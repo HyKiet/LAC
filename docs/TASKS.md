@@ -1,223 +1,140 @@
-# TASKS — Bảng kế hoạch LẠC
+# TASKS — Kế hoạch LẠC
 
-> **Đây là nguồn sự thật duy nhất về việc ai đang làm gì.**
-> Xong một task → tick ô ở đây **và** ghi vào [PROGRESS.md](PROGRESS.md), **trong cùng một commit**.
+> **Đây là file duy nhất theo dõi công việc.** Ai đang làm gì, đã xong gì, chức năng đó làm gì — tất cả ở đây.
 
-## Cách dùng
+## Cách dùng — 3 bước
 
+**1. Nhận việc:** thay `chưa ai nhận` bằng tên bạn, push ngay để hai người kia không làm trùng.
+
+**2. Làm xong:** đổi `[ ]` → `[x]` *(để con trỏ vào dòng, bấm `Alt+C`)*, thêm tên + ngày, rồi **viết một dòng `>` ngay dưới** nói chức năng đó làm gì và nằm ở file nào.
+
+**3. Commit:** `feat(T-05): dash có i-frame`
+
+```markdown
+Trước:
+- [ ] **T-05** Dash có i-frame và cooldown — chưa ai nhận
+
+Sau:
+- [x] **T-05** Dash có i-frame và cooldown — @HyKiet · 27/08
+  > Dash 6m trong 0.15s, bất tử suốt lúc dash, hồi 0.4s. `Player/PlayerDash.cs`. Gọi `TryDash()` từ `PlayerController`.
 ```
-- [ ] **T-101** Tên task — `@ai-lam` — *phụ thuộc: T-100*
-- [x] **T-101** Tên task — `@HyKiet` — ✅ 2026-08-27
-```
 
-- **Nhận việc:** điền tên mình vào chỗ `@ai-lam` rồi push ngay, để hai người kia không làm trùng.
-- **Xong việc:** đổi `[ ]` → `[x]`, thay phần đuôi bằng `✅ YYYY-MM-DD`, rồi viết mục trong [PROGRESS.md](PROGRESS.md).
-- **Không tick** nếu chưa chạy được trong Unity. "Code xong" ≠ "xong".
+Dòng `>` đó là thứ để người sau (và AI) biết chức năng đã tồn tại, đừng viết lại. **Không có dòng đó thì coi như chưa xong.**
 
-**Thành viên:** `@HyKiet` · `@dev2` · `@dev3` · `@artist`
-*(Đổi `@dev2` / `@dev3` thành tên thật rồi commit.)*
+**Thành viên:** `@HyKiet` · `@dev2` · `@dev3` · `@artist` — *đổi thành tên thật rồi commit*
 
 ---
 
-## 🚦 Cổng nghiệm thu
+# 🚩 CỔNG 1 — Tuần 1–3
 
-| Cổng | Tuần | Tiêu chí đạt |
-|---|---|---|
-| **Cổng 1** | 3 | Di chuyển + dash + tự bắn *đã đã tay*, chạy qua Mirror host mode, 2 người cùng chơi trên LAN có giả lập trễ 100ms |
-| **Cổng 2** | 7 | Ba nhân vật chơi ra ba cảm giác khác nhau **và** có clip 15 giây đăng TikTok được |
-| **Cổng 3** | 12 | Co-op qua Steam invite hoạt động với người ngoài mạng LAN, chơi hết 16 đợt không desync |
-| **Cổng 4** | 16 | Demo miễn phí lên Steam, bảo vệ khoá luận |
+**Đạt khi:** hai người cùng chơi một ván qua mạng, đánh quái thấy đã tay.
 
----
+### Chuẩn bị
 
-## 📅 TUẦN 1–3 — CỔNG 1: cảm giác chiến đấu + xương sống mạng
+- [ ] **T-01** Cả 3 máy clone repo, mở được bằng Unity 6000.5.6f1 — chưa ai nhận
+- [ ] **T-02** Cài Mirror + FizzySteamworks + Steamworks.NET — chưa ai nhận
 
-> Ba tuần này quyết định dự án sống hay chết. Kiến trúc mạng phải đúng **ngay từ commit đầu**, không lắp sau.
+### Nền móng
 
-### Hạ tầng
+- [ ] **T-03** `RunRandom` — nguồn ngẫu nhiên duy nhất, có seed — chưa ai nhận
+- [ ] **T-04** `ObjectPool` — dùng chung cho đạn, quái, VFX — chưa ai nhận
+- [ ] **T-05** `RunManager` — bắt đầu ván → 16 đợt → thắng/thua — chưa ai nhận
+- [ ] **T-06** `CharacterData` (ScriptableObject) + asset Thạch Sanh — chưa ai nhận
 
-- [ ] **T-001** Tạo repo, push cấu trúc thư mục + tài liệu — `@HyKiet`
-- [ ] **T-002** Cả 3 máy clone được, mở Unity 6000.5.6f1 không lỗi — `@ai-lam` — *phụ thuộc: T-001*
-- [ ] **T-003** Cài Mirror (UPM) + FizzySteamworks + Steamworks.NET — `@ai-lam`
-- [ ] **T-004** Cấu hình `UnityYAMLMerge` trên cả 3 máy (chống conflict scene) — `@ai-lam` — *xem CONVENTIONS.md*
-- [ ] **T-005** Bật Git LFS, xác nhận file .png đi qua LFS — `@ai-lam`
+### Mạng — làm ngay tuần 1, không để tuần 10
 
-### Nền móng code
-
-- [ ] **T-010** `RunRandom` — bọc `System.Random`, seed đồng bộ được — `@ai-lam`
-- [ ] **T-011** `ObjectPool<T>` chung — `@ai-lam`
-- [ ] **T-012** `GameEvents` event bus tĩnh — `@ai-lam`
-- [ ] **T-013** `RunManager` khung: bắt đầu ván → 16 đợt → thắng/thua — `@ai-lam`
-- [ ] **T-014** `CharacterData` ScriptableObject + 1 asset mẫu (Thạch Sanh) — `@ai-lam`
-
-### Mạng — LÀM NGAY, KHÔNG ĐỂ TUẦN 10
-
-- [ ] **T-020** `NetworkManagerLAC`, chạy host mode ngay cả khi chơi 1 mình — `@ai-lam` — *phụ thuộc: T-003*
-- [ ] **T-021** `NetPlayerSpawner` — spawn 1–2 nhân vật đúng chỗ — `@ai-lam`
-- [ ] **T-022** Bật `LatencySimulation` transport, mặc định 100ms + 2% mất gói khi dev — `@ai-lam`
-- [ ] **T-023** `RunSync` — đồng bộ seed ván + nhân vật đã chọn — `@ai-lam`
-- [ ] **T-024** Chạy 2 build cùng lúc trên 1 máy, cả hai vào được ván — `@ai-lam`
+- [ ] **T-07** `NetworkManagerLAC` chạy host mode, kể cả khi chơi một mình — chưa ai nhận
+- [ ] **T-08** Bật giả lập trễ 100ms làm mặc định khi dev — chưa ai nhận
+- [ ] **T-09** Spawn 1–2 nhân vật, hai máy cùng vào được ván — chưa ai nhận
 
 ### Cảm giác chiến đấu
 
-- [ ] **T-030** Input System: di chuyển 8 hướng + nút dash (bàn phím + tay cầm) — `@ai-lam`
-- [ ] **T-031** `PlayerMovement` — di chuyển mượt, client dự đoán nhân vật mình — `@ai-lam`
-- [ ] **T-032** `PlayerDash` — i-frame, cooldown, ghost trail — `@ai-lam`
-- [ ] **T-033** `WeaponAuto` — chu kỳ, chọn mục tiêu gần nhất, bắn — `@ai-lam`
-- [ ] **T-034** `Projectile` qua pool, **không NetworkIdentity** — `@ai-lam`
-- [ ] **T-035** `DamageSystem` — điểm vào duy nhất, host-only — `@ai-lam`
-- [ ] **T-036** `PlayerHealth` — host trừ máu, client nhận SyncVar — `@ai-lam`
-- [ ] **T-037** Quái đầu tiên (Cô Hồn) — FSM đuổi theo, chết được — `@ai-lam`
-- [ ] **T-038** `HitFeedback` — hit-stop, nháy trắng, đẩy lùi, số sát thương — `@ai-lam`
-- [ ] **T-039** `CameraShake` theo cường độ — `@ai-lam`
+- [ ] **T-10** Di chuyển 8 hướng (bàn phím + tay cầm) — chưa ai nhận
+- [ ] **T-11** Dash — i-frame, cooldown, vệt mờ — chưa ai nhận
+- [ ] **T-12** Vũ khí tự bắn — chu kỳ, ngắm mục tiêu gần nhất — chưa ai nhận
+- [ ] **T-13** `DamageSystem` — mọi sát thương đi qua đây, chỉ host quyết — chưa ai nhận
+- [ ] **T-14** Quái đầu tiên (Cô Hồn) — đuổi theo, chết được — chưa ai nhận
+- [ ] **T-15** Phản hồi khi đánh trúng — khựng hình, nháy trắng, đẩy lùi, số sát thương, rung màn — chưa ai nhận
+- [ ] **T-16** **Sóng âm Đông Sơn** — vòng tròn lan ra, hoa văn trống đồng — chưa ai nhận
 
-### Money shot — bản đầu
+### Mỹ thuật
 
-- [ ] **T-040** Shader/VFX sóng âm đồng tâm, hoa văn Đông Sơn — `@ai-lam`
-- [ ] **T-041** `SoundWaveVFX` gắn vào `WeaponAuto`, additive + alpha thấp — `@ai-lam`
-- [ ] **T-042** Chốt bảng 24 màu Đông Hồ, **khoá 1 màu riêng cho đòn địch** — `@artist`
+- [ ] **T-17** Chốt bảng 24 màu Đông Hồ, **khoá riêng 1 màu cho đòn địch** — chưa ai nhận
+- [ ] **T-18** Sprite Thạch Sanh + Cô Hồn + tileset Sân Đình — chưa ai nhận
 
-### Mỹ thuật tuần 1–3
+### Marketing — bắt đầu tuần 2, không phải tuần 15
 
-- [ ] **T-050** Sprite Thạch Sanh 32×32, 4 frame/hành động (idle, đi, dash) — `@artist`
-- [ ] **T-051** Sprite Cô Hồn — `@artist`
-- [ ] **T-052** Tileset Sân Đình 16×16 — `@artist`
-
-### Marketing — bắt đầu từ TUẦN 2, không phải tuần 15
-
-- [ ] **T-060** Mua Steam Direct ($100), tạo app — `@HyKiet`
-- [ ] **T-061** **Dựng trang Steam ở tuần 2** — wishlist tích từ ngày đó — `@HyKiet`
-- [ ] **T-062** Lập TikTok + YouTube Shorts, đăng devlog số 1 — `@HyKiet`
-- [ ] **T-063** Lịch đăng devlog **hàng tuần** từ tuần 2 đến tuần 16 — `@HyKiet`
-
-### ✅ Cổng 1 — nghiệm thu tuần 3
-
-- [ ] **G-1** Hai người chơi cùng ván qua Mirror, có giả lập trễ 100ms, đánh quái đã tay — `cả nhóm`
+- [ ] **T-19** Mua Steam Direct ($100), **dựng trang Steam ngay tuần 2** — chưa ai nhận
+- [ ] **T-20** Lập TikTok, đăng devlog số 1, đặt lịch đăng hàng tuần — chưa ai nhận
 
 ---
 
-## 📅 TUẦN 4–5 — Thẻ, tiến hoá, hồn
+# 🚩 CỔNG 2 — Tuần 4–7
 
-- [ ] **T-100** `CardData` ScriptableObject + `CardEffect` — `@ai-lam`
-- [ ] **T-101** `PlayerStats` — cộng dồn hiệu ứng thẻ, vũ khí đọc từ đây — `@ai-lam`
-- [ ] **T-102** `CardPool` — bốc 3 thẻ bằng `RunRandom`, lọc theo nhân vật — `@ai-lam`
-- [ ] **T-103** `CardPickUI` — 10 giây, 2 lượt đổi, tạm dừng game — `@ai-lam`
-- [ ] **T-104** **Đồng bộ chọn thẻ trong co-op** — đợt sau chỉ bắt đầu khi cả hai chọn xong — `@ai-lam`
-- [ ] **T-105** Viết 12 thẻ chỉ số (đợt 1) — `@ai-lam`
-- [ ] **T-106** Viết 20 thẻ biến đổi vũ khí (đợt 2) — `@ai-lam`
-- [ ] **T-110** `CardEvolution` — máy kiểm tra công thức — `@ai-lam`
-- [ ] **T-111** Chốt 8 công thức tiến hoá, viết vào GDD — `cả nhóm`
-- [ ] **T-112** Cài 3 thẻ tiến hoá đầu: Nỏ Thần, Lửa Thiêng, Trăm Trứng — `@ai-lam`
-- [ ] **T-113** Cài 5 thẻ tiến hoá còn lại — `@ai-lam`
-- [ ] **T-114** UI báo tiến hoá — hiệu ứng lớn, ăn mừng — `@ai-lam`
-- [ ] **T-120** `SoulPickup` — rơi ra, tự hút, hiệu ứng — `@ai-lam`
-- [ ] **T-121** Âm thanh nhặt hồn cao độ tăng dần theo chuỗi — `@ai-lam`
-- [ ] **T-130** 40 icon thẻ (32 nền + 8 tiến hoá) — `@artist`
+**Đạt khi:** ba nhân vật chơi ra ba cảm giác khác nhau, **và** quay được clip 15 giây đăng TikTok.
 
----
-
-## 📅 TUẦN 6–7 — CỔNG 2: ba nhân vật + money shot hoàn chỉnh
-
-- [ ] **T-200** Gióng — roi sắt, đòn hình cung, đặc tính riêng — `@ai-lam`
-- [ ] **T-201** Tấm — sáo trúc, tia, **buff áp cho phát bắn kế tiếp** (không theo thời gian) — `@ai-lam`
-- [ ] **T-202** Màn chọn nhân vật + đồng bộ lựa chọn qua mạng — `@ai-lam`
-- [ ] **T-203** Thẻ riêng theo nhân vật (6 thẻ × 3) — `@ai-lam`
-- [ ] **T-210** Money shot hoàn chỉnh: sóng âm riêng cho từng nhạc cụ — `@ai-lam`
-- [ ] **T-211** Kiểm tra đọc hiểu: 40 quái + 200 đạn vẫn thấy được đòn địch — `cả nhóm`
-- [ ] **T-212** Đo hiệu năng: 60 FPS ở 40 quái + 200 đạn — `@ai-lam`
-- [ ] **T-220** Sprite Gióng + Tấm — `@artist`
-- [ ] **T-221** VFX ba nhạc cụ, ba hình sóng khác nhau — `@artist`
-
-### ✅ Cổng 2 — nghiệm thu tuần 7
-
-- [ ] **G-2** Ba nhân vật cho ba cảm giác khác nhau **và** có clip 15s đăng được — `cả nhóm`
+- [ ] **T-21** Thẻ nâng cấp — `CardData` + áp hiệu ứng lên chỉ số — chưa ai nhận
+- [ ] **T-22** Màn chọn 1 trong 3 thẻ, 10 giây, 2 lượt đổi — chưa ai nhận
+- [ ] **T-23** **Đồng bộ chọn thẻ:** đợt sau chỉ bắt đầu khi cả hai chọn xong — chưa ai nhận
+- [ ] **T-24** Viết 32 thẻ nền — chưa ai nhận
+- [ ] **T-25** **Tiến hoá thẻ** — máy kiểm tra công thức + UI ăn mừng — chưa ai nhận
+- [ ] **T-26** Chốt và cài 8 công thức tiến hoá — chưa ai nhận
+- [ ] **T-27** **Hồn** — quái chết rơi ra, tự hút về, âm thanh cao dần — chưa ai nhận
+- [ ] **T-28** Gióng — roi sắt, đòn hình cung — chưa ai nhận
+- [ ] **T-29** Tấm — sáo trúc, tia. **Buff áp cho phát bắn kế tiếp**, không theo thời gian — chưa ai nhận
+- [ ] **T-30** Màn chọn nhân vật + đồng bộ qua mạng — chưa ai nhận
+- [ ] **T-31** Sóng âm riêng cho từng nhạc cụ — chưa ai nhận
+- [ ] **T-32** Kiểm tra: 40 quái + 200 đạn vẫn 60 FPS và vẫn thấy được đòn địch — chưa ai nhận
+- [ ] **T-33** Sprite Gióng + Tấm + 40 icon thẻ — chưa ai nhận
 
 ---
 
-## 📅 TUẦN 8–9 — Quái, trùm, Trống Đồng
+# 🚩 CỔNG 3 — Tuần 8–12
 
-- [ ] **T-300** Ma Trơi (bắn xa) — `@ai-lam`
-- [ ] **T-301** Bù Nhìn (chậm, trâu) — `@ai-lam`
-- [ ] **T-302** Ma Da (nhanh, yếu) — `@ai-lam`
-- [ ] **T-303** Quỷ Nhỏ (chết thì tách đôi) — `@ai-lam`
-- [ ] **T-304** Snapshot vị trí quái 2 lần/giây để chống trôi — `@ai-lam`
-- [ ] **T-310** `DongSonDrum` — cooldown **dùng chung**, host giữ trạng thái — `@ai-lam`
-- [ ] **T-311** `CmdTryActivate` khi dash chạm trống — `@ai-lam`
-- [ ] **T-312** `DrumShockwave` — xoá đạn + đẩy lùi + choáng 1s — `@ai-lam`
-- [ ] **T-313** Hồn nạp cho trống, hiển thị vòng nạp trên HUD — `@ai-lam`
-- [ ] **T-314** Test co-op: hai người tranh nhau trống, không desync — `@ai-lam`
-- [ ] **T-320** Trùm Chằn Tinh — pha 1 — `@ai-lam`
-- [ ] **T-321** Chằn Tinh — pha 2 + chuyển pha — `@ai-lam`
-- [ ] **T-322** Trùm trong co-op: máu nhân theo số người chơi — `@ai-lam`
-- [ ] **T-330** Sprite 4 quái còn lại — `@artist`
-- [ ] **T-331** Sprite Chằn Tinh + hoạt ảnh 2 pha — `@artist`
-- [ ] **T-332** Sprite trống đồng + VFX sóng xung kích — `@artist`
-- [ ] **T-333** Tileset Ruộng Lúa + Âm Phủ — `@artist`
+**Đạt khi:** co-op qua Steam với người ngoài mạng LAN, chơi hết 16 đợt không lỗi đồng bộ.
 
----
-
-## 📅 TUẦN 10–12 — CỔNG 3: co-op qua Steam + AI Đạo Diễn
-
-> Phần khó của mạng đã xong từ tuần 1. Ba tuần này chỉ là ghép Steam và xử lý trường hợp biên.
-
-- [ ] **T-400** `SteamLobby` — tạo phòng, mời bạn qua overlay Steam — `@ai-lam`
-- [ ] **T-401** Chuyển từ transport LAN sang FizzySteamworks — `@ai-lam`
-- [ ] **T-402** Test với người **ngoài mạng LAN** — `@ai-lam`
-- [ ] **T-403** Hạ gục + hồi sinh (người kia đứng cạnh 3 giây) — `@ai-lam`
-- [ ] **T-404** Xử lý client rớt giữa ván — `@ai-lam`
-- [ ] **T-405** Xử lý host thoát — client về menu êm, không treo — `@ai-lam`
-- [ ] **T-406** Chơi hết 16 đợt co-op không desync, 3 lần liên tiếp — `cả nhóm`
-- [ ] **T-410** `Telemetry` — ghi CSV mọi đợt (**cắm từ tuần 8**) — `@ai-lam`
-- [ ] **T-411** `FixedWaveTable` — bảng đợt cố định (co-op + nhóm đối chứng) — `@ai-lam`
-- [ ] **T-412** `ContextVector` + `WaveSpec` — `@ai-lam`
-- [ ] **T-413** `AIDirector` LinUCB — `@ai-lam`
-- [ ] **T-414** `SafetyConstraints` — chặn đợt vượt ngưỡng — `@ai-lam`
-- [ ] **T-415** **Đạo diễn bất đối xứng**: mạnh thì đổi thành phần/hướng, không tăng số lượng/máu — `@ai-lam`
-- [ ] **T-416** **Đạo diễn hiện hình trên HUD** — người chơi thấy nó đang làm gì — `@ai-lam`
-
-### ✅ Cổng 3 — nghiệm thu tuần 12
-
-- [ ] **G-3** Co-op Steam với người ngoài LAN, hết 16 đợt, không desync — `cả nhóm`
+- [ ] **T-34** 4 quái còn lại — Ma Trơi, Bù Nhìn, Ma Da, Quỷ Nhỏ — chưa ai nhận
+- [ ] **T-35** Snapshot vị trí quái 2 lần/giây để chống trôi — chưa ai nhận
+- [ ] **T-36** **Trống Đồng** — dash vào → xoá đạn + đẩy lùi + choáng 1s — chưa ai nhận
+- [ ] **T-37** **Trống dùng chung một hồi chiêu**, host giữ trạng thái — chưa ai nhận
+- [ ] **T-38** Hồn nạp cho trống, hiện vòng nạp trên HUD — chưa ai nhận
+- [ ] **T-39** Trùm Chằn Tinh — 2 pha, máu nhân theo số người chơi — chưa ai nhận
+- [ ] **T-40** Mời bạn qua overlay Steam, đổi sang FizzySteamworks — chưa ai nhận
+- [ ] **T-41** Hạ gục + hồi sinh (đứng cạnh 3 giây) — chưa ai nhận
+- [ ] **T-42** Xử lý rớt mạng: client rớt, host thoát — không treo — chưa ai nhận
+- [ ] **T-43** Ghi telemetry ra CSV cho phần đánh giá khoá luận — chưa ai nhận
+- [ ] **T-44** Bảng đợt cố định (dùng cho co-op + nhóm đối chứng) — chưa ai nhận
+- [ ] **T-45** **AI Đạo Diễn** LinUCB — chỉ chạy chơi đơn — chưa ai nhận
+- [ ] **T-46** Đạo diễn **bất đối xứng** + **hiện trên HUD** cho người chơi thấy — chưa ai nhận
+- [ ] **T-47** Sprite 4 quái + Chằn Tinh + trống đồng + 2 tileset — chưa ai nhận
 
 ---
 
-## 📅 TUẦN 13–14 — Tiến trình, cân bằng, đánh giá
+# 🚩 CỔNG 4 — Tuần 13–16
 
-- [ ] **T-500** Tiền tệ Ngọc + lưu tiến trình — `@ai-lam`
-- [ ] **T-501** Bảng mở khoá (3 gói thẻ, không phải 5) — `@ai-lam`
-- [ ] **T-502** 2 cấp độ khó (không phải 4) — `@ai-lam`
-- [ ] **T-503** Màn kết quả sau ván + thống kê — `@ai-lam`
-- [ ] **T-510** Cân bằng: chốt sát thương gốc cho cả 3 vũ khí (**GDD đang thiếu**) — `cả nhóm`
-- [ ] **T-511** Cân bằng đường cong 16 đợt — `cả nhóm`
-- [ ] **T-520** **Thực nghiệm khoá luận: 15 người đạo diễn AI vs 15 người bảng cố định, chơi đơn** — `@HyKiet`
-- [ ] **T-521** Phân tích số liệu, viết chương đánh giá — `@HyKiet`
-- [ ] **T-530** Nhạc nền 3 bối cảnh + nhạc trùm — `@artist`
-- [ ] **T-531** Toàn bộ SFX — `@ai-lam`
+**Đạt khi:** demo miễn phí lên Steam, bảo vệ xong khoá luận.
 
----
+- [ ] **T-48** Tiền tệ Ngọc + lưu tiến trình + bảng mở khoá — chưa ai nhận
+- [ ] **T-49** 2 cấp độ khó + màn kết quả sau ván — chưa ai nhận
+- [ ] **T-50** **Cân bằng: chốt sát thương gốc cho 3 vũ khí** *(GDD đang thiếu con số này)* — chưa ai nhận
+- [ ] **T-51** Cân bằng đường cong 16 đợt — chưa ai nhận
+- [ ] **T-52** Nhạc + toàn bộ SFX — chưa ai nhận
+- [ ] **T-53** **Thực nghiệm: 15 người AI Đạo Diễn vs 15 người bảng cố định** (chơi đơn) — chưa ai nhận
+- [ ] **T-54** Phân tích số liệu, viết chương đánh giá — chưa ai nhận
+- [ ] **T-55** Cắt demo miễn phí (8 đợt đầu, 1 nhân vật) — chưa ai nhận
+- [ ] **T-56** Trailer — dùng sóng âm Đông Sơn làm 5 giây đầu — chưa ai nhận
+- [ ] **T-57** Đăng demo + đăng ký Steam Next Fest — chưa ai nhận
+- [ ] **T-58** Đặt giá: $4.99 · VN 49.000–59.000₫ *(đè lên gợi ý ~78.000₫ của Steam)* — chưa ai nhận
+- [ ] **T-59** Slide + demo bảo vệ khoá luận — chưa ai nhận
 
-## 📅 TUẦN 15–16 — CỔNG 4: demo + bảo vệ
-
-- [ ] **T-600** Cắt demo miễn phí (đề xuất: 8 đợt đầu, 1 nhân vật) — `@ai-lam`
-- [ ] **T-601** Dựng trailer — dùng money shot làm 5 giây đầu — `@HyKiet`
-- [ ] **T-602** Ảnh chụp + capsule art cho trang Steam — `@artist`
-- [ ] **T-603** Đăng demo lên Steam — `@HyKiet`
-- [ ] **T-604** Đăng ký **Steam Next Fest** đợt gần nhất — `@HyKiet`
-- [ ] **T-605** Đặt giá vùng: $4.99 · VN 49.000–59.000₫ (**đè lên gợi ý ~78.000₫ của Steam**) — `@HyKiet`
-- [ ] **T-610** Slide + demo bảo vệ khoá luận — `cả nhóm`
-- [ ] **T-611** Viết chương Hạn chế: *"mở rộng đạo diễn cho nhiều người chơi cần hàm mục tiêu đa tác nhân — ngoài phạm vi"* — `@HyKiet`
-
-> **KHÔNG bán game ở tuần 16.** Ra demo + bảo vệ khoá luận. Chỉ đặt ngày phát hành khi đạt ~8.000 wishlist. Bạn chỉ có đúng một lần ra mắt.
+> **Tuần 16 KHÔNG bán game.** Ra demo + bảo vệ. Chỉ đặt ngày phát hành khi đạt ~8.000 wishlist — bạn chỉ có đúng một lần ra mắt.
 
 ---
 
-## 🅿️ Đã hoãn — chỉ làm nếu còn thời gian
+## Để dành — chỉ làm nếu dư thời gian
 
-- [ ] **P-01** Daily challenge + Steam Leaderboard
-- [ ] **P-02** Nhân vật thứ 4
-- [ ] **P-03** Trùm thứ 2
-- [ ] **P-04** Đạo diễn AI chạy trong co-op (hàm mục tiêu đa tác nhân)
+Daily challenge + bảng xếp hạng Steam · nhân vật thứ 4 · trùm thứ 2 · AI Đạo Diễn chạy trong co-op
 
-## ❌ Ngoài phạm vi — đã chốt không làm
+## Đã chốt không làm
 
-Co-op 4 người · matchmaking · cửa hàng trang phục · bản mobile · cắt cảnh · rẽ nhánh Núi/Biển *(nhóm đã bác ở tuần 0)*
+Co-op 4 người · matchmaking · cửa hàng trang phục · bản mobile · cắt cảnh · rẽ nhánh Núi/Biển

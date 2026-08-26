@@ -6,17 +6,14 @@
 
 ---
 
-## Bắt đầu
-
-### 1. Cài đặt một lần
+## Cài một lần
 
 ```bash
 git lfs install
 git clone https://github.com/HyKiet/LAC.git
-cd LAC
 ```
 
-Cấu hình công cụ merge của Unity (**bắt buộc**, không có thì conflict scene phải sửa tay):
+Cấu hình công cụ merge của Unity — **bắt buộc**, không có thì conflict scene phải sửa tay:
 
 ```bash
 git config --global merge.unityyamlmerge.name "Unity SmartMerge"
@@ -24,31 +21,31 @@ git config --global merge.unityyamlmerge.driver \
   '"C:/Program Files/Unity/Hub/Editor/6000.5.6f1/Editor/Data/Tools/UnityYAMLMerge.exe" merge -p %O %B %A %A'
 ```
 
-### 2. Mở dự án
+Mở dự án bằng Unity Hub — **phải đúng bản 6000.5.6f1**.
 
-Unity Hub → Add → chọn thư mục. **Bắt buộc dùng Unity 6000.5.6f1.** Bản khác sẽ nâng cấp file project và gây conflict cho cả nhóm.
-
-### 3. Nhận việc
-
-1. Đọc [CLAUDE.md](CLAUDE.md) — bắt buộc, kể cả khi bạn là người
-2. Mở [docs/TASKS.md](docs/TASKS.md), chọn một task chưa có người
-3. Điền tên mình vào, push ngay để hai người kia không làm trùng
-4. Tạo nhánh: `git checkout -b feat/T-102-ten-task`
-5. Làm. Xong thì tick ô + ghi [docs/PROGRESS.md](docs/PROGRESS.md) + mở PR
+Mở thư mục bằng VS Code, nó sẽ hỏi cài extension → bấm **Install All**. Sau đó bấm `Alt+C` là tick được task.
 
 ---
 
-## Tài liệu
+## Bắt đầu làm
 
-| File | Nội dung |
+1. Đọc [CLAUDE.md](CLAUDE.md) — 10 phút, hiểu đủ để bắt đầu
+2. Mở [docs/TASKS.md](docs/TASKS.md), chọn một task còn ghi *"chưa ai nhận"*
+3. Điền tên mình vào, push ngay để hai người kia không làm trùng
+4. Làm xong: tick ô + viết một dòng `>` nói chức năng đó làm gì
+5. Commit `feat(T-11): dash có i-frame` rồi push lên `dev`
+
+---
+
+## Ba file cần biết
+
+| | |
 |---|---|
-| [CLAUDE.md](CLAUDE.md) | **Đọc đầu tiên.** Game là gì, ba luật sắt, cấu trúc, quy trình |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Bản đồ hệ thống, ai gọi ai |
-| [docs/TASKS.md](docs/TASKS.md) | Kế hoạch 16 tuần có ô tick |
-| [docs/PROGRESS.md](docs/PROGRESS.md) | Nhật ký chức năng đã xong |
-| [docs/NETCODE.md](docs/NETCODE.md) | Luật đồng bộ — đọc trước khi động vào mạng |
-| [docs/CONVENTIONS.md](docs/CONVENTIONS.md) | Quy ước git, code, và cách làm việc với AI |
-| [docs/GDD.md](docs/GDD.md) | Game Design Document gốc (có chỗ đã lỗi thời — xem mục 8 của CLAUDE.md) |
+| [CLAUDE.md](CLAUDE.md) | **Đọc đầu tiên.** Game là gì, ba luật sắt, quy trình |
+| [docs/TASKS.md](docs/TASKS.md) | Việc — ai làm gì, xong gì |
+| [docs/GDD.md](docs/GDD.md) | Chi tiết thiết kế (bản gốc, có chỗ đã lỗi thời) |
+
+*Cần biết code nằm đâu, ai gọi ai → [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)*
 
 ---
 
@@ -58,37 +55,10 @@ Unity Hub → Add → chọn thư mục. **Bắt buộc dùng Unity 6000.5.6f1.*
 2. **Đồng bộ sự kiện, không đồng bộ trạng thái.** Không gắn `NetworkIdentity` lên đạn.
 3. **Không `UnityEngine.Random` trong gameplay.** Dùng `RunRandom` có seed.
 
-Chi tiết: [CLAUDE.md](CLAUDE.md) mục 3.
+Chi tiết ở [CLAUDE.md](CLAUDE.md) mục 3. Vi phạm là hỏng game.
 
 ---
 
 ## Nhóm
 
-| | |
-|---|---|
-| @HyKiet | Code · sản phẩm · marketing |
-| @dev2 | Code |
-| @dev3 | Code |
-| @artist | Pixel art · VFX · âm thanh |
-
----
-
-<!-- PROGRESS:START -->
-
-### Tiến độ — 0/111 task (0%)
-
-`░░░░░░░░░░░░░░░░░░░░░░░░░░░░` **0%**
-
-| Giai đoạn | Xong | Tiến độ |
-|---|---|---|
-| 📅 TUẦN 1–3 — CỔNG 1: cảm giác chiến đấu + xương sống mạng | 0/36 | `░░░░░░░░░░░░░░░░░░░░` 0% |
-| 📅 TUẦN 4–5 — Thẻ, tiến hoá, hồn | 0/15 | `░░░░░░░░░░░░░░░░░░░░` 0% |
-| 📅 TUẦN 6–7 — CỔNG 2: ba nhân vật + money shot hoàn chỉnh | 0/10 | `░░░░░░░░░░░░░░░░░░░░` 0% |
-| 📅 TUẦN 8–9 — Quái, trùm, Trống Đồng | 0/17 | `░░░░░░░░░░░░░░░░░░░░` 0% |
-| 📅 TUẦN 10–12 — CỔNG 3: co-op qua Steam + AI Đạo Diễn | 0/15 | `░░░░░░░░░░░░░░░░░░░░` 0% |
-| 📅 TUẦN 13–14 — Tiến trình, cân bằng, đánh giá | 0/10 | `░░░░░░░░░░░░░░░░░░░░` 0% |
-| 📅 TUẦN 15–16 — CỔNG 4: demo + bảo vệ | 0/8 | `░░░░░░░░░░░░░░░░░░░░` 0% |
-
-*Tự cập nhật từ [docs/TASKS.md](docs/TASKS.md).*
-
-<!-- PROGRESS:END -->
+`@HyKiet` code · sản phẩm · marketing — `@dev2` code — `@dev3` code — `@artist` pixel art · VFX · âm thanh
