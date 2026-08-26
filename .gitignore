@@ -63,3 +63,4 @@ desktop.ini
 /Recordings/
 /Telemetry/*.csv
 !/Telemetry/.gitkeep
+Packages/*.bak
