@@ -70,3 +70,25 @@ Chi tiết: [CLAUDE.md](CLAUDE.md) mục 3.
 | @dev2 | Code |
 | @dev3 | Code |
 | @artist | Pixel art · VFX · âm thanh |
+
+---
+
+<!-- PROGRESS:START -->
+
+### Tiến độ — 0/111 task (0%)
+
+`░░░░░░░░░░░░░░░░░░░░░░░░░░░░` **0%**
+
+| Giai đoạn | Xong | Tiến độ |
+|---|---|---|
+| 📅 TUẦN 1–3 — CỔNG 1: cảm giác chiến đấu + xương sống mạng | 0/36 | `░░░░░░░░░░░░░░░░░░░░` 0% |
+| 📅 TUẦN 4–5 — Thẻ, tiến hoá, hồn | 0/15 | `░░░░░░░░░░░░░░░░░░░░` 0% |
+| 📅 TUẦN 6–7 — CỔNG 2: ba nhân vật + money shot hoàn chỉnh | 0/10 | `░░░░░░░░░░░░░░░░░░░░` 0% |
+| 📅 TUẦN 8–9 — Quái, trùm, Trống Đồng | 0/17 | `░░░░░░░░░░░░░░░░░░░░` 0% |
+| 📅 TUẦN 10–12 — CỔNG 3: co-op qua Steam + AI Đạo Diễn | 0/15 | `░░░░░░░░░░░░░░░░░░░░` 0% |
+| 📅 TUẦN 13–14 — Tiến trình, cân bằng, đánh giá | 0/10 | `░░░░░░░░░░░░░░░░░░░░` 0% |
+| 📅 TUẦN 15–16 — CỔNG 4: demo + bảo vệ | 0/8 | `░░░░░░░░░░░░░░░░░░░░` 0% |
+
+*Tự cập nhật từ [docs/TASKS.md](docs/TASKS.md).*
+
+<!-- PROGRESS:END -->

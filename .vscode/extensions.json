@@ -1,5 +1,15 @@
 {
-    "recommendations": [
-      "visualstudiotoolsforunity.vstuc"
-    ]
+  "recommendations": [
+    "visualstudiotoolsforunity.vstuc",
+    "ms-dotnettools.csharp",
+
+    "shd101wyy.markdown-preview-enhanced",
+    "yzhang.markdown-all-in-one",
+    "gruntfuggly.todo-tree",
+    "bierner.markdown-mermaid",
+    "bierner.markdown-checkbox",
+
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github"
+  ]
 }

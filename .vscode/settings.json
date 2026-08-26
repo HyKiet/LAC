@@ -67,5 +67,73 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "LAC.slnx"
+    "dotnet.defaultSolution": "LAC.slnx",
+    "_comment_todo": "Todo Tree doc docs/TASKS.md va cac file .cs -> hien cay task o sidebar",
+    "todo-tree.general.tags": [
+        "[ ]",
+        "[x]",
+        "TODO",
+        "FIXME",
+        "BUG",
+        "HACK"
+    ],
+    "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^[ \\t]*(-|\\d+.))\\s*($TAGS)",
+    "todo-tree.filtering.includeGlobs": [
+        "**/docs/TASKS.md",
+        "**/Assets/_LAC/**/*.cs"
+    ],
+    "todo-tree.filtering.excludeGlobs": [
+        "**/Library/**",
+        "**/Temp/**",
+        "**/node_modules/**"
+    ],
+    "todo-tree.tree.showCountsInTree": true,
+    "todo-tree.tree.groupedByTag": true,
+    "todo-tree.tree.expanded": true,
+    "todo-tree.highlights.customHighlight": {
+        "[ ]": {
+            "icon": "issue-opened",
+            "iconColour": "#f0a020",
+            "foreground": "#f0a020",
+            "type": "tag"
+        },
+        "[x]": {
+            "icon": "issue-closed",
+            "iconColour": "#3fb950",
+            "foreground": "#3fb950",
+            "type": "tag",
+            "hideFromTree": false
+        },
+        "TODO": {
+            "icon": "note",
+            "iconColour": "#58a6ff",
+            "type": "tag"
+        },
+        "FIXME": {
+            "icon": "tools",
+            "iconColour": "#f0a020",
+            "type": "tag"
+        },
+        "BUG": {
+            "icon": "bug",
+            "iconColour": "#f85149",
+            "type": "tag"
+        },
+        "HACK": {
+            "icon": "flame",
+            "iconColour": "#db6d28",
+            "type": "tag"
+        }
+    },
+    "_comment_md": "Alt+C de tick/bo tick checkbox trong TASKS.md",
+    "markdown.preview.breaks": true,
+    "markdown-preview-enhanced.previewTheme": "github-dark.css",
+    "markdown-preview-enhanced.enableTypographer": true,
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "other": true
+        },
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    }
 }

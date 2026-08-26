@@ -145,3 +145,36 @@ git checkout --theirs Assets/_LAC/Scenes/Arena.unity   # lấy bản trên serve
 ```
 
 Sửa tay file YAML của Unity gần như luôn làm hỏng scene. Làm lại nhanh hơn sửa.
+
+---
+
+## 9. Tick task cho nhanh — cài 4 extension
+
+Mở dự án bằng VS Code, nó sẽ hiện thông báo *"This workspace has extension recommendations"* → bấm **Install All**. Danh sách nằm ở [.vscode/extensions.json](../.vscode/extensions.json), cấu hình đã có sẵn ở [.vscode/settings.json](../.vscode/settings.json).
+
+| Extension | Dùng để làm gì |
+|---|---|
+| **Markdown All in One** | Đặt con trỏ vào dòng task → **`Alt+C`** để tick / bỏ tick |
+| **Markdown Preview Enhanced** | **`Ctrl+K V`** mở bản xem trước → **bấm chuột thẳng vào ô vuông**, nó tự ghi ngược vào file |
+| **Todo Tree** | Cây task ở thanh bên trái: ô cam = chưa xong, ô xanh = xong, có đếm số |
+| **Markdown Mermaid** | Xem sơ đồ kiến trúc trong [ARCHITECTURE.md](ARCHITECTURE.md) |
+
+**Ba cách tick, chọn cái bạn thích:**
+
+1. Gõ tay `- [ ]` → `- [x]`
+2. `Alt+C` trong editor
+3. `Ctrl+K V` rồi bấm chuột vào ô vuông trong preview
+
+Cả ba đều ghi vào cùng file `docs/TASKS.md` — nên **AI vẫn đọc được y nguyên**. Không có cơ sở dữ liệu ẩn nào cả.
+
+### Thanh tiến độ tự chạy
+
+Mỗi lần `docs/TASKS.md` được push, GitHub Action [progress.yml](../.github/workflows/progress.yml) tính lại và ghi bảng tiến độ vào [README.md](../README.md). Muốn xem trước ở máy mình:
+
+```bash
+python tools/update_progress.py
+```
+
+### Xem trên GitHub
+
+GitHub tự render `- [ ]` thành ô vuông kèm thanh tiến độ. Vào thẳng [docs/TASKS.md](TASKS.md) trên web là thấy — không cần cài gì.
