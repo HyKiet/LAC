@@ -1,19 +1,21 @@
 # LẠC — Children of the Dragon
 
-**Arena survival roguelite 2D trên nền thần thoại Việt Nam.** Ba anh hùng, ba lối chơi. 15 phút một ván, co-op 2 người qua Steam.
+Arena survival roguelite 2D trên nền thần thoại Việt Nam. Ba nhân vật với ba lối chơi phân biệt, mỗi ván 15 phút, hỗ trợ co-op hai người qua Steam.
 
 > Đồ án tốt nghiệp · Unity 6000.5.6f1 · URP 2D · Mirror + Steamworks.NET
 
 ---
 
-## Cài một lần
+## Thiết lập môi trường
+
+Thực hiện một lần trên mỗi máy.
 
 ```bash
 git lfs install
 git clone https://github.com/HyKiet/LAC.git
 ```
 
-Cấu hình công cụ merge của Unity — **bắt buộc**, không có thì conflict scene phải sửa tay:
+Cấu hình công cụ hợp nhất của Unity. **Bước này bắt buộc** — thiếu nó, xung đột trên tệp scene sẽ phải xử lý thủ công:
 
 ```bash
 git config --global merge.unityyamlmerge.name "Unity SmartMerge"
@@ -21,44 +23,48 @@ git config --global merge.unityyamlmerge.driver \
   '"C:/Program Files/Unity/Hub/Editor/6000.5.6f1/Editor/Data/Tools/UnityYAMLMerge.exe" merge -p %O %B %A %A'
 ```
 
-Mở dự án bằng Unity Hub — **phải đúng bản 6000.5.6f1**.
+Mở dự án qua Unity Hub với **đúng phiên bản 6000.5.6f1**.
 
-Mở thư mục bằng VS Code, nó sẽ hỏi cài extension → bấm **Install All**. Sau đó bấm `Alt+C` là tick được task.
-
----
-
-## Bắt đầu làm
-
-1. Đọc [CLAUDE.md](CLAUDE.md) — 10 phút, hiểu đủ để bắt đầu
-2. Mở [docs/TASKS.md](docs/TASKS.md), chọn một task còn ghi *"chưa ai nhận"*
-3. Điền tên mình vào, push ngay để hai người kia không làm trùng
-4. Làm xong: tick ô + viết một dòng `>` nói chức năng đó làm gì
-5. Commit `feat(T-11): dash có i-frame` rồi push lên `dev`
+Mở thư mục dự án bằng VS Code và chấp nhận danh sách extension được đề xuất. Sau khi cài, phím `Alt+C` dùng để đánh dấu hoàn thành hạng mục trong kế hoạch công việc.
 
 ---
 
-## Ba file cần biết
+## Quy trình làm việc
 
-| | |
+1. Đọc [CLAUDE.md](CLAUDE.md) — tài liệu chủ đạo, cung cấp đủ thông tin để bắt đầu.
+2. Mở [docs/TASKS.md](docs/TASKS.md) và chọn một hạng mục còn ở trạng thái *Chưa phân công*.
+3. Điền tên vào hạng mục và đẩy lên remote ngay để tránh trùng lặp công việc.
+4. Sau khi hoàn thành: đánh dấu `[x]`, bổ sung dòng trích dẫn mô tả chức năng và vị trí tệp.
+5. Commit theo định dạng `feat(T-11): dash có i-frame` và đẩy lên nhánh `dev`.
+
+---
+
+## Bộ tài liệu
+
+| Tài liệu | Nội dung |
 |---|---|
-| [CLAUDE.md](CLAUDE.md) | **Đọc đầu tiên.** Game là gì, ba luật sắt, quy trình |
-| [docs/TASKS.md](docs/TASKS.md) | Việc — ai làm gì, xong gì |
-| [docs/GDD.md](docs/GDD.md) | Chi tiết thiết kế (bản gốc, có chỗ đã lỗi thời) |
-
-*Cần biết code nằm đâu, ai gọi ai → [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)*
+| [CLAUDE.md](CLAUDE.md) | Tài liệu chủ đạo — tổng quan sản phẩm, ràng buộc kiến trúc, quy trình |
+| [docs/TASKS.md](docs/TASKS.md) | Kế hoạch công việc, phân công, nhật ký hoàn thành |
+| [docs/GDD.md](docs/GDD.md) | Đặc tả thiết kế gốc — một số nội dung đã lỗi thời, xem mục 7 của CLAUDE.md |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Sơ đồ hệ thống và quan hệ giữa các module |
 
 ---
 
-## Ba luật sắt
+## Ràng buộc kiến trúc
 
-1. **Không có "chế độ chơi đơn" riêng.** Chơi đơn = Mirror host mode với 1 client.
+1. **Không tồn tại nhánh mã riêng cho chế độ chơi đơn.** Chơi đơn là Mirror host mode với một client.
 2. **Đồng bộ sự kiện, không đồng bộ trạng thái.** Không gắn `NetworkIdentity` lên đạn.
-3. **Không `UnityEngine.Random` trong gameplay.** Dùng `RunRandom` có seed.
+3. **Cấm `UnityEngine.Random` trong luồng gameplay.** Sử dụng `RunRandom` có seed.
 
-Chi tiết ở [CLAUDE.md](CLAUDE.md) mục 3. Vi phạm là hỏng game.
+Diễn giải đầy đủ tại [CLAUDE.md](CLAUDE.md) mục 3.
 
 ---
 
-## Nhóm
+## Nhóm phát triển
 
-`@HyKiet` code · sản phẩm · marketing — `@dev2` code — `@dev3` code — `@artist` pixel art · VFX · âm thanh
+| Thành viên | Vai trò |
+|---|---|
+| `@Kiet` | Lập trình · quản lý sản phẩm · quảng bá |
+| `@Hung` | Lập trình |
+| `@Kang` | Lập trình |
+| `@artist` | Pixel art · hiệu ứng · âm thanh |

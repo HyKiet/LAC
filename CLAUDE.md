@@ -1,204 +1,279 @@
 # LẠC — Children of the Dragon
 
-> **AI và người mới đọc file này trước tiên.** Đọc xong là hiểu đủ để bắt đầu làm.
-> Chỉ 3 file tài liệu: file này, [docs/TASKS.md](docs/TASKS.md) (việc), [docs/GDD.md](docs/GDD.md) (chi tiết thiết kế).
-> Cần biết code nằm đâu, ai gọi ai → [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+**Tài liệu chủ đạo của dự án.** Mọi thành viên và mọi công cụ AI tham gia phát triển phải đọc tài liệu này trước khi thực hiện bất kỳ thay đổi nào lên mã nguồn.
 
----
+Bộ tài liệu dự án gồm ba văn bản:
 
-## 1. Game này là gì
-
-**Arena survival roguelite 2D top-down, pixel art, nền thần thoại Việt Nam.** Dòng Vampire Survivors / Brotato.
-
-| | |
+| Tài liệu | Nội dung |
 |---|---|
-| Nền tảng | PC — Steam · giá **$4.99** |
-| Người chơi | 1–2, **co-op online bắt buộc** (yêu cầu của giảng viên) |
-| Một ván | 15 phút · 16 đợt quái |
-| Engine | **Unity 6000.5.6f1** · URP 2D · C# |
-| Mạng | Mirror + Steamworks.NET, **host quyết mọi thứ** |
+| **CLAUDE.md** *(tài liệu này)* | Tổng quan sản phẩm, ràng buộc kiến trúc, quy ước lập trình, quy trình phát triển |
+| [docs/TASKS.md](docs/TASKS.md) | Kế hoạch công việc, phân công, nhật ký hoàn thành |
+| [docs/GDD.md](docs/GDD.md) | Đặc tả thiết kế chi tiết — chỉ số, nội dung, cân bằng |
 
-**Vòng lặp:** đợt quái (30–50s) → chọn 1 trong 3 thẻ (10s) → lặp ×15 → trùm Chằn Tinh ở đợt 16.
+Tài liệu tham chiếu bổ sung: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — sơ đồ hệ thống và quan hệ giữa các module.
 
-**Chỉ hai thao tác: di chuyển + lướt (dash).** Vũ khí tự khai hỏa. Người chơi điều khiển vị trí và thời điểm, không điều khiển việc bắn.
+---
 
-| Nhân vật | Vũ khí | HP | Tốc độ | Tầm | Chu kỳ |
+## 1. Tổng quan sản phẩm
+
+LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, đồ hoạ pixel art, xây dựng trên nền thần thoại Việt Nam. Sản phẩm thuộc dòng Vampire Survivors / Brotato.
+
+| Hạng mục | Đặc tả |
+|---|---|
+| Nền tảng phát hành | PC — Steam |
+| Giá bán | **$2.99** |
+| Số người chơi | 1–2, **co-op trực tuyến** *(yêu cầu bắt buộc từ giảng viên hướng dẫn)* |
+| Thời lượng một ván | 15 phút — 16 đợt quái |
+| Engine | **Unity 6000.5.6f1**, URP 2D, C# |
+| Kiến trúc mạng | Mirror + Steamworks.NET, mô hình **host-authoritative** |
+
+### 1.1 Vòng lặp cốt lõi
+
+```
+Đợt quái (30–50 giây) → Chọn 1 trong 3 thẻ nâng cấp (10 giây)
+→ Lặp lại 15 lần → Trùm Chằn Tinh ở đợt 16
+```
+
+Người chơi chỉ có **hai thao tác: di chuyển và lướt (dash)**. Vũ khí khai hoả tự động. Người chơi kiểm soát vị trí và thời điểm, không kiểm soát hành vi bắn.
+
+### 1.2 Nhân vật
+
+| Nhân vật | Vũ khí | Máu | Tốc độ | Tầm đánh | Chu kỳ |
 |---|---|---|---|---|---|
-| Thạch Sanh | Đàn bầu | 6 | 5 | 4 (vòng tròn) | 0.9s |
-| Gióng | Roi sắt | 10 | 3 | 2.5 (hình cung) | 0.6s |
-| Tấm | Sáo trúc | 4 | 8 | 7 (tia) | 0.12s |
+| Thạch Sanh | Đàn bầu | 6 | 5 | 4 — vòng tròn | 0.9 s |
+| Gióng | Roi sắt | 10 | 3 | 2.5 — hình cung | 0.6 s |
+| Tấm | Sáo trúc | 4 | 8 | 7 — tia thẳng | 0.12 s |
 
-Vũ khí gắn chết với nhân vật, không thay thế được. Đổi nhân vật là đổi game.
-
----
-
-## 2. Bốn thứ làm nên bản sắc — không được bỏ
-
-Đây là thứ phân biệt LẠC với 200 game survivors khác trên Steam.
-
-**① Sóng âm Đông Sơn.** Mọi vũ khí là nhạc cụ. Đòn đánh hiện ra thành **vòng tròn đồng tâm lan ra** mang hoa văn trống đồng. Cuối ván màn hình đầy sóng âm của chính người chơi. Đây là hình ảnh cho trailer và TikTok.
-> ⚠️ Giữ riêng **1 màu trong bảng 24 màu Đông Hồ chỉ cho đòn địch**. VFX người chơi không bao giờ dùng màu đó, vẽ alpha thấp + additive, nằm layer dưới. Đòn địch vẽ đặc, layer trên cùng. Không có luật này thì cuối ván không ai thấy đạn địch.
-
-**② Trống Đồng.** Trống đặt cố định giữa đấu trường. Dash vào nó → xoá sạch đạn địch + đẩy lùi + choáng 1 giây. Hồi chiêu ~20s.
-> ⚠️ **Co-op: hai người dùng CHUNG một hồi chiêu.** Đây là chủ đích — nó tạo khoảnh khắc "đừng dùng, để tao!". Host giữ trạng thái, không phải mỗi máy một bản.
-
-**③ Tiến hoá thẻ, 8 công thức.** Gom đủ thẻ nền → tiến hoá thành thẻ đặc biệt. Đây là **lý do chơi lại chính**, không cắt xuống dưới 8.
-> Xuyên thấu×3 + Nảy tường×3 = **Nỏ Thần** · Nổ×3 + Vệt cháy×3 = **Lửa Thiêng** · +2 đạn×3 + Tách đạn×3 = **Trăm Trứng** · *(5 công thức còn lại chốt ở tuần 4)*
-
-**④ Hồn.** Quái chết rơi ra hồn, tự hút về, âm thanh cao dần khi nhặt liên tiếp. Hồn nạp cho Trống Đồng. Đây là vòng lặp dopamine 2 giây mà thể loại này bắt buộc phải có.
+Vũ khí gắn cố định với nhân vật và không thể thay thế trong ván. Việc đổi nhân vật tương đương đổi lối chơi.
 
 ---
 
-## 3. BA LUẬT SẮT
+## 2. Bốn cơ chế định vị
 
-Ba lỗi này sẽ giết dự án. Mọi dòng code phải tuân thủ.
+Thể loại survivors hiện đã bão hoà trên Steam. Bốn cơ chế dưới đây là yếu tố phân biệt sản phẩm và **không được cắt giảm trong bất kỳ trường hợp nào**.
 
-### 🔴 1 — Không bao giờ có "chế độ chơi đơn" riêng
+### 2.1 Sóng âm Đông Sơn
+
+Toàn bộ vũ khí trong game đều là nhạc cụ. Đòn đánh được biểu diễn dưới dạng **các vòng tròn đồng tâm lan toả** mang hoa văn trống đồng Đông Sơn. Càng về cuối ván, màn hình càng phủ kín sóng âm do chính người chơi tạo ra. Đây là hình ảnh chủ đạo dùng cho trailer và nội dung quảng bá.
+
+> **Ràng buộc bắt buộc về khả năng đọc hiểu thị giác**
+> Dành riêng **một màu trong bảng 24 màu Đông Hồ cho đòn tấn công của kẻ địch**. Hiệu ứng của người chơi tuyệt đối không sử dụng màu này, được vẽ ở alpha thấp với chế độ additive và nằm ở sorting layer thấp hơn. Đòn địch vẽ đặc, luôn ở sorting layer trên cùng.
+> Không tuân thủ ràng buộc này, người chơi sẽ mất khả năng quan sát đạn địch từ khoảng đợt 10 trở đi.
+
+### 2.2 Trống Đồng
+
+Một trống đồng đặt cố định tại tâm đấu trường. Người chơi lướt vào trống để kích hoạt sóng xung kích: xoá toàn bộ đạn địch trên màn, đẩy lùi và gây choáng 1 giây. Thời gian hồi khoảng 20 giây.
+
+> **Trong chế độ co-op, hai người chơi dùng chung một thời gian hồi.**
+> Đây là quyết định thiết kế có chủ đích nhằm tạo ra tình huống phối hợp và thương lượng giữa hai người chơi. Trạng thái do host quản lý tập trung, không nhân bản trên từng client.
+
+Tham chiếu thiết kế: cơ chế Blank của *Enter the Gungeon*, Teleporter của *Risk of Rain 2*, thùng tiếp tế của *Deep Rock Galactic*.
+
+### 2.3 Tiến hoá thẻ — 8 công thức
+
+Khi tích luỹ đủ các thẻ nền theo công thức định sẵn, hệ thống tự động hợp nhất thành một thẻ tiến hoá có sức mạnh vượt trội. Đây là **động lực chơi lại chính** của sản phẩm; số lượng công thức không được giảm xuống dưới 8.
+
+| Nguyên liệu | Kết quả |
+|---|---|
+| Xuyên thấu ×3 + Nảy tường ×3 | Nỏ Thần |
+| Nổ ×3 + Vệt cháy ×3 | Lửa Thiêng |
+| +2 đạn ×3 + Tách đạn ×3 | Trăm Trứng |
+| *5 công thức còn lại* | *Chốt tại tuần 4* |
+
+### 2.4 Hồn
+
+Quái vật khi bị tiêu diệt sẽ rơi ra "hồn", tự động hút về phía người chơi kèm hiệu ứng âm thanh tăng dần cao độ theo chuỗi nhặt liên tiếp. Hồn là nguồn nạp năng lượng cho Trống Đồng.
+
+Cơ chế này cung cấp vòng phản hồi tích cực chu kỳ 2 giây — một yêu cầu bắt buộc của thể loại.
+
+---
+
+## 3. Ba ràng buộc kiến trúc bắt buộc
+
+Ba ràng buộc dưới đây đã được xác định là các điểm thất bại nghiêm trọng nhất của dự án. Mọi thay đổi lên mã nguồn phải tuân thủ.
+
+### 3.1 Không tồn tại nhánh mã riêng cho chế độ chơi đơn
 
 ```
-Chơi đơn = Mirror host mode, 1 client
-Chơi đôi = Mirror host mode, 2 client
-         --> MỘT code path duy nhất
+Chơi đơn  = Mirror host mode, 1 client
+Chơi đôi  = Mirror host mode, 2 client
+          → Một luồng thực thi duy nhất
 ```
 
-Kể cả test một mình cũng chạy qua host mode. **Không viết `if (isSinglePlayer)`.**
-Lý do: lắp mạng vào sau là nguyên nhân số 1 giết dự án Unity sinh viên. Làm từ tuần 1 tốn ~6 ngày; lắp ở tuần 10 tốn ~15 ngày và rất dễ hỏng.
+Kể cả khi kiểm thử một mình, game vẫn khởi chạy qua host mode. **Nghiêm cấm mọi câu lệnh rẽ nhánh dạng `if (isSinglePlayer)`.**
 
-### 🔴 2 — Đồng bộ *sự kiện*, không đồng bộ *trạng thái*
+*Cơ sở:* việc tích hợp mạng vào một codebase đã hoàn thiện theo hướng chơi đơn là nguyên nhân đổ vỡ phổ biến nhất ở các dự án Unity quy mô sinh viên. Xây dựng kiến trúc mạng từ tuần đầu tiêu tốn khoảng 6 ngày công; tích hợp bổ sung ở tuần 10 tiêu tốn khoảng 15 ngày công và mang rủi ro không hoàn thành.
 
-| Thứ | Đồng bộ? | Cách |
+### 3.2 Đồng bộ sự kiện, không đồng bộ trạng thái
+
+| Đối tượng | Đồng bộ | Cơ chế |
 |---|---|---|
-| Người chơi (2) | ✅ | `NetworkTransform`, client dự đoán nhân vật của mình |
-| Máu, sát thương, chết | ✅ | **Chỉ host quyết.** Phát RPC sự kiện, không sync thanh máu liên tục |
-| Quái | ⚠️ một phần | Đồng bộ **seed + đặc tả đợt**, hai máy tự spawn. Host gửi snapshot vị trí 2 lần/giây |
-| Chọn thẻ | ✅ | Đồng bộ *id thẻ đã chọn*, hai máy tự áp hiệu ứng |
-| Hồi chiêu Trống Đồng | ✅ | `SyncVar` trên host, dùng chung |
-| **Đạn** | ❌ **không bao giờ** | Spawn cục bộ. Đạn phía client thuần trang trí |
-| VFX, khựng hình, rung màn, SFX | ❌ | Hoàn toàn cục bộ |
+| Vị trí người chơi | Có | `NetworkTransform`; client dự đoán cục bộ nhân vật của mình |
+| Máu, sát thương, cái chết | Có | **Host là thẩm quyền duy nhất.** Phát RPC theo sự kiện, không đồng bộ liên tục |
+| Quái vật | Một phần | Đồng bộ seed và đặc tả đợt; hai máy tự sinh. Host gửi snapshot vị trí 2 lần/giây để hiệu chỉnh sai lệch |
+| Lựa chọn thẻ | Có | Đồng bộ định danh thẻ; hai máy tự áp dụng hiệu ứng |
+| Thời gian hồi Trống Đồng | Có | `SyncVar` do host quản lý, dùng chung |
+| **Đạn** | **Không** | Sinh cục bộ. Đạn phía client chỉ mang tính biểu diễn |
+| Hiệu ứng hình ảnh, hit-stop, rung màn, âm thanh | Không | Xử lý hoàn toàn cục bộ |
 
-Một câu để nhớ: **host mô phỏng sự thật, client mô phỏng hình ảnh.**
+Nguyên tắc tóm lược: **host mô phỏng trạng thái thật, client mô phỏng biểu diễn.**
 
-Ba sai lầm cụ thể:
-- ❌ Gắn `NetworkIdentity` lên đạn → 200 object đồng bộ → vỡ băng thông. *Đây là thứ AI tự động làm nếu bạn chỉ nói "thêm multiplayer".*
-- ❌ Client tự trừ máu mình → hai máy lệch trong vài giây.
-- ❌ Chỉ test localhost 0ms → tuần 15 test với bạn ở tỉnh khác thì game vỡ, hết thời gian sửa. **Bật giả lập trễ 100ms ngay từ tuần 1.**
+**Ba lỗi triển khai phải tránh:**
 
-Mẫu chuẩn — client xin, host quyết, phát về:
+1. **Gắn `NetworkIdentity` lên đạn.** Ở giai đoạn cuối ván có khoảng 200 viên đạn đồng thời; đồng bộ toàn bộ sẽ làm quá tải băng thông và gây sai lệch trạng thái. *Đây là phương án mà công cụ AI sẽ tự động chọn nếu yêu cầu được diễn đạt chung chung như "thêm multiplayer".*
+2. **Client tự trừ máu của chính mình.** Hai máy sẽ phân kỳ chỉ sau vài giây.
+3. **Chỉ kiểm thử trên localhost.** Độ trễ 0 ms che giấu toàn bộ lỗi đồng bộ. **Bật giả lập độ trễ 100 ms làm cấu hình mặc định ngay từ tuần 1.**
+
+**Mẫu triển khai chuẩn** — client yêu cầu, host thẩm định, host phát kết quả:
+
 ```csharp
-[Command] void CmdTryActivateDrum() {
-    if (!_isReady) return;        // host kiểm tra, không phải client
-    _isReady = false;             // SyncVar tự lan về client
-    ApplyShockwave();             // host thi hành
-    RpcPlayVfx();                 // client chỉ nhận phần nhìn
+[Command]
+void CmdTryActivateDrum()
+{
+    if (!_isReady) return;      // Thẩm quyền kiểm tra thuộc về host
+    _isReady = false;           // SyncVar tự lan truyền xuống client
+    ApplyShockwave();           // Host thi hành logic
+    RpcPlayVfx();               // Client chỉ nhận phần biểu diễn
 }
 ```
 
-### 🔴 3 — Không `UnityEngine.Random` trong gameplay
+### 3.3 Cấm sử dụng `UnityEngine.Random` trong luồng gameplay
 
-Mọi ngẫu nhiên ảnh hưởng gameplay đi qua `LAC.Core.RunRandom` (có seed). Một lệnh `Random.Range` lạc loài = một lần desync. Ngoại lệ duy nhất: VFX và âm thanh thuần trang trí.
+Mọi phép ngẫu nhiên có ảnh hưởng đến gameplay phải đi qua `LAC.Core.RunRandom` — bộ sinh số có seed đồng bộ giữa các máy. Một lời gọi `Random.Range` nằm ngoài quy định sẽ gây phân kỳ trạng thái giữa host và client.
+
+*Ngoại lệ duy nhất:* hiệu ứng hình ảnh và âm thanh thuần tuý trang trí.
 
 ---
 
-## 4. Code nằm ở đâu
+## 4. Tổ chức mã nguồn
 
-Code và tài nguyên của nhóm nằm hết trong `Assets/_LAC/`. Thư mục khác trong `Assets/` là package bên thứ ba — **không sửa**.
+Toàn bộ mã nguồn và tài nguyên do nhóm phát triển nằm trong `Assets/_LAC/`. Các thư mục khác trong `Assets/` thuộc về package bên thứ ba và **không được chỉnh sửa**.
 
 ```
 Assets/_LAC/
 ├── Scripts/
 │   ├── Core/      Vòng đời ván, quản lý đợt, object pool, RunRandom
-│   ├── Player/    Di chuyển, dash, máu
-│   ├── Enemies/   FSM quái, spawner
-│   ├── Combat/    Sát thương, đạn, ngắm mục tiêu
-│   ├── Cards/     Bể thẻ, hiệu ứng, tiến hoá, UI chọn thẻ
-│   ├── Director/  AI Đạo Diễn, telemetry
-│   ├── Net/       Mirror, Steam, lobby
+│   ├── Player/    Di chuyển, dash, hệ thống máu
+│   ├── Enemies/   Máy trạng thái quái vật, spawner
+│   ├── Combat/    Sát thương, đạn, chọn mục tiêu
+│   ├── Cards/     Bể thẻ, hiệu ứng, tiến hoá, giao diện chọn thẻ
+│   ├── Director/  AI Đạo Diễn, thu thập telemetry
+│   ├── Net/       Mirror, Steamworks, lobby
 │   ├── Drum/      Trống Đồng
 │   ├── UI/  VFX/  Audio/  Utils/
-├── Data/          ScriptableObject: Cards, Characters, Enemies, Waves
+├── Data/          ScriptableObject — Cards, Characters, Enemies, Waves
 ├── Prefabs/  Art/  Audio/  Scenes/
 ```
 
-**File mới luôn đặt đúng thư mục con. Không tạo script ở gốc `Assets/`.**
+Tệp mới phải được đặt đúng thư mục chức năng. Không tạo script tại thư mục gốc `Assets/`.
 
 ---
 
-## 5. Quy tắc code
+## 5. Quy ước lập trình
 
-- Namespace theo thư mục: `LAC.Core`, `LAC.Player`, `LAC.Net`…
-- Class/method PascalCase · field private `_camelCase` · interface `ITargetable` · ScriptableObject `CardData`
-- `[SerializeField] private`, **không** dùng `public` field
-- Nội dung (thẻ, quái, nhân vật, đợt) **luôn** là ScriptableObject trong `Data/`, **không** hardcode trong C#
-- Thứ spawn nhiều lần (đạn, quái, VFX) **phải** qua `ObjectPool`. Không `Instantiate` trong gameplay loop
-- Không `GameObject.Find` / `FindObjectOfType` trong gameplay loop
-- Ngân sách: **60 FPS với 40 quái + 200 đạn** cùng lúc
-- Tên biến/hàm tiếng Anh · comment và chữ hiển thị tiếng Việt
-- Comment chỉ giải thích *tại sao*, không mô tả lại điều code đã nói rõ
+**Định danh**
+
+| Thành phần | Quy ước | Ví dụ |
+|---|---|---|
+| Class, method, property | PascalCase | `PlayerDash`, `TryDash()` |
+| Trường private | `_camelCase` | `_cooldownTimer` |
+| Interface | Tiền tố `I` | `ITargetable` |
+| ScriptableObject | Hậu tố `Data` | `CardData`, `EnemyData` |
+| Namespace | Theo cấu trúc thư mục | `LAC.Core`, `LAC.Net` |
+
+**Yêu cầu bắt buộc**
+
+- Sử dụng `[SerializeField] private`; không khai báo trường `public`.
+- Toàn bộ nội dung game — thẻ, quái, nhân vật, đợt — phải là ScriptableObject trong `Data/`. Không hard-code giá trị trong C#.
+- Mọi đối tượng được sinh lặp lại (đạn, quái, hiệu ứng) phải đi qua `ObjectPool`. Không gọi `Instantiate` hoặc `Destroy` trong vòng lặp gameplay.
+- Không gọi `GameObject.Find` hoặc `FindObjectOfType` trong vòng lặp gameplay.
+- **Ngân sách hiệu năng: 60 FPS với 40 quái và 200 đạn hoạt động đồng thời.**
+- Định danh trong mã dùng tiếng Anh; chú thích và văn bản hiển thị dùng tiếng Việt.
+- Chú thích chỉ giải thích lý do của quyết định kỹ thuật, không diễn giải lại nội dung mã.
 
 ---
 
-## 6. Quy trình làm việc
+## 6. Quy trình phát triển
 
-### Git — giữ đơn giản
+### 6.1 Quản lý phiên bản
 
 ```
-main   bản chạy được. Chỉ merge từ dev ở mỗi cổng nghiệm thu.
-dev    mọi người làm ở đây.
+main   Nhánh ổn định. Chỉ hợp nhất từ dev tại mỗi cổng nghiệm thu.
+dev    Nhánh phát triển. Toàn bộ công việc hàng ngày diễn ra tại đây.
 ```
 
-Sáng ra: `git pull origin dev` **trước khi làm gì cả.** Xong việc: commit + push ngay, đừng ôm code quá một ngày.
+Đồng bộ nhánh `dev` vào đầu mỗi phiên làm việc (`git pull origin dev`). Đẩy mã lên remote ngay khi hoàn thành một hạng mục; không giữ thay đổi cục bộ quá một ngày làm việc.
 
-Commit: `feat(T-11): dash có i-frame` — loại là `feat` · `fix` · `art` · `docs` · `balance`
+Định dạng thông điệp commit:
 
-### 🔴 Luật scene — nguồn đau khổ lớn nhất của Unity + Git
+```
+<loại>(<mã công việc>): <mô tả ngắn gọn>
 
-File `.unity` và `.prefab` git không merge được. Ba việc:
+Ví dụ:  feat(T-11): dash có i-frame và thời gian hồi
+Loại:   feat · fix · art · docs · balance · chore
+```
 
-1. **Mỗi lúc chỉ MỘT người sửa scene.** Nhắn nhóm "tôi đang giữ Arena scene" → sửa → push → nhắn "đã trả".
-2. **Làm mọi thứ trong prefab, không trong scene.** Scene chỉ chứa điểm spawn, camera, tilemap, manager.
-3. **Cài UnityYAMLMerge một lần trên mỗi máy** (xem [README.md](README.md)).
+### 6.2 Quy định về scene — bắt buộc
 
-Nếu lỡ conflict scene: **đừng sửa tay file YAML** — lấy bản trên server (`git checkout --theirs`) rồi làm lại trong Unity. Nhanh hơn nhiều.
+Tệp `.unity` và `.prefab` được lưu ở định dạng YAML và không hợp nhất tự động được bằng Git. Đây là nguyên nhân xung đột nghiêm trọng nhất trong các dự án Unity nhiều người.
 
-### Sau mỗi chức năng — bắt buộc
+1. **Tại một thời điểm chỉ một thành viên được chỉnh sửa scene.** Thông báo trên kênh trao đổi của nhóm trước khi bắt đầu và sau khi hoàn tất.
+2. **Thực hiện mọi thay đổi trong prefab thay vì trong scene.** Scene chỉ chứa điểm sinh, camera, tilemap và các manager.
+3. **Cài đặt UnityYAMLMerge một lần trên mỗi máy** — xem [README.md](README.md).
 
-Trong **cùng một commit** với code:
+Khi xảy ra xung đột scene: không chỉnh sửa thủ công tệp YAML. Lấy phiên bản trên remote (`git checkout --theirs`) và thực hiện lại thay đổi trong Unity.
 
-1. Tick ô trong [docs/TASKS.md](docs/TASKS.md) *(`Alt+C`)* + điền tên và ngày
-2. **Viết một dòng `>` ngay dưới** nói chức năng đó làm gì, nằm ở file nào
+### 6.3 Thủ tục hoàn thành một hạng mục — bắt buộc
 
-> **AI vừa code xong task: tự làm 2 bước này trước khi báo hoàn thành.** Không có dòng `>` thì coi như chưa xong.
+Ba thao tác sau phải nằm trong **cùng một commit** với mã nguồn:
 
-### Ra lệnh cho AI thế nào
+1. Đánh dấu hoàn thành trong [docs/TASKS.md](docs/TASKS.md) (`Alt+C`), ghi tên người thực hiện và ngày.
+2. Bổ sung **một dòng trích dẫn `>` ngay bên dưới**, mô tả chức năng và vị trí tệp.
+3. Commit theo định dạng tại mục 6.1.
 
-Mở đầu: *"Đọc CLAUDE.md trước. Sau đó làm task T-11 trong docs/TASKS.md."*
+> **Áp dụng cho công cụ AI:** hai thao tác đầu là một phần của hạng mục, không phải bước tuỳ chọn. Không được báo cáo hoàn thành khi chưa thực hiện.
 
-Đưa kiến trúc cho AI, đừng để AI tự nghĩ:
-- ❌ *"thêm multiplayer vào game này"* → nó gắn `NetworkIdentity` lên mọi thứ
-- ✅ *"theo bảng đồng bộ ở mục 3, cài Trống Đồng với hồi chiêu dùng chung do host giữ"*
+### 6.4 Hướng dẫn sử dụng công cụ AI
 
-Trước khi merge code AI viết, hỏi 3 câu: (1) có trùng chức năng đã có trong TASKS.md không? (2) có phạm Luật Sắt nào không? (3) có `Instantiate` trong `Update()` không?
+Nhóm phát triển chủ yếu bằng phương pháp AI-assisted. Ba quy định nhằm bảo toàn kiến trúc:
 
----
+**a. Chỉ định tài liệu trước khi giao việc**
 
-## 7. GDD có chỗ đã lỗi thời
+> *"Đọc CLAUDE.md. Sau đó thực hiện hạng mục T-11 trong docs/TASKS.md."*
 
-[docs/GDD.md](docs/GDD.md) là bản gốc. **Khi mâu thuẫn, file này thắng.**
+**b. Cung cấp kiến trúc, không để công cụ tự quyết định**
 
-| GDD nói | Thực tế |
+| | |
 |---|---|
-| Unity 6.3 LTS · giá $6.99 | **6000.5.6f1** · **$4.99** |
-| 48 thẻ · 4 cấp độ khó | **32 thẻ nền + 8 tiến hoá** · **2 cấp** |
-| Không có vật phẩm rơi ra | **Có hồn (soul pickup)** |
-| Không có Trống Đồng, không có tiến hoá thẻ | **Có — xem mục 2** |
-| AI Đạo Diễn chạy mọi chế độ | **Chỉ chơi đơn.** Co-op dùng bảng đợt cố định *(hai người khác build khác máu → không có câu trả lời đúng; và thực nghiệm khoá luận chạy chơi đơn nên sạch hơn)* |
-| Đạo diễn siết máu về 15–25% mọi lúc | **Bất đối xứng:** yếu thì được giảm áp lực; mạnh thì đổi **thành phần và hướng spawn**, không tăng số lượng/máu. Siết máu là trừng phạt người chơi vì xây build tốt |
-| Co-op làm ở tuần 10–12 | **Kiến trúc mạng từ tuần 1** — xem Luật 1 |
-| Tấm: ×2 sát thương 1s sau dash | **Lỗi thiết kế** — dash CD 0.4s < 1s nên buff bật vĩnh viễn. Sửa: buff áp cho **phát bắn kế tiếp** |
+| Không đạt | *"Thêm multiplayer vào game này."* → Công cụ sẽ gắn `NetworkIdentity` lên toàn bộ đối tượng |
+| Đạt | *"Theo bảng đồng bộ tại mục 3.2, triển khai Trống Đồng với thời gian hồi dùng chung do host quản lý."* |
+
+**c. Thẩm định trước khi hợp nhất**
+
+1. Chức năng này đã tồn tại trong [docs/TASKS.md](docs/TASKS.md) chưa?
+2. Có vi phạm ràng buộc nào tại mục 3 không?
+3. Có lời gọi `Instantiate` trong `Update()` không?
 
 ---
 
-## 8. Môi trường
+## 7. Sai lệch so với GDD
 
-- Unity **6000.5.6f1** — cả nhóm phải đúng bản này, bản khác sẽ nâng cấp file project và gây conflict
-- Unity-MCP đã cài (88 tool). Mất kết nối thì: mở Unity → focus cửa sổ → chờ nạp lại
+[docs/GDD.md](docs/GDD.md) là bản đặc tả gốc và chứa một số nội dung đã lỗi thời. **Khi có mâu thuẫn, tài liệu này là căn cứ.**
+
+| GDD | Quyết định hiện hành | Lý do |
+|---|---|---|
+| Unity 6.3 LTS · $6.99 | **6000.5.6f1** · **$2.99** | Phiên bản engine thực tế; định giá theo mặt bằng thể loại |
+| 48 thẻ · 4 cấp độ khó | **32 thẻ nền + 8 tiến hoá** · **2 cấp** | Cân đối phạm vi theo nguồn lực 16 tuần |
+| Không có vật phẩm rơi ra | **Bổ sung cơ chế Hồn** | Thể loại yêu cầu vòng phản hồi chu kỳ ngắn |
+| Không có Trống Đồng và tiến hoá thẻ | **Bổ sung — xem mục 2** | Yếu tố định vị sản phẩm |
+| AI Đạo Diễn chạy ở mọi chế độ | **Chỉ chơi đơn.** Co-op dùng bảng đợt cố định | Véc-tơ ngữ cảnh được định nghĩa cho một người chơi; hai người khác build và khác lượng máu không có lời giải đơn trị. Thực nghiệm khoá luận chạy ở chế độ chơi đơn nên thiết kế thí nghiệm sạch hơn |
+| Đạo diễn giữ tổn thất máu trong 15–25% ở mọi thời điểm | **Điều tiết bất đối xứng:** được phép giảm áp lực khi người chơi gặp khó; khi người chơi mạnh thì thay đổi **thành phần và hướng sinh quái**, không tăng số lượng hoặc lượng máu | Siết tổn thất máu ở cả hai chiều là trừng phạt người chơi vì xây dựng build hiệu quả, làm triệt tiêu cảm giác tưởng thưởng |
+| Triển khai co-op ở tuần 10–12 | **Kiến trúc mạng từ tuần 1** | Xem mục 3.1 |
+| Tấm: nhân đôi sát thương trong 1 giây sau dash | **Áp dụng cho phát bắn kế tiếp** | Thời gian hồi dash 0.4 s ngắn hơn cửa sổ 1 giây, khiến hiệu ứng duy trì vĩnh viễn |
+
+---
+
+## 8. Môi trường phát triển
+
+- **Unity 6000.5.6f1.** Toàn nhóm bắt buộc dùng đúng phiên bản này; phiên bản khác sẽ nâng cấp tệp project và gây xung đột cho các thành viên còn lại.
+- **Unity-MCP** đã được cài đặt và cấu hình (88 công cụ khả dụng). Khi mất kết nối: mở Unity, đưa cửa sổ về foreground và chờ hoàn tất domain reload.
