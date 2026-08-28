@@ -33,12 +33,22 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 ### Chuẩn bị môi trường
 
 - [ ] **T-01** Cả ba máy clone repository và mở dự án bằng Unity 6000.5.6f1 không phát sinh lỗi — Chưa phân công
-- [ ] **T-02** Cài đặt Mirror, FizzySteamworks và Steamworks.NET — Chưa phân công
+- [ ] **T-02** Cài đặt Mirror (Asset Store, miễn phí) và dùng `KcpTransport` — Chưa phân công
+
+> **Steamworks.NET và FizzySteamworks đã dời sang T-40 ở tuần 10.** Mirror kèm `KcpTransport` đáp ứng đầy đủ Cổng 1 và Cổng 2, bao gồm giả lập độ trễ. Cài Steamworks sớm buộc mỗi lần chạy thử phải mở Steam và cần App ID — thứ chỉ có sau khi hoàn tất T-46B.
 
 ### Hạ tầng nền tảng
 
-- [ ] **T-03** `RunRandom` — bộ sinh số ngẫu nhiên có seed, nguồn ngẫu nhiên duy nhất của gameplay — Chưa phân công
-- [ ] **T-04** `ObjectPool` — pool dùng chung cho đạn, quái và hiệu ứng — Chưa phân công
+- [x] **T-03** `RunRandom` — bộ sinh số ngẫu nhiên có seed, nguồn ngẫu nhiên duy nhất của gameplay — @Kiet · 28/08
+  > Bộ sinh Xorshift128 tự cài đặt, **không dùng `System.Random`** vì thuật toán nội bộ của nó thay đổi giữa các phiên bản .NET và không bảo đảm giống nhau trên mọi máy.
+  > Ngẫu nhiên chia thành bốn kênh độc lập — `Enemies`, `Cards`, `Loot`, `Director` — để một hệ thống rút thêm hoặc thiếu một lần không làm lệch pha các hệ thống còn lại và gây phân kỳ host/client.
+  > `Core/RunRandom.cs` (mặt tiền tĩnh, `Initialize(seed)` · `CreateSeed()` · `Reset()`), `Core/RandomStream.cs` (`NextUInt` · `NextFloat` · `Range` · `Chance` · `Pick` · `Shuffle`).
+  > Đã kiểm chứng: cùng seed cho cùng dãy số, hai kênh khác nhau cho dãy khác nhau, 20.000 mẫu có trung bình 0.5021, `Shuffle` bảo toàn tập phần tử.
+- [x] **T-04** `ObjectPool` — pool dùng chung cho đạn, quái và hiệu ứng — @Kiet · 28/08
+  > `ObjectPool<T>` với `Get` · `Release` · `ReleaseAll` · `Clear`, hỗ trợ prewarm và cảnh báo khi phải cấp phát thêm giữa trận. Phát hiện và chặn lỗi trả về pool hai lần.
+  > `PoolRegistry` tra cứu pool theo prefab qua bảng băm, loại bỏ nhu cầu gọi `FindObjectOfType` trong vòng lặp gameplay.
+  > `IPoolable` với `OnSpawned` và `OnDespawned` — bắt buộc cho mọi đối tượng có trạng thái riêng theo lần sử dụng, vì đối tượng lấy từ pool giữ nguyên giá trị của lần trước.
+  > `Core/ObjectPool.cs`, `Core/PoolRegistry.cs`, `Core/IPoolable.cs`.
 - [ ] **T-05** `RunManager` — vòng đời một ván: khởi tạo, 16 đợt, điều kiện thắng thua — Chưa phân công
 - [ ] **T-06** `CharacterData` (ScriptableObject) kèm asset cấu hình Thạch Sanh — Chưa phân công
 

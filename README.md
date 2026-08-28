@@ -20,8 +20,10 @@ Cấu hình công cụ hợp nhất của Unity. **Bước này bắt buộc** �
 ```bash
 git config --global merge.unityyamlmerge.name "Unity SmartMerge"
 git config --global merge.unityyamlmerge.driver \
-  '"C:/Program Files/Unity/Hub/Editor/6000.5.6f1/Editor/Data/Tools/UnityYAMLMerge.exe" merge -p %O %B %A %A'
+  '"D:/Unity/Hub/Editor/6000.5.6f1/Editor/Data/Tools/UnityYAMLMerge.exe" merge -p %O %B %A %A'
 ```
+
+Đường dẫn trên tương ứng với vị trí cài Unity của nhóm. Nếu máy của bạn cài ở nơi khác, sửa lại cho đúng — xác nhận tệp `UnityYAMLMerge.exe` tồn tại tại vị trí đó trước khi chạy lệnh.
 
 Mở dự án qua Unity Hub với **đúng phiên bản 6000.5.6f1**.
 
