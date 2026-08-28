@@ -27,6 +27,10 @@ LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, �
 | Engine | **Unity 6000.5.6f1**, URP 2D, C# |
 | Kiến trúc mạng | Mirror + Steamworks.NET, mô hình **host-authoritative** |
 
+> **Nền tảng đã chốt: PC — Steam. Không phát triển bản mobile.**
+> Cơ sở: (a) co-op trực tuyến trên Steam sử dụng hạ tầng lobby và NAT traversal miễn phí của Steamworks — trên mobile phải thuê dịch vụ relay và xây dựng hệ thống tài khoản riêng; (b) Steamworks.NET không chạy trên Android và iOS, chuyển nền tảng đồng nghĩa với việc loại bỏ toàn bộ tầng truyền tải mạng; (c) ngân sách hiệu năng 40 quái và 200 đạn ở 60 FPS không đạt được trên thiết bị di động tầm trung; (d) sóng âm Đông Sơn phủ kín màn hình mất khả năng đọc hiểu trên màn hình 6 inch có ngón tay che khuất; (e) thị trường game trả phí một lần trên mobile gần như không còn khả năng tiếp cận người dùng mới.
+> Nếu sản phẩm đạt doanh số trên Steam, bản mobile có thể xem xét ở giai đoạn sau — mã nguồn 2D URP không cản trở việc này.
+
 ### 1.1 Vòng lặp cốt lõi
 
 ```
@@ -263,10 +267,11 @@ Nhóm phát triển chủ yếu bằng phương pháp AI-assisted. Ba quy địn
 | GDD | Quyết định hiện hành | Lý do |
 |---|---|---|
 | Unity 6.3 LTS · $6.99 | **6000.5.6f1** · **$2.99** | Phiên bản engine thực tế; định giá theo mặt bằng thể loại |
-| 48 thẻ · 4 cấp độ khó | **32 thẻ nền + 8 tiến hoá** · **2 cấp** | Cân đối phạm vi theo nguồn lực 16 tuần |
+| 48 thẻ · 4 cấp độ khó | **32 thẻ nền + 8 tiến hoá** · **1 cấp** | Cân đối phạm vi theo nguồn lực 16 tuần. Cấp độ khó thứ hai chuyển sang giai đoạn sau bảo vệ để lấy quỹ thời gian cho đạo diễn co-op |
 | Không có vật phẩm rơi ra | **Bổ sung cơ chế Hồn** | Thể loại yêu cầu vòng phản hồi chu kỳ ngắn |
 | Không có Trống Đồng và tiến hoá thẻ | **Bổ sung — xem mục 2** | Yếu tố định vị sản phẩm |
-| AI Đạo Diễn chạy ở mọi chế độ | **Chỉ chơi đơn.** Co-op dùng bảng đợt cố định | Véc-tơ ngữ cảnh được định nghĩa cho một người chơi; hai người khác build và khác lượng máu không có lời giải đơn trị. Thực nghiệm khoá luận chạy ở chế độ chơi đơn nên thiết kế thí nghiệm sạch hơn |
+| AI Đạo Diễn chạy ở mọi chế độ | **Hoạt động ở cả hai chế độ.** Co-op dùng véc-tơ ngữ cảnh hợp thành, tầng an toàn theo người yếu nhất và số hạng công bằng | Yêu cầu bắt buộc từ giảng viên hướng dẫn. Đặc tả đầy đủ tại [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) mục 2.7 |
+| — | **Thực nghiệm khoá luận vẫn chạy ở chế độ chơi đơn** (15/15). Co-op thu thập mẫu quan sát bổ sung | Hai người chơi khác build và khác lượng máu tạo ra biến số không kiểm soát được với cỡ mẫu 30. Chế độ hoạt động và thiết kế thí nghiệm là hai vấn đề tách rời |
 | Đạo diễn giữ tổn thất máu trong 15–25% ở mọi thời điểm | **Điều tiết bất đối xứng:** được phép giảm áp lực khi người chơi gặp khó; khi người chơi mạnh thì thay đổi **thành phần và hướng sinh quái**, không tăng số lượng hoặc lượng máu | Siết tổn thất máu ở cả hai chiều là trừng phạt người chơi vì xây dựng build hiệu quả, làm triệt tiêu cảm giác tưởng thưởng |
 | Triển khai co-op ở tuần 10–12 | **Kiến trúc mạng từ tuần 1** | Xem mục 3.1 |
 | Tấm: nhân đôi sát thương trong 1 giây sau dash | **Áp dụng cho phát bắn kế tiếp** | Thời gian hồi dash 0.4 s ngắn hơn cửa sổ 1 giây, khiến hiệu ứng duy trì vĩnh viễn |

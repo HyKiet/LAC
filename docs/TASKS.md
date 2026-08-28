@@ -63,10 +63,12 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 - [ ] **T-17** Chốt bảng 24 màu Đông Hồ, **dành riêng một màu cho đòn tấn công của địch** — Chưa phân công
 - [ ] **T-18** Sprite Thạch Sanh, sprite Cô Hồn, tileset Sân Đình — Chưa phân công
 
-### Phát hành và quảng bá — khởi động tại tuần 2
+### Quảng bá — khởi động tại tuần 2, không phát sinh chi phí
 
-- [ ] **T-19** Đăng ký Steam Direct ($100) và **dựng trang Steam trong tuần 2** — Chưa phân công
+- [ ] **T-19** Chuẩn bị bộ tài sản trang cửa hàng: mô tả sản phẩm, ảnh chụp màn hình, ảnh bìa, GIF sóng âm — lưu tại `docs/store/` — Chưa phân công
 - [ ] **T-20** Thiết lập kênh TikTok, xuất bản devlog số 1, lập lịch đăng hàng tuần — Chưa phân công
+
+> **Đăng ký Steam Direct đã dời sang tuần 10 — hạng mục T-46B.** Khoản phí $100 chỉ chi khi sản phẩm đã có bản chạy được, nhằm loại bỏ rủi ro tài chính ở giai đoạn đầu. Toàn bộ hoạt động quảng bá không phát sinh chi phí vẫn khởi động từ tuần 2 vì lượng wishlist tích luỹ theo thời gian.
 
 ---
 
@@ -104,9 +106,11 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 - [ ] **T-41** Cơ chế hạ gục và hồi sinh — đồng đội đứng cạnh 3 giây — Chưa phân công
 - [ ] **T-42** Xử lý mất kết nối: client rớt mạng và host thoát ván, không treo ứng dụng — Chưa phân công
 - [ ] **T-43** Thu thập telemetry ra CSV phục vụ phần đánh giá của khoá luận — Chưa phân công
-- [ ] **T-44** Bảng đợt cố định — dùng cho co-op và nhóm đối chứng — Chưa phân công
-- [ ] **T-45** **AI Đạo Diễn** (LinUCB) — chỉ hoạt động ở chế độ chơi đơn — Chưa phân công
-- [ ] **T-46** Điều tiết bất đối xứng và **hiển thị hoạt động của đạo diễn trên HUD** — Chưa phân công
+- [ ] **T-44** Bảng đợt cố định — dùng cho nhóm đối chứng và làm phương án dự phòng — Chưa phân công
+- [ ] **T-45** **AI Đạo Diễn** (LinUCB) — lõi thuật toán, `ContextVector`, `WaveSpec` — Chưa phân công
+- [ ] **T-45B** **Đạo diễn hoạt động trong co-op** — `ContextAggregator` hợp thành ngữ cảnh N người chơi, số hạng công bằng trong hàm thưởng, tầng an toàn đánh giá theo người yếu nhất — Chưa phân công
+- [ ] **T-46** Điều tiết bất đối xứng, đòn bẩy *chia cắt* và *dồn ép* theo hướng sinh quái, **hiển thị hoạt động của đạo diễn trên HUD** — Chưa phân công
+- [ ] **T-46B** Đăng ký Steam Direct ($100), hoàn tất tax interview và xác minh tài khoản, dựng trang cửa hàng — **thực hiện tại tuần 10** — Chưa phân công
 - [ ] **T-47** Sprite bốn quái, sprite Chằn Tinh, sprite trống đồng, hai tileset còn lại — Chưa phân công
 
 ---
@@ -116,11 +120,11 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 **Tiêu chí nghiệm thu:** demo miễn phí đã phát hành trên Steam; hoàn tất bảo vệ khoá luận.
 
 - [ ] **T-48** Hệ thống tiền tệ Ngọc, lưu tiến trình, bảng mở khoá — Chưa phân công
-- [ ] **T-49** Hai cấp độ khó và màn thống kê sau ván — Chưa phân công
+- [ ] **T-49** Màn thống kê sau ván — *cấp độ khó thứ hai chuyển sang giai đoạn sau bảo vệ, lấy quỹ thời gian cho T-45B* — Chưa phân công
 - [ ] **T-50** **Cân bằng: xác định sát thương gốc cho cả ba vũ khí** — *GDD hiện chưa có thông số này* — Chưa phân công
 - [ ] **T-51** Cân bằng đường cong độ khó qua 16 đợt — Chưa phân công
 - [ ] **T-52** Nhạc nền và toàn bộ hiệu ứng âm thanh — Chưa phân công
-- [ ] **T-53** **Thực nghiệm đánh giá: 15 người dùng AI Đạo Diễn, 15 người dùng bảng đợt cố định**, chế độ chơi đơn — Chưa phân công
+- [ ] **T-53** **Thực nghiệm đánh giá: 15 người dùng AI Đạo Diễn, 15 người dùng bảng đợt cố định**, chế độ chơi đơn. Thu thập thêm mẫu quan sát định tính ở chế độ co-op — Chưa phân công
 - [ ] **T-54** Phân tích số liệu và biên soạn chương đánh giá — Chưa phân công
 - [ ] **T-55** Đóng gói demo miễn phí — 8 đợt đầu, một nhân vật — Chưa phân công
 - [ ] **T-56** Dựng trailer, sử dụng sóng âm Đông Sơn cho 5 giây mở đầu — Chưa phân công
@@ -134,7 +138,7 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 
 ## Hạng mục dự phòng — triển khai nếu còn quỹ thời gian
 
-Thử thách hằng ngày kèm bảng xếp hạng Steam · nhân vật thứ tư · trùm thứ hai · mở rộng AI Đạo Diễn cho chế độ co-op
+Thử thách hằng ngày kèm bảng xếp hạng Steam · nhân vật thứ tư · trùm thứ hai · cấp độ khó thứ hai · thực nghiệm định lượng cho chế độ co-op
 
 ## Hạng mục ngoài phạm vi — đã chốt không triển khai
 
