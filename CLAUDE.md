@@ -28,7 +28,7 @@ LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, �
 | Kiến trúc mạng | Mirror + Steamworks.NET, mô hình **host-authoritative** |
 
 > **Nền tảng đã chốt: PC — Steam. Không phát triển bản mobile.**
-> Cơ sở: (a) co-op trực tuyến trên Steam sử dụng hạ tầng lobby và NAT traversal miễn phí của Steamworks — trên mobile phải thuê dịch vụ relay và xây dựng hệ thống tài khoản riêng; (b) Steamworks.NET không chạy trên Android và iOS, chuyển nền tảng đồng nghĩa với việc loại bỏ toàn bộ tầng truyền tải mạng; (c) ngân sách hiệu năng 40 quái và 200 đạn ở 60 FPS không đạt được trên thiết bị di động tầm trung; (d) sóng âm Đông Sơn phủ kín màn hình mất khả năng đọc hiểu trên màn hình 6 inch có ngón tay che khuất; (e) thị trường game trả phí một lần trên mobile gần như không còn khả năng tiếp cận người dùng mới.
+> Cơ sở: (a) co-op trực tuyến trên Steam sử dụng hạ tầng lobby và NAT traversal miễn phí của Steamworks — trên mobile phải thuê dịch vụ relay và xây dựng hệ thống tài khoản riêng; (b) mobile không có hạ tầng tương đương — hệ thống tài khoản, danh sách bạn bè và lời mời chơi cùng đều phải tự xây dựng, ước tính 10–15 ngày công cộng chi phí vận hành định kỳ; (c) ngân sách hiệu năng 40 quái và 200 đạn ở 60 FPS không đạt được trên thiết bị di động tầm trung; (d) sóng âm Đông Sơn phủ kín màn hình mất khả năng đọc hiểu trên màn hình 6 inch có ngón tay che khuất; (e) thị trường game trả phí một lần trên mobile gần như không còn khả năng tiếp cận người dùng mới.
 > Nếu sản phẩm đạt doanh số trên Steam, bản mobile có thể xem xét ở giai đoạn sau — mã nguồn 2D URP không cản trở việc này.
 
 ### 1.1 Vòng lặp cốt lõi
