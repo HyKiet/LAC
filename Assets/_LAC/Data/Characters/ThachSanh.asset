@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb4e60e9a7d7d94fb3cd618d4abf69c, type: 3}
+  m_Name: ThachSanh
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Player.CharacterData
+  _id: 0
+  _displayName: "Th\u1EA1ch Sanh"
+  _description: "Ti\u1EBFng \u0111\xE0n b\u1EA7u lan ra th\xE0nh v\xF2ng s\xF3ng
+    quanh ng\u01B0\u1EDDi. C\xE2n b\u1EB1ng gi\u1EEFa m\xE1u, t\u1ED1c \u0111\u1ED9
+    v\xE0 t\u1EA7m \u0111\xE1nh."
+  _maxHealth: 6
+  _moveSpeed: 5
+  _weaponName: "\u0110\xE0n b\u1EA7u"
+  _weaponShape: 0
+  _attackRange: 4
+  _attackInterval: 0.9
+  _baseDamage: 1
+  _dashDistance: 6
+  _dashDuration: 0.15
+  _dashCooldown: 0.4
+  _playerPrefab: {fileID: 0}
+  _portrait: {fileID: 0}

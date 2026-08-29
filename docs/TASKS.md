@@ -52,8 +52,16 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
   > `PoolRegistry` tra cứu pool theo prefab qua bảng băm, loại bỏ nhu cầu gọi `FindObjectOfType` trong vòng lặp gameplay.
   > `IPoolable` với `OnSpawned` và `OnDespawned` — bắt buộc cho mọi đối tượng có trạng thái riêng theo lần sử dụng, vì đối tượng lấy từ pool giữ nguyên giá trị của lần trước.
   > `Core/ObjectPool.cs`, `Core/PoolRegistry.cs`, `Core/IPoolable.cs`.
-- [ ] **T-05** `RunManager` — vòng đời một ván: khởi tạo, 16 đợt, điều kiện thắng thua — Chưa phân công
-- [ ] **T-06** `CharacterData` (ScriptableObject) kèm asset cấu hình Thạch Sanh — Chưa phân công
+- [x] **T-05** `RunManager` — vòng đời một ván: khởi tạo, 16 đợt, điều kiện thắng thua — @Kiet · 29/08
+  > `NetworkBehaviour` do host giữ thẩm quyền. Ba `SyncVar`: seed, số đợt hiện tại, trạng thái ván (`Idle` · `WaveActive` · `CardSelection` · `Victory` · `Defeat`).
+  > Client nhận seed qua hook và tự gọi `RunRandom.Initialize` — hai máy dùng chung một nguồn ngẫu nhiên mà không cần đồng bộ từng lần rút.
+  > Không tự sinh quái và không tự đếm quái. Các hệ thống khác báo cáo vào qua `ReportWaveCleared` · `ReportCardSelectionComplete` · `ReportPlayerDown` · `ReportPlayerRevived`; sự kiện `WaveStarted` · `WaveCleared` · `RunEnded` dành cho phần biểu diễn cục bộ.
+  > Chỉ hook của `_state` phát `WaveStarted`, không phải hook của `_currentWave` — hai `SyncVar` cùng đổi trong một lần cập nhật, nếu cả hai cùng phát thì đợt quái sẽ được sinh gấp đôi.
+  > `Core/RunManager.cs`, `Core/RunState.cs`. Đặt component vào scene ở T-07.
+- [x] **T-06** `CharacterData` (ScriptableObject) kèm asset cấu hình Thạch Sanh — @Kiet · 29/08
+  > Chỉ số cơ bản, chỉ số vũ khí và chỉ số lướt nằm chung một tài sản: vũ khí gắn cố định với nhân vật và không thay thế được trong ván, tách ra thành tệp riêng chỉ thêm một lần trỏ mà không thêm khả năng phối hợp nào.
+  > `WeaponShape` (`Circle` · `Arc` · `Line`) là thứ phân biệt ba nhân vật về lối chơi chứ không chỉ về con số.
+  > `Player/CharacterData.cs`, `Combat/WeaponShape.cs`, tài sản `Data/Characters/ThachSanh.asset` — 6 máu, tốc độ 5, tầm 4, chu kỳ 0.9 s, lướt 6 đơn vị trong 0.15 s, hồi 0.4 s.
 
 ### Kiến trúc mạng — triển khai tại tuần 1
 
