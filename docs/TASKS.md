@@ -33,7 +33,10 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 ### Chuẩn bị môi trường
 
 - [ ] **T-01** Cả ba máy clone repository và mở dự án bằng Unity 6000.5.6f1 không phát sinh lỗi — Chưa phân công
-- [ ] **T-02** Cài đặt Mirror (Asset Store, miễn phí) và dùng `KcpTransport` — Chưa phân công
+- [x] **T-02** Cài đặt Mirror (Asset Store, miễn phí) và dùng `KcpTransport` — @Kiet · 29/08
+  > Mirror 96.0.1 nhập vào `Assets/Mirror/`. Thư viện commit thẳng vào repository thay vì để mỗi thành viên tự tải từ Asset Store, bảo đảm ba máy dùng đúng một phiên bản — lệch phiên bản thư viện mạng gây lỗi rất khó chẩn đoán.
+  > `Transports/KCP/KcpTransport.cs` đáp ứng truyền tải; `Transports/Latency/LatencySimulation.cs` dành cho T-08.
+  > Mirror tự thêm các định nghĩa tiền xử lý `MIRROR`, `MIRROR_96_OR_NEWER` vào ProjectSettings.
 
 > **Steamworks.NET và FizzySteamworks đã dời sang T-40 ở tuần 10.** Mirror kèm `KcpTransport` đáp ứng đầy đủ Cổng 1 và Cổng 2, bao gồm giả lập độ trễ. Cài Steamworks sớm buộc mỗi lần chạy thử phải mở Steam và cần App ID — thứ chỉ có sau khi hoàn tất T-46B.
 
