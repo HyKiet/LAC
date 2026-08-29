@@ -90,16 +90,13 @@ namespace LAC.Core
         {
             if (_state != RunState.WaveActive) return;
 
-            int cleared = _currentWave;
-
-            if (cleared >= _totalWaves)
+            if (_currentWave >= _totalWaves)
             {
                 EndRun(true);
                 return;
             }
 
             _state = RunState.CardSelection;
-            RpcWaveCleared(cleared);
         }
 
         /// <summary>
@@ -145,6 +142,11 @@ namespace LAC.Core
 
         // ── Hook SyncVar — chạy trên client, và trên host vì host cũng là một client ────
         //
+        // Cả ba sự kiện đều phát từ hook của _state, không dùng ClientRpc. RPC trên host đi
+        // qua hàng đợi của kết nối cục bộ nên tới chậm một lần cập nhật mạng, trong khi hook
+        // SyncVar chạy ngay. Trộn hai kênh sẽ khiến WaveCleared tới sau WaveStarted trên
+        // host nhưng đúng thứ tự trên client — sai lệch rất khó truy vết ở hệ thống thẻ.
+        //
         // Chỉ _state phát sự kiện WaveStarted, không phải _currentWave. Hai SyncVar cùng
         // thay đổi trong một lần cập nhật; nếu cả hai cùng phát thì sự kiện nổ hai lần và
         // đợt quái được sinh gấp đôi. _currentWave luôn được gán trước _state nên tại thời
@@ -163,6 +165,9 @@ namespace LAC.Core
                 case RunState.WaveActive:
                     if (_currentWave > 0) WaveStarted?.Invoke(_currentWave);
                     break;
+                case RunState.CardSelection:
+                    WaveCleared?.Invoke(_currentWave);
+                    break;
                 case RunState.Victory:
                     RunEnded?.Invoke(true);
                     break;
@@ -171,8 +176,5 @@ namespace LAC.Core
                     break;
             }
         }
-
-        [ClientRpc]
-        private void RpcWaveCleared(int waveIndex) => WaveCleared?.Invoke(waveIndex);
     }
 }

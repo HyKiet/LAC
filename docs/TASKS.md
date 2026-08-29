@@ -65,8 +65,15 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 
 ### Kiến trúc mạng — triển khai tại tuần 1
 
-- [ ] **T-07** `NetworkManagerLAC` vận hành ở host mode kể cả khi chơi đơn — Chưa phân công
-- [ ] **T-08** Kích hoạt giả lập độ trễ 100 ms làm cấu hình mặc định khi phát triển — Chưa phân công
+- [x] **T-07** `NetworkManagerLAC` vận hành ở host mode kể cả khi chơi đơn — @Kiet · 29/08
+  > Kế thừa `NetworkManager`, tự khởi động host khi vào scene. Không có nhánh mã nào phân biệt chơi đơn với chơi đôi.
+  > Scene `Scenes/Arena.unity` chứa `NetworkManagerLAC` + `KcpTransport` + `LatencySimulation` + `NetworkManagerHUD`, và đối tượng `RunManager` kèm `NetworkIdentity`.
+  > `autoCreatePlayer` tạm tắt vì chưa có prefab nhân vật — bật lại ở T-09.
+  > `Net/NetworkManagerLAC.cs`. Đã kiểm chứng khi chạy: server và client đều hoạt động, `RunManager.isServer` đúng, 16 đợt chạy hết và cho `Victory`, hết người chơi cho `Defeat`.
+- [x] **T-08** Kích hoạt giả lập độ trễ 100 ms làm cấu hình mặc định khi phát triển — @Kiet · 29/08
+  > `LatencySimulation` bọc quanh `KcpTransport`, độ trễ 100 ms, jitter 0.02, thất thoát gói 2% ở kênh unreliable.
+  > Việc chọn truyền tải nằm trong mã (`#if UNITY_EDITOR || DEVELOPMENT_BUILD`) chứ không phụ thuộc vào người sửa tay trong Inspector trước khi build — lớp giả lập lọt vào bản phát hành sẽ khiến mọi người chơi thật chịu thêm 100 ms.
+  > Không tắt component giả lập bằng cách bỏ tick `enabled`: `OnDisable` của nó tắt luôn truyền tải bên dưới.
 - [ ] **T-09** Sinh 1–2 nhân vật; hai máy cùng vào được một ván — Chưa phân công
 
 ### Cơ chế chiến đấu
