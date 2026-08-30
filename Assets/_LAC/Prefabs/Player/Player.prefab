@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4949670620471853139}
   - component: {fileID: 7896660642393578512}
   - component: {fileID: 3248112856059442746}
+  - component: {fileID: 2483358299205505175}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -314,3 +315,22 @@ MonoBehaviour:
   _input: {fileID: 2942545882418416218}
   _renderer: {fileID: 6167772276280095739}
   _hitInvulnerability: 0.6
+--- !u!114 &2483358299205505175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2262978805030011470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29817012275216d4ca141cf9d0d0e492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Combat.WeaponAuto
+  _character: {fileID: 352858062260180986}
+  _movement: {fileID: 4949670620471853139}
+  _health: {fileID: 3248112856059442746}
+  _projectilePrefab: {fileID: 6566557113357108523, guid: e216bff48a434ab4087c4ae1a2b3830a, type: 3}
+  _pulsePrefab: {fileID: 7545431451406739087, guid: c56fdc9c03b31b948bbfdb3c0b7012af, type: 3}
+  _arcHalfAngle: 60
+  _tint: {r: 0.85, g: 0.9, b: 1, a: 1}

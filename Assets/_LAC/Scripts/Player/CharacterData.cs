@@ -40,6 +40,9 @@ namespace LAC.Player
         [SerializeField, Min(0.02f)] private float _attackInterval = 0.9f;
         [SerializeField, Min(1)] private int _baseDamage = 1;
 
+        [Tooltip("Tốc độ đạn. Chỉ dùng cho vũ khí hình tia.")]
+        [SerializeField, Min(1f)] private float _projectileSpeed = 12f;
+
         [Header("Lướt")]
         [SerializeField, Min(0.1f)] private float _dashDistance = 6f;
         [SerializeField, Min(0.02f)] private float _dashDuration = 0.15f;
@@ -61,6 +64,7 @@ namespace LAC.Player
         public float AttackRange => _attackRange;
         public float AttackInterval => _attackInterval;
         public int BaseDamage => _baseDamage;
+        public float ProjectileSpeed => _projectileSpeed;
 
         public float DashDistance => _dashDistance;
         public float DashDuration => _dashDuration;
