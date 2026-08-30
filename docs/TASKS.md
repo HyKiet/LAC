@@ -86,7 +86,16 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 
 ### Cơ chế chiến đấu
 
-- [ ] **T-10** Di chuyển 8 hướng, hỗ trợ bàn phím và tay cầm — Chưa phân công
+- [x] **T-10** Di chuyển 8 hướng, hỗ trợ bàn phím và tay cầm — @Kiet · 30/08
+  > `Player/PlayerInputReader.cs` · `Player/PlayerMovement.cs` · `Utils/CameraFollow.cs` · tài sản `Data/Input/LACControls.inputactions`.
+  > Bản đồ thao tác `Gameplay` với `Move` (WASD, phím mũi tên, cần trái, D-pad) và `Dash` (Space, Shift trái, nút Đông, R1) — `Dash` khai báo sẵn cho T-11.
+  > Đọc thiết bị tách khỏi di chuyển: sơ đồ phím thay đổi khi thêm thiết bị, cách di chuyển thay đổi khi cân bằng lối chơi. Gộp lại thì mỗi lần thêm một nút là một lần đụng vào mã vật lý.
+  > Vùng chết cần analog áp theo độ dài véc-tơ, không theo từng trục — áp theo trục sẽ cắt vuông góc và làm lệch hướng chéo khi cần gạt nghiêng nhẹ.
+  > Client tự chạy vật lý cho nhân vật của mình và đẩy vị trí lên qua `NetworkTransformReliable` chiều `ClientToServer`. Bắt client hỏi host rồi mới được đi thì mỗi bước chân chờ trọn một vòng mạng — ở 100 ms là hỏng hoàn toàn cảm giác điều khiển. Host không thẩm định vị trí: LẠC hợp tác, không đối kháng, nên gian lận vị trí chỉ ảnh hưởng chính ván của người đó. Máu và sát thương thì ngược lại, xem T-13.
+  > Nhân vật của người khác chuyển `Rigidbody2D` sang `Kinematic` — để vật lý động chạy trên nó thì vật lý và mạng tranh nhau ghi transform, hình ảnh giật liên tục.
+  > `CameraFollow` bám nhân vật cục bộ, mỗi máy một camera. Camera chung sẽ buộc hai người chơi luôn ở gần nhau, mâu thuẫn với lối chơi chạy vòng tránh đám quái.
+  > Đã kiểm chứng khi chạy bằng tay cầm ảo: cần gạt (0.6, 0.8) cho tốc độ đo 4.90 so với chuẩn 5 và hướng khớp tuyệt đối; D-pad chéo và D-pad thẳng cho tỉ lệ tốc độ 1.000 — đi chéo không nhanh hơn đi thẳng; thả nút thì vận tốc về 0 và hướng nhìn được giữ nguyên; camera bám lệch 0.000.
+  > **Chưa kiểm tự động được đường bàn phím:** Unity Editor không định tuyến sự kiện bàn phím vào play mode khi cửa sổ Game mất focus, nên khung kiểm thử không bơm phím giả vào được. Đã xác nhận gián tiếp: hành động `Move` phân giải đúng 18 control gồm `/Keyboard/w a s d` và bốn phím mũi tên. Cần một người bấm thử.
 - [ ] **T-11** Dash — i-frame, thời gian hồi, vệt mờ — Chưa phân công
 - [ ] **T-12** Vũ khí khai hoả tự động — chu kỳ bắn, chọn mục tiêu gần nhất — Chưa phân công
 - [ ] **T-13** `DamageSystem` — điểm vào duy nhất cho mọi sát thương, thẩm quyền thuộc host — Chưa phân công
