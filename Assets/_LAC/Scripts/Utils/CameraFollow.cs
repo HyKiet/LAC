@@ -1,3 +1,4 @@
+using LAC.Core;
 using LAC.Player;
 using UnityEngine;
 
@@ -20,8 +21,21 @@ namespace LAC.Utils
         [Tooltip("Thời gian camera đuổi kịp nhân vật. Càng lớn càng mượt nhưng càng trễ.")]
         [SerializeField, Range(0f, 0.5f)] private float _smoothTime = 0.12f;
 
+        [Tooltip("Giữ khung hình nằm trong đấu trường. Tắt nếu đấu trường nhỏ hơn màn hình.")]
+        [SerializeField] private bool _clampToArena = true;
+
+        [Tooltip("Số đơn vị được phép nhìn ra ngoài vùng chơi, đủ để thấy vòng tường.")]
+        [SerializeField, Min(0f)] private float _revealBeyondArena = 1.5f;
+
+        [SerializeField] private Camera _camera;
+
         private Transform _target;
         private Vector3 _velocity;
+
+        private void Awake()
+        {
+            if (_camera == null) _camera = GetComponent<Camera>();
+        }
 
         private void LateUpdate()
         {
@@ -32,12 +46,39 @@ namespace LAC.Utils
 
                 // Lần đầu bám thì nhảy thẳng tới nơi. Trượt từ gốc toạ độ về nhân vật là một
                 // cú lia camera mà người chơi không yêu cầu.
-                transform.position = WithDepth(_target.position);
+                transform.position = Framed(_target.position);
                 return;
             }
 
             transform.position = Vector3.SmoothDamp(
-                transform.position, WithDepth(_target.position), ref _velocity, _smoothTime);
+                transform.position, Framed(_target.position), ref _velocity, _smoothTime);
+        }
+
+        /// <summary>
+        /// Vị trí camera cần tới để nhìn vào mục tiêu mà không lộ ra ngoài đấu trường.
+        /// </summary>
+        /// <remarks>
+        /// Kẹp theo nửa khung hình chứ không theo một con số cố định: tỉ lệ màn hình của
+        /// người chơi quyết định khung rộng bao nhiêu, và màn hình siêu rộng sẽ nhìn xuyên
+        /// qua tường nếu dùng lề cứng.
+        ///
+        /// Lề được nới ra một chút để vòng tường lọt vào khung hình. Kẹp khít vào vùng chơi
+        /// thì mép màn hình rơi đúng lên biên, người chơi bị chặn bởi một bức tường mà họ
+        /// không nhìn thấy.
+        /// </remarks>
+        private Vector3 Framed(Vector3 targetPosition)
+        {
+            Vector2 wanted = targetPosition;
+
+            if (_clampToArena && ArenaBounds.Instance != null && _camera != null && _camera.orthographic)
+            {
+                float halfHeight = _camera.orthographicSize;
+                float halfWidth = halfHeight * _camera.aspect;
+                wanted = ArenaBounds.Instance.Clamp(
+                    wanted, new Vector2(halfWidth - _revealBeyondArena, halfHeight - _revealBeyondArena));
+            }
+
+            return new Vector3(wanted.x, wanted.y, transform.position.z);
         }
 
         private void AcquireTarget()
@@ -52,7 +93,5 @@ namespace LAC.Utils
             }
         }
 
-        private Vector3 WithDepth(Vector3 position) =>
-            new Vector3(position.x, position.y, transform.position.z);
     }
 }

@@ -95,7 +95,15 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
   > Nhân vật của người khác chuyển `Rigidbody2D` sang `Kinematic` — để vật lý động chạy trên nó thì vật lý và mạng tranh nhau ghi transform, hình ảnh giật liên tục.
   > `CameraFollow` bám nhân vật cục bộ, mỗi máy một camera. Camera chung sẽ buộc hai người chơi luôn ở gần nhau, mâu thuẫn với lối chơi chạy vòng tránh đám quái.
   > Đã kiểm chứng khi chạy bằng tay cầm ảo: cần gạt (0.6, 0.8) cho tốc độ đo 4.90 so với chuẩn 5 và hướng khớp tuyệt đối; D-pad chéo và D-pad thẳng cho tỉ lệ tốc độ 1.000 — đi chéo không nhanh hơn đi thẳng; thả nút thì vận tốc về 0 và hướng nhìn được giữ nguyên; camera bám lệch 0.000.
-  > **Chưa kiểm tự động được đường bàn phím:** Unity Editor không định tuyến sự kiện bàn phím vào play mode khi cửa sổ Game mất focus, nên khung kiểm thử không bơm phím giả vào được. Đã xác nhận gián tiếp: hành động `Move` phân giải đúng 18 control gồm `/Keyboard/w a s d` và bốn phím mũi tên. Cần một người bấm thử.
+  > Đường bàn phím đã được @Kiet bấm thử tay và xác nhận chạy. Khung kiểm thử tự động không bơm phím giả vào được: Unity Editor không định tuyến sự kiện bàn phím vào play mode khi cửa sổ Game mất focus.
+- [x] **T-10B** Đấu trường — nền lát gạch, biên va chạm, `ArenaBounds` — @Kiet · 30/08
+  > Hạng mục **bổ sung ngoài kế hoạch gốc**: kế hoạch không có mục nào dựng đấu trường, mà mọi hạng mục sau đều cần. T-11 không nhìn thấy vệt dash trên nền trống, T-14 không biết sinh quái ở đâu, và T-10 không tự kiểm chứng được camera vì không có gì cố định làm mốc.
+  > `Core/ArenaBounds.cs` — nguồn duy nhất cho câu hỏi "bên trong sân là ở đâu". Camera, bộ sinh quái và đạn nảy tường đều cần cùng con số; để mỗi hệ thống giữ một bản sao thì chỗ quên sửa sẽ biểu hiện thành quái sinh ngoài tường, trông như lỗi AI chứ không như lỗi cấu hình. Kích thước là dữ liệu của scene nên không đồng bộ qua mạng.
+  > Sân 36×20 đơn vị, tâm tại gốc toạ độ. Nền lát bằng `Tilemap` xen kẽ hai ô sáng tối để nhìn ra chuyển động; viền tường dày 1 ô ngoài vùng chơi.
+  > Va chạm dùng **bốn `BoxCollider2D`** thay cho `TilemapCollider2D` — bốn hộp là bốn hình, còn tilemap collider sinh hàng trăm hình và phải dựng lại mỗi khi đổi một ô.
+  > `CameraFollow` kẹp khung hình theo nửa khung hình thật (phụ thuộc tỉ lệ màn hình) chứ không theo lề cứng — màn hình siêu rộng sẽ nhìn xuyên qua tường nếu dùng lề cứng. Nới thêm 1.5 đơn vị để vòng tường lọt vào khung: kẹp khít vào vùng chơi thì mép màn hình rơi đúng lên biên và người chơi bị chặn bởi một bức tường họ không nhìn thấy.
+  > Đã kiểm chứng khi chạy: nhân vật đâm vào tường phải dừng ở `x=17.60` (biên 18 trừ bán kính 0.4) với vận tốc 0; camera kẹp đúng `±2.90` ngang và `±3.00` dọc; ở góc trên-phải mép khung hình đạt `19.50` / `11.50`, thấy rõ vòng tường.
+  > Ô lát và màu nền là tạm, **không** thuộc bảng 24 màu Đông Hồ — thay ở T-17. Kích thước sân là con số đầu tiên, cần chỉnh lại khi có quái để đá thử.
 - [ ] **T-11** Dash — i-frame, thời gian hồi, vệt mờ — Chưa phân công
 - [ ] **T-12** Vũ khí khai hoả tự động — chu kỳ bắn, chọn mục tiêu gần nhất — Chưa phân công
 - [ ] **T-13** `DamageSystem` — điểm vào duy nhất cho mọi sát thương, thẩm quyền thuộc host — Chưa phân công
