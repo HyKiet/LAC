@@ -24,6 +24,9 @@ namespace LAC.Player
         [SerializeField] private PlayerCharacter _character;
         [SerializeField] private SpriteRenderer _renderer;
 
+        [Tooltip("Lướt giành quyền điều khiển vận tốc trong pha lướt.")]
+        [SerializeField] private PlayerDash _dash;
+
         [Tooltip("Tốc độ dùng khi chưa nạp được chỉ số nhân vật.")]
         [SerializeField, Min(0.1f)] private float _fallbackSpeed = 5f;
 
@@ -61,6 +64,12 @@ namespace LAC.Player
         private void FixedUpdate()
         {
             if (!isOwned) return;
+
+            // Trong pha lướt, PlayerDash mới là thứ đặt vận tốc. Không nhường thì hai thành
+            // phần cùng ghi vào một Rigidbody trong cùng một bước vật lý, và cú lướt bị kéo
+            // ngược lại thành tốc độ đi bộ.
+            if (_dash != null && _dash.IsDashing) return;
+
             _rigidbody.linearVelocity = _input != null ? _input.Move * MoveSpeed : Vector2.zero;
         }
     }

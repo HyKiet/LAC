@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 352858062260180986}
   - component: {fileID: 2942545882418416218}
   - component: {fileID: 4949670620471853139}
+  - component: {fileID: 7896660642393578512}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -264,4 +265,31 @@ MonoBehaviour:
   _input: {fileID: 2942545882418416218}
   _character: {fileID: 352858062260180986}
   _renderer: {fileID: 6167772276280095739}
+  _dash: {fileID: 7896660642393578512}
   _fallbackSpeed: 5
+--- !u!114 &7896660642393578512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2262978805030011470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4092b01a530fa1342ab432b6d60c2162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Player.PlayerDash
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _rigidbody: {fileID: 7977673870991579727}
+  _input: {fileID: 2942545882418416218}
+  _character: {fileID: 352858062260180986}
+  _movement: {fileID: 4949670620471853139}
+  _renderer: {fileID: 6167772276280095739}
+  _afterimagePrefab: {fileID: 4668655889744355560, guid: b027f1055bd16c043b4bb51023391e2c, type: 3}
+  _afterimageInterval: 0.03
+  _maxLatencyCompensation: 0.2
+  _fallbackDuration: 0.15
+  _fallbackCooldown: 0.4
+  _fallbackSpeed: 40
