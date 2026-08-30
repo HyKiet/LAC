@@ -127,7 +127,18 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
   > Quái không tự trừ máu người chơi. Nó phát `GameEvents.EnemyTouchedPlayer` — một sự thật cục bộ; việc trừ máu là thẩm quyền host và do `DamageSystem` ở T-13 thi hành. **Sát thương chạm vì vậy chưa có hiệu lực cho tới khi T-13 xong.**
   > Đã kiểm chứng khi chạy: pha báo trước đứng yên đúng 0.35 s; tốc độ đuổi đo được 2.99 so với chuẩn 3; áp sát ở 0.68 với tầm 0.7 và chạm 3 lần trong 1.7 s đúng chu kỳ 0.8; đánh 4 rồi 6 thì chết, trả về pool, sự kiện chết phát đúng một lần và đánh tiếp con đã chết không phát thêm; 40 con chạy ở 2.90 ms/khung (345 FPS), còn xa ngân sách 16.6 ms.
   > **Hai lỗi phát hiện nhờ chụp màn hình chứ không nhờ đọc mã.** (a) Giãn cách chỉ chạy khi truy đuổi, nên vào tầm đánh là cả đàn dồn thành một khối — đo được 40 con trong bán kính 0.076, nhìn như một con duy nhất. (b) Sau khi cho giãn cách chạy cả lúc đứng đánh vẫn còn dồn, vì lực đẩy bị chuẩn hoá nên độ lớn bị vứt bỏ: dù chen chúc đến mấy nó vẫn là hằng số 0.9 trong khi lực hút là 1.0, hút luôn thắng. Sửa thành cộng cả độ lớn, mỗi hàng xóm góp tối đa 1 đơn vị giảm tuyến tính theo khoảng cách. Kết quả: 0 con chồng khít, khoảng cách trung bình 0.396, cả đàn trong bán kính 1.54.
-  > **Chưa làm:** thành phần đợt và bộ đếm quái còn sống thuộc `WaveManager`; `EnemyRegistry.Clear` và `GameEvents.Clear` chưa được `RunManager` gọi khi kết thúc ván. Sprite là hình tròn tạm, không thuộc bảng Đông Hồ — thay ở T-18.
+  > **Chưa làm:** `EnemyRegistry.Clear` và `GameEvents.Clear` chưa được `RunManager` gọi khi kết thúc ván. Sprite là hình tròn tạm, không thuộc bảng Đông Hồ — thay ở T-18.
+- [x] **T-14B** `WaveManager` — sinh quái theo đợt và kết thúc đợt — @Kiet · 30/08
+  > Hạng mục **bổ sung ngoài kế hoạch gốc**: Cổng 1 lấy tiêu chí nghiệm thu là "hai người chơi cùng hoàn tất một ván", nhưng không có hạng mục nào nối `RunManager` với `EnemySpawner`. Hệ quả trực tiếp: bấm Play thì sân trống, vì `Spawn` chỉ được gọi từ khung kiểm thử.
+  > `Core/WaveManager.cs`, đặt cùng đối tượng với `RunManager`.
+  > **Thành phần đợt do cả hai máy tự tính, không ai gửi cho ai.** `RunManager` đã đồng bộ seed và số đợt; từ hai con số đó mỗi máy rút ra cùng một đặc tả và gọi `Spawn` theo cùng thứ tự. Gửi danh sách quái qua mạng là tốn băng thông cho thứ hai bên đều tự suy ra được.
+  > **Mỗi đợt dùng một luồng ngẫu nhiên riêng**, gieo từ seed của ván cộng số hiệu đợt, chứ không rút tiếp từ `RunRandom.Enemies`. Lý do: người thứ hai vào giữa ván không có lịch sử rút của các đợt trước, nên với luồng nối tiếp họ sẽ tính ra một đợt hoàn toàn khác. Luồng theo đợt làm kết quả chỉ phụ thuộc số hiệu đợt.
+  > Quái sinh sát biên sân chứ không quanh người chơi — hiện ra ngay cạnh người chơi là đòn không né được.
+  > Số lượng: 6 con ở đợt 1, cộng 2 mỗi đợt, trần 40. Đây là con số giữ chỗ; bảng đợt thật ở T-44 và AI Đạo Diễn ở T-45.
+  > Chỉ host quyết thời điểm đợt kết thúc, vì chỉ host biết chắc con nào đã chết.
+  > **Có một chỗ giữ tạm phải gỡ:** cờ `_autoAdvanceCardSelection` tự chuyển sang đợt kế tiếp sau 1.5 giây mà không cần chọn thẻ. Tắt cờ này khi T-22 và T-23 xong.
+  > Đã kiểm chứng khi chạy: bấm Play là 6 con hiện ra ở biên và tiến vào; giết sạch thì sang đợt 2 có 8 con, rồi đợt 3 có 10 con, trạng thái ván trở lại `WaveActive` đúng.
+  > **Lưu ý khi chơi thử:** chưa có vũ khí (T-12) nên không giết được quái, và chưa có `DamageSystem` (T-13) nên quái cũng không trừ máu được. Ván sẽ đứng ở đợt 1 với đàn quái vây quanh — đó là trạng thái đúng của lúc này.
 - [ ] **T-15** Phản hồi khi đánh trúng — hit-stop, nháy trắng, đẩy lùi, số sát thương, rung màn — Chưa phân công
 - [ ] **T-16** **Sóng âm Đông Sơn** — vòng tròn đồng tâm lan toả mang hoa văn trống đồng — Chưa phân công
 
