@@ -19,6 +19,10 @@ namespace LAC.Core
     /// </remarks>
     public static class GameEvents
     {
+        /// <summary>Gỡ mọi người nghe mỗi lần vào play mode. Xem `PoolRegistry.ResetStatics`.</summary>
+        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => Clear();
+
         /// <summary>Một con quái vừa chết. Tham số là quái đó, vẫn còn đọc được chỉ số.</summary>
         public static event Action<Enemies.Enemy> EnemyDied;
 
@@ -29,7 +33,20 @@ namespace LAC.Core
         /// </remarks>
         public static event Action<Enemies.Enemy, Player.PlayerCharacter> EnemyTouchedPlayer;
 
+        /// <summary>Một người chơi vừa trúng đòn. Tham số: người chơi, lượng máu đã mất.</summary>
+        /// <remarks>Chỉ phát trên host, vì chỉ host quyết được sát thương có hiệu lực hay không.</remarks>
+        public static event Action<Player.PlayerCharacter, int> PlayerDamaged;
+
+        /// <summary>Một con quái vừa trúng đòn. Tham số: quái, lượng máu đã mất.</summary>
+        public static event Action<Enemies.Enemy, int> EnemyDamaged;
+
         public static void RaiseEnemyDied(Enemies.Enemy enemy) => EnemyDied?.Invoke(enemy);
+
+        public static void RaisePlayerDamaged(Player.PlayerCharacter player, int amount) =>
+            PlayerDamaged?.Invoke(player, amount);
+
+        public static void RaiseEnemyDamaged(Enemies.Enemy enemy, int amount) =>
+            EnemyDamaged?.Invoke(enemy, amount);
 
         public static void RaiseEnemyTouchedPlayer(Enemies.Enemy enemy, Player.PlayerCharacter player) =>
             EnemyTouchedPlayer?.Invoke(enemy, player);
@@ -45,6 +62,8 @@ namespace LAC.Core
         {
             EnemyDied = null;
             EnemyTouchedPlayer = null;
+            PlayerDamaged = null;
+            EnemyDamaged = null;
         }
     }
 }

@@ -116,7 +116,16 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
   > Đã kiểm chứng khi chạy: quãng đường 6.000 ở bốn hướng; bấm khi đang hồi không ăn; lướt lại được ngay khi hết hồi; lướt đâm tường thoát sau 0.157 s và dừng đúng `y=9.60`; ảnh mờ trả về pool hết (0 đang dùng, 8 nhàn rỗi).
   > **Chưa kiểm được độ lệch pha i-frame thật.** Đo trên host cho khe hở đầu 21 ms và dư đuôi 17 ms, nhưng host nói chuyện với chính mình qua kết nối cục bộ nên **không đi qua lớp giả lập độ trễ** — con số này không đại diện cho client thật. Phải đo lại khi chạy hai tiến trình ở T-12. Nếu chơi thử thấy rõ hiện tượng "đã né mà vẫn dính", phương án thay thế là để client tự quyết i-frame của mình, cùng lập luận đã dùng cho vị trí ở T-10.
 - [ ] **T-12** Vũ khí khai hoả tự động — chu kỳ bắn, chọn mục tiêu gần nhất — Chưa phân công
-- [ ] **T-13** `DamageSystem` — điểm vào duy nhất cho mọi sát thương, thẩm quyền thuộc host — Chưa phân công
+- [x] **T-13** `DamageSystem` — điểm vào duy nhất cho mọi sát thương, thẩm quyền thuộc host — @Kiet · 30/08
+  > `Combat/DamageSystem.cs` · `Player/PlayerHealth.cs`, đặt cùng đối tượng với `RunManager`.
+  > **Vì sao phải gom về một chỗ:** sát thương đến từ quái chạm người, đạn trúng quái, sóng xung kích Trống Đồng, vệt cháy của thẻ tiến hoá. Nếu mỗi nguồn tự trừ máu thì mỗi quy tắc bất tử phải được nhớ lại ở từng nơi, và chỉ cần một nguồn quên kiểm tra i-frame là cú lướt né đòn mất tác dụng đúng trong tình huống đó.
+  > Toàn bộ lớp chỉ chạy trên host. Lời gọi trên client bị bỏ qua **lặng lẽ chứ không báo lỗi**: client vẫn chạy cùng mã gameplay — đạn vẫn bay, quái vẫn đuổi — nên nó gọi vào đây rất thường xuyên, và đó là hành vi đúng.
+  > `PlayerHealth` không có phương thức công khai nào trừ máu được; chỉ `DamageSystem` gọi được qua `internal`. Máu là `SyncVar` do host giữ, client chỉ đọc để hiển thị.
+  > **Cửa sổ bất tử 0.6 giây sau khi trúng đòn là bắt buộc, không phải ưu ái:** cuối ván có 40 con vây quanh, mỗi con 1 sát thương, nên không có cửa sổ này thì Thạch Sanh 6 máu chết trong đúng một khung hình. Đo được: 40 đòn trong một khung chỉ mất 1 máu.
+  > `IsInvulnerable` gộp hai nguồn: đang lướt (T-11) và vừa trúng đòn. Đây là chỗ khép lại mối nối để hở ở T-11.
+  > Việc tắt điều khiển khi chết do mỗi máy tự làm cho nhân vật của mình — chờ host gửi lệnh tắt thì trong một vòng mạng người chơi vẫn điều khiển được một xác chết.
+  > Đã kiểm chứng khi chạy: đánh quái 4 còn 6/10, đánh thêm 6 thì chết, đánh con đã chết không có tác dụng; ba đòn liên tiếp lên người chơi chỉ đòn đầu ăn (6→5); 40 đòn trong một khung chỉ mất 1 máu (5→4); **đánh trong lúc lướt không ăn (4→4) với `batTuTheoHost=True`**; hết máu thì ván chuyển `Defeat` và đàn quái được giữ lại trên sân.
+  > **Chưa làm:** hồi sinh giữa ván, và phản hồi hình ảnh khi trúng đòn (T-15).
 - [x] **T-14** Quái vật đầu tiên (Cô Hồn) — hành vi truy đuổi và trạng thái chết — @Kiet · 30/08
   > `Enemies/Enemy.cs` · `Enemies/EnemyData.cs` · `Enemies/EnemyState.cs` · `Enemies/EnemyRegistry.cs` · `Enemies/EnemySpawner.cs` · `Core/GameEvents.cs` · tài sản `Data/Enemies/CoHon.asset` · prefab `Prefabs/Enemies/Enemy.prefab`.
   > Cô Hồn: 10 máu, tốc độ 3, truy đuổi trực tiếp — theo docs/GDD.md mục 6.1. FSM ba trạng thái `Spawning → Chasing → Attacking` cộng `Dead`. Pha báo trước 0.35 s đứng yên và không gây sát thương: quái hiện ra rồi lao vào ngay là không đọc kịp.

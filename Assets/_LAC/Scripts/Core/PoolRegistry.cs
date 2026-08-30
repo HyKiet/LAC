@@ -17,6 +17,23 @@ namespace LAC.Core
         private static Transform _root;
 
         /// <summary>
+        /// Xoá trạng thái tĩnh mỗi lần vào play mode.
+        /// </summary>
+        /// <remarks>
+        /// Bảng này sống ngoài scene. Khi thoát play mode, mọi đối tượng trong pool bị huỷ
+        /// nhưng bảng vẫn giữ tham chiếu tới chúng; lần chạy sau sẽ nhận về một pool toàn
+        /// đối tượng đã chết. Với "Enter Play Mode Options" bật và domain reload tắt thì
+        /// lỗi này không tự khỏi, và triệu chứng của nó là quái không hiện ra ở lần chạy
+        /// thứ hai — rất khó lần ra vì lần chạy đầu vẫn đúng.
+        /// </remarks>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            Pools.Clear();
+            _root = null;
+        }
+
+        /// <summary>
         /// Lấy pool của một prefab, tạo mới nếu chưa tồn tại.
         /// </summary>
         /// <param name="prewarm">Chỉ có tác dụng ở lần gọi đầu tiên với prefab này.</param>

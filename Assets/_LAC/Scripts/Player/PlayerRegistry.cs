@@ -19,6 +19,10 @@ namespace LAC.Player
     {
         private static readonly List<PlayerCharacter> _players = new List<PlayerCharacter>(2);
 
+        /// <summary>Xoá trạng thái tĩnh mỗi lần vào play mode. Xem `PoolRegistry.ResetStatics`.</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => _players.Clear();
+
         public static IReadOnlyList<PlayerCharacter> All => _players;
 
         public static int Count => _players.Count;

@@ -20,6 +20,10 @@ namespace LAC.Enemies
         private static readonly List<Enemy> _alive = new List<Enemy>(64);
         private static readonly Dictionary<int, Enemy> _byId = new Dictionary<int, Enemy>(64);
 
+        /// <summary>Xoá trạng thái tĩnh mỗi lần vào play mode. Xem `PoolRegistry.ResetStatics`.</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => Clear();
+
         public static IReadOnlyList<Enemy> Alive => _alive;
 
         public static int Count => _alive.Count;

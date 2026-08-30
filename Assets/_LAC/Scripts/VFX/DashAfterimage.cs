@@ -53,6 +53,16 @@ namespace LAC.VFX
 
         private void Update()
         {
+            // Khi thoát play mode, Unity huỷ các thành phần theo thứ tự không xác định và
+            // Update vẫn chạy thêm một nhịp. Không chặn ở đây thì mỗi ảnh mờ còn sống sinh
+            // một MissingReferenceException lúc dừng — chín dòng đỏ cho một lỗi vô hại,
+            // đủ để che mất lỗi thật.
+            if (_renderer == null)
+            {
+                enabled = false;
+                return;
+            }
+
             _age += Time.deltaTime;
 
             if (_age >= _lifetime)

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2942545882418416218}
   - component: {fileID: 4949670620471853139}
   - component: {fileID: 7896660642393578512}
+  - component: {fileID: 3248112856059442746}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -293,3 +294,23 @@ MonoBehaviour:
   _fallbackDuration: 0.15
   _fallbackCooldown: 0.4
   _fallbackSpeed: 40
+--- !u!114 &3248112856059442746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2262978805030011470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d46adda6f4965f4f9812aa5fe51124e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Player.PlayerHealth
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _character: {fileID: 352858062260180986}
+  _dash: {fileID: 7896660642393578512}
+  _input: {fileID: 2942545882418416218}
+  _renderer: {fileID: 6167772276280095739}
+  _hitInvulnerability: 0.6

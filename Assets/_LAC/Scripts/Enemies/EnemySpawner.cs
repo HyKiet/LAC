@@ -23,7 +23,18 @@ namespace LAC.Enemies
     /// </remarks>
     public sealed class EnemySpawner : NetworkBehaviour
     {
-        public static EnemySpawner Instance { get; private set; }
+        /// <summary>Điểm truy cập tĩnh, tự tìm lại nếu mất. Xem chú thích ở `RunManager.Instance`.</summary>
+        public static EnemySpawner Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = FindFirstObjectByType<EnemySpawner>(FindObjectsInactive.Include);
+                return _instance;
+            }
+            private set => _instance = value;
+        }
+
+        private static EnemySpawner _instance;
 
         [SerializeField] private Enemy _enemyPrefab;
 
@@ -64,7 +75,7 @@ namespace LAC.Enemies
 
         private void OnDestroy()
         {
-            if (Instance == this) Instance = null;
+            if (_instance == this) _instance = null;
         }
 
         /// <summary>

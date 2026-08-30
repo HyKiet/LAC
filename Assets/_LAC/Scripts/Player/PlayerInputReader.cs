@@ -41,6 +41,13 @@ namespace LAC.Player
                 return;
             }
 
+            // Nhân bản tài sản cho riêng người chơi này. Tài sản thao tác giữ trạng thái
+            // bật/tắt bên trong nó; nếu hai nhân vật cùng trỏ vào một bản thì lần tắt của
+            // người này sẽ giẫm lên lần bật của người kia, và Input System ném ra
+            // "Map must be contained in state". Lỗi xuất hiện ngay cả với một người chơi,
+            // vì PlayerHealth bật tắt thành phần này mỗi lần trạng thái sống chết đổi.
+            _actions = Instantiate(_actions);
+
             _map = _actions.FindActionMap(_actionMapName, throwIfNotFound: false);
             if (_map == null)
             {
@@ -53,12 +60,22 @@ namespace LAC.Player
             _dash = _map.FindAction("Dash", throwIfNotFound: false);
         }
 
-        private void OnEnable() => _map?.Enable();
+        private void OnEnable()
+        {
+            if (_map == null) return;
+            _map.Enable();
+        }
 
         private void OnDisable()
         {
-            _map?.Disable();
+            if (_map != null) _map.Disable();
             Move = Vector2.zero;
+        }
+
+        private void OnDestroy()
+        {
+            // Bản nhân bản là tài sản chạy trong bộ nhớ, không thuộc scene nên không ai dọn hộ.
+            if (_actions != null) Destroy(_actions);
         }
 
         private void Update()

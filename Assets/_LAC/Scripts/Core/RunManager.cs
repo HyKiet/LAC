@@ -16,7 +16,31 @@ namespace LAC.Core
     /// </remarks>
     public sealed class RunManager : NetworkBehaviour
     {
-        public static RunManager Instance { get; private set; }
+        /// <summary>
+        /// Điểm truy cập tĩnh. Tự tìm lại nếu tham chiếu bị mất.
+        /// </summary>
+        /// <remarks>
+        /// Không gán một lần trong <c>Awake</c> rồi tin vào nó mãi. Thứ tự <c>Awake</c> giữa
+        /// các đối tượng trong scene là không xác định, và Mirror còn tắt rồi bật lại các
+        /// đối tượng scene có <c>NetworkIdentity</c> khi host khởi động — đủ để tham chiếu
+        /// tĩnh biến mất giữa chừng trong khi đối tượng vẫn sống. Triệu chứng của nó là quái
+        /// không hiện ra ở một số lần chạy chứ không phải mọi lần, tức là một lỗi chỉ xuất
+        /// hiện trên máy này mà không xuất hiện trên máy kia.
+        ///
+        /// Lần tìm lại tốn một lời gọi <c>FindFirstObjectByType</c>, nhưng chỉ xảy ra khi
+        /// tham chiếu rỗng chứ không phải mỗi khung hình, nên không vi phạm mục 5.
+        /// </remarks>
+        public static RunManager Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = FindFirstObjectByType<RunManager>(FindObjectsInactive.Include);
+                return _instance;
+            }
+            private set => _instance = value;
+        }
+
+        private static RunManager _instance;
 
         // Số đợt là nội dung game, sẽ chuyển sang tài sản WaveTable ở T-44. Tạm để dạng
         // trường tuần tự hoá để khâu cân bằng chỉnh được mà không phải biên dịch lại.
@@ -64,7 +88,7 @@ namespace LAC.Core
 
         private void OnDestroy()
         {
-            if (Instance == this) Instance = null;
+            if (_instance == this) _instance = null;
         }
 
         // ── Thẩm quyền host ────────────────────────────────────────────────────────────

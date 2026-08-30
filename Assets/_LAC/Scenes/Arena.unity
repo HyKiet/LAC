@@ -7608,6 +7608,7 @@ GameObject:
   - component: {fileID: 712958574}
   - component: {fileID: 712958573}
   - component: {fileID: 712958576}
+  - component: {fileID: 712958577}
   m_Layer: 0
   m_Name: RunManager
   m_TagString: Untagged
@@ -7685,6 +7686,18 @@ MonoBehaviour:
   _spawnInset: 1.2
   _autoAdvanceCardSelection: 1
   _autoAdvanceDelay: 1.5
+--- !u!114 &712958577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712958572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad979f3a0e3bb74aa9dd9981d7278cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Combat.DamageSystem
 --- !u!1 &949777519
 GameObject:
   m_ObjectHideFlags: 0
