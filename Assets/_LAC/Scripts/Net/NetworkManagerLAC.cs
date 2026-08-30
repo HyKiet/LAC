@@ -1,3 +1,5 @@
+using LAC.Core;
+using LAC.Player;
 using Mirror;
 using UnityEngine;
 
@@ -24,6 +26,9 @@ namespace LAC.Net
         [Tooltip("Lớp bọc giả lập độ trễ, chỉ dùng trong Editor và bản development.")]
         [SerializeField] private LatencySimulation _latencySimulation;
 
+        [Tooltip("Bảng nhân vật. Người vào ván được phân nhân vật theo thứ tự khai báo.")]
+        [SerializeField] private CharacterRegistry _characterRegistry;
+
         public override void Awake()
         {
             SelectTransport();
@@ -38,6 +43,44 @@ namespace LAC.Net
             if (NetworkServer.active || NetworkClient.active) return;
 
             StartHost();
+        }
+
+        /// <summary>
+        /// Sinh nhân vật cho một người vừa nối vào và ghi họ vào ván đang chạy.
+        /// </summary>
+        /// <remarks>
+        /// Nhân vật được phân theo thứ tự nối vào cho tới khi có màn hình chọn nhân vật ở
+        /// T-20. Chỉ host quyết định ai cầm nhân vật nào — nếu để client tự chọn rồi báo lên
+        /// thì hai người cùng bấm một lúc sẽ cùng nhận một nhân vật.
+        ///
+        /// Định danh nhân vật được gán trước <see cref="NetworkServer.AddPlayerForConnection"/>
+        /// nên nó nằm sẵn trong gói trạng thái ban đầu. Gán sau sẽ tạo ra một khoảng thời gian
+        /// người chơi đã hiện trên màn hình nhưng chưa có chỉ số.
+        /// </remarks>
+        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        {
+            Transform start = GetStartPosition();
+            Vector3 position = start != null ? start.position : Vector3.zero;
+
+            GameObject player = Instantiate(playerPrefab, position, Quaternion.identity);
+
+            if (player.TryGetComponent(out PlayerCharacter character) && _characterRegistry != null)
+            {
+                CharacterData assigned = _characterRegistry.GetByIndex(numPlayers);
+                if (assigned != null) character.SetCharacter(assigned.Id);
+            }
+
+            NetworkServer.AddPlayerForConnection(conn, player);
+
+            if (RunManager.Instance != null) RunManager.Instance.RegisterPlayer();
+        }
+
+        public override void OnServerDisconnect(NetworkConnectionToClient conn)
+        {
+            if (conn.identity != null && RunManager.Instance != null)
+                RunManager.Instance.UnregisterPlayer();
+
+            base.OnServerDisconnect(conn);
         }
 
         /// <summary>

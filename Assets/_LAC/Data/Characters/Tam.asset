@@ -10,22 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcb4e60e9a7d7d94fb3cd618d4abf69c, type: 3}
-  m_Name: ThachSanh
+  m_Name: Tam
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Player.CharacterData
-  _id: 0
-  _displayName: "Th\u1EA1ch Sanh"
-  _description: "Ti\u1EBFng \u0111\xE0n b\u1EA7u lan ra th\xE0nh v\xF2ng s\xF3ng
-    quanh ng\u01B0\u1EDDi. C\xE2n b\u1EB1ng gi\u1EEFa m\xE1u, t\u1ED1c \u0111\u1ED9
-    v\xE0 t\u1EA7m \u0111\xE1nh."
-  _maxHealth: 6
-  _moveSpeed: 5
-  _weaponName: "\u0110\xE0n b\u1EA7u"
-  _weaponShape: 0
-  _attackRange: 4
-  _attackInterval: 0.9
-  _baseDamage: 2
+  _id: 2
+  _displayName: "T\u1EA5m"
+  _description: 
+  _maxHealth: 4
+  _moveSpeed: 8
+  _weaponName: "S\xE1o tr\xFAc"
+  _weaponShape: 2
+  _attackRange: 7
+  _attackInterval: 0.12
+  _baseDamage: 1
   _dashDistance: 6
   _dashDuration: 0.15
   _dashCooldown: 0.4
-  _bodySprite: {fileID: 21300000, guid: f1613b89e50d63d4fb7ffdd2a59843fc, type: 3}
+  _bodySprite: {fileID: 21300000, guid: 21311cf99fdfffa4485dee7ed3f3989c, type: 3}
   _portrait: {fileID: 0}

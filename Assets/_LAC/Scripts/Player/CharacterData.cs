@@ -46,7 +46,7 @@ namespace LAC.Player
         [SerializeField, Min(0.05f)] private float _dashCooldown = 0.4f;
 
         [Header("Hiển thị")]
-        [SerializeField] private GameObject _playerPrefab;
+        [SerializeField] private Sprite _bodySprite;
         [SerializeField] private Sprite _portrait;
 
         public CharacterId Id => _id;
@@ -66,7 +66,7 @@ namespace LAC.Player
         public float DashDuration => _dashDuration;
         public float DashCooldown => _dashCooldown;
 
-        public GameObject PlayerPrefab => _playerPrefab;
+        public Sprite BodySprite => _bodySprite;
         public Sprite Portrait => _portrait;
 
         /// <summary>Tốc độ di chuyển trong lúc lướt, suy ra từ quãng đường và thời lượng.</summary>

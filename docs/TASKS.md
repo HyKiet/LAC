@@ -74,7 +74,15 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
   > `LatencySimulation` bọc quanh `KcpTransport`, độ trễ 100 ms, jitter 0.02, thất thoát gói 2% ở kênh unreliable.
   > Việc chọn truyền tải nằm trong mã (`#if UNITY_EDITOR || DEVELOPMENT_BUILD`) chứ không phụ thuộc vào người sửa tay trong Inspector trước khi build — lớp giả lập lọt vào bản phát hành sẽ khiến mọi người chơi thật chịu thêm 100 ms.
   > Không tắt component giả lập bằng cách bỏ tick `enabled`: `OnDisable` của nó tắt luôn truyền tải bên dưới.
-- [ ] **T-09** Sinh 1–2 nhân vật; hai máy cùng vào được một ván — Chưa phân công
+- [x] **T-09** Sinh 1–2 nhân vật; hai máy cùng vào được một ván — @Kiet · 30/08
+  > `Player/PlayerCharacter.cs` · `Player/CharacterRegistry.cs` · `Player/PlayerRegistry.cs` · `Prefabs/Player/Player.prefab`.
+  > Một prefab người chơi duy nhất cho cả ba nhân vật. Mạng chỉ truyền `CharacterId` qua `SyncVar`; mỗi máy tự tra `CharacterRegistry` và tự áp dụng chỉ số — mẫu "đồng bộ định danh" ở CLAUDE.md mục 3.2. Nhờ vậy cân bằng lại chỉ số chỉ là sửa ScriptableObject, không đụng tới đường truyền.
+  > `NetworkManagerLAC.OnServerAddPlayer` phân nhân vật theo thứ tự nối vào và sinh tại `NetworkStartPosition`. Định danh được gán **trước** `AddPlayerForConnection` để nó nằm trong gói trạng thái ban đầu; gán sau sẽ tạo ra khoảng thời gian nhân vật đã hiện nhưng chưa có chỉ số.
+  > `RunManager.RegisterPlayer` khởi động ván khi người đầu tiên vào; người thứ hai vào sau chỉ tăng số người còn sống, không khởi động lại ván.
+  > `PlayerRegistry` là danh sách tĩnh cục bộ, thay cho `FindObjectOfType` bị cấm ở mục 5. Quái vật ở T-14 tra mục tiêu qua đây.
+  > `NetworkTransformReliable` đặt `ClientToServer` để client dự đoán cục bộ nhân vật của mình.
+  > Đã kiểm chứng khi chạy: nhân vật sinh tại điểm sinh, chỉ số áp đúng (Thạch Sanh 6 máu, Gióng 10 máu), ván tự vào đợt 1, người thứ hai vào không kéo ván về đợt 1, một người gục thì ván tiếp tục và cả hai gục mới `Defeat`.
+  > Sprite trong `Art/Placeholder/` là hình khối tạm, **không** thuộc bảng 24 màu Đông Hồ — thay ở T-17.
 
 ### Cơ chế chiến đấu
 

@@ -69,13 +69,34 @@ namespace LAC.Core
 
         // ── Thẩm quyền host ────────────────────────────────────────────────────────────
 
+        /// <summary>Ghi nhận một người chơi vừa vào ván. Chỉ host được gọi.</summary>
+        /// <remarks>
+        /// Ván tự khởi động khi người đầu tiên vào. Người thứ hai vào sau chỉ làm tăng số
+        /// người còn sống chứ không khởi động lại ván — hai máy không bao giờ nối vào cùng
+        /// một thời điểm, nên nếu để việc vào ván khởi động lại thì người vào trước sẽ bị
+        /// kéo về đợt 1 ngay giữa lúc đang đánh.
+        /// </remarks>
+        [Server]
+        public void RegisterPlayer()
+        {
+            _alivePlayers++;
+            if (_state == RunState.Idle) StartRun();
+        }
+
+        /// <summary>Ghi nhận một người chơi rời ván. Chỉ host được gọi.</summary>
+        [Server]
+        public void UnregisterPlayer()
+        {
+            _alivePlayers = Mathf.Max(_alivePlayers - 1, 0);
+        }
+
         /// <summary>Bắt đầu một ván mới. Chỉ host được gọi.</summary>
         /// <param name="seed">Seed dùng chung. Truyền 0 để sinh seed mới.</param>
         [Server]
-        public void StartRun(int seed = 0, int playerCount = 1)
+        public void StartRun(int seed = 0)
         {
             _seed = seed != 0 ? seed : RunRandom.CreateSeed();
-            _alivePlayers = Mathf.Max(playerCount, 1);
+            _alivePlayers = Mathf.Max(_alivePlayers, 1);
             _currentWave = 0;
 
             // Host khởi tạo ngay; client khởi tạo trong hook khi SyncVar tới nơi.
