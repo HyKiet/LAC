@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3de5a453105f84184d4d95743bffba, type: 3}
+  m_Name: CoHon
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Enemies.EnemyData
+  _displayName: "C\xF4 H\u1ED3n"
+  _maxHealth: 10
+  _moveSpeed: 3
+  _contactDamage: 1
+  _attackRange: 0.7
+  _attackInterval: 0.8
+  _spawnDelay: 0.35
+  _bodySprite: {fileID: 21300000, guid: 92d7ad0bc42f7d242ad21e7891d5c970, type: 3}
+  _tint: {r: 1, g: 1, b: 1, a: 1}
