@@ -28,7 +28,7 @@ namespace LAC.Combat
         {
             get
             {
-                if (_instance == null) _instance = FindFirstObjectByType<DamageSystem>(FindObjectsInactive.Include);
+                if (_instance == null) _instance = FindAnyObjectByType<DamageSystem>(FindObjectsInactive.Include);
                 return _instance;
             }
             private set => _instance = value;
@@ -60,21 +60,21 @@ namespace LAC.Combat
         private void OnEnemyTouchedPlayer(Enemy enemy, PlayerCharacter player)
         {
             if (enemy == null || enemy.Data == null) return;
-            ApplyToPlayer(player, enemy.Data.ContactDamage);
+            ApplyToPlayer(player, enemy.Data.ContactDamage, enemy.Position);
         }
 
         /// <summary>
         /// Gây sát thương lên một người chơi. Bỏ qua nếu không phải host.
         /// </summary>
         /// <returns>Đúng nếu sát thương thực sự được áp dụng.</returns>
-        public static bool ApplyToPlayer(PlayerCharacter player, int amount)
+        public static bool ApplyToPlayer(PlayerCharacter player, int amount, Vector2 source)
         {
             if (!NetworkServer.active || player == null) return false;
             if (!player.TryGetComponent(out PlayerHealth health)) return false;
 
             if (!health.ServerTakeDamage(amount)) return false;
 
-            GameEvents.RaisePlayerDamaged(player, amount);
+            GameEvents.RaisePlayerDamaged(player, amount, source);
             return true;
         }
 
@@ -87,13 +87,13 @@ namespace LAC.Combat
         /// làm việc đó — xem T-14.
         /// </remarks>
         /// <returns>Đúng nếu sát thương thực sự được áp dụng.</returns>
-        public static bool ApplyToEnemy(Enemy enemy, int amount)
+        public static bool ApplyToEnemy(Enemy enemy, int amount, Vector2 source)
         {
             if (!NetworkServer.active || enemy == null || !enemy.IsAlive || amount <= 0) return false;
             if (EnemySpawner.Instance == null) return false;
 
             EnemySpawner.Instance.DamageEnemy(enemy, amount);
-            GameEvents.RaiseEnemyDamaged(enemy, amount);
+            GameEvents.RaiseEnemyDamaged(enemy, amount, source);
             return true;
         }
 

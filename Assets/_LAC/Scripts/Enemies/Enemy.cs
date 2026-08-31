@@ -44,6 +44,16 @@ namespace LAC.Enemies
         [Tooltip("Phần tốc độ dùng để giãn ra khi đang đứng đánh.")]
         [SerializeField, Range(0f, 1f)] private float _crowdSpeedScale = 0.6f;
 
+        [Header("Phản hồi khi trúng đòn")]
+        [Tooltip("Quãng đường bị đẩy lùi mỗi lần trúng đòn.")]
+        [SerializeField, Min(0f)] private float _knockbackDistance = 0.35f;
+
+        [Tooltip("Thời gian tiêu hết quãng đẩy lùi.")]
+        [SerializeField, Min(0.01f)] private float _knockbackDuration = 0.12f;
+
+        private Vector2 _knockbackVelocity;
+        private float _knockbackEndsAt;
+
         private EnemyData _data;
         private int _id;
         private int _health;
@@ -67,6 +77,8 @@ namespace LAC.Enemies
             _health = data.MaxHealth;
             _target = null;
             _nextAttackAt = 0f;
+            _knockbackEndsAt = 0f;
+            _knockbackVelocity = Vector2.zero;
 
             _rigidbody.position = position;
             transform.position = position;
@@ -113,6 +125,28 @@ namespace LAC.Enemies
 
             GameEvents.RaiseEnemyDied(this);
             EnemyRegistry.Unregister(this);
+        }
+
+        /// <summary>
+        /// Bị đẩy lùi khỏi nguồn sát thương.
+        /// </summary>
+        /// <remarks>
+        /// Đẩy lùi là phần biểu diễn, chạy trên mọi máy và không đồng bộ — xem bảng ở mục 3.2.
+        /// Sai lệch vị trí nó gây ra được snapshot của host kéo lại trong vòng nửa giây.
+        ///
+        /// Đẩy lùi cũng có tác dụng chơi được chứ không chỉ để nhìn: nó tạo ra khoảng hở giữa
+        /// người chơi và đám quái, nên một cú đánh mạnh vừa là sát thương vừa là không gian
+        /// thở. Không có nó, người chơi bị vây rồi thì không còn cách nào thoát ngoài lướt.
+        /// </remarks>
+        public void ApplyKnockback(Vector2 fromPosition)
+        {
+            if (!IsAlive || _knockbackDistance <= 0f) return;
+
+            Vector2 away = Position - fromPosition;
+            if (away.sqrMagnitude < 0.0001f) return;
+
+            _knockbackVelocity = away.normalized * (_knockbackDistance / _knockbackDuration);
+            _knockbackEndsAt = Time.time + _knockbackDuration;
         }
 
         /// <summary>Kéo vị trí về đúng chỗ host báo. Chỉ client gọi.</summary>
@@ -183,6 +217,9 @@ namespace LAC.Enemies
         private void Step(Vector2 direction, float speed)
         {
             Vector2 wanted = Position + direction * (speed * Time.fixedDeltaTime);
+
+            if (Time.time < _knockbackEndsAt)
+                wanted += _knockbackVelocity * Time.fixedDeltaTime;
 
             if (ArenaBounds.Instance != null)
                 wanted = ArenaBounds.Instance.Clamp(wanted, Vector2.one * _arenaMargin);

@@ -30,7 +30,7 @@ namespace LAC.Combat
 
         [Header("Tài sản dùng chung")]
         [SerializeField] private Projectile _projectilePrefab;
-        [SerializeField] private VFX.PulseEffect _pulsePrefab;
+        [SerializeField] private VFX.SoundWave _wavePrefab;
 
         [Header("Hình cung")]
         [Tooltip("Nửa góc mở của hình cung, tính bằng độ.")]
@@ -42,7 +42,7 @@ namespace LAC.Combat
 
         private float _nextShotAt;
         private ObjectPool<Projectile> _projectilePool;
-        private ObjectPool<VFX.PulseEffect> _pulsePool;
+        private ObjectPool<VFX.SoundWave> _wavePool;
 
         private CharacterData Data => _character != null ? _character.Data : null;
 
@@ -87,10 +87,10 @@ namespace LAC.Combat
                 if (enemy == null || !enemy.IsAlive) continue;
                 if ((enemy.Position - origin).sqrMagnitude > rangeSqr) continue;
 
-                DamageSystem.ApplyToEnemy(enemy, data.BaseDamage);
+                DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
             }
 
-            SpawnPulse(origin, 0.5f, data.AttackRange);
+            SpawnWave(origin, 0.5f, data.AttackRange);
         }
 
         /// <summary>Hình cung hướng về mục tiêu gần nhất — roi sắt của Gióng.</summary>
@@ -122,11 +122,11 @@ namespace LAC.Combat
                 if (toEnemy.sqrMagnitude > rangeSqr) continue;
                 if (Vector2.Dot(facing, toEnemy.normalized) < cosLimit) continue;
 
-                DamageSystem.ApplyToEnemy(enemy, data.BaseDamage);
+                DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
             }
 
             // Vòng nhỏ đặt lệch về phía trước, đủ để đọc ra hướng vung roi.
-            SpawnPulse(origin + facing * (data.AttackRange * 0.5f), 0.3f, data.AttackRange * 0.7f);
+            SpawnWave(origin + facing * (data.AttackRange * 0.5f), 0.3f, data.AttackRange * 0.7f);
         }
 
         /// <summary>Tia thẳng về phía mục tiêu gần nhất — sáo trúc của Tấm.</summary>
@@ -148,12 +148,12 @@ namespace LAC.Combat
             shot.Launch(_projectilePool, direction, data.ProjectileSpeed, data.BaseDamage, lifetime, pierce: 1);
         }
 
-        private void SpawnPulse(Vector2 position, float fromRadius, float toRadius)
+        private void SpawnWave(Vector2 position, float fromRadius, float toRadius)
         {
-            if (_pulsePrefab == null) return;
+            if (_wavePrefab == null) return;
 
-            _pulsePool ??= PoolRegistry.Get(_pulsePrefab, prewarm: 8, softLimit: 64);
-            _pulsePool.Get(position, Quaternion.identity).Play(_pulsePool, fromRadius, toRadius, _tint);
+            _wavePool ??= PoolRegistry.Get(_wavePrefab, prewarm: 8, softLimit: 64);
+            _wavePool.Get(position, Quaternion.identity).Play(_wavePool, fromRadius, toRadius, _tint);
         }
     }
 }

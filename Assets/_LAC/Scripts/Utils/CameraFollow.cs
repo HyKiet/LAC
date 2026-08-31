@@ -29,8 +29,24 @@ namespace LAC.Utils
 
         [SerializeField] private Camera _camera;
 
+        [Tooltip("Thời gian một cú rung màn tắt hẳn.")]
+        [SerializeField, Min(0.01f)] private float _shakeDecay = 0.25f;
+
+        [Tooltip("Trần biên độ rung, tính bằng đơn vị thế giới.")]
+        [SerializeField, Min(0f)] private float _maxShake = 0.35f;
+
         private Transform _target;
         private Vector3 _velocity;
+        private float _shake;
+
+        /// <summary>
+        /// Rung màn một cú. Các lời gọi chồng nhau lấy giá trị lớn nhất, không cộng dồn.
+        /// </summary>
+        /// <remarks>
+        /// Cộng dồn sẽ khiến cuối ván — lúc sự kiện dày đặc nhất — màn hình rung đến mức
+        /// không nhìn được gì, đúng vào lúc người chơi cần nhìn rõ nhất.
+        /// </remarks>
+        public void Shake(float amount) => _shake = Mathf.Min(Mathf.Max(_shake, amount), _maxShake);
 
         private void Awake()
         {
@@ -50,8 +66,18 @@ namespace LAC.Utils
                 return;
             }
 
-            transform.position = Vector3.SmoothDamp(
+            Vector3 wanted = Vector3.SmoothDamp(
                 transform.position, Framed(_target.position), ref _velocity, _smoothTime);
+
+            if (_shake > 0.0001f)
+            {
+                // Đồng hồ không co giãn: rung màn phải tiếp tục chạy trong lúc hit-stop đang
+                // dừng thời gian, nếu không thì màn hình đứng cứng đúng lúc cần có sức nặng.
+                _shake = Mathf.Max(_shake - _maxShake / _shakeDecay * Time.unscaledDeltaTime, 0f);
+                wanted += (Vector3)(Random.insideUnitCircle * _shake);
+            }
+
+            transform.position = wanted;
         }
 
         /// <summary>

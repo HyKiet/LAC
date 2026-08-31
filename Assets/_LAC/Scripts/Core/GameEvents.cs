@@ -33,20 +33,29 @@ namespace LAC.Core
         /// </remarks>
         public static event Action<Enemies.Enemy, Player.PlayerCharacter> EnemyTouchedPlayer;
 
-        /// <summary>Một người chơi vừa trúng đòn. Tham số: người chơi, lượng máu đã mất.</summary>
+        /// <summary>
+        /// Một người chơi vừa trúng đòn. Tham số: người chơi, lượng máu đã mất, vị trí nguồn.
+        /// </summary>
         /// <remarks>Chỉ phát trên host, vì chỉ host quyết được sát thương có hiệu lực hay không.</remarks>
-        public static event Action<Player.PlayerCharacter, int> PlayerDamaged;
+        public static event Action<Player.PlayerCharacter, int, UnityEngine.Vector2> PlayerDamaged;
 
-        /// <summary>Một con quái vừa trúng đòn. Tham số: quái, lượng máu đã mất.</summary>
-        public static event Action<Enemies.Enemy, int> EnemyDamaged;
+        /// <summary>
+        /// Một con quái vừa trúng đòn. Tham số: quái, lượng máu đã mất, vị trí nguồn sát thương.
+        /// </summary>
+        /// <remarks>
+        /// Vị trí nguồn đi kèm chứ không để bên nhận tự đoán: hướng đẩy lùi phải là hướng ra
+        /// xa thứ đã đánh trúng. Đoán bằng "ra xa người chơi gần nhất" sẽ sai ngay khi có đạn
+        /// nảy tường hoặc hai người chơi đứng hai phía.
+        /// </remarks>
+        public static event Action<Enemies.Enemy, int, UnityEngine.Vector2> EnemyDamaged;
 
         public static void RaiseEnemyDied(Enemies.Enemy enemy) => EnemyDied?.Invoke(enemy);
 
-        public static void RaisePlayerDamaged(Player.PlayerCharacter player, int amount) =>
-            PlayerDamaged?.Invoke(player, amount);
+        public static void RaisePlayerDamaged(Player.PlayerCharacter player, int amount, UnityEngine.Vector2 source) =>
+            PlayerDamaged?.Invoke(player, amount, source);
 
-        public static void RaiseEnemyDamaged(Enemies.Enemy enemy, int amount) =>
-            EnemyDamaged?.Invoke(enemy, amount);
+        public static void RaiseEnemyDamaged(Enemies.Enemy enemy, int amount, UnityEngine.Vector2 source) =>
+            EnemyDamaged?.Invoke(enemy, amount, source);
 
         public static void RaiseEnemyTouchedPlayer(Enemies.Enemy enemy, Player.PlayerCharacter player) =>
             EnemyTouchedPlayer?.Invoke(enemy, player);

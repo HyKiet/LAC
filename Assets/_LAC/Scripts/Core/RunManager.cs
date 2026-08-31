@@ -34,7 +34,7 @@ namespace LAC.Core
         {
             get
             {
-                if (_instance == null) _instance = FindFirstObjectByType<RunManager>(FindObjectsInactive.Include);
+                if (_instance == null) _instance = FindAnyObjectByType<RunManager>(FindObjectsInactive.Include);
                 return _instance;
             }
             private set => _instance = value;

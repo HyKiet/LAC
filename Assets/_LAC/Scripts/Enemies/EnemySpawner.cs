@@ -28,7 +28,7 @@ namespace LAC.Enemies
         {
             get
             {
-                if (_instance == null) _instance = FindFirstObjectByType<EnemySpawner>(FindObjectsInactive.Include);
+                if (_instance == null) _instance = FindAnyObjectByType<EnemySpawner>(FindObjectsInactive.Include);
                 return _instance;
             }
             private set => _instance = value;

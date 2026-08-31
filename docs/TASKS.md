@@ -157,8 +157,30 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
   > **Có một chỗ giữ tạm phải gỡ:** cờ `_autoAdvanceCardSelection` tự chuyển sang đợt kế tiếp sau 1.5 giây mà không cần chọn thẻ. Tắt cờ này khi T-22 và T-23 xong.
   > Đã kiểm chứng khi chạy: bấm Play là 6 con hiện ra ở biên và tiến vào; giết sạch thì sang đợt 2 có 8 con, rồi đợt 3 có 10 con, trạng thái ván trở lại `WaveActive` đúng.
   > **Lưu ý khi chơi thử:** chưa có vũ khí (T-12) nên không giết được quái, và chưa có `DamageSystem` (T-13) nên quái cũng không trừ máu được. Ván sẽ đứng ở đợt 1 với đàn quái vây quanh — đó là trạng thái đúng của lúc này.
-- [ ] **T-15** Phản hồi khi đánh trúng — hit-stop, nháy trắng, đẩy lùi, số sát thương, rung màn — Chưa phân công
-- [ ] **T-16** **Sóng âm Đông Sơn** — vòng tròn đồng tâm lan toả mang hoa văn trống đồng — Chưa phân công
+- [x] **T-15** Phản hồi khi đánh trúng — hit-stop, nháy trắng, đẩy lùi, số sát thương, rung màn — @Kiet · 30/08
+  > `VFX/HitFeedback.cs` · `VFX/SpriteFlash.cs` · `VFX/HitStop.cs` · `VFX/DamageNumber.cs` · `VFX/PixelNumber.cs` · prefab `Prefabs/VFX/DamageNumber.prefab`.
+  > Toàn bộ là biểu diễn cục bộ, không đồng bộ — xem bảng ở mục 3.2. Gom về `HitFeedback` thay vì rải vào từng hệ thống vì phản hồi cần **điều tiết theo mức độ**: đánh trúng thường chỉ nháy sáng, quái chết mới được dừng hình và rung màn, người chơi trúng đòn là sự kiện nặng nhất. Nếu mỗi hệ thống tự quyết thì cuối ván mọi thứ cùng kêu to và không còn gì nổi bật.
+  > **Hit-stop giữ dưới 30 ms và chỉ dùng cho sự kiện thưa.** Nó tác động lên `Time.timeScale`, tức là trên host thì trạng thái có thẩm quyền cũng chậm theo và client sẽ thấy đàn quái khựng. Giữ dưới một nhịp gửi mạng (33 ms ở sendRate 30) thì độ lệch tan trước snapshot kế tiếp nên không tích luỹ.
+  > Nháy sáng và rung màn dùng đồng hồ **không co giãn**: nếu dùng đồng hồ thường thì chính hit-stop sẽ kéo dài chúng ra, và cú đánh mạnh lại nháy lâu hơn cú đánh nhẹ.
+  > Rung màn lấy giá trị lớn nhất chứ không cộng dồn — cộng dồn thì cuối ván màn hình rung đến mức không nhìn được, đúng lúc cần nhìn rõ nhất.
+  > Đẩy lùi vừa là phản hồi vừa là cơ chế chơi được: nó tạo khoảng hở giữa người chơi và đám quái, nên một cú đánh mạnh vừa là sát thương vừa là không gian thở.
+  > Sự kiện sát thương được mở rộng để **mang theo vị trí nguồn** — hướng đẩy lùi phải là hướng ra xa thứ đã đánh trúng; đoán bằng "ra xa người chơi gần nhất" sẽ sai ngay khi có đạn nảy tường hoặc hai người chơi đứng hai phía.
+  > **Không dùng TextMeshPro.** Phông vector bị làm mờ khi thu về cỡ pixel art và phá vỡ lưới điểm ảnh; ngoài ra TMP đòi nhập bộ tài sản riêng, thêm một bước cài đặt cho ba máy. Chữ số 3×5 điểm ảnh tự vẽ, dùng lại được cho cả số sát thương lẫn giao diện.
+  > Đã kiểm chứng khi chạy: `timeScale` chạm 0.00 đúng lúc hit-stop; số sát thương hiện trong 313 khung liên tiếp của một nhịp thử; **đẩy lùi đo bằng phép so sánh có đối chứng — con bị đẩy lệch đúng 0.350 đơn vị so với con đối chứng cùng khoảng cách**, khớp giá trị đặt.
+- [x] **T-16** **Sóng âm Đông Sơn** — vòng tròn đồng tâm lan toả mang hoa văn trống đồng — @Kiet · 30/08
+  > `VFX/SoundWave.cs` · shader `Art/Shaders/SpriteAdditive.shader` · vật liệu `Art/Materials/SpriteAdditive.mat` · prefab `Prefabs/VFX/SoundWave.prefab`. Thay hẳn `PulseEffect` giữ chỗ của T-12, đã xoá.
+  > Ba vòng đồng tâm lệch pha nhau, mang 24 vạch nan hoa theo nhịp hoa văn trống đồng, xoay chậm. Lệch pha để nghe như một tiếng đàn ngân ra chứ không phải một cú nổ; vòng sau mờ hơn vòng dẫn nên đuôi sóng mảnh dần đúng như âm thanh tắt.
+  > Shader additive tự viết cho URP: shader additive dựng sẵn của pipeline cũ sẽ hiện màu hồng. Không khai báo `_MainTex_ST` vì 2D SRP Batcher tắt batching cho mọi vật liệu có thuộc tính `_ST` hoặc `_TexelSize`.
+  > **Một lỗi đọc hiểu phát hiện bằng ảnh chụp, không phải bằng đọc mã.** Bản đầu để độ mờ đỉnh 0.55 và sóng phủ trắng gần hết vùng chơi — đúng kiểu hỏng mà mục 2.1 mô tả. Với additive thì các lớp sóng **cộng dồn** độ sáng, nên con số an toàn thấp hơn nhiều so với cảm giác khi nhìn một vòng đơn lẻ. Đã hạ xuống 0.11, khoá trần Inspector ở 0.4, vẽ lại vòng mỏng hơn và có viền mềm.
+  > **Cân chỉnh cuối cùng phải chờ T-17.** "Đủ mờ để đọc được đòn địch" chỉ định lượng được khi đã có màu dành riêng cho đòn địch. Con số hiện tại là an toàn tạm thời, không phải kết luận.
+- [x] **T-15B** HUD máu người chơi — @Kiet · 30/08
+  > Hạng mục **bổ sung ngoài kế hoạch gốc** theo yêu cầu: kế hoạch chỉ có giao diện chọn thẻ (T-22) và vòng nạp Trống Đồng (T-38), không có chỗ nào cho máu.
+  > `UI/PlayerHud.cs`, canvas `HUD` trong `Arena.unity`.
+  > Hiển thị bằng **ô rời chứ không bằng thanh liền**. Ba nhân vật có 4, 6 và 10 máu — những con số nhỏ, và mỗi điểm máu là một quyết định. Thanh liền biến chúng thành một tỉ lệ phần trăm mờ nhạt; ô rời cho người chơi *đếm* được mình còn chịu được mấy đòn nữa, thứ họ thực sự cần biết khi đang bị vây.
+  > Số ô dựng lúc chạy theo `MaxHealth`, nên đổi nhân vật hay cân bằng lại máu không phải sửa giao diện.
+  > Chỉ theo dõi nhân vật cục bộ, và chỉ bám khi `MaxHealth` đã về qua `SyncVar` — bám sớm hơn thì thanh máu được dựng với số ô sai.
+  > `CanvasScaler` khớp theo chiều cao: màn hình siêu rộng không làm HUD phình ra.
+  > Đã kiểm chứng khi chạy: 6 ô đầy lúc vào ván, 3 đầy 3 rỗng khi còn 3 máu, 6 ô rỗng khi gục.
 
 ### Mỹ thuật
 

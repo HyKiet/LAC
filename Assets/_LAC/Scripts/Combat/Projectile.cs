@@ -90,7 +90,7 @@ namespace LAC.Combat
 
                 // Trên client lời gọi này không có tác dụng và trả về false — đúng như thiết
                 // kế. Viên đạn vẫn biến mất để hình ảnh hai máy giống nhau.
-                DamageSystem.ApplyToEnemy(enemy, _damage);
+                DamageSystem.ApplyToEnemy(enemy, _damage, position);
 
                 if (--_remainingHits > 0) continue;
 

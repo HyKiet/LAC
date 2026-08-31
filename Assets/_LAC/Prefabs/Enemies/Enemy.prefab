@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6173993738796458205}
   - component: {fileID: 6029944035106838183}
   - component: {fileID: 4826519669651692187}
+  - component: {fileID: 5211852960315250749}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -175,3 +176,23 @@ MonoBehaviour:
   _collider: {fileID: 6029944035106838183}
   _arenaMargin: 0.4
   _snapshotBlend: 0.35
+  _separationRadius: 0.85
+  _separationWeight: 1.4
+  _separationMax: 4
+  _crowdSpeedScale: 0.6
+  _knockbackDistance: 0.35
+  _knockbackDuration: 0.12
+--- !u!114 &5211852960315250749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7463194521601460387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5310dfc05bbf3fd45a69533726633143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.VFX.SpriteFlash
+  _renderer: {fileID: 8653298267190069276}
+  _duration: 0.07
