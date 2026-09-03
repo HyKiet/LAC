@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CharacterRegistry
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Player.CharacterRegistry
   _characters:
-  - {fileID: 11400000, guid: 0965226fee8d15643931ce0aa86994be, type: 2}
   - {fileID: 11400000, guid: 8aef4fa51a24e924cbf841ed2ee520c3, type: 2}
+  - {fileID: 11400000, guid: 0965226fee8d15643931ce0aa86994be, type: 2}
   - {fileID: 11400000, guid: 830872f311ee88440a4ae5176ec0427b, type: 2}

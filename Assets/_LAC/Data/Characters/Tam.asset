@@ -22,8 +22,10 @@ MonoBehaviour:
   _attackRange: 7
   _attackInterval: 0.12
   _baseDamage: 1
+  _projectileSpeed: 12
   _dashDistance: 6
   _dashDuration: 0.15
   _dashCooldown: 0.4
   _bodySprite: {fileID: 21300000, guid: 21311cf99fdfffa4485dee7ed3f3989c, type: 3}
   _portrait: {fileID: 0}
+  _animationSet: {fileID: 11400000, guid: 7a1a8adb2a288aa479b6aec908860cf6, type: 2}

@@ -1,0 +1,278 @@
+fileFormatVersion: 2
+guid: b5f2ece57d9573f4287df3d8ceec036c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8750575402702392419
+    second: Enemy_CoHon_Death_0
+  - first:
+      213: 8766354873242058808
+    second: Enemy_CoHon_Death_1
+  - first:
+      213: 1214930203854708941
+    second: Enemy_CoHon_Death_2
+  - first:
+      213: -3525486852354050915
+    second: Enemy_CoHon_Death_3
+  - first:
+      213: 8636027268837370320
+    second: Enemy_CoHon_Death_4
+  - first:
+      213: 7095806261468603393
+    second: Enemy_CoHon_Death_5
+  - first:
+      213: -1607180683091918267
+    second: Enemy_CoHon_Death_6
+  - first:
+      213: -5989889075565067862
+    second: Enemy_CoHon_Death_7
+  - first:
+      213: -8252419930972749044
+    second: Enemy_CoHon_Death_8
+  - first:
+      213: -4557141583663057076
+    second: Enemy_CoHon_Death_9
+  - first:
+      213: -2072635994879722395
+    second: Enemy_CoHon_Death_10
+  - first:
+      213: 3714181843145820002
+    second: Enemy_CoHon_Death_11
+  - first:
+      213: 6887500504500222150
+    second: Enemy_CoHon_Death_12
+  - first:
+      213: -6507517741756208532
+    second: Enemy_CoHon_Death_13
+  - first:
+      213: 136105978092878982
+    second: Enemy_CoHon_Death_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.15625}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Enemy_CoHon_Death_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36cc85a57f9407970800000000000000
+      internalID: 8750575402702392419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_CoHon_Death_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8308b92af4958a970800000000000000
+      internalID: 8766354873242058808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_CoHon_Death_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc027ab559c4cd010800000000000000
+      internalID: 1214930203854708941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_CoHon_Death_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d947029f264f21fc0800000000000000
+      internalID: -3525486852354050915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Enemy_CoHon_Death_0: 8750575402702392419
+      Enemy_CoHon_Death_1: 8766354873242058808
+      Enemy_CoHon_Death_10: -2072635994879722395
+      Enemy_CoHon_Death_11: 3714181843145820002
+      Enemy_CoHon_Death_12: 6887500504500222150
+      Enemy_CoHon_Death_13: -6507517741756208532
+      Enemy_CoHon_Death_14: 136105978092878982
+      Enemy_CoHon_Death_2: 1214930203854708941
+      Enemy_CoHon_Death_3: -3525486852354050915
+      Enemy_CoHon_Death_4: 8636027268837370320
+      Enemy_CoHon_Death_5: 7095806261468603393
+      Enemy_CoHon_Death_6: -1607180683091918267
+      Enemy_CoHon_Death_7: -5989889075565067862
+      Enemy_CoHon_Death_8: -8252419930972749044
+      Enemy_CoHon_Death_9: -4557141583663057076
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

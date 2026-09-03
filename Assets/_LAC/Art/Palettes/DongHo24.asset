@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b081a1a94ac33429cd52b2d34d0221, type: 3}
+  m_Name: DongHo24
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Utils.PaletteData
+  _entries:
+  - _name: DiepSang
+    _family: 0
+    _color: {r: 0.95686275, g: 0.91764706, b: 0.85490197, a: 1}
+  - _name: Diep
+    _family: 0
+    _color: {r: 0.8784314, g: 0.8117647, b: 0.6862745, a: 1}
+  - _name: DiepBong
+    _family: 0
+    _color: {r: 0.7490196, g: 0.6627451, b: 0.5058824, a: 1}
+  - _name: DiepSau
+    _family: 0
+    _color: {r: 0.5803922, g: 0.5019608, b: 0.36078432, a: 1}
+  - _name: ThanNhat
+    _family: 1
+    _color: {r: 0.43137255, g: 0.39607844, b: 0.33333334, a: 1}
+  - _name: Than
+    _family: 1
+    _color: {r: 0.2784314, g: 0.2509804, b: 0.22745098, a: 1}
+  - _name: ThanDam
+    _family: 1
+    _color: {r: 0.16862746, g: 0.15294118, b: 0.14117648, a: 1}
+  - _name: ThanSau
+    _family: 1
+    _color: {r: 0.08235294, g: 0.07450981, b: 0.05882353, a: 1}
+  - _name: HoeSang
+    _family: 2
+    _color: {r: 0.9843137, g: 0.8666667, b: 0.50980395, a: 1}
+  - _name: Hoe
+    _family: 2
+    _color: {r: 0.92941177, g: 0.73333335, b: 0.24313726, a: 1}
+  - _name: HoeDam
+    _family: 2
+    _color: {r: 0.7529412, g: 0.5529412, b: 0.1254902, a: 1}
+  - _name: HoeSau
+    _family: 2
+    _color: {r: 0.5411765, g: 0.37254903, b: 0.078431375, a: 1}
+  - _name: ChamSang
+    _family: 3
+    _color: {r: 0.6117647, g: 0.8117647, b: 0.7529412, a: 1}
+  - _name: GiDong
+    _family: 3
+    _color: {r: 0.30980393, g: 0.6509804, b: 0.5803922, a: 1}
+  - _name: Cham
+    _family: 3
+    _color: {r: 0.18431373, g: 0.45490196, b: 0.5019608, a: 1}
+  - _name: ChamDam
+    _family: 3
+    _color: {r: 0.10980392, g: 0.29411766, b: 0.36078432, a: 1}
+  - _name: ChamSau
+    _family: 3
+    _color: {r: 0.06666667, g: 0.18039216, b: 0.24313726, a: 1}
+  - _name: NauSang
+    _family: 4
+    _color: {r: 0.7019608, g: 0.49803922, b: 0.30980393, a: 1}
+  - _name: Nau
+    _family: 4
+    _color: {r: 0.49803922, g: 0.32941177, b: 0.19607843, a: 1}
+  - _name: NauDam
+    _family: 4
+    _color: {r: 0.3137255, g: 0.2, b: 0.11764706, a: 1}
+  - _name: SonSang
+    _family: 5
+    _color: {r: 1, g: 0.47843137, b: 0.33333334, a: 1}
+  - _name: Son
+    _family: 5
+    _color: {r: 0.8862745, g: 0.23137255, b: 0.14901961, a: 1}
+  - _name: SonDam
+    _family: 5
+    _color: {r: 0.65882355, g: 0.1254902, b: 0.09411765, a: 1}
+  - _name: SonSau
+    _family: 5
+    _color: {r: 0.41960785, g: 0.06666667, b: 0.07450981, a: 1}
+  _enemyAttack: {r: 1, g: 0.47843137, b: 0.33333334, a: 1}

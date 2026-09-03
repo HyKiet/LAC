@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Enemies.EnemyData
   _displayName: "C\xF4 H\u1ED3n"
   _maxHealth: 10
-  _moveSpeed: 3
+  _moveSpeed: 2.2
   _contactDamage: 1
   _attackRange: 0.7
   _attackInterval: 0.8
   _spawnDelay: 0.35
-  _bodySprite: {fileID: 21300000, guid: 92d7ad0bc42f7d242ad21e7891d5c970, type: 3}
+  _bodySprite: {fileID: -9150489477472823759, guid: bd7551b727c65064e8ec8764b0ddbd4a, type: 3}
   _tint: {r: 1, g: 1, b: 1, a: 1}
+  _animationSet: {fileID: 11400000, guid: ed3117e4d32a606468d9d40b675aec0b, type: 2}

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba3835d057a5ca94ab483c6a9930c7ce, type: 3}
+  m_Name: ThachSanh
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.VFX.SpriteAnimationSet
+  _clips:
+  - _state: 0
+    _frames:
+    - {fileID: 8007959636554696691, guid: 240b24df464fc0846ada19c7d6fba310, type: 3}
+    - {fileID: 3154847942986641541, guid: 240b24df464fc0846ada19c7d6fba310, type: 3}
+    - {fileID: -2448661787310253499, guid: 240b24df464fc0846ada19c7d6fba310, type: 3}
+    - {fileID: -3749219892559198811, guid: 240b24df464fc0846ada19c7d6fba310, type: 3}
+    _fps: 6
+    _loop: 1
+    _holdLastFrame: 0
+  - _state: 1
+    _frames:
+    - {fileID: 403753552890811327, guid: f8823e28642f29e4982c4ff87e0276af, type: 3}
+    - {fileID: -4332633327665998046, guid: f8823e28642f29e4982c4ff87e0276af, type: 3}
+    - {fileID: 312553490882191464, guid: f8823e28642f29e4982c4ff87e0276af, type: 3}
+    - {fileID: 163283823160682722, guid: f8823e28642f29e4982c4ff87e0276af, type: 3}
+    - {fileID: -7947211553441081166, guid: f8823e28642f29e4982c4ff87e0276af, type: 3}
+    - {fileID: 6397188252199413168, guid: f8823e28642f29e4982c4ff87e0276af, type: 3}
+    _fps: 10
+    _loop: 1
+    _holdLastFrame: 0
+  - _state: 2
+    _frames:
+    - {fileID: 9219519748636038608, guid: 9a289ab1bd147bc49b3daae376aaa838, type: 3}
+    - {fileID: -1522211958257955402, guid: 9a289ab1bd147bc49b3daae376aaa838, type: 3}
+    - {fileID: -4386542089506432898, guid: 9a289ab1bd147bc49b3daae376aaa838, type: 3}
+    - {fileID: -2645307070676418532, guid: 9a289ab1bd147bc49b3daae376aaa838, type: 3}
+    _fps: 10
+    _loop: 0
+    _holdLastFrame: 0
+  - _state: 3
+    _frames:
+    - {fileID: 2143081350219624550, guid: b5764d55dc42ab547ab657d7ceadab27, type: 3}
+    - {fileID: 1387999016365794356, guid: b5764d55dc42ab547ab657d7ceadab27, type: 3}
+    - {fileID: -6810932368642274372, guid: b5764d55dc42ab547ab657d7ceadab27, type: 3}
+    _fps: 12
+    _loop: 0
+    _holdLastFrame: 0
+  - _state: 4
+    _frames:
+    - {fileID: -5468638995203628563, guid: bc5d67821c0dd3f40ac7fa60cb8dad33, type: 3}
+    - {fileID: 9103168400862800745, guid: bc5d67821c0dd3f40ac7fa60cb8dad33, type: 3}
+    - {fileID: 1139323173549169601, guid: bc5d67821c0dd3f40ac7fa60cb8dad33, type: 3}
+    - {fileID: 6276125338646489072, guid: bc5d67821c0dd3f40ac7fa60cb8dad33, type: 3}
+    _fps: 6
+    _loop: 0
+    _holdLastFrame: 1
+  _playHurtClip: 0

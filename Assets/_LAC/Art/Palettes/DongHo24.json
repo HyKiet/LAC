@@ -1,0 +1,146 @@
+[
+ {
+  "name": "DiepSang",
+  "family": "Diep",
+  "hex": "F4EADA",
+  "note": "Nen giay diep bat sang"
+ },
+ {
+  "name": "Diep",
+  "family": "Diep",
+  "hex": "E0CFAF",
+  "note": "Nen giay diep"
+ },
+ {
+  "name": "DiepBong",
+  "family": "Diep",
+  "hex": "BFA981",
+  "note": "Bong tren nen diep"
+ },
+ {
+  "name": "DiepSau",
+  "family": "Diep",
+  "hex": "94805C",
+  "note": "Diep trong bong sau"
+ },
+ {
+  "name": "ThanNhat",
+  "family": "Than",
+  "hex": "6E6555",
+  "note": "Than pha loang"
+ },
+ {
+  "name": "Than",
+  "family": "Than",
+  "hex": "47403A",
+  "note": "Than la tre"
+ },
+ {
+  "name": "ThanDam",
+  "family": "Than",
+  "hex": "2B2724",
+  "note": "Net dam"
+ },
+ {
+  "name": "ThanSau",
+  "family": "Than",
+  "hex": "15130F",
+  "note": "Net vien ngoai cung"
+ },
+ {
+  "name": "HoeSang",
+  "family": "Hoe",
+  "hex": "FBDD82",
+  "note": "Hoa hoe bat sang"
+ },
+ {
+  "name": "Hoe",
+  "family": "Hoe",
+  "hex": "EDBB3E",
+  "note": "Hoa hoe"
+ },
+ {
+  "name": "HoeDam",
+  "family": "Hoe",
+  "hex": "C08D20",
+  "note": "Hoe trong bong"
+ },
+ {
+  "name": "HoeSau",
+  "family": "Hoe",
+  "hex": "8A5F14",
+  "note": "Hoe sau nhat"
+ },
+ {
+  "name": "ChamSang",
+  "family": "Cham",
+  "hex": "9CCFC0",
+  "note": "Cham bat sang"
+ },
+ {
+  "name": "GiDong",
+  "family": "Cham",
+  "hex": "4FA694",
+  "note": "Gi dong"
+ },
+ {
+  "name": "Cham",
+  "family": "Cham",
+  "hex": "2F7480",
+  "note": "La cham"
+ },
+ {
+  "name": "ChamDam",
+  "family": "Cham",
+  "hex": "1C4B5C",
+  "note": "Cham trong bong"
+ },
+ {
+  "name": "ChamSau",
+  "family": "Cham",
+  "hex": "112E3E",
+  "note": "Cham sau nhat"
+ },
+ {
+  "name": "NauSang",
+  "family": "Nau",
+  "hex": "B37F4F",
+  "note": "Nau dat bat sang"
+ },
+ {
+  "name": "Nau",
+  "family": "Nau",
+  "hex": "7F5432",
+  "note": "Nau dat"
+ },
+ {
+  "name": "NauDam",
+  "family": "Nau",
+  "hex": "50331E",
+  "note": "Nau dat trong bong"
+ },
+ {
+  "name": "SonSang",
+  "family": "Son",
+  "hex": "FF7A55",
+  "note": "SON - bat sang"
+ },
+ {
+  "name": "Son",
+  "family": "Son",
+  "hex": "E23B26",
+  "note": "SON - mau chuan cua don dich"
+ },
+ {
+  "name": "SonDam",
+  "family": "Son",
+  "hex": "A82018",
+  "note": "SON - trong bong"
+ },
+ {
+  "name": "SonSau",
+  "family": "Son",
+  "hex": "6B1113",
+  "note": "SON - sau nhat"
+ }
+]

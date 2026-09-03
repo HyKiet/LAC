@@ -184,8 +184,26 @@ Dòng trích dẫn là cơ sở để thành viên khác và công cụ AI xác 
 
 ### Mỹ thuật
 
-- [ ] **T-17** Chốt bảng 24 màu Đông Hồ, **dành riêng một màu cho đòn tấn công của địch** — Chưa phân công
-- [ ] **T-18** Sprite Thạch Sanh, sprite Cô Hồn, tileset Sân Đình — Chưa phân công
+- [x] **T-17** Chốt bảng 24 màu Đông Hồ, **dành riêng một màu cho đòn tấn công của địch** — @Kiet · 03/09
+  > `Art/Palettes/DongHo24.asset` (mã đọc được) · `.gpl` cho Aseprite · `.png` bảng tra · `Utils/PaletteData.cs`. Đặc tả đầy đủ tại [docs/PALETTE.md](PALETTE.md).
+  > Bảng màu bắt nguồn từ **năm màu gốc thật của tranh Đông Hồ** — điệp, than, hoè, chàm, son — mỗi nhóm kéo thành một dải sáng tối, cộng nhóm nâu pha. Không bịa màu cho đủ 24.
+  > **Bảng màu là tài sản chứ không phải hằng số trong mã**, vì ràng buộc ở mục 2.1 là một quy tắc kiểm tra được chứ không phải lời khuyên thẩm mỹ: `PaletteData.IsReservedForEnemy` cho phép tự kiểm rằng không hiệu ứng nào của người chơi lấn sang màu của địch.
+  > **Dành riêng cả nhóm son bốn màu, không phải một màu.** Đòn địch cũng cần sáng tối để đọc ra hình khối. Đổi lại nhân vật, quái, ô lát và giao diện mất quyền dùng đỏ — còn 20 màu, thừa.
+  > **Màu chuẩn của đòn địch là `SonSang #FF7A55`, không phải `Son #E23B26`.** Đo trên nền sân: 5.76:1 so với 3.45:1. Và con số quyết định: **`Son` so với `Cham` chỉ đạt 1.24:1 về độ chói** — hai màu khác sắc nhưng cùng độ sáng, đúng kiểu cặp mà khoảng 8% nam giới không phân biệt được. Quy tắc rút ra: **đòn địch phải khác hiệu ứng người chơi ở độ chói, không chỉ ở sắc.**
+  > **Đã tính ra được trần độ mờ của sóng âm — con số mà T-16 phải chờ.** Sóng vẽ additive nên các lớp cộng dồn; ở ngưỡng 3:1 thì ba lớp chồng nhau cho phép tối đa **0.07** mỗi lớp, một lớp đơn độc là 0.22. Chốt `_peakAlpha = 0.07`, trần Inspector 0.22. **Giá trị cũ 0.11 thực tế quá cao** — ở ba lớp chỉ còn 2.36:1. Mỗi lần khai hoả phát ba vòng lệch pha nên ba lớp là tình huống thường, không phải trường hợp xấu hiếm gặp.
+  > `WeaponAuto._tint` đổi sang `ChamSang #9CCFC0` cho đúng bảng.
+  > **Chưa kiểm chứng được:** chưa có quái nào đánh tầm xa nên `SonSang` chưa từng hiện trên màn hình. Con số 5.76:1 là tính toán, không phải quan sát — phải chụp lại khi có quái bắn đầu tiên.
+- [x] **T-18** Sprite Thạch Sanh, sprite Cô Hồn, tileset Sân Đình — @Kiet · 03/09
+  > `Art/Sprites/` — 10 bảng khung hình và 3 ô lát · bộ hoạt ảnh `Data/Animations/ThachSanh.asset` và `CoHon.asset` · trình sinh lưu tại `docs/tools/make_art.py`.
+  > **Mật độ pixel chốt ở 32 px, PPU 32** — một ô lát bằng đúng 1 đơn vị Unity. Sprite tạm cũ là 16 px, quá thấp để vẽ được hoa văn; gói thử nghiệm TinyRPG là 100 px, quá cao.
+  > Thạch Sanh: Idle 4 · Walk 6 · Attack 4 · Hurt 3 · Death 4. Cô Hồn: cùng bộ. Đòn đánh của Thạch Sanh vẽ dây đàn bầu rung kèm vệt chàm — chính nhạc cụ là vũ khí.
+  > **Sprite viết dưới dạng lưới ký tự trong mã Python**, mỗi ký tự một chỉ số màu. Ảnh nhị phân không đọc được diff trong Git; lưới ký tự thì sửa được từng điểm ảnh và thấy được ai đổi gì.
+  > **Cô Hồn rộng 20 px = 0.63 đơn vị, nhỏ hơn bán kính giãn cách 0.85** — đây là lời đáp trực tiếp cho vấn đề phát hiện ở T-18C, nơi quái rộng 1.4 đơn vị dồn lại thành một khối liền và nuốt mất người chơi.
+  > Pivot đặt ở bàn chân, lấy từ **khung đứng yên** chứ không phải khung thấp nhất: khung nhún người và khung ngã xuống đều tụt xuống dưới đường đất, lấy chúng làm mốc thì nhân vật bay lên.
+  > **Một lỗi đọc hiểu phải sửa lại, thấy bằng ảnh chụp.** Bản đầu của tileset Sân Đình dùng `Nau #7F5432` làm thân gạch; trên màn hình nhân vật gần như biến mất, và **mọi phép tính tương phản ở T-17 đều sai vì chúng giả định nền tối**. Vẽ lại bằng nhóm than, nâu chỉ còn là điểm lốm đốm thưa. Nền sân phải tối là một ràng buộc, không phải lựa chọn thẩm mỹ.
+  > Thạch Sanh trở lại làm người chơi thứ nhất trong `CharacterRegistry` — lý do chọn Gióng ở T-18C là sprite Soldier cận chiến, nay Thạch Sanh đã có mỹ thuật riêng với đàn bầu. Gióng giữ nguyên cấu hình đã dựng, chờ T-33.
+  > **Chất lượng là bản đầu, không phải bản cuối.** Đọc được, đúng bảng màu, đủ để cân chỉnh thị giác — nhưng cánh tay còn cứng và khung ngã cuối còn mỏng. Hoạ sĩ nên tinh lại trên chính lưới ký tự này.
+  > **Cấu hình đang chạy không dùng mỹ thuật này.** Trong lúc thử nghiệm, `CharacterRegistry` để Gióng làm người chơi thứ nhất và `CoHon.asset` trỏ vào `Orc_TEST`. Tileset Sân Đình thì dùng bản thật. Mỹ thuật Thạch Sanh và Cô Hồn nằm nguyên tại `Data/Animations/ThachSanh.asset` và `CoHon.asset`, đổi lại chỉ là hai trường dữ liệu.
 - [x] **T-18B** Hệ thống hoạt ảnh nhân vật, gắn sprite thử nghiệm vào người chơi — @Kiet · 03/09
   > Hạng mục **bổ sung ngoài kế hoạch gốc**, khoảng trống thứ tư sau T-10B, T-14B, T-15B. T-18, T-33 và T-47 đều là hạng mục *vẽ* sprite; không có hạng mục nào cho việc *chạy* sprite. Trước hạng mục này, nhân vật là một hình tĩnh trượt trên sân.
   > `VFX/SpriteAnimationSet.cs` · `VFX/SpriteAnimator.cs` · `Player/PlayerAnimatorDriver.cs` · tài sản `Assets/ThirdParty/TinyRPG/Soldier_TEST.asset`.

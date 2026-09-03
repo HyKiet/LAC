@@ -145,7 +145,7 @@ MonoBehaviour:
   - {fileID: 9040880130511061575}
   _duration: 0.45
   _ringDelay: 0.18
-  _peakAlpha: 0.11
+  _peakAlpha: 0.07
   _spinSpeed: 25
 --- !u!1 &7285869847049928683
 GameObject:

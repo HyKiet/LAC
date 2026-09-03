@@ -24,8 +24,11 @@ MonoBehaviour:
   _attackRange: 4
   _attackInterval: 0.9
   _baseDamage: 2
+  _projectileSpeed: 12
+  _spawnSoundWave: 1
   _dashDistance: 6
   _dashDuration: 0.15
   _dashCooldown: 0.4
-  _bodySprite: {fileID: 21300000, guid: f1613b89e50d63d4fb7ffdd2a59843fc, type: 3}
+  _bodySprite: {fileID: 8007959636554696691, guid: 240b24df464fc0846ada19c7d6fba310, type: 3}
   _portrait: {fileID: 0}
+  _animationSet: {fileID: 11400000, guid: 9fcd896da93f10c498bfb6c4503d07aa, type: 2}

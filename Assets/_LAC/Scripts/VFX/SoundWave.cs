@@ -37,7 +37,10 @@ namespace LAC.VFX
         [SerializeField, Range(0f, 0.5f)] private float _ringDelay = 0.18f;
 
         [Tooltip("Độ mờ lúc mạnh nhất. Giữ thấp — xem ràng buộc ở mục 2.1.")]
-        [SerializeField, Range(0f, 0.4f)] private float _peakAlpha = 0.11f;
+        // Trần 0.22 là mức mà MỘT lớp sóng còn giữ được 3:1 với đòn địch #FF7A55; quá đó
+        // thì dù chỉ một vòng cũng đã nuốt mất đòn địch. Giá trị mặc định 0.07 là mức an
+        // toàn khi ba lớp chồng nhau — xem docs/PALETTE.md.
+        [SerializeField, Range(0f, 0.22f)] private float _peakAlpha = 0.07f;
 
         [Tooltip("Tốc độ xoay của hoa văn, độ mỗi giây. Làm sóng có nhịp thay vì đứng im.")]
         [SerializeField] private float _spinSpeed = 25f;
