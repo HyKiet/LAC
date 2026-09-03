@@ -29,6 +29,14 @@ Mở dự án qua Unity Hub với **đúng phiên bản 6000.5.6f1**.
 
 Mở thư mục dự án bằng VS Code và chấp nhận danh sách extension được đề xuất. Sau khi cài, phím `Alt+C` dùng để đánh dấu hoàn thành hạng mục trong kế hoạch công việc.
 
+**Sau khi clone, chạy một lần:**
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\setup-git.ps1
+```
+
+Script cài công cụ merge cho file scene của Unity và bật Git LFS. Không chạy thì xung đột scene sẽ không tự gỡ được — xem [docs/WORKFLOW.md](docs/WORKFLOW.md).
+
 ---
 
 ## Quy trình làm việc

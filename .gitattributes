@@ -15,6 +15,8 @@
 *.shader    text eol=lf
 *.hlsl      text eol=lf
 *.cginc     text eol=lf
+*.sh        text eol=lf
+*.ps1       text eol=crlf
 
 # --- File YAML của Unity: dùng công cụ merge riêng của Unity ---
 *.unity      merge=unityyamlmerge eol=lf
