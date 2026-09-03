@@ -38,9 +38,8 @@ Tài liệu số 00 không yêu cầu bạn biết C#, Unity, toán vector hay m
 2. [Nền tảng C# và Unity](01_CSHARP_UNITY_FOUNDATIONS.md): chỉ đọc sau khi hoàn thành bài 00.
 3. [Kiến trúc và các luồng chạy](02_ARCHITECTURE_AND_FLOWS.md): nhìn toàn cảnh trước khi đọc chi tiết.
 4. [Giải thích từng file](03_FILE_BY_FILE.md): dùng như từ điển khi mở một script.
-5. [Bài tập thực hành](04_PRACTICE_PLAN.md): chuyển từ “đọc hiểu” sang “tự viết và tự giải thích”.
 
-Đừng đọc 37 file theo thứ tự bảng chữ cái. Một vòng học hợp lý là:
+Đừng đọc hết các file theo thứ tự bảng chữ cái. Một vòng học hợp lý là:
 
 ```text
 PlayerInputReader

@@ -1,17 +1,5 @@
 # 00 — Học code game từ con số 0
 
-## Trước hết: bạn không “dốt code”
-
-Bạn chỉ đang cố đọc một cuốn sách ở chương 20 khi chưa được học bảng chữ cái. Những từ như `class`, `private`, `Vector2`, `NetworkBehaviour` xuất hiện cùng lúc nên não không có hình ảnh nào để bám vào. Đây là vấn đề thứ tự học, không phải khả năng của bạn.
-
-Trong bài này, ta tạm quên multiplayer, quái, shader và kiến trúc. Mục tiêu đầu tiên rất nhỏ:
-
-> Nhìn một đoạn C# ngắn và hiểu máy tính sẽ làm gì theo thứ tự nào.
-
-Bạn chưa cần nhớ cú pháp. Chỉ cần hình dung được câu chuyện.
-
----
-
 ## Bài 1 — Code là gì?
 
 Code là danh sách chỉ dẫn cực kỳ chi tiết cho máy tính.

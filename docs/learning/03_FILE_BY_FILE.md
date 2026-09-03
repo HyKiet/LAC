@@ -475,4 +475,6 @@ Bạn không cần thuộc từng dòng. Bạn đã hiểu khi có thể:
 
 Nếu chỉ mô tả được cú pháp nhưng không kể được vai trò trong game, hãy quay lại bài 02 và lần theo một luồng. Nếu kể được vai trò nhưng không hiểu một dòng, quay lại đúng mục cú pháp ở bài 01.
 
-Tài liệu này bao phủ toàn bộ 37 file `.cs` và 1 file `.shader` first-party hiện có trong `Assets/_LAC`. Nó là bản đồ để học; code thật vẫn là nguồn chính xác cuối cùng.
+Tài liệu này bao phủ 37 file `.cs` và 1 file `.shader` trong `Assets/_LAC`.
+
+> **Chưa bao phủ 5 file thêm sau ngày 03/09:** `SpriteAnimationSet.cs` · `SpriteAnimator.cs` · `PlayerAnimatorDriver.cs` (hệ thống hoạt ảnh, T-18B) · `PaletteData.cs` (bảng màu, T-17) · `RunEndScreen.cs` (màn kết thúc ván, T-05B). Nó là bản đồ để học; code thật vẫn là nguồn chính xác cuối cùng.
