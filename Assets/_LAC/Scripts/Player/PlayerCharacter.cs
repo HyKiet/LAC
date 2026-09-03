@@ -26,9 +26,23 @@ namespace LAC.Player
         private CharacterId _characterId = CharacterId.ThachSanh;
 
         private CharacterData _data;
+        private PlayerHealth _health;
 
         /// <summary>Chỉ số của nhân vật này. Null cho tới khi định danh được áp dụng.</summary>
         public CharacterData Data => _data;
+
+        /// <summary>
+        /// Còn sống hay không. Quái dùng giá trị này để chọn mục tiêu.
+        /// </summary>
+        /// <remarks>
+        /// Máu được giữ ở <see cref="PlayerHealth"/> nhưng tra cứu phải nằm ở đây: mỗi khung
+        /// hình có tới 40 con quái hỏi "ai là người gần nhất còn sống", và gọi
+        /// <c>GetComponent</c> 40 lần một khung là thứ mục 5 cấm. Tham chiếu lấy một lần
+        /// trong Awake.
+        /// </remarks>
+        public bool IsAlive => _health == null || _health.IsAlive;
+
+        private void Awake() => _health = GetComponent<PlayerHealth>();
 
         public CharacterId CharacterId => _characterId;
 

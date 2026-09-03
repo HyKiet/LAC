@@ -35,7 +35,18 @@ namespace LAC.Player
 
         public static void Unregister(PlayerCharacter player) => _players.Remove(player);
 
-        /// <summary>Người chơi gần vị trí cho trước nhất, hoặc null nếu không còn ai.</summary>
+        /// <summary>
+        /// Người chơi còn sống gần vị trí cho trước nhất, hoặc null nếu không còn ai đứng.
+        /// </summary>
+        /// <remarks>
+        /// <b>Phải bỏ qua người đã gục.</b> Không lọc thì cả đàn quái tiếp tục truy đuổi và
+        /// vây kín cái xác, còn người chơi kia — nếu còn sống — thì không bị con nào để ý.
+        /// Ở chế độ chơi đơn thì màn hình đứng lại với một đống quái chồng lên chỗ người chơi
+        /// vừa ngã.
+        ///
+        /// Trả null khi không còn ai sống là kết quả hợp lệ: quái đứng lại chờ, và
+        /// <c>RunManager</c> là thứ quyết định ván kết thúc.
+        /// </remarks>
         public static PlayerCharacter Nearest(Vector2 position)
         {
             PlayerCharacter nearest = null;
@@ -44,7 +55,7 @@ namespace LAC.Player
             for (int i = 0; i < _players.Count; i++)
             {
                 PlayerCharacter candidate = _players[i];
-                if (candidate == null) continue;
+                if (candidate == null || !candidate.IsAlive) continue;
 
                 float sqr = ((Vector2)candidate.transform.position - position).sqrMagnitude;
                 if (sqr >= nearestSqr) continue;

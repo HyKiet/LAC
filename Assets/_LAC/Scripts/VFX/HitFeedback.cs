@@ -27,7 +27,9 @@ namespace LAC.VFX
         [SerializeField] private Color _playerHitColor = new Color(1f, 0.45f, 0.4f);
 
         [Header("Nháy sáng")]
-        [SerializeField] private Color _flashColor = Color.white;
+        [Tooltip("Hệ số nhân, KHÔNG phải màu hiển thị. Phải lớn hơn 1 mới thấy được — " +
+                 "xem chú thích trong SpriteFlash.")]
+        [SerializeField] private Color _flashColor = new Color(6f, 6f, 6f, 1f);
 
         [Header("Sức nặng")]
         [Tooltip("Dừng hình khi quái chết. Không dùng cho mỗi lần trúng đòn thường.")]

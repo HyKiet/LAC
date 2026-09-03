@@ -81,6 +81,24 @@ namespace LAC.Player
             return true;
         }
 
+        /// <summary>
+        /// Đặt lại máu về đầy cho một ván mới. Chỉ host được gọi.
+        /// </summary>
+        /// <remarks>
+        /// Khác <see cref="ServerHeal"/> ở chỗ hàm này <b>cố ý bỏ qua kiểm tra còn sống</b>:
+        /// nó tồn tại chính là để dựng người chơi đã gục đứng dậy. Hook của SyncVar sẽ lo
+        /// phần còn lại trên cả hai máy — bật lại điều khiển, trả sprite về rõ nét, và gỡ
+        /// khoá hoạt ảnh chết.
+        /// </remarks>
+        [Server]
+        internal void ServerRestore()
+        {
+            int max = _character != null && _character.Data != null ? _character.Data.MaxHealth : 1;
+            _maxHealth = max;
+            _health = max;
+            _invulnerableUntil = 0f;
+        }
+
         /// <summary>Hồi máu. Chỉ host được gọi.</summary>
         [Server]
         internal void ServerHeal(int amount)

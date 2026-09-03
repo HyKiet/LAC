@@ -61,11 +61,19 @@ namespace LAC.Core
             EnemyTouchedPlayer?.Invoke(enemy, player);
 
         /// <summary>
-        /// Gỡ toàn bộ người nghe. Gọi khi kết thúc ván.
+        /// Gỡ toàn bộ người nghe. Gọi khi <b>rời scene đấu trường</b>, không phải khi kết
+        /// thúc một ván.
         /// </summary>
         /// <remarks>
         /// Sự kiện tĩnh sống qua cả lần đổi scene. Không gỡ thì đối tượng của ván trước vẫn
         /// bị gọi ở ván sau — một trong những nguồn rò rỉ khó truy nhất khi dùng event bus.
+        ///
+        /// <b>Không gọi hàm này giữa hai ván.</b> Chơi lại không nạp lại scene, nên
+        /// <c>HitFeedback</c> và <c>PlayerHud</c> vẫn đang sống và đã đăng ký từ
+        /// <c>OnEnable</c> — gọi <c>Clear</c> ở đó sẽ gỡ luôn chúng và ván sau mất sạch phản
+        /// hồi khi đánh trúng, trong khi mã vẫn chạy đúng nên rất khó truy. Người nghe của
+        /// một ván đều tự gỡ trong <c>OnDisable</c> của chính mình, nên không có rò rỉ nào
+        /// cần dọn ở ranh giới giữa hai ván.
         /// </remarks>
         public static void Clear()
         {

@@ -216,7 +216,13 @@ namespace LAC.Enemies
         private void Chase()
         {
             _target = PlayerRegistry.Nearest(Position);
-            if (_target == null) return;
+            if (_target == null)
+            {
+                // Khong con ai de duoi. Dung lai va tro ve dang dung yen thay vi giu tu the
+                // chay tai cho — de nguoi xem doc ra rang van da xong chu khong phai treo.
+                if (_animator != null) _animator.SetBaseState(AnimState.Idle);
+                return;
+            }
 
             Vector2 toTarget = (Vector2)_target.transform.position - Position;
             if (toTarget.sqrMagnitude <= _data.AttackRange * _data.AttackRange)
@@ -306,7 +312,7 @@ namespace LAC.Enemies
 
         private void Attack()
         {
-            if (_target == null || !_target.isActiveAndEnabled)
+            if (_target == null || !_target.isActiveAndEnabled || !_target.IsAlive)
             {
                 EnterState(EnemyState.Chasing);
                 return;

@@ -1,4 +1,5 @@
 using System;
+using LAC.Player;
 using Mirror;
 using UnityEngine;
 
@@ -74,6 +75,15 @@ namespace LAC.Core
         /// <summary>Phát khi ván kết thúc. Tham số true là thắng.</summary>
         public event Action<bool> RunEnded;
 
+        /// <summary>Phát khi một ván mới bắt đầu, kể cả ván chơi lại. Dùng để dọn giao diện.</summary>
+        public event Action RunStarted;
+
+        /// <summary>Ván đã kết thúc và đang chờ người chơi quyết định chơi lại.</summary>
+        public bool IsOver => _state == RunState.Victory || _state == RunState.Defeat;
+
+        /// <summary>Số đợt đã vượt qua. Bằng số đợt hiện tại trừ một khi đang đánh dở.</summary>
+        public int WavesCleared => _state == RunState.Victory ? _totalWaves : Mathf.Max(_currentWave - 1, 0);
+
         private void Awake()
         {
             // Điểm truy cập tĩnh nhằm loại bỏ FindObjectOfType trong vòng lặp gameplay.
@@ -120,7 +130,11 @@ namespace LAC.Core
         public void StartRun(int seed = 0)
         {
             _seed = seed != 0 ? seed : RunRandom.CreateSeed();
-            _alivePlayers = Mathf.Max(_alivePlayers, 1);
+
+            // Đếm lại từ danh sách thật thay vì tin vào bộ đếm cũ. Sau một ván thua bộ đếm
+            // đang ở 0; nếu chỉ kẹp về tối thiểu 1 thì ván chơi lại của hai người sẽ tưởng
+            // chỉ có một người, và ván kết thúc ngay khi người đầu tiên gục.
+            _alivePlayers = Mathf.Max(PlayerRegistry.Count, 1);
             _currentWave = 0;
 
             // Host khởi tạo ngay; client khởi tạo trong hook khi SyncVar tới nơi.
@@ -172,6 +186,58 @@ namespace LAC.Core
         [Server]
         public void ReportPlayerRevived() => _alivePlayers++;
 
+        /// <summary>
+        /// Bắt đầu lại từ đợt 1 với seed mới. Chỉ host được gọi, và chỉ khi ván đã kết thúc.
+        /// </summary>
+        /// <remarks>
+        /// Chơi lại <b>không</b> đi qua việc nạp lại scene. Nạp lại scene trong Mirror đồng
+        /// nghĩa với ngắt và nối lại toàn bộ đối tượng mạng, tức là ở co-op người kia bị đá
+        /// ra rồi phải vào lại. Ở đây chỉ có trạng thái được đặt lại còn các đối tượng mạng
+        /// giữ nguyên, nên người chơi thứ hai không nhận ra điều gì ngoài việc ván mới bắt đầu.
+        ///
+        /// Đàn quái của ván cũ được giữ trên sân cho tới đúng lúc này — xem chú thích ở
+        /// <c>WaveManager.EndRun</c> — và được dọn khi đợt 1 của ván mới sinh ra.
+        /// </remarks>
+        [Server]
+        public void RestartRun()
+        {
+            if (!IsOver) return;
+
+            for (int i = 0; i < PlayerRegistry.Count; i++)
+            {
+                PlayerCharacter player = PlayerRegistry.All[i];
+                if (player == null) continue;
+
+                if (player.TryGetComponent(out PlayerHealth health)) health.ServerRestore();
+                if (player.TryGetComponent(out PlayerMovement movement)) movement.ServerRespawn(SpawnPoint(i));
+            }
+
+            StartRun();
+        }
+
+        /// <summary>
+        /// Client xin chơi lại. Host là bên thẩm định và bên thi hành.
+        /// </summary>
+        /// <remarks>
+        /// Đúng mẫu ở CLAUDE.md mục 3.2: client yêu cầu, host kiểm tra điều kiện, host đổi
+        /// trạng thái, SyncVar tự lan xuống. Không đặt quyền chơi lại ở client vì hai người
+        /// bấm cùng lúc sẽ khởi động hai ván chồng lên nhau.
+        ///
+        /// <c>requiresAuthority = false</c> vì đối tượng này thuộc về scene chứ không thuộc
+        /// về một kết nối nào.
+        /// </remarks>
+        [Command(requiresAuthority = false)]
+        public void CmdRequestRestart() => RestartRun();
+
+        private Vector3 SpawnPoint(int index)
+        {
+            Transform start = NetworkManager.startPositions.Count > 0
+                ? NetworkManager.startPositions[index % NetworkManager.startPositions.Count]
+                : null;
+
+            return start != null ? start.position : Vector3.zero;
+        }
+
         [Server]
         private void StartWave(int waveIndex)
         {
@@ -208,6 +274,9 @@ namespace LAC.Core
             switch (newState)
             {
                 case RunState.WaveActive:
+                    // Đợt 1 vừa bắt đầu nghĩa là một ván mới — kể cả ván chơi lại. Giao diện
+                    // kết thúc ván nghe sự kiện này để tự đóng lại.
+                    if (_currentWave == 1) RunStarted?.Invoke();
                     if (_currentWave > 0) WaveStarted?.Invoke(_currentWave);
                     break;
                 case RunState.CardSelection:

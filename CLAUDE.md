@@ -45,7 +45,7 @@ Người chơi chỉ có **hai thao tác: di chuyển và lướt (dash)**. Vũ 
 | Nhân vật | Vũ khí | Máu | Tốc độ | Tầm đánh | Chu kỳ |
 |---|---|---|---|---|---|
 | Thạch Sanh | Đàn bầu | 6 | 5 | 4 — vòng tròn | 0.9 s |
-| Gióng | Roi sắt | 10 | 3 | 2.5 — hình cung | 0.6 s |
+| Gióng | Roi sắt | 10 | 3 | **3.2** — hình cung | 0.6 s |
 | Tấm | Sáo trúc | 4 | 8 | 7 — tia thẳng | 0.12 s |
 
 Vũ khí gắn cố định với nhân vật và không thể thay thế trong ván. Việc đổi nhân vật tương đương đổi lối chơi.
@@ -277,6 +277,7 @@ Nhóm phát triển chủ yếu bằng phương pháp AI-assisted. Ba quy địn
 | Đạo diễn giữ tổn thất máu trong 15–25% ở mọi thời điểm | **Điều tiết bất đối xứng:** được phép giảm áp lực khi người chơi gặp khó; khi người chơi mạnh thì thay đổi **thành phần và hướng sinh quái**, không tăng số lượng hoặc lượng máu | Siết tổn thất máu ở cả hai chiều là trừng phạt người chơi vì xây dựng build hiệu quả, làm triệt tiêu cảm giác tưởng thưởng |
 | Triển khai co-op ở tuần 10–12 | **Kiến trúc mạng từ tuần 1** | Xem mục 3.1 |
 | Tấm: nhân đôi sát thương trong 1 giây sau dash | **Áp dụng cho phát bắn kế tiếp** | Thời gian hồi dash 0.4 s ngắn hơn cửa sổ 1 giây, khiến hiệu ứng duy trì vĩnh viễn |
+| Gióng tầm đánh 2.5 | **3.2** | Quái cơ bản ban đầu chạy tốc độ 3, đúng bằng Gióng — nhân vật chậm nhất không thoát được vòng vây nên tầm ngắn thành vô dụng. Đã hạ tốc độ quái xuống 2.2; tầm 3.2 là phần bù còn lại, vẫn giữ Gióng là nhân vật cận chiến |
 
 ---
 

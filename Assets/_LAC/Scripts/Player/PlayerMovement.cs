@@ -58,6 +58,35 @@ namespace LAC.Player
         }
 
         /// <summary>
+        /// Đưa nhân vật về điểm sinh khi ván mới bắt đầu. Chỉ host được gọi.
+        /// </summary>
+        /// <remarks>
+        /// Phải đi qua RPC chứ không đặt vị trí thẳng trên host. `NetworkTransform` của người
+        /// chơi chạy theo chiều client → server, nên vị trí do host ghi sẽ bị chính chủ sở
+        /// hữu ghi đè lại ngay gói tin kế tiếp: người chơi trên máy host thấy mình về điểm
+        /// sinh còn máy kia thì không, rồi cả hai lệch nhau.
+        /// </remarks>
+        [Server]
+        public void ServerRespawn(Vector3 position) => RpcRespawn(position);
+
+        [ClientRpc]
+        private void RpcRespawn(Vector3 position)
+        {
+            // Mỗi máy chỉ dịch chuyển nhân vật của chính nó; nhân vật của người kia sẽ tự
+            // tới nơi qua NetworkTransform.
+            if (!isOwned) { _lastPosition = position; return; }
+
+            _rigidbody.linearVelocity = Vector2.zero;
+            _rigidbody.position = position;
+            transform.position = position;
+
+            _lastPosition = position;
+            IsMoving = false;
+            Facing = Vector2.down;
+            _facingOverrideUntil = 0f;
+        }
+
+        /// <summary>
         /// Quay mặt về một hướng trong một khoảng thời gian, bất kể đang đi hướng nào.
         /// </summary>
         /// <remarks>
