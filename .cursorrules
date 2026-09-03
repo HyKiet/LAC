@@ -1,0 +1,11 @@
+Đọc AGENTS.md trước, rồi CLAUDE.md. Đây là tài liệu chủ đạo của dự án.
+
+Ba ràng buộc không được vi phạm:
+1. Không có nhánh mã riêng cho chơi đơn — chơi đơn là Mirror host mode với một client. Cấm `if (isSinglePlayer)`.
+2. Đồng bộ sự kiện, không đồng bộ trạng thái. Không gắn NetworkIdentity lên đạn hay hiệu ứng.
+3. Cấm UnityEngine.Random trong luồng gameplay — dùng LAC.Core.RunRandom.
+
+Trạng thái công việc nằm ở docs/TASKS.md. Hoàn thành một hạng mục thì phải cập nhật
+file đó trong cùng commit với mã.
+
+Định danh viết bằng tiếng Anh; chú thích và văn bản hiển thị viết bằng tiếng Việt.

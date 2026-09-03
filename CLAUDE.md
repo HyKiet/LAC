@@ -12,6 +12,8 @@ Bộ tài liệu dự án gồm ba văn bản:
 
 Tài liệu tham chiếu bổ sung: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — sơ đồ hệ thống và quan hệ giữa các module.
 
+Công cụ AI khác Claude Code đọc [AGENTS.md](AGENTS.md) làm điểm vào — file đó tóm tắt ràng buộc, trạng thái hiện tại và các bẫy đã từng mất nhiều giờ.
+
 ---
 
 ## 1. Tổng quan sản phẩm
