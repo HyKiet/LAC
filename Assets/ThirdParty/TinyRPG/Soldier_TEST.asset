@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba3835d057a5ca94ab483c6a9930c7ce, type: 3}
+  m_Name: Soldier_TEST
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.VFX.SpriteAnimationSet
+  _clips:
+  - _state: 0
+    _frames:
+    - {fileID: -6959240526762826261, guid: 4babc988628669f438428c3ac0c6c77d, type: 3}
+    - {fileID: 6273637514668394407, guid: 4babc988628669f438428c3ac0c6c77d, type: 3}
+    - {fileID: 5344471610817549075, guid: 4babc988628669f438428c3ac0c6c77d, type: 3}
+    - {fileID: 6659727407018504118, guid: 4babc988628669f438428c3ac0c6c77d, type: 3}
+    - {fileID: 7802090489322608717, guid: 4babc988628669f438428c3ac0c6c77d, type: 3}
+    - {fileID: 3214507315791699118, guid: 4babc988628669f438428c3ac0c6c77d, type: 3}
+    _fps: 8
+    _loop: 1
+    _holdLastFrame: 0
+  - _state: 1
+    _frames:
+    - {fileID: 3661309534013752325, guid: 6aba8acb5d9fff84b9bbbdc24bbc1411, type: 3}
+    - {fileID: -4957804133577398636, guid: 6aba8acb5d9fff84b9bbbdc24bbc1411, type: 3}
+    - {fileID: -3101956384212191621, guid: 6aba8acb5d9fff84b9bbbdc24bbc1411, type: 3}
+    - {fileID: -8010437836585537589, guid: 6aba8acb5d9fff84b9bbbdc24bbc1411, type: 3}
+    - {fileID: 3244374764285207902, guid: 6aba8acb5d9fff84b9bbbdc24bbc1411, type: 3}
+    - {fileID: -485439556189050524, guid: 6aba8acb5d9fff84b9bbbdc24bbc1411, type: 3}
+    - {fileID: -6811688143634163936, guid: 6aba8acb5d9fff84b9bbbdc24bbc1411, type: 3}
+    - {fileID: 3068859675810577015, guid: 6aba8acb5d9fff84b9bbbdc24bbc1411, type: 3}
+    _fps: 12
+    _loop: 1
+    _holdLastFrame: 0
+  - _state: 2
+    _frames:
+    - {fileID: 803507284070732230, guid: 9d8cadadbffd710478bce40297a3b9fd, type: 3}
+    - {fileID: 2401737223721200415, guid: 9d8cadadbffd710478bce40297a3b9fd, type: 3}
+    - {fileID: -8817086654764101268, guid: 9d8cadadbffd710478bce40297a3b9fd, type: 3}
+    - {fileID: -8919146800522588946, guid: 9d8cadadbffd710478bce40297a3b9fd, type: 3}
+    - {fileID: -7456918057786217639, guid: 9d8cadadbffd710478bce40297a3b9fd, type: 3}
+    - {fileID: 7424397770753483781, guid: 9d8cadadbffd710478bce40297a3b9fd, type: 3}
+    _fps: 15
+    _loop: 0
+    _holdLastFrame: 0
+  - _state: 3
+    _frames:
+    - {fileID: 8162659410228577127, guid: e82d5d17632e26344981338d99e37a47, type: 3}
+    - {fileID: -8001067120496743791, guid: e82d5d17632e26344981338d99e37a47, type: 3}
+    - {fileID: -6497225179394124338, guid: e82d5d17632e26344981338d99e37a47, type: 3}
+    - {fileID: 6006208700412312921, guid: e82d5d17632e26344981338d99e37a47, type: 3}
+    _fps: 12
+    _loop: 0
+    _holdLastFrame: 0
+  - _state: 4
+    _frames:
+    - {fileID: -8837730503579240587, guid: 102beeb41a47e3545a1feeb5d0455e68, type: 3}
+    - {fileID: 2726879130252316194, guid: 102beeb41a47e3545a1feeb5d0455e68, type: 3}
+    - {fileID: -8100786454920621681, guid: 102beeb41a47e3545a1feeb5d0455e68, type: 3}
+    - {fileID: -3045238035382778172, guid: 102beeb41a47e3545a1feeb5d0455e68, type: 3}
+    _fps: 8
+    _loop: 0
+    _holdLastFrame: 1
+  _playHurtClip: 0

@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba3835d057a5ca94ab483c6a9930c7ce, type: 3}
+  m_Name: Orc_TEST
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.VFX.SpriteAnimationSet
+  _clips:
+  - _state: 0
+    _frames:
+    - {fileID: -9150489477472823759, guid: bd7551b727c65064e8ec8764b0ddbd4a, type: 3}
+    - {fileID: 542560960333195376, guid: bd7551b727c65064e8ec8764b0ddbd4a, type: 3}
+    - {fileID: 3668920506500180977, guid: bd7551b727c65064e8ec8764b0ddbd4a, type: 3}
+    - {fileID: 4407846453197948913, guid: bd7551b727c65064e8ec8764b0ddbd4a, type: 3}
+    - {fileID: -662730461484591835, guid: bd7551b727c65064e8ec8764b0ddbd4a, type: 3}
+    - {fileID: -4627010983029706919, guid: bd7551b727c65064e8ec8764b0ddbd4a, type: 3}
+    _fps: 8
+    _loop: 1
+    _holdLastFrame: 0
+  - _state: 1
+    _frames:
+    - {fileID: -783973874332692857, guid: e8847e37619d1f244876bb594c88e881, type: 3}
+    - {fileID: -4374825176789774050, guid: e8847e37619d1f244876bb594c88e881, type: 3}
+    - {fileID: -3452230526400582556, guid: e8847e37619d1f244876bb594c88e881, type: 3}
+    - {fileID: -4102074181349533089, guid: e8847e37619d1f244876bb594c88e881, type: 3}
+    - {fileID: 7543058853353936312, guid: e8847e37619d1f244876bb594c88e881, type: 3}
+    - {fileID: -5816490669822362881, guid: e8847e37619d1f244876bb594c88e881, type: 3}
+    - {fileID: 2471731790482710774, guid: e8847e37619d1f244876bb594c88e881, type: 3}
+    - {fileID: -3210234295470494024, guid: e8847e37619d1f244876bb594c88e881, type: 3}
+    _fps: 12
+    _loop: 1
+    _holdLastFrame: 0
+  - _state: 2
+    _frames:
+    - {fileID: 7386512506193448783, guid: 1a6478a9a270b5c45bd3f618cf363c8b, type: 3}
+    - {fileID: 8327985162324194679, guid: 1a6478a9a270b5c45bd3f618cf363c8b, type: 3}
+    - {fileID: -5335688800271179607, guid: 1a6478a9a270b5c45bd3f618cf363c8b, type: 3}
+    - {fileID: 3387206350577020049, guid: 1a6478a9a270b5c45bd3f618cf363c8b, type: 3}
+    - {fileID: 2802558218973951980, guid: 1a6478a9a270b5c45bd3f618cf363c8b, type: 3}
+    - {fileID: 740700845294451524, guid: 1a6478a9a270b5c45bd3f618cf363c8b, type: 3}
+    _fps: 15
+    _loop: 0
+    _holdLastFrame: 0
+  - _state: 3
+    _frames:
+    - {fileID: -7183568614796697643, guid: e72b9bac869413c4c85d3020ebab4830, type: 3}
+    - {fileID: -6658383062474771407, guid: e72b9bac869413c4c85d3020ebab4830, type: 3}
+    - {fileID: -6996181481567200596, guid: e72b9bac869413c4c85d3020ebab4830, type: 3}
+    - {fileID: -5674297547405555215, guid: e72b9bac869413c4c85d3020ebab4830, type: 3}
+    _fps: 12
+    _loop: 0
+    _holdLastFrame: 0
+  - _state: 4
+    _frames:
+    - {fileID: -6634240400177418082, guid: 7fe2f9ae7e50d604bae400e834314429, type: 3}
+    - {fileID: 370393475637858559, guid: 7fe2f9ae7e50d604bae400e834314429, type: 3}
+    - {fileID: -9080859390935191118, guid: 7fe2f9ae7e50d604bae400e834314429, type: 3}
+    - {fileID: 8470104493075811987, guid: 7fe2f9ae7e50d604bae400e834314429, type: 3}
+    _fps: 8
+    _loop: 0
+    _holdLastFrame: 1
+  _playHurtClip: 0

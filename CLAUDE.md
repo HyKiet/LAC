@@ -153,6 +153,8 @@ Mọi phép ngẫu nhiên có ảnh hưởng đến gameplay phải đi qua `LAC
 
 Toàn bộ mã nguồn và tài nguyên do nhóm phát triển nằm trong `Assets/_LAC/`. Các thư mục khác trong `Assets/` thuộc về package bên thứ ba và **không được chỉnh sửa**.
 
+Asset bên thứ ba tải về đặt tại `Assets/ThirdParty/<tên gói>/`, không trộn vào `_LAC/`, để có thể xoá nguyên gói khi không cần nữa. Xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md) cho các gói asset thử nghiệm hiện có.
+
 ```
 Assets/_LAC/
 ├── Scripts/
