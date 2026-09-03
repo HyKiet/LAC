@@ -49,6 +49,10 @@ Mở thư mục dự án bằng VS Code và chấp nhận danh sách extension �
 | [docs/TASKS.md](docs/TASKS.md) | Kế hoạch công việc, phân công, nhật ký hoàn thành |
 | [docs/GDD.md](docs/GDD.md) | Đặc tả thiết kế gốc — một số nội dung đã lỗi thời, xem mục 7 của CLAUDE.md |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Sơ đồ hệ thống và quan hệ giữa các module |
+| [docs/WORKFLOW.md](docs/WORKFLOW.md) | **Quy trình làm việc nhóm — đọc trước khi commit lần đầu** |
+| [docs/PALETTE.md](docs/PALETTE.md) | Bảng 24 màu Đông Hồ đã chốt, và ràng buộc màu cho đòn địch |
+| [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md) | Gói asset thử nghiệm: dùng phần nào, gỡ ra thế nào |
+| [docs/learning/README.md](docs/learning/README.md) | Lộ trình đọc code dành cho người mới, giải thích từng file first-party |
 
 ---
 
