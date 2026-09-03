@@ -1,5 +1,6 @@
 using LAC.Core;
 using LAC.Player;
+using LAC.VFX;
 using UnityEngine;
 
 namespace LAC.Enemies
@@ -22,6 +23,9 @@ namespace LAC.Enemies
     public sealed class Enemy : MonoBehaviour, IPoolable
     {
         [SerializeField] private SpriteRenderer _renderer;
+
+        [Tooltip("Trình chạy hoạt ảnh. Bỏ trống thì quái dùng sprite tĩnh trong EnemyData.")]
+        [SerializeField] private SpriteAnimator _animator;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Collider2D _collider;
 
@@ -86,6 +90,14 @@ namespace LAC.Enemies
             _renderer.sprite = data.BodySprite;
             _renderer.color = data.Tint;
 
+            // Đối tượng này vừa được dùng cho một con đã chết, và nó đang khoá ở khung cuối
+            // của hoạt ảnh chết. Phải dọn trước khi đặt trạng thái mới.
+            if (_animator != null)
+            {
+                _animator.SetAnimationSet(data.AnimationSet);
+                _animator.Unlock();
+            }
+
             EnterState(data.SpawnDelay > 0f ? EnemyState.Spawning : EnemyState.Chasing);
             EnemyRegistry.Register(this);
         }
@@ -122,6 +134,7 @@ namespace LAC.Enemies
 
             _state = EnemyState.Dead;
             if (_collider != null) _collider.enabled = false;
+            if (_animator != null) _animator.Lock(AnimState.Death);
 
             GameEvents.RaiseEnemyDied(this);
             EnemyRegistry.Unregister(this);
@@ -166,6 +179,16 @@ namespace LAC.Enemies
             _state = next;
             if (next == EnemyState.Spawning && _data != null)
                 _stateEndsAt = Time.time + _data.SpawnDelay;
+
+            // Đứng đánh thì nền vẫn là Idle: mỗi nhịp chạm sẽ chồng một lượt Attack lên trên,
+            // còn giữa hai nhịp thì con quái phải đứng thở chứ không lặp mãi động tác vung.
+            if (_animator == null) return;
+            switch (next)
+            {
+                case EnemyState.Chasing: _animator.SetBaseState(AnimState.Walk); break;
+                case EnemyState.Spawning:
+                case EnemyState.Attacking: _animator.SetBaseState(AnimState.Idle); break;
+            }
         }
 
         private void FixedUpdate()
@@ -216,6 +239,10 @@ namespace LAC.Enemies
 
         private void Step(Vector2 direction, float speed)
         {
+            // Lật hình là biểu diễn cục bộ, không đồng bộ — xem bảng ở CLAUDE.md mục 3.2.
+            if (_renderer != null && Mathf.Abs(direction.x) > 0.01f)
+                _renderer.flipX = direction.x < 0f;
+
             Vector2 wanted = Position + direction * (speed * Time.fixedDeltaTime);
 
             if (Time.time < _knockbackEndsAt)
@@ -301,6 +328,11 @@ namespace LAC.Enemies
 
             if (Time.time < _nextAttackAt) return;
             _nextAttackAt = Time.time + _data.AttackInterval;
+
+            // Chặn trần theo nhịp đánh: clip dài hơn thì nhịp sau cắt ngang nhịp trước và
+            // động tác đứng nguyên ở khung đầu.
+            if (_animator != null)
+                _animator.PlayOneShot(AnimState.Attack, _data.AttackInterval * 0.8f);
 
             // Quái không tự trừ máu người chơi. Nó chỉ báo "hai bên đang chạm nhau" — một
             // sự thật cục bộ. Việc trừ máu là thẩm quyền của host và do DamageSystem ở T-13

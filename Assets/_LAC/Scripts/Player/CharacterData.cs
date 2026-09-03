@@ -43,6 +43,10 @@ namespace LAC.Player
         [Tooltip("Tốc độ đạn. Chỉ dùng cho vũ khí hình tia.")]
         [SerializeField, Min(1f)] private float _projectileSpeed = 12f;
 
+        [Tooltip("Phát sóng âm Đông Sơn khi khai hoả. Tắt cho vũ khí mà chính hoạt ảnh " +
+                 "đã tả đủ đòn đánh.")]
+        [SerializeField] private bool _spawnSoundWave = true;
+
         [Header("Lướt")]
         [SerializeField, Min(0.1f)] private float _dashDistance = 6f;
         [SerializeField, Min(0.02f)] private float _dashDuration = 0.15f;
@@ -51,6 +55,9 @@ namespace LAC.Player
         [Header("Hiển thị")]
         [SerializeField] private Sprite _bodySprite;
         [SerializeField] private Sprite _portrait;
+
+        [Tooltip("Bộ hoạt ảnh. Bỏ trống thì nhân vật dùng sprite tĩnh ở trên.")]
+        [SerializeField] private VFX.SpriteAnimationSet _animationSet;
 
         public CharacterId Id => _id;
         public string DisplayName => _displayName;
@@ -66,12 +73,33 @@ namespace LAC.Player
         public int BaseDamage => _baseDamage;
         public float ProjectileSpeed => _projectileSpeed;
 
+        /// <summary>
+        /// Vũ khí này có phát sóng âm Đông Sơn hay không.
+        /// </summary>
+        /// <remarks>
+        /// Là dữ liệu chứ không phải hằng số trong mã, vì nó phụ thuộc vào sprite: khi chính
+        /// hoạt ảnh đã vẽ ra đường vung vũ khí thì thêm một vòng sóng nữa là vẽ hai lần cùng
+        /// một thông tin. Đây <b>không</b> phải là cắt bỏ cơ chế sóng âm ở mục 2.1 — nó vẫn
+        /// bật cho vũ khí tầm xa, nơi đường đi của đòn đánh không nằm trong hoạt ảnh.
+        /// </remarks>
+        public bool SpawnSoundWave => _spawnSoundWave;
+
         public float DashDistance => _dashDistance;
         public float DashDuration => _dashDuration;
         public float DashCooldown => _dashCooldown;
 
         public Sprite BodySprite => _bodySprite;
         public Sprite Portrait => _portrait;
+
+        /// <summary>
+        /// Bộ hoạt ảnh, hoặc null nếu nhân vật chỉ có sprite tĩnh.
+        /// </summary>
+        /// <remarks>
+        /// Null là giá trị hợp lệ và phải giữ nguyên như vậy. Bộ hoạt ảnh hiện tại nằm trong
+        /// gói asset thử nghiệm ở <c>Assets/ThirdParty/</c>; khi T-18 xong và gói bị xoá,
+        /// trường này thành null và nhân vật phải quay về sprite tĩnh chứ không được vỡ.
+        /// </remarks>
+        public VFX.SpriteAnimationSet AnimationSet => _animationSet;
 
         /// <summary>Tốc độ di chuyển trong lúc lướt, suy ra từ quãng đường và thời lượng.</summary>
         public float DashSpeed => _dashDistance / _dashDuration;

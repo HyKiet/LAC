@@ -32,6 +32,9 @@ namespace LAC.Enemies
         [SerializeField] private Sprite _bodySprite;
         [SerializeField] private Color _tint = Color.white;
 
+        [Tooltip("Bộ hoạt ảnh. Bỏ trống thì quái dùng sprite tĩnh ở trên.")]
+        [SerializeField] private VFX.SpriteAnimationSet _animationSet;
+
         public string DisplayName => _displayName;
         public int MaxHealth => _maxHealth;
         public float MoveSpeed => _moveSpeed;
@@ -41,5 +44,8 @@ namespace LAC.Enemies
         public float SpawnDelay => _spawnDelay;
         public Sprite BodySprite => _bodySprite;
         public Color Tint => _tint;
+
+        /// <summary>Bộ hoạt ảnh, hoặc null nếu quái chỉ có sprite tĩnh. Null là hợp lệ.</summary>
+        public VFX.SpriteAnimationSet AnimationSet => _animationSet;
     }
 }

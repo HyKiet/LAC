@@ -1,3 +1,4 @@
+using System;
 using LAC.Core;
 using LAC.Enemies;
 using LAC.Player;
@@ -38,7 +39,7 @@ namespace LAC.Combat
 
         [Header("Biểu diễn")]
         [Tooltip("Màu hiệu ứng của người chơi. KHÔNG được trùng màu dành cho đòn địch — mục 2.1.")]
-        [SerializeField] private Color _tint = new Color(0.85f, 0.9f, 1f, 1f);
+        [SerializeField] private Color _tint = new Color(0.612f, 0.812f, 0.753f, 1f); // ChamSang #9CCFC0
 
         private float _nextShotAt;
         private ObjectPool<Projectile> _projectilePool;
@@ -48,6 +49,16 @@ namespace LAC.Combat
 
         /// <summary>Mục tiêu hiện tại, hoặc null nếu không có quái nào trong tầm.</summary>
         public Enemy CurrentTarget { get; private set; }
+
+        /// <summary>
+        /// Vừa khai hoả. Tham số là hướng tới mục tiêu, đã chuẩn hoá.
+        /// </summary>
+        /// <remarks>
+        /// Chỉ dành cho phần biểu diễn — hoạt ảnh đánh và hướng nhìn. Sát thương đã do
+        /// <see cref="DamageSystem"/> xử lý bên trong các hàm Fire, người nghe sự kiện này
+        /// không được động vào máu của bất kỳ ai.
+        /// </remarks>
+        public event Action<Vector2> Fired;
 
         private void Update()
         {
@@ -72,6 +83,12 @@ namespace LAC.Combat
                 case WeaponShape.Arc: FireArc(data); break;
                 default: FireLine(data); break;
             }
+
+            Vector2 toTarget = CurrentTarget != null
+                ? (Vector2)(CurrentTarget.transform.position - transform.position)
+                : Vector2.zero;
+
+            Fired?.Invoke(toTarget.sqrMagnitude > 0.0001f ? toTarget.normalized : Vector2.right);
         }
 
         /// <summary>Vòng tròn quanh người chơi — đàn bầu của Thạch Sanh.</summary>
@@ -90,7 +107,7 @@ namespace LAC.Combat
                 DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
             }
 
-            SpawnWave(origin, 0.5f, data.AttackRange);
+            if (data.SpawnSoundWave) SpawnWave(origin, 0.5f, data.AttackRange);
         }
 
         /// <summary>Hình cung hướng về mục tiêu gần nhất — roi sắt của Gióng.</summary>
@@ -125,8 +142,10 @@ namespace LAC.Combat
                 DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
             }
 
-            // Vòng nhỏ đặt lệch về phía trước, đủ để đọc ra hướng vung roi.
-            SpawnWave(origin + facing * (data.AttackRange * 0.5f), 0.3f, data.AttackRange * 0.7f);
+            // Vòng nhỏ đặt lệch về phía trước, đủ để đọc ra hướng vung roi — chỉ khi bản
+            // thân hoạt ảnh chưa tả được đường roi.
+            if (data.SpawnSoundWave)
+                SpawnWave(origin + facing * (data.AttackRange * 0.5f), 0.3f, data.AttackRange * 0.7f);
         }
 
         /// <summary>Tia thẳng về phía mục tiêu gần nhất — sáo trúc của Tấm.</summary>

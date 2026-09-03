@@ -30,6 +30,13 @@ namespace LAC.Player
         [Tooltip("Tốc độ dùng khi chưa nạp được chỉ số nhân vật.")]
         [SerializeField, Min(0.1f)] private float _fallbackSpeed = 5f;
 
+        [Tooltip("Ngưỡng tốc độ để coi nhân vật của người khác là đang đi, tính bằng đơn vị mỗi giây.")]
+        [SerializeField, Min(0f)] private float _remoteMoveThreshold = 0.35f;
+
+        private Vector2 _lastPosition;
+        private Vector2 _facingOverride;
+        private float _facingOverrideUntil;
+
         /// <summary>Hướng nhìn hiện tại. Giữ nguyên khi đứng yên, dùng cho lướt và ngắm bắn.</summary>
         public Vector2 Facing { get; private set; } = Vector2.down;
 
@@ -46,19 +53,78 @@ namespace LAC.Player
             _rigidbody.bodyType = isOwned ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
 
             if (_input != null) _input.enabled = isOwned;
+
+            _lastPosition = transform.position;
+        }
+
+        /// <summary>
+        /// Quay mặt về một hướng trong một khoảng thời gian, bất kể đang đi hướng nào.
+        /// </summary>
+        /// <remarks>
+        /// Vũ khí gọi hàm này khi khai hoả. Vừa chạy sang trái vừa bắn sang phải là tình
+        /// huống thường xuyên trong thể loại này — quay mặt về phía mục tiêu thì người chơi
+        /// đọc được mình đang đánh ai, còn quay theo hướng chạy thì không.
+        /// </remarks>
+        public void FaceTowards(Vector2 direction, float holdSeconds)
+        {
+            if (direction.sqrMagnitude < 0.0001f) return;
+
+            _facingOverride = direction;
+            _facingOverrideUntil = Time.time + holdSeconds;
         }
 
         private void Update()
         {
-            if (!isOwned || _input == null) return;
+            if (isOwned) ReadOwnedIntent();
+            else ReadRemoteIntent();
+
+            ApplyFlip();
+        }
+
+        private void ReadOwnedIntent()
+        {
+            if (_input == null) return;
 
             Vector2 move = _input.Move;
             IsMoving = move.sqrMagnitude > 0f;
             if (IsMoving) Facing = move;
+        }
 
-            // Lật hình là phần biểu diễn thuần tuý, xử lý cục bộ và không đồng bộ.
-            if (_renderer != null && Mathf.Abs(move.x) > 0.01f)
-                _renderer.flipX = move.x < 0f;
+        /// <summary>
+        /// Suy ra ý định di chuyển của nhân vật người khác từ độ dời vị trí.
+        /// </summary>
+        /// <remarks>
+        /// Máy này không có thao tác bàn phím của họ — thứ duy nhất nó nhận được là vị trí
+        /// do <c>NetworkTransform</c> bơm vào. Không suy ra ở đây thì nhân vật đồng đội
+        /// trượt ngang màn hình trong tư thế đứng yên, luôn quay mặt một phía.
+        ///
+        /// Có ngưỡng chết vì vị trí đến theo từng gói tin rồi được nội suy, nên luôn có
+        /// dao động nhỏ ngay cả khi họ đứng im; không lọc thì nhân vật rung qua rung lại
+        /// giữa hai hoạt ảnh.
+        /// </remarks>
+        private void ReadRemoteIntent()
+        {
+            Vector2 current = transform.position;
+            Vector2 delta = current - _lastPosition;
+            _lastPosition = current;
+
+            float dt = Time.deltaTime;
+            if (dt <= 0f) return;
+
+            float speed = delta.magnitude / dt;
+            IsMoving = speed > _remoteMoveThreshold;
+            if (IsMoving) Facing = delta.normalized;
+        }
+
+        /// <summary>Lật hình là phần biểu diễn thuần tuý, xử lý cục bộ và không đồng bộ.</summary>
+        private void ApplyFlip()
+        {
+            if (_renderer == null) return;
+
+            Vector2 look = Time.time < _facingOverrideUntil ? _facingOverride : Facing;
+            if (!IsMoving && Time.time >= _facingOverrideUntil) return;
+
+            if (Mathf.Abs(look.x) > 0.01f) _renderer.flipX = look.x < 0f;
         }
 
         private void FixedUpdate()

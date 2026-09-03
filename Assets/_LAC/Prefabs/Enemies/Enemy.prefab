@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6029944035106838183}
   - component: {fileID: 4826519669651692187}
   - component: {fileID: 5211852960315250749}
+  - component: {fileID: 6593550256644886769}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -172,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Enemies.Enemy
   _renderer: {fileID: 8653298267190069276}
+  _animator: {fileID: 6593550256644886769}
   _rigidbody: {fileID: 6173993738796458205}
   _collider: {fileID: 6029944035106838183}
   _arenaMargin: 0.4
@@ -196,3 +198,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.VFX.SpriteFlash
   _renderer: {fileID: 8653298267190069276}
   _duration: 0.07
+--- !u!114 &6593550256644886769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7463194521601460387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427ddf8216b9c004abd6a8b65ebb26ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.VFX.SpriteAnimator
+  _renderer: {fileID: 8653298267190069276}
+  _set: {fileID: 0}
