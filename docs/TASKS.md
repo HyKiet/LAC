@@ -114,8 +114,9 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 ### Hệ thống thẻ — @Kang
 
-- [ ] **T-21** `CardData` và cơ chế áp hiệu ứng lên chỉ số — **@Kang**
+- [x] **T-21** `CardData` và cơ chế áp hiệu ứng lên chỉ số — **@Kang** · 06/09
   > **Không sửa trực tiếp `CharacterData`.** Đó là ScriptableObject; sửa lúc chạy sẽ ghi đè vĩnh viễn vào asset trong Editor. Cần một lớp chỉ số của ván, khởi tạo từ `CharacterData` rồi cho thẻ cộng dồn lên bản sao đó.
+  > Demo 7 thẻ dùng `CardDefinition` và `PlayerUpgradeState`, áp sát thương/tốc đánh/máu/lướt cùng combo Song Tiễn–Xuyên Tâm–Bộc Phá mà không sửa asset nhân vật. `Scripts/Cards` · `Data/Cards` · `Combat/WeaponAuto.cs` · `Combat/Projectile.cs`.
 - [ ] **T-22** Giao diện chọn 1 trong 3 thẻ — 10 giây, 2 lượt đổi thẻ — **@Kang**
   > Dựng thành prefab trong `Prefabs/UI/Cards`, sinh lúc chạy. Không đặt sẵn vào `Arena.unity`.
 - [ ] **T-23** Đồng bộ chọn thẻ: đợt kế chỉ khởi động khi cả hai người đã chọn xong — **@Kang**

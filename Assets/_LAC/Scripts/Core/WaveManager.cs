@@ -1,4 +1,5 @@
 using LAC.Enemies;
+using LAC.Cards;
 using Mirror;
 using UnityEngine;
 
@@ -81,7 +82,8 @@ namespace LAC.Core
 
                 // Chỗ giữ tạm cho màn hình chọn thẻ. Khi T-22 và T-23 xong thì lớp thẻ mới
                 // là thứ gọi ReportCardSelectionComplete, và cờ ở trên được tắt.
-                if (_autoAdvanceCardSelection) _advanceAt = Time.time + _autoAdvanceDelay;
+                if (_autoAdvanceCardSelection && !CardSelectionController.IsAvailable)
+                    _advanceAt = Time.time + _autoAdvanceDelay;
                 return;
             }
 

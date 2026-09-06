@@ -1,4 +1,5 @@
 using System;
+using LAC.Cards;
 using LAC.Core;
 using LAC.Enemies;
 using LAC.Player;
@@ -44,8 +45,17 @@ namespace LAC.Combat
         private float _nextShotAt;
         private ObjectPool<Projectile> _projectilePool;
         private ObjectPool<VFX.SoundWave> _wavePool;
+        private PlayerUpgradeState _upgrades;
 
         private CharacterData Data => _character != null ? _character.Data : null;
+        private PlayerUpgradeState Upgrades
+        {
+            get
+            {
+                if (_upgrades == null && _character != null) _upgrades = _character.Upgrades;
+                return _upgrades;
+            }
+        }
 
         /// <summary>Mục tiêu hiện tại, hoặc null nếu không có quái nào trong tầm.</summary>
         public Enemy CurrentTarget { get; private set; }
@@ -65,12 +75,16 @@ namespace LAC.Combat
             CharacterData data = Data;
             if (data == null) return;
             if (_health != null && !_health.IsAlive) return;
+            if (CardSelectionController.CombatInputLocked) return;
 
             CurrentTarget = EnemyRegistry.Nearest(transform.position, data.AttackRange);
             if (CurrentTarget == null) return;
 
             if (Time.time < _nextShotAt) return;
-            _nextShotAt = Time.time + data.AttackInterval;
+            float interval = Upgrades != null
+                ? Upgrades.AttackIntervalFromBase(data.AttackInterval)
+                : data.AttackInterval;
+            _nextShotAt = Time.time + interval;
 
             Fire(data);
         }
@@ -104,7 +118,8 @@ namespace LAC.Combat
                 if (enemy == null || !enemy.IsAlive) continue;
                 if ((enemy.Position - origin).sqrMagnitude > rangeSqr) continue;
 
-                DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
+                int damage = Upgrades != null ? Upgrades.DamageFromBase(data.BaseDamage, false) : data.BaseDamage;
+                DamageSystem.ApplyToEnemy(enemy, damage, origin);
             }
 
             if (data.SpawnSoundWave) SpawnWave(origin, 0.5f, data.AttackRange);
@@ -139,7 +154,8 @@ namespace LAC.Combat
                 if (toEnemy.sqrMagnitude > rangeSqr) continue;
                 if (Vector2.Dot(facing, toEnemy.normalized) < cosLimit) continue;
 
-                DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
+                int damage = Upgrades != null ? Upgrades.DamageFromBase(data.BaseDamage, false) : data.BaseDamage;
+                DamageSystem.ApplyToEnemy(enemy, damage, origin);
             }
 
             // Vòng nhỏ đặt lệch về phía trước, đủ để đọc ra hướng vung roi — chỉ khi bản
@@ -163,8 +179,23 @@ namespace LAC.Combat
             // tiêu khi mục tiêu đang chạy ra xa.
             float lifetime = data.AttackRange / data.ProjectileSpeed * 1.35f;
 
-            Projectile shot = _projectilePool.Get(origin, Quaternion.identity);
-            shot.Launch(_projectilePool, direction, data.ProjectileSpeed, data.BaseDamage, lifetime, pierce: 1);
+            PlayerUpgradeState upgrades = Upgrades;
+            int count = upgrades != null ? upgrades.ProjectileCount : 1;
+            float spread = upgrades != null ? upgrades.ProjectileSpreadDegrees : 0f;
+            int damage = upgrades != null ? upgrades.DamageFromBase(data.BaseDamage, true) : data.BaseDamage;
+            int hitLimit = upgrades != null ? upgrades.ProjectileHitLimit : 1;
+            bool explodes = upgrades != null && upgrades.Explodes;
+            float explosionRadius = upgrades != null ? upgrades.ExplosionRadius : 0f;
+            float explosionRatio = upgrades != null ? upgrades.ExplosionDamageRatio : 0f;
+
+            for (int i = 0; i < count; i++)
+            {
+                float angle = count == 1 ? 0f : Mathf.Lerp(-spread * 0.5f, spread * 0.5f, i / (count - 1f));
+                Vector2 shotDirection = Quaternion.Euler(0f, 0f, angle) * (Vector3)direction;
+                Projectile shot = _projectilePool.Get(origin, Quaternion.identity);
+                shot.Launch(_projectilePool, shotDirection, data.ProjectileSpeed, damage, lifetime,
+                    hitLimit, explodes, explosionRadius, explosionRatio);
+            }
         }
 
         private void SpawnWave(Vector2 position, float fromRadius, float toRadius)

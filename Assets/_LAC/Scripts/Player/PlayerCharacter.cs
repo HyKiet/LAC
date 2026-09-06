@@ -1,3 +1,4 @@
+using LAC.Cards;
 using Mirror;
 using UnityEngine;
 
@@ -27,9 +28,11 @@ namespace LAC.Player
 
         private CharacterData _data;
         private PlayerHealth _health;
+        private PlayerUpgradeState _upgrades;
 
         /// <summary>Chỉ số của nhân vật này. Null cho tới khi định danh được áp dụng.</summary>
         public CharacterData Data => _data;
+        public PlayerUpgradeState Upgrades => _upgrades;
 
         /// <summary>
         /// Còn sống hay không. Quái dùng giá trị này để chọn mục tiêu.
@@ -42,7 +45,12 @@ namespace LAC.Player
         /// </remarks>
         public bool IsAlive => _health == null || _health.IsAlive;
 
-        private void Awake() => _health = GetComponent<PlayerHealth>();
+        private void Awake()
+        {
+            _health = GetComponent<PlayerHealth>();
+            _upgrades = GetComponent<PlayerUpgradeState>();
+            if (_upgrades == null) _upgrades = gameObject.AddComponent<PlayerUpgradeState>();
+        }
 
         public CharacterId CharacterId => _characterId;
 

@@ -107,6 +107,17 @@ namespace LAC.Player
             _health = Mathf.Min(_health + amount, _maxHealth);
         }
 
+        /// <summary>Áp máu cộng thêm của thẻ lên bản sao chỉ số trong ván.</summary>
+        [Server]
+        public void ServerApplyMaxHealthBonus(int totalBonus, int healAmount)
+        {
+            if (_character == null || _character.Data == null) return;
+
+            _maxHealth = _character.Data.MaxHealth + Mathf.Max(totalBonus, 0);
+            _health = Mathf.Min(_health + Mathf.Max(healAmount, 0), _maxHealth);
+            HealthChanged?.Invoke(_health, _maxHealth);
+        }
+
         private void OnHealthChanged(int _, int newHealth)
         {
             HealthChanged?.Invoke(newHealth, _maxHealth);

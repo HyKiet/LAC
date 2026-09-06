@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e205789dd1fd044a282048a047abd8, type: 3}
+  m_Name: SongTien
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
+  _id: 4
+  _displayName: "Song Ti\u1EC5n"
+  _description: "B\u1EAFn 2 \u0111\u1EA1n l\u1EC7ch g\xF3c nh\u1ECF; m\u1ED7i \u0111\u1EA1n
+    g\xE2y 70% s\xE1t th\u01B0\u01A1ng hi\u1EC7n t\u1EA1i."
+  _icon: {fileID: 0}
+  _maxStacks: 1
+  _weight: 1
+  _accent: {r: 0.63, g: 0.5, b: 0.9, a: 1}
