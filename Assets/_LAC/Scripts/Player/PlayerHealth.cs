@@ -118,10 +118,11 @@ namespace LAC.Player
             HealthChanged?.Invoke(_health, _maxHealth);
         }
 
-        private void OnHealthChanged(int _, int newHealth)
+        private void OnHealthChanged(int oldHealth, int newHealth)
         {
             HealthChanged?.Invoke(newHealth, _maxHealth);
-            ApplyAliveState();
+            // Hồi máu (ví dụ thẻ Sinh Lực) không được bật lại input đang bị UI khóa.
+            if ((oldHealth > 0) != (newHealth > 0)) ApplyAliveState();
         }
 
         /// <summary>

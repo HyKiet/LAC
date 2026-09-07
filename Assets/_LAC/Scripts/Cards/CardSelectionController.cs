@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using LAC.Core;
 using LAC.Player;
+using LAC.VFX;
 using Mirror;
 using UnityEngine;
 
@@ -30,6 +31,8 @@ namespace LAC.Cards
         private bool _committing;
         private bool _pendingOpen;
         private bool _ownsAvailability;
+        private bool _ownsPause;
+        private Coroutine _finishSelection;
 
         private void Awake()
         {
@@ -167,12 +170,13 @@ namespace LAC.Cards
 
             _view.MarkSelected(card);
             _view.RefreshOwned(_definitions, _state);
-            StartCoroutine(FinishSelectionAfterFeedback());
+            _finishSelection = StartCoroutine(FinishSelectionAfterFeedback());
         }
 
         private IEnumerator FinishSelectionAfterFeedback()
         {
             yield return new WaitForSecondsRealtime(_selectionFeedbackSeconds);
+            _finishSelection = null;
             CloseSelection();
             if (_run != null && NetworkServer.active)
                 _run.ReportCardSelectionComplete();
@@ -188,23 +192,36 @@ namespace LAC.Cards
 
         private void PauseCombat()
         {
+            // Đợt thường kết thúc ngay lúc quái cuối chết. Không lưu số 0 tạm thời
+            // của hit-stop làm tốc độ cần khôi phục sau khi chọn thẻ.
+            HitStop.Cancel();
             _previousTimeScale = Time.timeScale;
             _inputWasEnabled = _input != null && _input.enabled;
             if (_input != null) _input.enabled = false;
             CombatInputLocked = true;
+            _ownsPause = true;
             Time.timeScale = 0f;
         }
 
         private void RestoreCombat()
         {
-            if (!CombatInputLocked) return;
+            if (!_ownsPause) return;
+            _ownsPause = false;
             Time.timeScale = _previousTimeScale;
-            if (_input != null) _input.enabled = _inputWasEnabled;
+            PlayerHealth health = _player != null ? _player.GetComponent<PlayerHealth>() : null;
+            if (_input != null) _input.enabled = _inputWasEnabled && (health == null || health.IsAlive);
             CombatInputLocked = false;
         }
 
         private void CloseSelection()
         {
+            // Không để phản hồi chọn của ván cũ chuyển đợt trong ván vừa khởi động lại.
+            if (_finishSelection != null)
+            {
+                StopCoroutine(_finishSelection);
+                _finishSelection = null;
+            }
+            _committing = false;
             _pendingOpen = false;
             _selectionOpen = false;
             if (_view != null) _view.Hide();
