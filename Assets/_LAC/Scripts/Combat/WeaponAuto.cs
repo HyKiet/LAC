@@ -34,8 +34,10 @@ namespace LAC.Combat
         [SerializeField] private VFX.SoundWave _wavePrefab;
 
         [Header("Hình cung")]
-        [Tooltip("Nửa góc mở của hình cung, tính bằng độ.")]
-        [SerializeField, Range(10f, 180f)] private float _arcHalfAngle = 60f;
+        [SerializeField] private VFX.ArcSlash _arcSlashPrefab;
+
+        [Tooltip("Trong bán kính này thì coi như luôn nằm trong cung, khỏi cần đo góc.")]
+        [SerializeField, Min(0f)] private float _pointBlankRadius = 0.35f;
 
         [Header("Biểu diễn")]
         [Tooltip("Màu hiệu ứng của người chơi. KHÔNG được trùng màu dành cho đòn địch — mục 2.1.")]
@@ -44,6 +46,7 @@ namespace LAC.Combat
         private float _nextShotAt;
         private ObjectPool<Projectile> _projectilePool;
         private ObjectPool<VFX.SoundWave> _wavePool;
+        private ObjectPool<VFX.ArcSlash> _slashPool;
 
         private CharacterData Data => _character != null ? _character.Data : null;
 
@@ -127,7 +130,8 @@ namespace LAC.Combat
 
             var alive = EnemyRegistry.Alive;
             float rangeSqr = data.AttackRange * data.AttackRange;
-            float cosLimit = Mathf.Cos(_arcHalfAngle * Mathf.Deg2Rad);
+            float cosLimit = Mathf.Cos(data.ArcHalfAngle * Mathf.Deg2Rad);
+            float pointBlankSqr = _pointBlankRadius * _pointBlankRadius;
             Vector2 origin = transform.position;
 
             for (int i = alive.Count - 1; i >= 0; i--)
@@ -136,11 +140,20 @@ namespace LAC.Combat
                 if (enemy == null || !enemy.IsAlive) continue;
 
                 Vector2 toEnemy = enemy.Position - origin;
-                if (toEnemy.sqrMagnitude > rangeSqr) continue;
-                if (Vector2.Dot(facing, toEnemy.normalized) < cosLimit) continue;
+                float distSqr = toEnemy.sqrMagnitude;
+                if (distSqr > rangeSqr) continue;
+
+                // Quái đứng đè lên người chơi thì không còn hướng nào để đo góc, và
+                // Vector2.normalized trả về véc-tơ không khi độ dài quá nhỏ — tích vô hướng
+                // bằng 0 nên con quái đang cắm mặt vào Gióng lại là con duy nhất không ăn
+                // đòn. Trong bán kính này thì bỏ qua phép đo góc.
+                if (distSqr > pointBlankSqr &&
+                    Vector2.Dot(facing, toEnemy / Mathf.Sqrt(distSqr)) < cosLimit) continue;
 
                 DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
             }
+
+            SpawnSlash(origin, facing, data);
 
             // Vòng nhỏ đặt lệch về phía trước, đủ để đọc ra hướng vung roi — chỉ khi bản
             // thân hoạt ảnh chưa tả được đường roi.
@@ -165,6 +178,21 @@ namespace LAC.Combat
 
             Projectile shot = _projectilePool.Get(origin, Quaternion.identity);
             shot.Launch(_projectilePool, direction, data.ProjectileSpeed, data.BaseDamage, lifetime, pierce: 1);
+        }
+
+        /// <summary>Vệt roi quét qua trước mặt. Không có prefab thì bỏ qua, không báo lỗi.</summary>
+        /// <remarks>
+        /// Tách khỏi sóng âm vì hai thứ nói hai điều khác nhau: sóng tròn nghĩa là đòn lan ra
+        /// mọi phía, vệt cung nghĩa là đòn chỉ trúng phía trước. Gióng vẽ sóng tròn thì người
+        /// chơi học sai tầm đánh và đứng sai chỗ.
+        /// </remarks>
+        private void SpawnSlash(Vector2 origin, Vector2 facing, CharacterData data)
+        {
+            if (_arcSlashPrefab == null) return;
+
+            _slashPool ??= PoolRegistry.Get(_arcSlashPrefab, prewarm: 4, softLimit: 32);
+            _slashPool.Get(origin, Quaternion.identity)
+                      .Play(_slashPool, facing, data.AttackRange, data.ArcHalfAngle, _tint);
         }
 
         private void SpawnWave(Vector2 position, float fromRadius, float toRadius)

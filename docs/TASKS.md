@@ -128,7 +128,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 - [x] **T-27** Cơ chế Hồn — rơi khi quái chết, tự hút về, âm thanh tăng dần cao độ — @Kiet · 08/09
   > Số Hồn rơi ra tra theo định danh quái qua `RandomStream.Hash01` chứ không rút tuần tự khỏi luồng, nên người vào giữa ván vẫn ra cùng kết quả. Đường bay và tiếng động là biểu diễn cục bộ; **chỉ host cộng bộ đếm** `RunManager.SoulsCollected` — nguồn nạp cho Trống Đồng ở T-38. `Core/SoulPickup.cs` · `Core/SoulSpawner.cs` · `Audio/PitchLadder.cs` · `Prefabs/VFX/Soul.prefab` · `Art/Sprites/VFX_Hon.png` · `Audio/SFX_NhatHon.wav` (tạm, chờ T-52).
-- [ ] **T-28** Nhân vật Gióng — roi sắt, đòn hình cung — **@Kiet**
+- [x] **T-28** Nhân vật Gióng — roi sắt, đòn hình cung — @Kiet · 08/09
+  > Vùng sát thương hình cung đã có từ T-12; hạng mục này khép ba chỗ hở. Nửa góc cung chuyển từ trường trên `WeaponAuto` vào `CharacterData.ArcHalfAngle` để mỗi nhân vật một góc và khâu cân bằng sửa dữ liệu chứ không sửa prefab. Thêm bán kính cận chiến: quái đứng đè lên người chơi làm `normalized` trả về véc-tơ không nên trước đó nó là con duy nhất không ăn đòn. Vệt roi `ArcSlash` quét qua trước mặt thay cho sóng tròn — Gióng vốn `SpawnSoundWave` tắt nên trước đó đòn đánh không có hiệu ứng nào. `VFX/ArcSlash.cs` · `Combat/WeaponAuto.cs` · `Player/CharacterData.cs` · `Prefabs/VFX/ArcSlash.prefab` · `Art/Sprites/VFX_RoiSat.png` (tạm, chờ T-33).
 - [ ] **T-29** Nhân vật Tấm — sáo trúc, đòn tia; tăng sát thương áp cho **phát bắn kế tiếp** — **@Kiet**
 - [ ] **T-31** Sóng âm riêng cho từng nhạc cụ — **@Kiet**
 - [ ] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**

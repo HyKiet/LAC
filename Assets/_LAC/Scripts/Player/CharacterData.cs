@@ -40,6 +40,9 @@ namespace LAC.Player
         [SerializeField, Min(0.02f)] private float _attackInterval = 0.9f;
         [SerializeField, Min(1)] private int _baseDamage = 1;
 
+        [Tooltip("Nửa góc mở của hình cung, tính bằng độ. Chỉ dùng cho vũ khí hình cung.")]
+        [SerializeField, Range(10f, 180f)] private float _arcHalfAngle = 60f;
+
         [Tooltip("Tốc độ đạn. Chỉ dùng cho vũ khí hình tia.")]
         [SerializeField, Min(1f)] private float _projectileSpeed = 12f;
 
@@ -72,6 +75,16 @@ namespace LAC.Player
         public float AttackInterval => _attackInterval;
         public int BaseDamage => _baseDamage;
         public float ProjectileSpeed => _projectileSpeed;
+        /// <summary>
+        /// Nửa góc mở của hình cung, tính bằng độ.
+        /// </summary>
+        /// <remarks>
+        /// Thuộc về nhân vật chứ không thuộc về thành phần vũ khí. Trước đây nó là một trường
+        /// trên <c>WeaponAuto</c>, nghĩa là cả ba nhân vật dùng chung một góc và khâu cân bằng
+        /// phải sửa prefab thay vì sửa tài sản dữ liệu — trái với mục 5, mọi nội dung game
+        /// nằm trong ScriptableObject.
+        /// </remarks>
+        public float ArcHalfAngle => _arcHalfAngle;
 
         /// <summary>
         /// Vũ khí này có phát sóng âm Đông Sơn hay không.

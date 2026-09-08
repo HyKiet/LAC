@@ -22,7 +22,9 @@ MonoBehaviour:
   _attackRange: 7
   _attackInterval: 0.12
   _baseDamage: 1
+  _arcHalfAngle: 60
   _projectileSpeed: 12
+  _spawnSoundWave: 1
   _dashDistance: 6
   _dashDuration: 0.15
   _dashCooldown: 0.4

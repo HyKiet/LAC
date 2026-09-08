@@ -397,6 +397,42 @@ SOUL = [
     "..kkkk..",
 ]
 
+
+def crescent(size=64, r_mid=26.0, thickness=3.4, half_deg=55.0, taper=0.55):
+    """Vet roi hinh cung, trang, do mo giam dan ve hai dau.
+
+    Ve bang toan hoc chu khong bang luoi ky tu: mot cung tron o do phan giai nay
+    can khu rang cua, ma luoi ky tu thi chi cho duoc mot muc alpha.
+    Sprite de trang de SpriteRenderer.color nhan mau vao, cung cach SoundWave lam.
+    """
+    import math
+    im = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    px = im.load()
+    c = (size - 1) / 2.0
+    half = math.radians(half_deg)
+    ss = 3  # lay mau 3x3 moi diem anh de bien cung muot
+    for y in range(size):
+        for x in range(size):
+            acc = 0.0
+            for sy in range(ss):
+                for sx in range(ss):
+                    dx = x + (sx + 0.5) / ss - 0.5 - c
+                    dy = c - (y + (sy + 0.5) / ss - 0.5)
+                    r = math.hypot(dx, dy)
+                    if r < 1e-6:
+                        continue
+                    ang = math.atan2(dy, dx)
+                    if abs(ang) > half:
+                        continue
+                    radial = max(0.0, 1.0 - abs(r - r_mid) / thickness)
+                    # Dau roi mong dan: goc cang lech khoi huong nhin thi cang nhat.
+                    along = 1.0 - (abs(ang) / half) ** 2 * taper
+                    acc += radial * along
+            a = acc / (ss * ss)
+            if a > 0.0:
+                px[x, y] = (255, 255, 255, int(min(1.0, a) * 255))
+    return im
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     jobs = [
@@ -418,3 +454,6 @@ if __name__ == "__main__":
 
     grid(SOUL, 8, 8).save(os.path.join(OUT, "VFX_Hon.png"))
     print("%-28s 8x8" % "VFX_Hon")
+
+    crescent().save(os.path.join(OUT, "VFX_RoiSat.png"))
+    print("%-28s 64x64" % "VFX_RoiSat")
