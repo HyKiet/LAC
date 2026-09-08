@@ -11,9 +11,9 @@ Ràng buộc kiến trúc: [CLAUDE.md](../CLAUDE.md).
 
 | Thành viên | Mảng phụ trách | Thư mục sở hữu |
 |---|---|---|
-| **@Kiet** | Vòng lặp lõi: chiến đấu, quái, mạng, đạo diễn | `Scripts/Core` `Combat` `Enemies` `Player` `Net` `VFX` · `Scenes/Arena.unity` |
-| **@Hung** | Màn hình vào game: menu chính, cài đặt, tạo và vào phòng, tạm dừng | `Scripts/Menu` · `Scenes/Boot.unity` · `Prefabs/UI/Menu` |
-| **@Kang** | Hệ thống thẻ nâng cấp và giao diện thẻ | `Scripts/Cards` · `Data/Cards` · `Prefabs/UI/Cards` |
+| **@Kiet** | Vòng lặp lõi: chiến đấu, quái, đồng bộ trong ván, đạo diễn | `Scripts/Core` `Combat` `Enemies` `Player` `VFX` · `Scripts/Net` *(trừ `Net/Lobby`)* · `Scenes/Arena.unity` |
+| **@Hung** | Hệ thống thẻ nâng cấp và giao diện thẻ | `Scripts/Cards` · `Data/Cards` · `Prefabs/UI/Cards` |
+| **@Kang** | Màn hình vào game và kết nối: menu, cài đặt, tạo và vào phòng, tạm dừng, Steam, mất kết nối | `Scripts/Menu` · `Scripts/Net/Lobby` · `Scenes/Boot.unity` · `Prefabs/UI/Menu` |
 | **@artist** | Sprite, tileset, icon | `Art/Sprites` `Art/Palettes` |
 
 > Tên là phân công hiện tại, đổi được. Nguyên tắc không đổi: **mỗi thư mục có đúng một người chịu trách nhiệm.** Cần sửa file ngoài thư mục của mình thì hỏi người sở hữu trước.
@@ -101,28 +101,28 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 **Nghiệm thu:** vào được game từ menu, ba nhân vật cho ba lối chơi khác nhau, hệ thống thẻ hoạt động trong co-op.
 
-### Màn hình và luồng vào game — @Hung
+### Màn hình, luồng vào game và kết nối — @Kang
 
-- [ ] **T-60** Scene `Boot.unity` và menu chính: Chơi · Chơi cùng bạn · Cài đặt · Thoát — **@Hung**
-- [ ] **T-61** Màn hình cài đặt: âm lượng, độ phân giải, gán lại phím; lưu bằng `PlayerPrefs` — **@Hung**
-- [ ] **T-62** Luồng vào ván: tạo phòng, tham gia bằng địa chỉ, chuyển sang `Arena.unity` — **@Hung**
+- [ ] **T-60** Scene `Boot.unity` và menu chính: Chơi · Chơi cùng bạn · Cài đặt · Thoát — **@Kang**
+- [ ] **T-61** Màn hình cài đặt: âm lượng, độ phân giải, gán lại phím; lưu bằng `PlayerPrefs` — **@Kang**
+- [ ] **T-62** Luồng vào ván: tạo phòng, tham gia bằng địa chỉ, chuyển sang `Arena.unity` — **@Kang**
   > Bắt buộc đi qua `NetworkManagerLAC`. **Chơi đơn cũng phải `StartHost`**, không được có nhánh riêng — CLAUDE.md mục 3.1.
-- [ ] **T-63** Tạm dừng trong ván: tiếp tục · cài đặt · thoát về menu — **@Hung**
+- [ ] **T-63** Tạm dừng trong ván: tiếp tục · cài đặt · thoát về menu — **@Kang**
   > Trong co-op, tạm dừng **không** được dừng thời gian của cả hai máy; chỉ mở giao diện tại máy đó.
-- [ ] **T-30** Màn chọn nhân vật, đồng bộ lựa chọn qua mạng — **@Hung**
+- [ ] **T-30** Màn chọn nhân vật, đồng bộ lựa chọn qua mạng — **@Kang**
   > Chỉ đồng bộ định danh nhân vật, không đồng bộ chỉ số — mục 3.2.
 
-### Hệ thống thẻ — @Kang
+### Hệ thống thẻ — @Hung
 
-- [ ] **T-21** `CardData` và cơ chế áp hiệu ứng lên chỉ số — **@Kang**
+- [ ] **T-21** `CardData` và cơ chế áp hiệu ứng lên chỉ số — **@Hung**
   > **Không sửa trực tiếp `CharacterData`.** Đó là ScriptableObject; sửa lúc chạy sẽ ghi đè vĩnh viễn vào asset trong Editor. Cần một lớp chỉ số của ván, khởi tạo từ `CharacterData` rồi cho thẻ cộng dồn lên bản sao đó.
-- [ ] **T-22** Giao diện chọn 1 trong 3 thẻ — 10 giây, 2 lượt đổi thẻ — **@Kang**
+- [ ] **T-22** Giao diện chọn 1 trong 3 thẻ — 10 giây, 2 lượt đổi thẻ — **@Hung**
   > Dựng thành prefab trong `Prefabs/UI/Cards`, sinh lúc chạy. Không đặt sẵn vào `Arena.unity`.
-- [ ] **T-23** Đồng bộ chọn thẻ: đợt kế chỉ khởi động khi cả hai người đã chọn xong — **@Kang**
+- [ ] **T-23** Đồng bộ chọn thẻ: đợt kế chỉ khởi động khi cả hai người đã chọn xong — **@Hung**
   > Chỗ nối đã có sẵn: gọi `RunManager.ReportCardSelectionComplete()`. Xong việc này thì tắt cờ `_autoAdvanceCardSelection` ở T-14B.
-- [ ] **T-24** Biên soạn 32 thẻ nền — **@Kang**
-- [ ] **T-25** Hệ thống tiến hoá thẻ — kiểm tra công thức và thông báo — **@Kang**
-- [ ] **T-26** Chốt và triển khai 8 công thức tiến hoá — **@Kang**
+- [ ] **T-24** Biên soạn 32 thẻ nền — **@Hung**
+- [ ] **T-25** Hệ thống tiến hoá thẻ — kiểm tra công thức và thông báo — **@Hung**
+- [ ] **T-26** Chốt và triển khai 8 công thức tiến hoá — **@Hung**
 
 ### Vòng lặp lõi — @Kiet
 
@@ -145,9 +145,10 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-37** Thời gian hồi Trống Đồng dùng chung, host quản lý — **@Kiet**
 - [ ] **T-38** Hồn nạp năng lượng cho Trống Đồng, vòng nạp trên HUD — **@Kiet**
 - [ ] **T-39** Trùm Chằn Tinh — hai pha, máu tỉ lệ theo số người chơi — **@Kiet**
-- [ ] **T-40** Mời bạn qua Steam overlay, chuyển sang FizzySteamworks — **@Hung**
+- [ ] **T-40** Mời bạn qua Steam overlay, chuyển sang FizzySteamworks — **@Kang**
+  > Đổi transport phải sửa `Net/NetworkManagerLAC.cs` — file của @Kiet. Báo trước khi động vào.
 - [ ] **T-41** Hạ gục và hồi sinh — đồng đội đứng cạnh 3 giây — **@Kiet**
-- [ ] **T-42** Xử lý mất kết nối: client rớt mạng, host thoát ván — **@Hung**
+- [ ] **T-42** Xử lý mất kết nối: client rớt mạng, host thoát ván — **@Kang**
 - [ ] **T-43** Thu thập telemetry ra CSV cho phần đánh giá khoá luận — **@Kiet**
 - [ ] **T-44** Bảng đợt cố định — dùng cho nhóm đối chứng và làm phương án dự phòng — **@Kiet**
 - [ ] **T-45** AI Đạo Diễn (LinUCB) — lõi thuật toán, `ContextVector`, `WaveSpec` — **@Kiet**
@@ -162,8 +163,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 **Nghiệm thu:** demo chạy ổn định; hoàn tất bảo vệ khoá luận.
 
-- [ ] **T-48** Tiền tệ Ngọc, lưu tiến trình, bảng mở khoá — **@Hung**
-- [ ] **T-49** Màn thống kê sau ván — **@Hung**
+- [ ] **T-48** Tiền tệ Ngọc, lưu tiến trình, bảng mở khoá — **@Kang**
+- [ ] **T-49** Màn thống kê sau ván — **@Kang**
 - [ ] **T-50** Cân bằng: xác định sát thương gốc cho cả ba vũ khí — **@Kiet**
 - [ ] **T-51** Cân bằng đường cong độ khó qua 16 đợt — **@Kiet**
 - [ ] **T-52** Nhạc nền và hiệu ứng âm thanh — Chưa phân công

@@ -24,11 +24,11 @@ Cần cài sẵn: Unity **6000.5.6f1** (đúng bản này) và [Git LFS](https:/
 
 **Mỗi scene chỉ một người mở tại một thời điểm.** Nhắn nhóm trước khi mở, pull trước, xong thì commit và push ngay, rồi nhắn lại.
 
-**Cái gì mới thì làm thành prefab, đừng đặt thẳng vào scene.** Giao diện, hiệu ứng, menu — dựng prefab rồi sinh bằng mã lúc chạy. Nhờ vậy @Kang làm xong hệ thống thẻ mà không cần mở `Arena.unity` lần nào.
+**Cái gì mới thì làm thành prefab, đừng đặt thẳng vào scene.** Giao diện, hiệu ứng, menu — dựng prefab rồi sinh bằng mã lúc chạy. Nhờ vậy @Hung làm xong hệ thống thẻ mà không cần mở `Arena.unity` lần nào.
 
 | Scene | Chủ |
 |---|---|
-| `Scenes/Boot.unity` — menu, cài đặt, chọn nhân vật | **@Hung** |
+| `Scenes/Boot.unity` — menu, cài đặt, chọn nhân vật | **@Kang** |
 | `Scenes/Arena.unity` — đấu trường, mạng, HUD | **@Kiet** |
 
 ---
@@ -69,7 +69,7 @@ Loại: `feat` · `fix` · `art` · `balance` · `docs` · `chore`. Phần thân
 
 ## 4. Chỗ nối giữa ba mảng
 
-**@Kang → lõi.** Hết đợt quái, `RunManager` chuyển sang `CardSelection` và phát sự kiện `WaveCleared`. Hệ thống thẻ nghe sự kiện đó, mở giao diện, cả hai người chọn xong thì gọi:
+**@Hung → lõi.** Hết đợt quái, `RunManager` chuyển sang `CardSelection` và phát sự kiện `WaveCleared`. Hệ thống thẻ nghe sự kiện đó, mở giao diện, cả hai người chọn xong thì gọi:
 
 ```csharp
 RunManager.Instance.ReportCardSelectionComplete();   // chỉ host gọi
@@ -77,7 +77,7 @@ RunManager.Instance.ReportCardSelectionComplete();   // chỉ host gọi
 
 Hàm này đã có sẵn và đang chạy. Hiện `WaveManager` gọi tạm sau 1.5 giây qua cờ `_autoAdvanceCardSelection`; xong T-23 thì tắt cờ đó — đó là toàn bộ việc bàn giao.
 
-**@Hung → lõi.** Menu vào game bằng Mirror:
+**@Kang → lõi.** Menu vào game bằng Mirror:
 
 ```csharp
 NetworkManager.singleton.StartHost();     // chơi đơn VÀ tạo phòng — cùng một lệnh
