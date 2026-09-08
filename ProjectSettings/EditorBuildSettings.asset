@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_LAC/Scenes/ManCho.unity
+    guid: 074a2b01c88c6c142b51990542fd3925
+  - enabled: 1
     path: Assets/_LAC/Scenes/Arena.unity
     guid: 9999b87b9725d76458ab1b4aec080143
   - enabled: 1

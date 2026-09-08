@@ -105,12 +105,12 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 - [ ] **T-60** Scene `Boot.unity` và menu chính: Chơi · Chơi cùng bạn · Cài đặt · Thoát — **@Hung**
 - [ ] **T-61** Màn hình cài đặt: âm lượng, độ phân giải, gán lại phím; lưu bằng `PlayerPrefs` — **@Hung**
-- [ ] **T-62** Luồng vào ván: tạo phòng, tham gia bằng địa chỉ, chuyển sang `Arena.unity` — **@Hung**
-  > Bắt buộc đi qua `NetworkManagerLAC`. **Chơi đơn cũng phải `StartHost`**, không được có nhánh riêng — CLAUDE.md mục 3.1.
+- [x] **T-62** Luồng vào ván: tạo phòng, tham gia bằng địa chỉ, chuyển sang `Arena.unity` — @Hung · 08/09
+  > Sảnh `ManCho.unity` tạo host hoặc vào bằng địa chỉ LAN, giới hạn hai người, chặn bắt đầu tới khi mọi khách sẵn sàng rồi dùng `ServerChangeScene` sang Arena; chơi một người vẫn là `StartHost`. `Net/NetworkManagerLAC.Lobby.cs` · `Menu/LobbyView.cs` · `Prefabs/UI/Menu/`.
 - [ ] **T-63** Tạm dừng trong ván: tiếp tục · cài đặt · thoát về menu — **@Hung**
   > Trong co-op, tạm dừng **không** được dừng thời gian của cả hai máy; chỉ mở giao diện tại máy đó.
-- [ ] **T-30** Màn chọn nhân vật, đồng bộ lựa chọn qua mạng — **@Hung**
-  > Chỉ đồng bộ định danh nhân vật, không đồng bộ chỉ số — mục 3.2.
+- [x] **T-30** Màn chọn nhân vật, đồng bộ lựa chọn qua mạng — @Hung · 08/09
+  > Host chỉ đồng bộ `CharacterId` và trạng thái sẵn sàng; lựa chọn được gán trước `AddPlayerForConnection` và giữ nguyên khi sang Arena. Cho phép hai người chọn trùng nhân vật. `Net/LobbyMessages.cs` · `Net/NetworkManagerLAC.Lobby.cs` · `Menu/LobbyView.cs`.
 
 ### Hệ thống thẻ — @Kang
 

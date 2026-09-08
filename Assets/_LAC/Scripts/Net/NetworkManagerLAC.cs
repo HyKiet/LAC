@@ -14,7 +14,7 @@ namespace LAC.Net
     /// thi duy nhất, nên lỗi đồng bộ lộ ra ngay từ lần chạy thử đầu tiên thay vì đến tuần
     /// tích hợp mới phát hiện.
     /// </remarks>
-    public sealed class NetworkManagerLAC : NetworkManager
+    public sealed partial class NetworkManagerLAC : NetworkManager
     {
         [Header("LẠC")]
         [Tooltip("Tự khởi động host khi vào scene. Tắt khi đã có màn hình sảnh chờ.")]
@@ -31,6 +31,14 @@ namespace LAC.Net
 
         public override void Awake()
         {
+            // Manager trong Arena bị huỷ khi manager của sảnh đi theo qua scene.
+            // Không để bản sao đổi Transport.active trước khi Mirror loại nó.
+            if (singleton != null && singleton != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            maxConnections = 2;
             SelectTransport();
             base.Awake();
         }
@@ -49,9 +57,8 @@ namespace LAC.Net
         /// Sinh nhân vật cho một người vừa nối vào và ghi họ vào ván đang chạy.
         /// </summary>
         /// <remarks>
-        /// Nhân vật được phân theo thứ tự nối vào cho tới khi có màn hình chọn nhân vật ở
-        /// T-20. Chỉ host quyết định ai cầm nhân vật nào — nếu để client tự chọn rồi báo lên
-        /// thì hai người cùng bấm một lúc sẽ cùng nhận một nhân vật.
+        /// Khi đi qua sảnh, host lấy <see cref="CharacterId"/> đã xác nhận của từng kết nối.
+        /// Scene Arena cũ vẫn phân theo thứ tự nối vào để các scene thử nghiệm tiếp tục chạy.
         ///
         /// Định danh nhân vật được gán trước <see cref="NetworkServer.AddPlayerForConnection"/>
         /// nên nó nằm sẵn trong gói trạng thái ban đầu. Gán sau sẽ tạo ra một khoảng thời gian
@@ -59,6 +66,8 @@ namespace LAC.Net
         /// </remarks>
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
+            if (_useLobby && (!_loadingArena || !_members.ContainsKey(conn.connectionId))) return;
+            if (conn.identity != null) return;
             Transform start = GetStartPosition();
             Vector3 position = start != null ? start.position : Vector3.zero;
 
@@ -66,21 +75,25 @@ namespace LAC.Net
 
             if (player.TryGetComponent(out PlayerCharacter character) && _characterRegistry != null)
             {
-                CharacterData assigned = _characterRegistry.GetByIndex(numPlayers);
+                CharacterData assigned = _useLobby
+                    ? _characterRegistry.Get(_members[conn.connectionId].Character)
+                    : _characterRegistry.GetByIndex(numPlayers);
                 if (assigned != null) character.SetCharacter(assigned.Id);
             }
 
             NetworkServer.AddPlayerForConnection(conn, player);
 
-            if (RunManager.Instance != null) RunManager.Instance.RegisterPlayer();
+            if (!_useLobby && RunManager.Instance != null) RunManager.Instance.RegisterPlayer();
         }
 
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
         {
-            if (conn.identity != null && RunManager.Instance != null)
+            if (conn.identity != null && RunManager.Instance != null &&
+                conn.identity.TryGetComponent(out PlayerHealth health) && health.IsAlive)
                 RunManager.Instance.UnregisterPlayer();
 
             base.OnServerDisconnect(conn);
+            RemoveLobbyMember(conn.connectionId);
         }
 
         /// <summary>
