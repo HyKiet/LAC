@@ -383,6 +383,20 @@ WALL = [
     "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
 ]
 
+
+# Hon (T-27). Vien ngoc 8x8 ho Hoe. Khong dung ho Son: mau son danh rieng cho
+# don tan cong cua ke dich theo rang buoc doc hieu o CLAUDE.md muc 2.1.
+SOUL = [
+    "..kkkk..",
+    ".kjjjjk.",
+    "kjiijjjk",
+    "kjijjjjk",
+    "kjjjjjjk",
+    "kjjjjjjk",
+    ".kjjjjk.",
+    "..kkkk..",
+]
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     jobs = [
@@ -401,3 +415,6 @@ if __name__ == "__main__":
                        ("Tile_SanDinh_Wall", WALL)):
         grid(rows).save(os.path.join(OUT, name + ".png"))
         print("%-28s tile 32x32" % name)
+
+    grid(SOUL, 8, 8).save(os.path.join(OUT, "VFX_Hon.png"))
+    print("%-28s 8x8" % "VFX_Hon")

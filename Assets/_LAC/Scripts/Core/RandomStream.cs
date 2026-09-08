@@ -16,11 +16,15 @@ namespace LAC.Core
     {
         private uint _x, _y, _z, _w;
 
+        // Giữ lại giá trị gieo ban đầu để Hash01 tra được mà không đụng tới trạng thái luồng.
+        private readonly uint _origin;
+
         public RandomStream(int seed, string channel)
         {
             // Mỗi kênh được gieo bằng một giá trị dẫn xuất khác nhau để hai kênh
             // không bao giờ trả về cùng một dãy số dù xuất phát từ cùng seed ván đấu.
             uint s = Mix((uint)seed ^ HashChannel(channel));
+            _origin = s;
             _x = s == 0u ? 0x9E3779B9u : s;
             _y = Mix(_x);
             _z = Mix(_y);
@@ -63,6 +67,22 @@ namespace LAC.Core
         public bool Chance(float probability)
         {
             return NextFloat() < probability;
+        }
+
+        /// <summary>
+        /// Số thực trong nửa khoảng [0, 1) suy ra từ một khoá, không tiêu thụ luồng.
+        /// </summary>
+        /// <remarks>
+        /// Khác với <see cref="NextFloat"/>, kết quả ở đây không phụ thuộc vào việc đã rút bao
+        /// nhiêu số trước đó. Cần thiết khi hai máy phải ra cùng một kết quả cho cùng một đối
+        /// tượng nhưng <b>không bảo đảm gọi cùng số lần</b> — người vào giữa ván bỏ lỡ toàn bộ
+        /// sự kiện trước đó, nên nếu rút tuần tự thì từ đó trở đi hai máy lệch nhau vĩnh viễn.
+        /// Tra theo khoá thì thứ tự và số lần gọi không còn quan trọng.
+        /// </remarks>
+        public float Hash01(int key)
+        {
+            uint h = Mix(_origin ^ Mix((uint)key));
+            return (h >> 8) * (1.0f / 16777216.0f);
         }
 
         /// <summary>Chọn ngẫu nhiên một phần tử.</summary>

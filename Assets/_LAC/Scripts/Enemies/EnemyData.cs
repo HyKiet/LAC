@@ -28,6 +28,13 @@ namespace LAC.Enemies
         [Tooltip("Thời gian báo trước trước khi quái bắt đầu đuổi.")]
         [SerializeField, Min(0f)] private float _spawnDelay = 0.35f;
 
+        [Header("Rơi ra")]
+        [Tooltip("Số Hồn ít nhất rơi ra khi chết.")]
+        [SerializeField, Min(0)] private int _soulDropMin = 1;
+
+        [Tooltip("Số Hồn nhiều nhất. Bằng giá trị nhỏ nhất thì luôn rơi đúng chừng đó.")]
+        [SerializeField, Min(0)] private int _soulDropMax = 1;
+
         [Header("Hiển thị")]
         [SerializeField] private Sprite _bodySprite;
         [SerializeField] private Color _tint = Color.white;
@@ -42,6 +49,11 @@ namespace LAC.Enemies
         public float AttackRange => _attackRange;
         public float AttackInterval => _attackInterval;
         public float SpawnDelay => _spawnDelay;
+        public int SoulDropMin => _soulDropMin;
+
+        /// <summary>Cận trên, đã kẹp để không nhỏ hơn cận dưới dù người nhập điền ngược.</summary>
+        public int SoulDropMax => Mathf.Max(_soulDropMax, _soulDropMin);
+
         public Sprite BodySprite => _bodySprite;
         public Color Tint => _tint;
 

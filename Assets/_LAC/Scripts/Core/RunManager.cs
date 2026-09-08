@@ -56,7 +56,19 @@ namespace LAC.Core
         [SyncVar(hook = nameof(OnStateChanged))]
         private RunState _state = RunState.Idle;
 
+        /// <remarks>
+        /// Chỉ host cộng bộ đếm này. Hồn rơi ra và bay về được hai máy tự mô phỏng từ cùng
+        /// một seed nên nhìn giống nhau, nhưng thời điểm chạm vào người chơi ở hai máy lệch
+        /// nhau đúng bằng độ trễ đường truyền. Để mỗi máy tự cộng thì sau vài chục lần nhặt
+        /// hai bên ra hai con số khác nhau, và Trống Đồng ở T-38 nạp đầy không cùng lúc.
+        /// </remarks>
+        [SyncVar]
+        private int _soulsCollected;
+
         private int _alivePlayers;
+
+        /// <summary>Tổng số Hồn đã nhặt trong ván này. Nguồn nạp cho Trống Đồng ở T-38.</summary>
+        public int SoulsCollected => _soulsCollected;
 
         /// <summary>Đợt hiện tại, đánh số từ 1. Bằng 0 khi ván chưa bắt đầu.</summary>
         public int CurrentWave => _currentWave;
@@ -136,11 +148,20 @@ namespace LAC.Core
             // chỉ có một người, và ván kết thúc ngay khi người đầu tiên gục.
             _alivePlayers = Mathf.Max(PlayerRegistry.Count, 1);
             _currentWave = 0;
+            _soulsCollected = 0;
 
             // Host khởi tạo ngay; client khởi tạo trong hook khi SyncVar tới nơi.
             RunRandom.Initialize(_seed);
 
             StartWave(1);
+        }
+
+        /// <summary>Ghi nhận vừa nhặt được Hồn. Chỉ host được gọi — xem chú thích ở bộ đếm.</summary>
+        [Server]
+        public void ReportSoulCollected(int amount = 1)
+        {
+            if (amount <= 0) return;
+            _soulsCollected += amount;
         }
 
         /// <summary>Báo cho bộ điều phối rằng đợt hiện tại đã sạch quái. Chỉ host được gọi.</summary>

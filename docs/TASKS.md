@@ -126,7 +126,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 ### Vòng lặp lõi — @Kiet
 
-- [ ] **T-27** Cơ chế Hồn — rơi khi quái chết, tự hút về, âm thanh tăng dần cao độ — **@Kiet**
+- [x] **T-27** Cơ chế Hồn — rơi khi quái chết, tự hút về, âm thanh tăng dần cao độ — @Kiet · 08/09
+  > Số Hồn rơi ra tra theo định danh quái qua `RandomStream.Hash01` chứ không rút tuần tự khỏi luồng, nên người vào giữa ván vẫn ra cùng kết quả. Đường bay và tiếng động là biểu diễn cục bộ; **chỉ host cộng bộ đếm** `RunManager.SoulsCollected` — nguồn nạp cho Trống Đồng ở T-38. `Core/SoulPickup.cs` · `Core/SoulSpawner.cs` · `Audio/PitchLadder.cs` · `Prefabs/VFX/Soul.prefab` · `Art/Sprites/VFX_Hon.png` · `Audio/SFX_NhatHon.wav` (tạm, chờ T-52).
 - [ ] **T-28** Nhân vật Gióng — roi sắt, đòn hình cung — **@Kiet**
 - [ ] **T-29** Nhân vật Tấm — sáo trúc, đòn tia; tăng sát thương áp cho **phát bắn kế tiếp** — **@Kiet**
 - [ ] **T-31** Sóng âm riêng cho từng nhạc cụ — **@Kiet**
