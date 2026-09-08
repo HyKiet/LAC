@@ -66,6 +66,17 @@ namespace LAC.Player
         private float Distance => _character != null && _character.Data != null
             ? _character.Data.DashDistance : _fallbackSpeed * _fallbackDuration;
 
+        /// <summary>
+        /// Vừa bắt đầu một pha lướt trên máy này. Phát trên mọi máy, cho mọi nhân vật.
+        /// </summary>
+        /// <remarks>
+        /// Máy của chủ nhân phát ngay khi bấm; các máy còn lại phát khi nhận
+        /// <c>RpcDashStarted</c>. Nhờ vậy host cũng biết nhân vật của client vừa lướt và áp
+        /// được phần thưởng sát thương ở <c>WeaponAuto</c> — thẩm quyền sát thương thuộc về
+        /// host, xem CLAUDE.md mục 3.2.
+        /// </remarks>
+        public event System.Action Dashed;
+
         /// <summary>Đang trong pha lướt trên máy này.</summary>
         public bool IsDashing => _isDashing;
 
@@ -147,6 +158,8 @@ namespace LAC.Player
             _dashTimeoutAt = Time.time + Duration * 2f;
             _readyAt = Time.time + Cooldown;
             _nextAfterimageAt = 0f;
+
+            Dashed?.Invoke();
         }
 
         /// <summary>
@@ -198,6 +211,8 @@ namespace LAC.Player
             _isDashing = true;
             _dashTimeoutAt = Time.time + Duration;
             _nextAfterimageAt = 0f;
+
+            Dashed?.Invoke();
         }
 
         private void EmitAfterimage()

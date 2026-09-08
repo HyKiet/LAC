@@ -55,6 +55,9 @@ namespace LAC.Player
         [SerializeField, Min(0.02f)] private float _dashDuration = 0.15f;
         [SerializeField, Min(0.05f)] private float _dashCooldown = 0.4f;
 
+        [Tooltip("Hệ số sát thương cho PHÁT BẮN KẾ TIẾP sau khi lướt. 1 là không có thưởng.")]
+        [SerializeField, Range(1f, 4f)] private float _dashDamageMultiplier = 1f;
+
         [Header("Hiển thị")]
         [SerializeField] private Sprite _bodySprite;
         [SerializeField] private Sprite _portrait;
@@ -100,6 +103,20 @@ namespace LAC.Player
         public float DashDistance => _dashDistance;
         public float DashDuration => _dashDuration;
         public float DashCooldown => _dashCooldown;
+
+        /// <summary>
+        /// Hệ số sát thương áp cho <b>phát bắn kế tiếp</b> sau khi lướt.
+        /// </summary>
+        /// <remarks>
+        /// Áp cho một phát bắn chứ không cho một cửa sổ thời gian. GDD viết là nhân đôi sát
+        /// thương trong 1 giây sau khi lướt, nhưng hồi chiêu lướt của Tấm là 0.4 giây — ngắn
+        /// hơn cửa sổ — nên người chơi chỉ cần lướt đều là hiệu ứng bật vĩnh viễn và phần
+        /// thưởng mất hết ý nghĩa. Xem CLAUDE.md mục 7.
+        ///
+        /// Với chu kỳ bắn 0.12 giây của Tấm thì "phát kế tiếp" đến gần như tức thì, nên phần
+        /// thưởng vẫn cảm nhận được ngay chứ không thành hình phạt.
+        /// </remarks>
+        public float DashDamageMultiplier => _dashDamageMultiplier;
 
         public Sprite BodySprite => _bodySprite;
         public Sprite Portrait => _portrait;

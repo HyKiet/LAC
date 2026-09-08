@@ -28,6 +28,7 @@ namespace LAC.Combat
         [SerializeField] private PlayerCharacter _character;
         [SerializeField] private PlayerMovement _movement;
         [SerializeField] private PlayerHealth _health;
+        [SerializeField] private PlayerDash _dash;
 
         [Header("Tài sản dùng chung")]
         [SerializeField] private Projectile _projectilePrefab;
@@ -47,6 +48,8 @@ namespace LAC.Combat
         private ObjectPool<Projectile> _projectilePool;
         private ObjectPool<VFX.SoundWave> _wavePool;
         private ObjectPool<VFX.ArcSlash> _slashPool;
+        // Phát bắn kế tiếp sau khi lướt được nhân sát thương — xem CharacterData.
+        private bool _empoweredShot;
 
         private CharacterData Data => _character != null ? _character.Data : null;
 
@@ -63,6 +66,29 @@ namespace LAC.Combat
         /// </remarks>
         public event Action<Vector2> Fired;
 
+        private void OnEnable()
+        {
+            if (_dash != null) _dash.Dashed += OnDashed;
+        }
+
+        private void OnDisable()
+        {
+            if (_dash != null) _dash.Dashed -= OnDashed;
+        }
+
+        /// <summary>
+        /// Nạp phần thưởng cho phát bắn kế tiếp.
+        /// </summary>
+        /// <remarks>
+        /// Nạp một lần chứ không cộng dồn: lướt hai lần liên tiếp vẫn chỉ được một phát mạnh.
+        ///
+        /// Host và client có thể áp phần thưởng vào hai phát khác nhau, vì host chỉ biết
+        /// client đã lướt khi gói tin tới nơi. Sai lệch đó nằm ở phần biểu diễn và được chấp
+        /// nhận theo mục 3.2 — con số sát thương thật vẫn do host quyết, và tổng sát thương
+        /// của một lần lướt thì hai bên bằng nhau.
+        /// </remarks>
+        private void OnDashed() => _empoweredShot = true;
+
         private void Update()
         {
             CharacterData data = Data;
@@ -78,13 +104,32 @@ namespace LAC.Combat
             Fire(data);
         }
 
+        /// <summary>
+        /// Sát thương của phát đánh sắp tới, đã tính phần thưởng sau khi lướt.
+        /// </summary>
+        /// <remarks>
+        /// Tiêu phần thưởng ngay tại đây chứ không ở nơi gây sát thương: vũ khí hình tia bắn
+        /// ra một viên đạn bay mất vài phần mười giây mới trúng, nếu tiêu lúc trúng thì hai
+        /// viên bắn liên tiếp cùng ăn một phần thưởng.
+        /// </remarks>
+        private int ConsumeDamage(CharacterData data)
+        {
+            if (!_empoweredShot) return data.BaseDamage;
+
+            _empoweredShot = false;
+            return Mathf.Max(Mathf.RoundToInt(data.BaseDamage * data.DashDamageMultiplier),
+                             data.BaseDamage);
+        }
+
         private void Fire(CharacterData data)
         {
+            int damage = ConsumeDamage(data);
+
             switch (data.WeaponShape)
             {
-                case WeaponShape.Circle: FireCircle(data); break;
-                case WeaponShape.Arc: FireArc(data); break;
-                default: FireLine(data); break;
+                case WeaponShape.Circle: FireCircle(data, damage); break;
+                case WeaponShape.Arc: FireArc(data, damage); break;
+                default: FireLine(data, damage); break;
             }
 
             Vector2 toTarget = CurrentTarget != null
@@ -95,7 +140,7 @@ namespace LAC.Combat
         }
 
         /// <summary>Vòng tròn quanh người chơi — đàn bầu của Thạch Sanh.</summary>
-        private void FireCircle(CharacterData data)
+        private void FireCircle(CharacterData data, int damage)
         {
             var alive = EnemyRegistry.Alive;
             float rangeSqr = data.AttackRange * data.AttackRange;
@@ -107,7 +152,7 @@ namespace LAC.Combat
                 if (enemy == null || !enemy.IsAlive) continue;
                 if ((enemy.Position - origin).sqrMagnitude > rangeSqr) continue;
 
-                DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
+                DamageSystem.ApplyToEnemy(enemy, damage, origin);
             }
 
             if (data.SpawnSoundWave) SpawnWave(origin, 0.5f, data.AttackRange);
@@ -121,7 +166,7 @@ namespace LAC.Combat
         /// đứng ở sườn còn cung thì vẫn chĩa xuống dưới. Vũ khí khai hoả tự động thì việc
         /// ngắm cũng phải tự động — người chơi chỉ kiểm soát vị trí, xem mục 1.1.
         /// </remarks>
-        private void FireArc(CharacterData data)
+        private void FireArc(CharacterData data, int damage)
         {
             Vector2 toTarget = CurrentTarget.Position - (Vector2)transform.position;
             Vector2 facing = toTarget.sqrMagnitude > 0.0001f
@@ -150,7 +195,7 @@ namespace LAC.Combat
                 if (distSqr > pointBlankSqr &&
                     Vector2.Dot(facing, toEnemy / Mathf.Sqrt(distSqr)) < cosLimit) continue;
 
-                DamageSystem.ApplyToEnemy(enemy, data.BaseDamage, origin);
+                DamageSystem.ApplyToEnemy(enemy, damage, origin);
             }
 
             SpawnSlash(origin, facing, data);
@@ -162,7 +207,7 @@ namespace LAC.Combat
         }
 
         /// <summary>Tia thẳng về phía mục tiêu gần nhất — sáo trúc của Tấm.</summary>
-        private void FireLine(CharacterData data)
+        private void FireLine(CharacterData data, int damage)
         {
             if (_projectilePrefab == null) return;
 
@@ -177,7 +222,7 @@ namespace LAC.Combat
             float lifetime = data.AttackRange / data.ProjectileSpeed * 1.35f;
 
             Projectile shot = _projectilePool.Get(origin, Quaternion.identity);
-            shot.Launch(_projectilePool, direction, data.ProjectileSpeed, data.BaseDamage, lifetime, pierce: 1);
+            shot.Launch(_projectilePool, direction, data.ProjectileSpeed, damage, lifetime, pierce: 1);
         }
 
         /// <summary>Vệt roi quét qua trước mặt. Không có prefab thì bỏ qua, không báo lỗi.</summary>

@@ -334,6 +334,7 @@ MonoBehaviour:
   _character: {fileID: 352858062260180986}
   _movement: {fileID: 4949670620471853139}
   _health: {fileID: 3248112856059442746}
+  _dash: {fileID: 7896660642393578512}
   _projectilePrefab: {fileID: 6566557113357108523, guid: e216bff48a434ab4087c4ae1a2b3830a, type: 3}
   _wavePrefab: {fileID: 1705836828421816138, guid: 34bd6c31d67b6bb46bd4ba29b042d3e2, type: 3}
   _arcSlashPrefab: {fileID: 8512629550604686015, guid: 1dfbcc2a5faf80d40bae013d39e76c37, type: 3}

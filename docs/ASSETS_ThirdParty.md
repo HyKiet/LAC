@@ -86,6 +86,7 @@ Nên phân vai:
 | Hạng mục | Lấy từ |
 |---|---|
 | Nhân vật người chơi tạm | **TinyRPG Soldier** (có cả đánh gần lẫn bắn cung) |
+| Tấm tạm (T-29) | **TinySwords Blue Archer** — ngoại lệ, xem ghi chú dưới |
 | Quái Cô Hồn tạm (T-14) | **TinyRPG Orc** |
 | Đạn (T-12) | **TinyRPG** `Arrow01(32x32).png` |
 | Sàn đấu trường (T-10B) | **Placeholder 16px của nhóm** — đúng mật độ pixel |
@@ -95,6 +96,16 @@ Nên phân vai:
 Giao diện nằm ở không gian màn hình, không chịu ràng buộc mật độ pixel với thế
 giới game, nên trộn được. Đó là phần duy nhất TinySwords hơn hẳn và TinyRPG
 hoàn toàn không có.
+
+> **Ngoại lệ đã ghi nhận — Tấm dùng TinySwords Archer (T-29).**
+> Nhóm chọn Archer cho Tấm vì tư thế bắn tầm xa hợp với sáo trúc, trong khi TinyRPG chỉ
+> có hai nhân vật và Soldier đã dùng cho Thạch Sanh. Chấp nhận ba điểm yếu đã nêu ở trên:
+> **không có khung Hurt và Death** — `SpriteAnimationSet` trả null cho hai trạng thái đó và
+> `SpriteAnimator` tự lùi về trạng thái nền, nên không vỡ nhưng lúc Tấm gục sẽ không có động
+> tác ngã; **cỡ pixel lệch bốn lần** so với Thạch Sanh và Cô Hồn của TinyRPG, đặt cạnh nhau
+> nhìn ra ngay; **thân 70×88 px** nhập ở PPU 64 cho ra khoảng 1.37 đơn vị, xấp xỉ Soldier nên
+> tỉ lệ trong thế giới thì đúng.
+> Đây là mỹ thuật tạm để kiểm thử cơ chế, biến mất khi T-33 xong.
 
 ### Hai điểm cần biết trước khi dùng
 
