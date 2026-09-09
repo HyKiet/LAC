@@ -17,7 +17,7 @@ namespace LAC.Cards
                 return;
             }
 
-            new GameObject("CardSelection", typeof(CardSelectionController), typeof(CardSelectionView));
+            new GameObject("CardSelection", typeof(CardSelectionView), typeof(CardSelectionController));
         }
     }
 }

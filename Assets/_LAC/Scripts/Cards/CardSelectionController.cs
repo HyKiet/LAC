@@ -13,6 +13,13 @@ namespace LAC.Cards
         public static bool IsAvailable { get; private set; }
         public static bool CombatInputLocked { get; private set; }
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            IsAvailable = false;
+            CombatInputLocked = false;
+        }
+
         [SerializeField] private CardDefinition[] _definitions;
         [SerializeField, Min(0f)] private float _selectionFeedbackSeconds = 0.12f;
         [SerializeField, Range(0f, 30f)] private float _songTienSpreadDegrees = 7f;
@@ -168,14 +175,15 @@ namespace LAC.Cards
                 return;
             }
 
-            _view.MarkSelected(card);
+            _view.MarkSelected(card, _player != null ? _player.transform : null);
             _view.RefreshOwned(_definitions, _state);
             _finishSelection = StartCoroutine(FinishSelectionAfterFeedback());
         }
 
         private IEnumerator FinishSelectionAfterFeedback()
         {
-            yield return new WaitForSecondsRealtime(_selectionFeedbackSeconds);
+            yield return new WaitForSecondsRealtime(
+                Mathf.Max(_selectionFeedbackSeconds, CardHoverVisual.ConsumeDuration));
             _finishSelection = null;
             CloseSelection();
             if (_run != null && NetworkServer.active)

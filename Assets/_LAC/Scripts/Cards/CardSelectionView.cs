@@ -9,6 +9,8 @@ namespace LAC.Cards
 {
     public sealed class CardSelectionView : MonoBehaviour
     {
+        private static EventSystem _fallbackEventSystem;
+
         private sealed class Slot
         {
             public GameObject Root;
@@ -18,6 +20,7 @@ namespace LAC.Cards
             public Text Name;
             public Text Description;
             public Text Stacks;
+            public CardHoverVisual Hover;
             public CardDefinition Card;
         }
 
@@ -29,7 +32,10 @@ namespace LAC.Cards
         private Text _ownedText;
         private bool _built;
 
-        private void Awake() => EnsureBuilt();
+        private void Awake()
+        {
+            if (Application.isPlaying) EnsureBuilt();
+        }
 
         public void Show(IReadOnlyList<CardDefinition> cards, PlayerUpgradeState state,
             int rerollsRemaining, Action<CardDefinition> onPick, Action onReroll)
@@ -48,38 +54,39 @@ namespace LAC.Cards
                 slot.Card = card;
                 slot.Name.text = card.DisplayName;
                 slot.Description.text = card.Description;
-                slot.Stacks.text = $"Đã nhận: {state.GetStacks(card.Id)}/{card.MaxStacks}";
+                slot.Stacks.text = $"ĐÃ NHẬN  {state.GetStacks(card.Id)}/{card.MaxStacks}";
                 slot.Icon.sprite = card.Icon;
                 slot.Icon.color = card.Icon != null ? Color.white : card.Accent;
                 slot.Placeholder.gameObject.SetActive(card.Icon == null);
                 slot.Placeholder.text = string.IsNullOrEmpty(card.DisplayName)
                     ? "?" : card.DisplayName.Substring(0, 1).ToUpperInvariant();
                 slot.Button.interactable = true;
-                ColorBlock colors = slot.Button.colors;
-                colors.normalColor = new Color(0.16f, 0.13f, 0.18f, 1f);
-                colors.highlightedColor = new Color(0.30f, 0.24f, 0.34f, 1f);
-                colors.pressedColor = card.Accent;
-                colors.selectedColor = colors.highlightedColor;
-                slot.Button.colors = colors;
+                slot.Hover.ResetPresentation();
+                slot.Hover.SetInteractable(true);
                 slot.Button.onClick.RemoveAllListeners();
                 slot.Button.onClick.AddListener(() => onPick(card));
             }
 
-            _rerollText.text = $"Đổi thẻ  •  {rerollsRemaining} lượt";
+            _rerollText.text = $"ĐỔI THẺ  •  {rerollsRemaining} LƯỢT";
             _rerollButton.interactable = rerollsRemaining > 0;
             _rerollButton.onClick.RemoveAllListeners();
             _rerollButton.onClick.AddListener(() => onReroll());
+
+            SetHighlightedSlot(null);
+            if (EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(null);
         }
 
-        public void MarkSelected(CardDefinition selected)
+        public void MarkSelected(CardDefinition selected, Transform playerTarget)
         {
             for (int i = 0; i < _slots.Length; i++)
             {
                 Slot slot = _slots[i];
                 if (!slot.Root.activeSelf) continue;
                 slot.Button.interactable = false;
-                if (slot.Card != selected) continue;
-                slot.Button.targetGraphic.color = selected.Accent;
+                slot.Hover.SetInteractable(false);
+                if (slot.Card == selected) slot.Hover.PlayConsume(playerTarget);
+                else slot.Hover.SetDimmed(true);
             }
             _rerollButton.interactable = false;
         }
@@ -87,6 +94,9 @@ namespace LAC.Cards
         public void Hide()
         {
             EnsureBuilt();
+            SetHighlightedSlot(null);
+            for (int i = 0; i < _slots.Length; i++)
+                _slots[i]?.Hover?.ResetPresentation();
             _overlay.SetActive(false);
         }
 
@@ -129,33 +139,37 @@ namespace LAC.Cards
             scaler.referenceResolution = new Vector2(1920f, 1080f);
             scaler.matchWidthOrHeight = 0.5f;
 
-            _ownedText = CreateText("OwnedCards", canvasGo.transform, 21, TextAnchor.UpperLeft,
-                new Color(0.96f, 0.90f, 0.72f, 1f));
+            _ownedText = CreateText("OwnedCards", canvasGo.transform, 20, TextAnchor.UpperLeft, Hex("E0CFAF"));
             SetRect(_ownedText.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f),
                 new Vector2(24f, -24f), new Vector2(320f, 260f), new Vector2(0f, 1f));
             _ownedText.raycastTarget = false;
 
-            _overlay = CreateImage("SelectionOverlay", canvasGo.transform,
-                new Color(0.025f, 0.02f, 0.035f, 0.88f)).gameObject;
+            _overlay = CreateImage("SelectionOverlay", canvasGo.transform, Hex("15130F", 0.93f)).gameObject;
             Stretch((RectTransform)_overlay.transform);
 
-            Image panel = CreateImage("Panel", _overlay.transform, new Color(0.09f, 0.07f, 0.11f, 0.98f));
-            SetRect(panel.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-                Vector2.zero, new Vector2(1030f, 650f), new Vector2(0.5f, 0.5f));
+            Image panelGlow = CreateImage("PanelGlow", _overlay.transform, Hex("C08D20", 0.30f));
+            SetRect(panelGlow.rectTransform, Center, Center, Vector2.zero,
+                new Vector2(1090f, 720f), Center);
+            Image panel = CreateImage("Panel", panelGlow.transform, Hex("15130F"));
+            Inset(panel.rectTransform, 3f);
 
-            Text title = CreateText("Title", panel.transform, 42, TextAnchor.MiddleCenter,
-                new Color(0.98f, 0.78f, 0.30f, 1f));
+            Image titleRule = CreateImage("TitleRule", panel.transform, Hex("C08D20", 0.75f));
+            SetRect(titleRule.rectTransform, TopCenter, TopCenter,
+                new Vector2(0f, -92f), new Vector2(880f, 2f), Center);
+            Text title = CreateText("Title", panel.transform, 39, TextAnchor.MiddleCenter, Hex("FBDD82"));
             title.text = "CHỌN NÂNG CẤP";
-            SetRect(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
-                new Vector2(0f, -48f), new Vector2(900f, 70f), new Vector2(0.5f, 0.5f));
+            title.fontStyle = FontStyle.Bold;
+            SetRect(title.rectTransform, TopCenter, TopCenter,
+                new Vector2(0f, -48f), new Vector2(900f, 62f), Center);
 
             float[] x = { -330f, 0f, 330f };
             for (int i = 0; i < _slots.Length; i++) _slots[i] = CreateSlot(panel.transform, x[i]);
 
             _rerollButton = CreateButton("Reroll", panel.transform, out _rerollText);
-            SetRect((RectTransform)_rerollButton.transform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f),
-                new Vector2(0f, 45f), new Vector2(270f, 58f), new Vector2(0.5f, 0f));
-            _rerollText.fontSize = 23;
+            SetRect((RectTransform)_rerollButton.transform, BottomCenter, BottomCenter,
+                new Vector2(0f, 28f), new Vector2(270f, 52f), BottomCenter);
+            _rerollText.fontSize = 20;
+            _rerollText.fontStyle = FontStyle.Bold;
 
             _overlay.SetActive(false);
             RefreshOwned(null, null);
@@ -163,35 +177,54 @@ namespace LAC.Cards
 
         private Slot CreateSlot(Transform parent, float x)
         {
-            Button button = CreateButton("Card", parent, out _);
-            SetRect((RectTransform)button.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-                new Vector2(x, 10f), new Vector2(285f, 430f), new Vector2(0.5f, 0.5f));
+            Image glow = CreateImage("CardGlow", parent, Hex("C08D20", 0.16f));
+            Button button = glow.gameObject.AddComponent<Button>();
+            button.transition = Selectable.Transition.None;
+            SetRect((RectTransform)button.transform, Center, Center,
+                new Vector2(x, 6f), new Vector2(300f, 486f), Center);
 
-            Image icon = CreateImage("Icon", button.transform, Color.white);
-            SetRect(icon.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
-                new Vector2(0f, -36f), new Vector2(104f, 104f), new Vector2(0.5f, 1f));
+            Image border = CreateImage("BronzeBorder", button.transform, Hex("C08D20", 0.74f));
+            Inset(border.rectTransform, 5f);
+            Image surface = CreateImage("CardSurface", border.transform, Hex("15130F"));
+            Inset(surface.rectTransform, 4f);
+
+            Image artWell = CreateImage("ArtWell", surface.transform, Hex("112E3E"));
+            SetRect(artWell.rectTransform, TopCenter, TopCenter,
+                new Vector2(0f, -18f), new Vector2(260f, 230f), TopCenter);
+            Image artLine = CreateImage("ArtLine", artWell.transform, Hex("4FA694", 0.48f));
+            SetRect(artLine.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f),
+                Vector2.zero, new Vector2(0f, 3f), new Vector2(0.5f, 0f));
+
+            Image icon = CreateImage("Icon", artWell.transform, Color.white);
+            SetRect(icon.rectTransform, TopCenter, TopCenter,
+                new Vector2(0f, -4f), new Vector2(220f, 220f), TopCenter);
             icon.preserveAspect = true;
             icon.raycastTarget = false;
 
             Text placeholder = CreateText("Placeholder", icon.transform, 54, TextAnchor.MiddleCenter, Color.white);
             Stretch(placeholder.rectTransform);
-            placeholder.raycastTarget = false;
 
-            Text name = CreateText("Name", button.transform, 28, TextAnchor.MiddleCenter,
-                new Color(1f, 0.82f, 0.36f, 1f));
+            Image namePlate = CreateImage("NamePlate", surface.transform, Hex("2B2724"));
+            SetRect(namePlate.rectTransform, TopCenter, TopCenter,
+                new Vector2(0f, -256f), new Vector2(260f, 58f), TopCenter);
+            Text name = CreateText("Name", namePlate.transform, 28, TextAnchor.MiddleCenter, Hex("FBDD82"));
             name.fontStyle = FontStyle.Bold;
-            SetRect(name.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
-                new Vector2(0f, -158f), new Vector2(250f, 54f), new Vector2(0.5f, 1f));
+            Stretch(name.rectTransform);
 
-            Text description = CreateText("Description", button.transform, 20, TextAnchor.UpperCenter, Color.white);
-            SetRect(description.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
-                new Vector2(0f, -220f), new Vector2(242f, 142f), new Vector2(0.5f, 1f));
+            Text description = CreateText("Description", surface.transform, 19, TextAnchor.UpperCenter, Hex("F4EADA"));
+            SetRect(description.rectTransform, TopCenter, TopCenter,
+                new Vector2(0f, -326f), new Vector2(244f, 104f), TopCenter);
 
-            Text stacks = CreateText("Stacks", button.transform, 18, TextAnchor.MiddleCenter,
-                new Color(0.72f, 0.72f, 0.76f, 1f));
-            SetRect(stacks.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f),
-                new Vector2(0f, 24f), new Vector2(240f, 38f), new Vector2(0.5f, 0f));
+            Image footerRule = CreateImage("FooterRule", surface.transform, Hex("C08D20", 0.38f));
+            SetRect(footerRule.rectTransform, BottomCenter, BottomCenter,
+                new Vector2(0f, 46f), new Vector2(226f, 1f), BottomCenter);
+            Text stacks = CreateText("Stacks", surface.transform, 16, TextAnchor.MiddleCenter, Hex("BFA981"));
+            SetRect(stacks.rectTransform, BottomCenter, BottomCenter,
+                new Vector2(0f, 22f), new Vector2(240f, 32f), BottomCenter);
 
+            CardHoverVisual hover = button.gameObject.AddComponent<CardHoverVisual>();
+            hover.Configure(glow, border, surface, new[] { artLine, footerRule },
+                x / 990f, SetHighlightedSlot);
             return new Slot
             {
                 Root = button.gameObject,
@@ -200,25 +233,26 @@ namespace LAC.Cards
                 Placeholder = placeholder,
                 Name = name,
                 Description = description,
-                Stacks = stacks
+                Stacks = stacks,
+                Hover = hover
             };
         }
 
         private Button CreateButton(string name, Transform parent, out Text label)
         {
-            Image image = CreateImage(name, parent, new Color(0.16f, 0.13f, 0.18f, 1f));
+            Image image = CreateImage(name, parent, Hex("2B2724"));
             var button = image.gameObject.AddComponent<Button>();
-            button.targetGraphic = image;
             ColorBlock colors = button.colors;
-            colors.highlightedColor = new Color(0.30f, 0.24f, 0.34f, 1f);
-            colors.pressedColor = new Color(0.78f, 0.56f, 0.20f, 1f);
-            colors.disabledColor = new Color(0.10f, 0.09f, 0.11f, 0.75f);
+            colors.normalColor = Hex("2B2724");
+            colors.highlightedColor = Hex("1C4B5C");
+            colors.pressedColor = Hex("C08D20");
+            colors.selectedColor = Hex("1C4B5C");
+            colors.disabledColor = Hex("15130F", 0.75f);
             colors.colorMultiplier = 1f;
             button.colors = colors;
 
-            label = CreateText("Label", image.transform, 22, TextAnchor.MiddleCenter, Color.white);
+            label = CreateText("Label", image.transform, 22, TextAnchor.MiddleCenter, Hex("F4EADA"));
             Stretch(label.rectTransform);
-            label.raycastTarget = false;
             return button;
         }
 
@@ -242,8 +276,20 @@ namespace LAC.Cards
             text.color = color;
             text.horizontalOverflow = HorizontalWrapMode.Wrap;
             text.verticalOverflow = VerticalWrapMode.Truncate;
+            text.raycastTarget = false;
             return text;
         }
+
+        private static Color Hex(string rgb, float alpha = 1f)
+        {
+            ColorUtility.TryParseHtmlString("#" + rgb, out Color color);
+            color.a = alpha;
+            return color;
+        }
+
+        private static Vector2 Center => new Vector2(0.5f, 0.5f);
+        private static Vector2 TopCenter => new Vector2(0.5f, 1f);
+        private static Vector2 BottomCenter => new Vector2(0.5f, 0f);
 
         private static void SetRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax,
             Vector2 position, Vector2 size, Vector2 pivot)
@@ -263,10 +309,26 @@ namespace LAC.Cards
             rect.offsetMax = Vector2.zero;
         }
 
+        private static void Inset(RectTransform rect, float inset)
+        {
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = Vector2.one * inset;
+            rect.offsetMax = Vector2.one * -inset;
+        }
+
         private static void EnsureEventSystem()
         {
-            if (EventSystem.current != null) return;
-            new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
+            if (EventSystem.current != null || _fallbackEventSystem != null
+                || FindAnyObjectByType<EventSystem>() != null) return;
+            _fallbackEventSystem = new GameObject("EventSystem", typeof(EventSystem),
+                typeof(InputSystemUIInputModule)).GetComponent<EventSystem>();
+        }
+
+        private void SetHighlightedSlot(CardHoverVisual highlighted)
+        {
+            for (int i = 0; i < _slots.Length; i++)
+                _slots[i]?.Hover?.SetHighlighted(_slots[i].Hover == highlighted);
         }
     }
 }

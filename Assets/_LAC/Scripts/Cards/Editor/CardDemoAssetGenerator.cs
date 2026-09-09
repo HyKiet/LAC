@@ -14,59 +14,111 @@ namespace LAC.Cards.Editor
     public static class CardDemoAssetGenerator
     {
         private const string DataFolder = "Assets/_LAC/Data/Cards/Resources/Cards";
+        private const string IconFolder = "Assets/_LAC/Art/Sprites/UI/Cards/AI_Demo";
         private const string PrefabFolder = "Assets/_LAC/Prefabs/UI/Cards/Resources";
         private const string PrefabPath = PrefabFolder + "/CardSelection.prefab";
 
         [DidReloadScripts]
-        private static void AfterScriptsReloaded() => EditorApplication.delayCall += EnsureAssets;
+        private static void AfterScriptsReloaded() => EditorApplication.delayCall += EnsureMissingAssets;
 
         [MenuItem("LAC/Demo/Rebuild Card Demo Assets")]
         public static void RebuildFromMenu()
         {
-            EnsureAssets();
+            EnsureAssets(true);
             Selection.activeObject = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
         }
 
-        private static void EnsureAssets()
+        private static void EnsureMissingAssets()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+            EnsureAssets(false);
+        }
+
+        private static void EnsureAssets(bool overwrite)
         {
             EnsureFolder(DataFolder);
             EnsureFolder(PrefabFolder);
+            EnsureIconImports();
 
             CardDefinition[] cards =
             {
                 EnsureCard("CuongCong", CardId.CuongCong, "Cường Công",
-                    "Cộng 20% sát thương cơ bản. Cộng theo chỉ số gốc.", 3, new Color(0.86f, 0.33f, 0.24f)),
+                    "Cộng 20% sát thương cơ bản. Cộng theo chỉ số gốc.", 3, Hex("EDBB3E"), overwrite),
                 EnsureCard("LienKich", CardId.LienKich, "Liên Kích",
-                    "Cộng 15% tốc độ đánh cơ bản (giảm khoảng nghỉ giữa hai đòn).", 3, new Color(0.96f, 0.66f, 0.22f)),
+                    "Cộng 15% tốc độ đánh cơ bản (giảm khoảng nghỉ giữa hai đòn).", 3, Hex("FBDD82"), overwrite),
                 EnsureCard("SinhLuc", CardId.SinhLuc, "Sinh Lực",
-                    "Tăng 25 máu tối đa và hồi ngay 25 máu.", 3, new Color(0.30f, 0.72f, 0.43f)),
+                    "Tăng 25 máu tối đa và hồi ngay 25 máu.", 3, Hex("4FA694"), overwrite),
                 EnsureCard("BoPhap", CardId.BoPhap, "Bộ Pháp",
-                    "Giảm 20% thời gian hồi lướt.", 1, new Color(0.30f, 0.70f, 0.82f)),
+                    "Giảm 20% thời gian hồi lướt.", 1, Hex("9CCFC0"), overwrite),
                 EnsureCard("SongTien", CardId.SongTien, "Song Tiễn",
-                    "Bắn 2 đạn lệch góc nhỏ; mỗi đạn gây 70% sát thương hiện tại.", 1, new Color(0.63f, 0.50f, 0.90f)),
+                    "Bắn 2 đạn lệch góc nhỏ; mỗi đạn gây 70% sát thương hiện tại.", 1, Hex("9CCFC0"), overwrite),
                 EnsureCard("XuyenTam", CardId.XuyenTam, "Xuyên Tâm",
-                    "Đạn xuyên thêm 2 kẻ địch, tối đa chạm 3 mục tiêu khác nhau.", 1, new Color(0.78f, 0.78f, 0.84f)),
+                    "Đạn xuyên thêm 2 kẻ địch, tối đa chạm 3 mục tiêu khác nhau.", 1, Hex("E0CFAF"), overwrite),
                 EnsureCard("BocPha", CardId.BocPha, "Bộc Phá",
-                    "Lần chạm đầu phát nổ, gây 30% sát thương đạn lên địch xung quanh.", 1, new Color(0.93f, 0.43f, 0.20f))
+                    "Lần chạm đầu phát nổ, gây 30% sát thương đạn lên địch xung quanh.", 1, Hex("B37F4F"), overwrite)
             };
 
             EnsurePrefab(cards);
-            Validate(cards);
+            if (overwrite) Validate(cards);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
 
         private static CardDefinition EnsureCard(string fileName, CardId id, string displayName,
-            string description, int maxStacks, Color accent)
+            string description, int maxStacks, Color accent, bool overwrite)
         {
             string path = $"{DataFolder}/{fileName}.asset";
             CardDefinition card = AssetDatabase.LoadAssetAtPath<CardDefinition>(path);
-            if (card != null) return card;
+            if (card == null)
+            {
+                card = ScriptableObject.CreateInstance<CardDefinition>();
+                AssetDatabase.CreateAsset(card, path);
+                overwrite = true;
+            }
 
-            card = ScriptableObject.CreateInstance<CardDefinition>();
-            card.EditorConfigure(id, displayName, description, maxStacks, 1f, accent);
-            AssetDatabase.CreateAsset(card, path);
+            if (overwrite)
+                card.EditorConfigure(id, displayName, description, maxStacks, 1f, accent);
+            var serialized = new SerializedObject(card);
+            SerializedProperty icon = serialized.FindProperty("_icon");
+            if (overwrite || icon.objectReferenceValue == null)
+            {
+                icon.objectReferenceValue =
+                    AssetDatabase.LoadAssetAtPath<Sprite>($"{IconFolder}/CardIcon_{fileName}.png");
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(card);
+            }
             return card;
+        }
+
+        private static void EnsureIconImports()
+        {
+            string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { IconFolder });
+            for (int i = 0; i < guids.Length; i++)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+                if (AssetImporter.GetAtPath(path) is not TextureImporter importer) continue;
+                bool dirty = importer.textureType != TextureImporterType.Sprite
+                    || importer.spriteImportMode != SpriteImportMode.Single
+                    || importer.mipmapEnabled
+                    || importer.maxTextureSize != 512
+                    || !importer.alphaIsTransparency;
+                if (!dirty) continue;
+
+                importer.textureType = TextureImporterType.Sprite;
+                importer.spriteImportMode = SpriteImportMode.Single;
+                importer.alphaIsTransparency = true;
+                importer.mipmapEnabled = false;
+                importer.maxTextureSize = 512;
+                importer.filterMode = FilterMode.Bilinear;
+                importer.textureCompression = TextureImporterCompression.CompressedHQ;
+                importer.SaveAndReimport();
+            }
+        }
+
+        private static Color Hex(string rgb)
+        {
+            ColorUtility.TryParseHtmlString("#" + rgb, out Color color);
+            return color;
         }
 
         private static void EnsurePrefab(CardDefinition[] cards)

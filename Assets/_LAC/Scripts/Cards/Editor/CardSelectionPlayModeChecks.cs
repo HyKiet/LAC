@@ -65,7 +65,7 @@ namespace LAC.Cards.Editor
                         button.onClick.Invoke();
                         button.onClick.Invoke();
                         Require(!input.enabled, "Hiệu ứng thẻ bật input trước khi đóng bảng.");
-                        await Task.Delay(350);
+                        await Task.Delay(Mathf.CeilToInt(CardHoverVisual.ConsumeDuration * 1000f) + 250);
                         Require(player.Upgrades.GetStacks(card.Id) == 1, "Nhấp đôi nhận nhiều thẻ.");
                         Require(run.State == RunState.WaveActive && run.CurrentWave == 2,
                             "Không chuyển đúng một đợt sau chọn.");
@@ -90,7 +90,7 @@ namespace LAC.Cards.Editor
                     Time.timeScale = scale;
                     ClearWave(waveManager);
                     FirstCardButton(controller).onClick.Invoke();
-                    await Task.Delay(350);
+                    await Task.Delay(Mathf.CeilToInt(CardHoverVisual.ConsumeDuration * 1000f) + 250);
                     Require(Time.timeScale == scale && !input.enabled,
                         "Không bảo toàn pause/input đã có trước màn thẻ.");
                 }
@@ -99,6 +99,7 @@ namespace LAC.Cards.Editor
                 ClearWave(waveManager);
                 FirstCardButton(controller).onClick.Invoke();
                 run.ReportPlayerDown();
+                await Task.Delay(80);
                 run.RestartRun();
                 await Task.Delay(350);
                 Require(run.State == RunState.WaveActive && run.CurrentWave == 1,
