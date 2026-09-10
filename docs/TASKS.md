@@ -71,7 +71,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-14** Quái Cô Hồn — truy đuổi, giãn cách, trạng thái chết — @Kiet · 30/08
   > Hai máy tự sinh cùng đàn quái từ seed chung; host gửi kết quả chết qua RPC. `Enemies/Enemy.cs` · `EnemyData.cs` · `EnemySpawner.cs` · `EnemyRegistry.cs`.
 - [x] **T-14B** `WaveManager` — sinh quái theo đợt, kết thúc đợt — @Kiet · 30/08
-  > Mỗi đợt một luồng ngẫu nhiên riêng gieo từ seed + số đợt, để người vào giữa ván tính ra cùng kết quả. `Core/WaveManager.cs`.
+  > Mỗi đợt một luồng ngẫu nhiên riêng gieo từ seed + số đợt, để người vào giữa ván tính ra cùng kết quả. `Core/WaveManager.cs`. **Nội dung đợt đã chuyển sang bảng dữ liệu ở T-44.**
   > **Còn một chỗ giữ tạm:** cờ `_autoAdvanceCardSelection` tự sang đợt kế sau 1.5 giây. **Tắt khi T-22 và T-23 xong.**
 - [x] **T-15** Phản hồi khi đánh trúng — hit-stop, nháy sáng, đẩy lùi, số sát thương, rung màn — @Kiet · 30/08
   > Gom về một chỗ để điều tiết theo mức độ: đánh thường chỉ nháy, quái chết mới dừng hình. `VFX/HitFeedback.cs` · `SpriteFlash.cs` · `HitStop.cs` · `DamageNumber.cs` · `PixelNumber.cs`.
@@ -153,7 +153,9 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-41** Hạ gục và hồi sinh — đồng đội đứng cạnh 3 giây — **@Kiet**
 - [ ] **T-42** Xử lý mất kết nối: client rớt mạng, host thoát ván — **@Kang**
 - [ ] **T-43** Thu thập telemetry ra CSV cho phần đánh giá khoá luận — **@Kiet**
-- [ ] **T-44** Bảng đợt cố định — dùng cho nhóm đối chứng và làm phương án dự phòng — **@Kiet**
+- [x] **T-44** Bảng đợt cố định — quái vào sân theo nhịp, theo hướng, theo thành phần — @Kiet · 10/09
+  > Thay công thức tuyến tính hard-code trong `WaveManager` bằng một tài sản dữ liệu. Ba thay đổi về lối chơi: quái **vào sân theo nhịp** thay vì đổ hết trong một khung hình; mỗi đợt có **số hướng vào sân riêng**, trải đều trên chu vi rồi xoay ngẫu nhiên; nhiều loại quái trong một đợt **đan xen theo vòng** chứ không hết loại này tới loại kia. `WaveManager` giờ chỉ biết `WaveSpec` — đúng đầu ra của AI Đạo Diễn ở docs/GDD.md mục 7.3 — nên T-45 lắp vào không phải sửa tệp này. Trần 40 quái được kẹp **lúc dựng đặc tả**, không phải lúc sinh, vì đếm quái sống trên sân cho ra hai con số khác nhau ở hai máy. Tổng số đợt chuyển từ `RunManager` sang bảng. `Core/WaveSpec.cs` · `Core/WaveTable.cs` · `Core/WaveManager.cs` · `Core/RunManager.cs` · `Data/Waves/WaveTable_CoDinh.asset`.
+  > **Còn hai chỗ hở, cố ý.** Thành phần đợt hiện chỉ có Cô Hồn vì bốn quái còn lại thuộc T-34; cấu trúc đã sẵn sàng, chỉ cần thêm dòng vào bảng. Luật cấm sinh trong bán kính 3 quanh người chơi (GDD mục 7.6) **chưa cài** — nó cần vị trí người chơi, mà vị trí đó lệch nhau giữa hai máy; luật này thuộc tầng an toàn của đạo diễn ở T-45 nơi host quyết một mình.
 - [ ] **T-45** AI Đạo Diễn (LinUCB) — lõi thuật toán, `ContextVector`, `WaveSpec` — **@Kiet**
 - [ ] **T-45B** Đạo diễn trong co-op — hợp thành ngữ cảnh N người, số hạng công bằng, tầng an toàn theo người yếu nhất — **@Kiet**
 - [ ] **T-46** Điều tiết bất đối xứng, đòn bẩy chia cắt và dồn ép; hiển thị hoạt động đạo diễn trên HUD — **@Kiet**

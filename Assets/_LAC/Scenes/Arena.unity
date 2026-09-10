@@ -8027,7 +8027,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  _totalWaves: 16
+  _waves: {fileID: 11400000, guid: 74de609306278d34ebb6164d0cbc35c2, type: 2}
+  _fallbackTotalWaves: 16
 --- !u!114 &712958574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8075,11 +8076,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-  _baseCount: 6
-  _countPerWave: 2
-  _maxCount: 40
+  _table: {fileID: 11400000, guid: 74de609306278d34ebb6164d0cbc35c2, type: 2}
   _spawnInset: 1.2
+  _directionSpread: 0.06
   _autoAdvanceCardSelection: 1
   _autoAdvanceDelay: 1.5
 --- !u!114 &712958577

@@ -43,9 +43,15 @@ namespace LAC.Core
 
         private static RunManager _instance;
 
-        // Số đợt là nội dung game, sẽ chuyển sang tài sản WaveTable ở T-44. Tạm để dạng
-        // trường tuần tự hoá để khâu cân bằng chỉnh được mà không phải biên dịch lại.
-        [SerializeField, Min(1)] private int _totalWaves = 16;
+        /// <remarks>
+        /// Số đợt là nội dung game nên nó thuộc về bảng đợt chứ không thuộc về scene — một
+        /// ván dài đúng bằng số dòng đã biên soạn. Trường ở dưới chỉ là giá trị lùi về khi
+        /// chưa gán bảng, để scene thử nghiệm chạy được mà không kéo theo tài sản nội dung.
+        /// </remarks>
+        [SerializeField] private WaveTable _waves;
+
+        [Tooltip("Chỉ dùng khi chưa gán bảng đợt.")]
+        [SerializeField, Min(1)] private int _fallbackTotalWaves = 16;
 
         [SyncVar(hook = nameof(OnSeedChanged))]
         private int _seed;
@@ -73,10 +79,12 @@ namespace LAC.Core
         /// <summary>Đợt hiện tại, đánh số từ 1. Bằng 0 khi ván chưa bắt đầu.</summary>
         public int CurrentWave => _currentWave;
 
-        public int TotalWaves => _totalWaves;
+        public int TotalWaves => _waves != null && _waves.TotalWaves > 0
+            ? _waves.TotalWaves
+            : _fallbackTotalWaves;
         public RunState State => _state;
         public int Seed => _seed;
-        public bool IsFinalWave => _currentWave >= _totalWaves;
+        public bool IsFinalWave => _currentWave >= TotalWaves;
 
         /// <summary>Phát khi một đợt bắt đầu, kèm số thứ tự đợt. Chạy trên cả host và client.</summary>
         public event Action<int> WaveStarted;
@@ -94,7 +102,7 @@ namespace LAC.Core
         public bool IsOver => _state == RunState.Victory || _state == RunState.Defeat;
 
         /// <summary>Số đợt đã vượt qua. Bằng số đợt hiện tại trừ một khi đang đánh dở.</summary>
-        public int WavesCleared => _state == RunState.Victory ? _totalWaves : Mathf.Max(_currentWave - 1, 0);
+        public int WavesCleared => _state == RunState.Victory ? TotalWaves : Mathf.Max(_currentWave - 1, 0);
 
         private void Awake()
         {
@@ -170,7 +178,7 @@ namespace LAC.Core
         {
             if (_state != RunState.WaveActive) return;
 
-            if (_currentWave >= _totalWaves)
+            if (_currentWave >= TotalWaves)
             {
                 EndRun(true);
                 return;
