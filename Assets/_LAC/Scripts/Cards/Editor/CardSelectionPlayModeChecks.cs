@@ -49,11 +49,12 @@ namespace LAC.Cards.Editor
                 {
                     await Restart(run, health);
                     // Giữ đúng asset thẻ, chỉ giới hạn bể rút của đối tượng chạy để thử đủ 7 loại.
-                    var definitions = Get<CardDefinition[]>(controller, "_definitions");
-                    Set(controller, "_definitions", new[] { card });
+                    var definitions = Get<CardDefinition[]>(run, "_cardDefinitions");
+                    Set(run, "_cardDefinitions", new[] { card });
                     try
                     {
                         ClearWave(waveManager);
+                        await Task.Delay(250);
                         Require(Get<float>(controller, "_previousTimeScale") == 1f,
                             "Đã lưu nhầm timeScale của hit-stop.");
                         await Task.Delay(100);
@@ -65,7 +66,7 @@ namespace LAC.Cards.Editor
                         button.onClick.Invoke();
                         button.onClick.Invoke();
                         Require(!input.enabled, "Hiệu ứng thẻ bật input trước khi đóng bảng.");
-                        await Task.Delay(Mathf.CeilToInt(CardHoverVisual.ConsumeDuration * 1000f) + 250);
+                        await Task.Delay(Mathf.CeilToInt(CardHoverVisual.ConsumeDuration * 1000f) + 650);
                         Require(player.Upgrades.GetStacks(card.Id) == 1, "Nhấp đôi nhận nhiều thẻ.");
                         Require(run.State == RunState.WaveActive && run.CurrentWave == 2,
                             "Không chuyển đúng một đợt sau chọn.");
@@ -79,7 +80,7 @@ namespace LAC.Cards.Editor
                         Require(Time.fixedTime > before, "Mô phỏng vật lý không tiếp tục.");
                         Debug.Log($"[CardResume] PASS {card.DisplayName}: pause, double-click, wave 2, input, physics.");
                     }
-                    finally { Set(controller, "_definitions", definitions); }
+                    finally { Set(run, "_cardDefinitions", definitions); }
                 }
 
                 foreach (float scale in new[] { .5f, 0f })
@@ -89,14 +90,16 @@ namespace LAC.Cards.Editor
                     HitStop.Cancel();
                     Time.timeScale = scale;
                     ClearWave(waveManager);
+                    await Task.Delay(250);
                     FirstCardButton(controller).onClick.Invoke();
-                    await Task.Delay(Mathf.CeilToInt(CardHoverVisual.ConsumeDuration * 1000f) + 250);
+                    await Task.Delay(Mathf.CeilToInt(CardHoverVisual.ConsumeDuration * 1000f) + 650);
                     Require(Time.timeScale == scale && !input.enabled,
                         "Không bảo toàn pause/input đã có trước màn thẻ.");
                 }
 
                 await Restart(run, health);
                 ClearWave(waveManager);
+                await Task.Delay(250);
                 FirstCardButton(controller).onClick.Invoke();
                 run.ReportPlayerDown();
                 await Task.Delay(80);

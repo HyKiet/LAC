@@ -10,22 +10,15 @@ namespace LAC.Cards
 {
     public sealed class CardSelectionController : MonoBehaviour
     {
-        public static bool IsAvailable { get; private set; }
+        public static CardSelectionController Instance { get; private set; }
+        public static bool IsAvailable => Instance != null;
         public static bool CombatInputLocked { get; private set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void ResetStatics()
-        {
-            IsAvailable = false;
-            CombatInputLocked = false;
-        }
+        private static void ResetStatics() { Instance = null; CombatInputLocked = false; }
 
         [SerializeField] private CardDefinition[] _definitions;
         [SerializeField, Min(0f)] private float _selectionFeedbackSeconds = 0.12f;
-        [SerializeField, Range(0f, 30f)] private float _songTienSpreadDegrees = 7f;
-        [SerializeField, Min(0f)] private float _bocPhaRadius = 1.75f;
-
-        private readonly HashSet<CardId> _lastOffer = new HashSet<CardId>();
         private CardSelectionView _view;
         private RunManager _run;
         private PlayerCharacter _player;
@@ -34,23 +27,20 @@ namespace LAC.Cards
         private bool _inputWasEnabled;
         private float _previousTimeScale = 1f;
         private int _rerollsRemaining = 2;
+        private int _token;
+        private int _revision;
+        private double _deadline;
         private bool _selectionOpen;
         private bool _committing;
-        private bool _pendingOpen;
-        private bool _ownsAvailability;
         private bool _ownsPause;
+        private bool _requestPending;
+        private CardId[] _pendingOffer;
         private Coroutine _finishSelection;
 
         private void Awake()
         {
-            if (IsAvailable)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            IsAvailable = true;
-            _ownsAvailability = true;
+            if (Instance != null) { Destroy(gameObject); return; }
+            Instance = this;
             DontDestroyOnLoad(gameObject);
             _view = GetComponent<CardSelectionView>();
             if (_view == null) _view = gameObject.AddComponent<CardSelectionView>();
@@ -60,33 +50,56 @@ namespace LAC.Cards
 
         private void OnDestroy()
         {
-            if (_run != null) Unbind();
-            if (_ownsAvailability) IsAvailable = false;
-            RestoreCombat();
+            if (Instance != this) return;
+            if (_state != null) _state.Changed -= RefreshOwned;
+            Unbind();
+            CloseSelection();
+            Instance = null;
         }
 
         private void Update()
         {
             if (_run == null && RunManager.Instance != null) Bind(RunManager.Instance);
-            if ((_pendingOpen || _selectionOpen) && _player == null) FindLocalPlayer();
-            if (_pendingOpen && _player != null) OpenSelection();
+            if (!NetworkClient.isConnected)
+            {
+                if (_ownsPause) CloseSelection();
+                _token = _revision = 0;
+                _player = null;
+                if (_state != null) _state.Changed -= RefreshOwned;
+                _state = null;
+                return;
+            }
+            if (_player == null) FindLocalPlayer();
+            if (_run == null) return;
+            if (_run.State != RunState.CardSelection)
+            {
+                if (_ownsPause) CloseSelection();
+                return;
+            }
+            if (!_ownsPause) PauseCombat();
+            if (_pendingOffer != null && _state != null) ShowPendingOffer();
+            if (_selectionOpen && !_committing)
+            {
+                float remaining = Mathf.Max(0f, (float)(_deadline - NetworkTime.time));
+                _view.SetStatus(remaining > 0f ? $"TỰ CHỌN SAU {Mathf.CeilToInt(remaining)} GIÂY" : "ĐANG TỰ CHỌN…");
+                if (remaining <= 0f) _view.SetButtonsEnabled(false);
+            }
         }
 
         private void Bind(RunManager run)
         {
             _run = run;
-            _run.WaveCleared += OnWaveCleared;
             _run.RunStarted += OnRunStarted;
             _run.RunEnded += OnRunEnded;
-
-            if (_run.State == RunState.CardSelection) OnWaveCleared(_run.CurrentWave);
+            _run.WaveStarted += OnWaveStarted;
         }
 
         private void Unbind()
         {
-            _run.WaveCleared -= OnWaveCleared;
+            if (_run == null) return;
             _run.RunStarted -= OnRunStarted;
             _run.RunEnded -= OnRunEnded;
+            _run.WaveStarted -= OnWaveStarted;
             _run = null;
         }
 
@@ -94,114 +107,100 @@ namespace LAC.Cards
         {
             CloseSelection();
             _rerollsRemaining = 2;
-            _lastOffer.Clear();
             FindLocalPlayer();
-            if (_state != null) _state.ResetRun();
             _view.RefreshOwned(_definitions, _state);
         }
 
-        private void OnRunEnded(bool _)
-        {
-            _pendingOpen = false;
-            CloseSelection();
-        }
-
-        private void OnWaveCleared(int _)
-        {
-            // Lựa chọn ảnh hưởng trạng thái thật nên chỉ host thực hiện. Chơi một người vẫn
-            // đi qua đúng host mode của Mirror, không có nhánh gameplay riêng.
-            if (!NetworkServer.active || _run == null || _run.IsOver || _run.IsFinalWave) return;
-            _pendingOpen = true;
-            FindLocalPlayer();
-            if (_player != null) OpenSelection();
-        }
+        private void OnRunEnded(bool _) => CloseSelection();
+        private void OnWaveStarted(int _) { CloseSelection(); _view.RefreshOwned(_definitions, _state); }
 
         private void FindLocalPlayer()
         {
-            for (int i = 0; i < PlayerRegistry.Count; i++)
+            if (NetworkClient.localPlayer == null) return;
+            _player = NetworkClient.localPlayer.GetComponent<PlayerCharacter>();
+            if (_player == null) return;
+            _state = _player.Upgrades;
+            _state.Changed -= RefreshOwned;
+            _state.Changed += RefreshOwned;
+            _input = _player.GetComponent<PlayerInputReader>();
+            if (_ownsPause)
             {
-                PlayerCharacter candidate = PlayerRegistry.All[i];
-                if (candidate == null || !candidate.isLocalPlayer) continue;
-
-                _player = candidate;
-                _state = candidate.Upgrades;
-                _state.ConfigureProjectileEffects(_songTienSpreadDegrees, _bocPhaRadius);
-                _input = candidate.GetComponent<PlayerInputReader>();
-                _view.RefreshOwned(_definitions, _state);
-                return;
+                _inputWasEnabled = _input != null && _input.enabled;
+                if (_input != null) _input.enabled = false;
             }
+            _view.RefreshOwned(_definitions, _state);
         }
 
-        private void OpenSelection()
+        private void RefreshOwned() => _view.RefreshOwned(_definitions, _state);
+
+        public void ReceiveOffer(int token, int revision, CardId[] cards, int rerolls, double deadline)
         {
-            if (_selectionOpen || _committing || _state == null) return;
-            _pendingOpen = false;
+            if (token < _token || (token == _token && revision < _revision)) return;
+            _token = token;
+            _revision = revision;
+            _rerollsRemaining = rerolls;
+            _deadline = deadline;
+            _pendingOffer = cards;
+            _requestPending = false;
+        }
 
-            List<CardDefinition> offer = CardDeck.Draw(_definitions, _state, 3);
-            if (offer.Count == 0)
+        private void ShowPendingOffer()
+        {
+            var offer = new List<CardDefinition>(3);
+            foreach (CardId id in _pendingOffer)
             {
-                CompleteWithoutSelection();
-                return;
+                CardDefinition card = FindCard(id);
+                if (card != null) offer.Add(card);
             }
-
-            _lastOffer.Clear();
-            for (int i = 0; i < offer.Count; i++) _lastOffer.Add(offer[i].Id);
-
-            PauseCombat();
+            _pendingOffer = null;
             _selectionOpen = true;
             _view.Show(offer, _state, _rerollsRemaining, Pick, Reroll);
+            if (offer.Count == 0) { _committing = true; _view.ShowWaiting(); }
+        }
+
+        private CardDefinition FindCard(CardId id)
+        {
+            foreach (CardDefinition card in _definitions) if (card.Id == id) return card;
+            return null;
         }
 
         private void Reroll()
         {
-            if (!_selectionOpen || _committing || _rerollsRemaining <= 0) return;
-            _rerollsRemaining--;
-
-            List<CardDefinition> offer = CardDeck.Draw(_definitions, _state, 3, _lastOffer);
-            _lastOffer.Clear();
-            for (int i = 0; i < offer.Count; i++) _lastOffer.Add(offer[i].Id);
-            _view.Show(offer, _state, _rerollsRemaining, Pick, Reroll);
+            if (!_selectionOpen || _committing || _requestPending || _rerollsRemaining <= 0) return;
+            _requestPending = true;
+            _view.SetButtonsEnabled(false);
+            _run.CmdRerollCards(_token, _revision);
         }
 
         private void Pick(CardDefinition card)
         {
-            if (!_selectionOpen || _committing || card == null) return;
+            if (!_selectionOpen || _committing || _requestPending || card == null) return;
+            _requestPending = true;
+            _view.SetButtonsEnabled(false);
+            _run.CmdPickCard(_token, _revision, card.Id);
+        }
+
+        public void ReceiveAccepted(int token, CardId id)
+        {
+            if (token != _token || _committing) return;
+            if (_pendingOffer != null) { FindLocalPlayer(); if (_state != null) ShowPendingOffer(); }
             _committing = true;
-
-            PlayerHealth health = _player != null ? _player.GetComponent<PlayerHealth>() : null;
-            if (!_state.Apply(card, health))
-            {
-                _committing = false;
-                return;
-            }
-
-            _view.MarkSelected(card, _player != null ? _player.transform : null);
-            _view.RefreshOwned(_definitions, _state);
+            _view.MarkSelected(FindCard(id), _player != null ? _player.transform : null);
+            _view.SetStatus("ĐÃ CHỌN NÂNG CẤP");
             _finishSelection = StartCoroutine(FinishSelectionAfterFeedback());
         }
 
         private IEnumerator FinishSelectionAfterFeedback()
         {
-            yield return new WaitForSecondsRealtime(
-                Mathf.Max(_selectionFeedbackSeconds, CardHoverVisual.ConsumeDuration));
+            yield return new WaitForSecondsRealtime(Mathf.Max(_selectionFeedbackSeconds, CardHoverVisual.ConsumeDuration));
             _finishSelection = null;
-            CloseSelection();
-            if (_run != null && NetworkServer.active)
-                _run.ReportCardSelectionComplete();
-            _committing = false;
-        }
-
-        private void CompleteWithoutSelection()
-        {
-            CloseSelection();
-            if (_run != null && NetworkServer.active)
-                _run.ReportCardSelectionComplete();
+            _view.RefreshOwned(_definitions, _state);
+            _view.ShowWaiting();
+            if (_run != null && NetworkClient.isConnected) _run.CmdCardFeedbackComplete(_token);
         }
 
         private void PauseCombat()
         {
-            // Đợt thường kết thúc ngay lúc quái cuối chết. Không lưu số 0 tạm thời
-            // của hit-stop làm tốc độ cần khôi phục sau khi chọn thẻ.
             HitStop.Cancel();
             _previousTimeScale = Time.timeScale;
             _inputWasEnabled = _input != null && _input.enabled;
@@ -209,31 +208,21 @@ namespace LAC.Cards
             CombatInputLocked = true;
             _ownsPause = true;
             Time.timeScale = 0f;
-        }
-
-        private void RestoreCombat()
-        {
-            if (!_ownsPause) return;
-            _ownsPause = false;
-            Time.timeScale = _previousTimeScale;
-            PlayerHealth health = _player != null ? _player.GetComponent<PlayerHealth>() : null;
-            if (_input != null) _input.enabled = _inputWasEnabled && (health == null || health.IsAlive);
-            CombatInputLocked = false;
+            _view.ShowWaiting();
         }
 
         private void CloseSelection()
         {
-            // Không để phản hồi chọn của ván cũ chuyển đợt trong ván vừa khởi động lại.
-            if (_finishSelection != null)
-            {
-                StopCoroutine(_finishSelection);
-                _finishSelection = null;
-            }
-            _committing = false;
-            _pendingOpen = false;
-            _selectionOpen = false;
+            if (_finishSelection != null) StopCoroutine(_finishSelection);
+            _finishSelection = null;
+            _pendingOffer = null;
+            _committing = _selectionOpen = _requestPending = false;
             if (_view != null) _view.Hide();
-            RestoreCombat();
+            if (!_ownsPause) return;
+            _ownsPause = false;
+            Time.timeScale = _previousTimeScale;
+            if (_input != null) _input.enabled = _inputWasEnabled && (_player == null || _player.IsAlive);
+            CombatInputLocked = false;
         }
     }
 }

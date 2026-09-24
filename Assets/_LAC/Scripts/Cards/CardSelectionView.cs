@@ -30,6 +30,7 @@ namespace LAC.Cards
         private Text _rerollText;
         private Button _rerollButton;
         private Text _ownedText;
+        private Text _statusText;
         private bool _built;
 
         private void Awake()
@@ -42,6 +43,8 @@ namespace LAC.Cards
         {
             EnsureBuilt();
             _overlay.SetActive(true);
+            SetRect(_statusText.rectTransform, BottomCenter, BottomCenter,
+                new Vector2(-325f, 52f), new Vector2(380f, 48f), Center);
 
             for (int i = 0; i < _slots.Length; i++)
             {
@@ -89,6 +92,29 @@ namespace LAC.Cards
                 else slot.Hover.SetDimmed(true);
             }
             _rerollButton.interactable = false;
+        }
+
+        public void SetStatus(string message) => _statusText.text = message;
+
+        public void SetButtonsEnabled(bool enabled)
+        {
+            foreach (Slot slot in _slots)
+            {
+                slot.Button.interactable = enabled;
+                slot.Hover.SetInteractable(enabled);
+            }
+            _rerollButton.interactable = enabled;
+        }
+
+        public void ShowWaiting()
+        {
+            EnsureBuilt();
+            _overlay.SetActive(true);
+            foreach (Slot slot in _slots) slot.Root.SetActive(false);
+            _rerollButton.interactable = false;
+            SetRect(_statusText.rectTransform, Center, Center,
+                Vector2.zero, new Vector2(900f, 60f), Center);
+            SetStatus("ĐANG CHỜ NGƯỜI CHƠI CÒN LẠI…");
         }
 
         public void Hide()
@@ -161,6 +187,10 @@ namespace LAC.Cards
             title.fontStyle = FontStyle.Bold;
             SetRect(title.rectTransform, TopCenter, TopCenter,
                 new Vector2(0f, -48f), new Vector2(900f, 62f), Center);
+
+            _statusText = CreateText("SelectionStatus", panel.transform, 20, TextAnchor.MiddleCenter, Hex("9CCFC0"));
+            SetRect(_statusText.rectTransform, BottomCenter, BottomCenter,
+                new Vector2(-325f, 52f), new Vector2(380f, 48f), Center);
 
             float[] x = { -330f, 0f, 330f };
             for (int i = 0; i < _slots.Length; i++) _slots[i] = CreateSlot(panel.transform, x[i]);

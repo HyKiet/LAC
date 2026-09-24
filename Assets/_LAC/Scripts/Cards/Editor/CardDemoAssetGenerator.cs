@@ -40,6 +40,10 @@ namespace LAC.Cards.Editor
             EnsureFolder(PrefabFolder);
             EnsureIconImports();
 
+            const string rulesPath = "Assets/_LAC/Data/Cards/Resources/CardSelectionRules.asset";
+            if (AssetDatabase.LoadAssetAtPath<CardSelectionRulesData>(rulesPath) == null)
+                AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<CardSelectionRulesData>(), rulesPath);
+
             CardDefinition[] cards =
             {
                 EnsureCard("CuongCong", CardId.CuongCong, "Cường Công",

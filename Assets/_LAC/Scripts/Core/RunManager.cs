@@ -15,7 +15,7 @@ namespace LAC.Core
     /// vào đây qua <see cref="ReportWaveCleared"/> và <see cref="ReportPlayerDown"/>. Tách
     /// như vậy để bộ điều phối không phải biết chi tiết của spawner hay hệ thống máu.
     /// </remarks>
-    public sealed class RunManager : NetworkBehaviour
+    public sealed partial class RunManager : NetworkBehaviour
     {
         /// <summary>
         /// Điểm truy cập tĩnh. Tự tìm lại nếu tham chiếu bị mất.
@@ -140,6 +140,8 @@ namespace LAC.Core
             // Host khởi tạo ngay; client khởi tạo trong hook khi SyncVar tới nơi.
             RunRandom.Initialize(_seed);
 
+            ResetCardSelections();
+
             StartWave(1);
         }
 
@@ -156,6 +158,7 @@ namespace LAC.Core
             }
 
             _state = RunState.CardSelection;
+            BeginCardSelections();
         }
 
         /// <summary>

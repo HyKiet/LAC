@@ -71,8 +71,8 @@ thẻ mới.
 - Thẻ đang hover vẫn tiếp tục nhịp đập, đồng thời nhấc lên và phóng lớn nhẹ.
 - Khi chọn: thẻ xoay đủ một vòng tại chỗ trong 0,38 giây; chỉ sau đó mới bắt đầu bay
   ở mốc 0,42 giây về toạ độ màn hình của player, đồng thời thu nhỏ và mờ dần.
-- Tổng thời lượng phản hồi là 1,05 giây. Controller chỉ đóng bảng và cho phép chuyển
-  đợt sau khi animation kết thúc.
+- Tổng thời lượng phản hồi là 1,05 giây. Sau animation, client xác nhận với host và
+  hiển thị chờ đồng đội; chỉ đóng bảng khi host cho sang đợt mới.
 
 ### 3.4. Lifecycle và độ ổn định
 
@@ -94,8 +94,26 @@ thẻ mới.
   phục hồi input/physics, chuyển wave và reset ván.
 - Cloud Unity-MCP đang dùng cấu hình HTTP trong `.mcp.json` và đã gọi được trạng thái
   Editor, refresh asset, Console, Play Mode và Game View.
-- T-22 vẫn còn thiếu bộ đếm và xử lý tự chọn sau 10 giây; T-23 vẫn còn đồng bộ xác
-  nhận thật giữa hai người chơi. Vì vậy hai task này **chưa được đánh dấu hoàn thành**.
+- Tại mốc 09/09, T-22 còn thiếu bộ đếm/tự chọn và T-23 chưa có xác nhận hai người.
+
+### 3.6. Nghiệm thu T-22/T-23 ngày 24/09/2026
+
+- Hoàn tất đếm ngược 10 giây theo đồng hồ host, tự chọn thẻ hợp lệ bằng `RunRandom.Cards`.
+- Mỗi người có 2 lượt đổi cho cả ván; đổi không gia hạn đồng hồ. Host kiểm tra token
+  lượt, revision đề nghị, kết nối sở hữu, thẻ hợp lệ và giới hạn cộng dồn.
+- Đồng bộ định danh thẻ qua TargetRpc/Command và lịch sử nhận thẻ qua SyncList;
+  client dựng lại hiệu ứng, chỉ host thay đổi máu. Người vào muộn nhận lịch sử hiện tại.
+- Chờ mọi người chọn và hoàn tất animation trước khi chuyển đợt; có hạn chờ ACK
+  dự phòng. Người đã gục/rời mạng không chặn lượt; người vào giữa lượt chờ lượt kế.
+- Gỡ hoàn toàn cơ chế tự chuyển đợt tạm sau 1,5 giây trong `WaveManager`.
+- Hồi quy host 7/7 thẻ đạt. Kiểm thử Editor host + client Windows riêng, dùng
+  LatencySimulation 100 ms, đạt: chờ đồng đội, lượt đổi độc lập, từ chối yêu cầu
+  sai/trùng, hết giờ, rời mạng và reset ván. Tự chọn rồi sang đợt đo được 11,39 giây
+  bao gồm animation và truyền mạng. Log client xác nhận nâng cấp của cả hai người.
+- Kiểm tra giới hạn cộng dồn và hết bể thẻ đạt; đã nhìn ảnh đếm ngược và trạng thái
+  chờ trong Game View. Console cuối phiên: 0 lỗi, 0 cảnh báo.
+- Quy trình chạy lại: [CARD_TESTS.md](CARD_TESTS.md). Cấu hình thời hạn/lượt đổi:
+  `Data/Cards/Resources/CardSelectionRules.asset`.
 
 ## 4. Dữ liệu của một thẻ
 
@@ -176,6 +194,8 @@ mục 7. Mô tả phải nêu rõ giá trị, cách cộng dồn và mọi bất
 | Chỉ số trong ván | `Assets/_LAC/Scripts/Cards/PlayerUpgradeState.cs` |
 | Bốc thẻ | `Assets/_LAC/Scripts/Cards/CardDeck.cs` |
 | Điều khiển lựa chọn | `Assets/_LAC/Scripts/Cards/CardSelectionController.cs` |
+| Điều phối mạng trên host | `Assets/_LAC/Scripts/Cards/CardSelectionNetwork.cs` |
+| Cấu hình lượt chọn | `Assets/_LAC/Data/Cards/Resources/CardSelectionRules.asset` |
 | Giao diện | `Assets/_LAC/Scripts/Cards/CardSelectionView.cs` |
 | Hover/nhịp đập/animation chọn | `Assets/_LAC/Scripts/Cards/CardHoverVisual.cs` |
 | Asset | `Assets/_LAC/Data/Cards/Resources/Cards/` |

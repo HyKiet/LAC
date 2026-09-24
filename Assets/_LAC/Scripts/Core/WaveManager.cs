@@ -1,5 +1,4 @@
 using LAC.Enemies;
-using LAC.Cards;
 using Mirror;
 using UnityEngine;
 
@@ -45,15 +44,8 @@ namespace LAC.Core
         [Tooltip("Khoảng cách từ biên sân vào trong, nơi quái hiện ra.")]
         [SerializeField, Min(0f)] private float _spawnInset = 1.2f;
 
-        [Header("Tạm thời — gỡ khi có hệ thống thẻ")]
-        [Tooltip("Tự chuyển sang đợt kế tiếp mà không cần chọn thẻ. Tắt khi T-22 và T-23 xong.")]
-        [SerializeField] private bool _autoAdvanceCardSelection = true;
-
-        [SerializeField, Min(0f)] private float _autoAdvanceDelay = 1.5f;
-
         private int _spawnedWave;
         private RunState _lastState = RunState.Idle;
-        private float _advanceAt;
 
         private void Update()
         {
@@ -80,17 +72,8 @@ namespace LAC.Core
             {
                 run.ReportWaveCleared();
 
-                // Chỗ giữ tạm cho màn hình chọn thẻ. Khi T-22 và T-23 xong thì lớp thẻ mới
-                // là thứ gọi ReportCardSelectionComplete, và cờ ở trên được tắt.
-                if (_autoAdvanceCardSelection && !CardSelectionController.IsAvailable)
-                    _advanceAt = Time.time + _autoAdvanceDelay;
                 return;
             }
-
-            if (_advanceAt <= 0f || Time.time < _advanceAt) return;
-
-            _advanceAt = 0f;
-            run.ReportCardSelectionComplete();
         }
 
         /// <summary>
@@ -105,7 +88,6 @@ namespace LAC.Core
         private void EndRun()
         {
             _spawnedWave = 0;
-            _advanceAt = 0f;
         }
 
         /// <summary>Chạy trên cả hai máy: mỗi máy tự sinh đúng đàn quái của mình.</summary>

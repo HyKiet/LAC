@@ -30,7 +30,7 @@ Cổng 1 đã xong: vòng lặp một ván chạy được đầu-cuối — di 
 
 - Người chơi mặc định là **Gióng** dùng sprite Soldier, quái dùng sprite Orc — cả hai lấy từ `Assets/ThirdParty/`, xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md)
 - Mỹ thuật thật của T-18 đã có sẵn tại `Data/Animations/ThachSanh.asset` và `CoHon.asset`, đổi lại chỉ là hai trường dữ liệu
-- Cờ `WaveManager._autoAdvanceCardSelection` tự sang đợt kế sau 1.5 giây — **chỗ giữ tạm**, tắt khi hệ thống thẻ (T-22, T-23) xong
+- T-22/T-23 đã có chọn thẻ 10 giây và đồng bộ co-op; đã gỡ cơ chế tự sang đợt sau 1.5 giây. Kiểm thử: [docs/CARD_TESTS.md](docs/CARD_TESTS.md)
 
 ## Nhận việc thế nào
 

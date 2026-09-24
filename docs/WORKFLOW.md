@@ -75,7 +75,9 @@ Loại: `feat` · `fix` · `art` · `balance` · `docs` · `chore`. Phần thân
 RunManager.Instance.ReportCardSelectionComplete();   // chỉ host gọi
 ```
 
-Hàm này đã có sẵn và đang chạy. Hiện `WaveManager` gọi tạm sau 1.5 giây qua cờ `_autoAdvanceCardSelection`; xong T-23 thì tắt cờ đó — đó là toàn bộ việc bàn giao.
+T-23 đã triển khai điều phối trong `Cards/CardSelectionNetwork.cs` (partial `RunManager`).
+Host chỉ gọi hàm này khi mọi người tham gia đã hoàn tất; cơ chế gọi tạm sau 1.5 giây
+trong `WaveManager` đã được gỡ. Xem `docs/CARD_TESTS.md` để kiểm thử hai tiến trình.
 
 **@Hung → lõi.** Menu vào game bằng Mirror:
 
