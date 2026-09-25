@@ -134,7 +134,7 @@ Nâu chỉ được dùng làm điểm lốm đốm thưa. Đây là điều ki�
 
 Bảng màu đã chốt, không đổi nữa. Ba việc tiếp theo dùng nguyên bảng này:
 
-- **T-33** — sprite Gióng, sprite Tấm, 40 icon thẻ
+- **T-33** — sprite Gióng, sprite Tấm, 20 icon thẻ (12 nền + 8 tiến hoá)
 - **T-47** — sprite bốn quái còn lại, Chằn Tinh, trống đồng, hai tileset còn lại
 - Đòn tấn công của địch: chưa có quái nào đánh tầm xa, nên `SonSang` **chưa từng xuất
   hiện trên màn hình**. Con số 5.76 : 1 là tính toán, chưa phải quan sát. Phải kiểm lại

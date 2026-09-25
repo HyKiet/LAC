@@ -122,7 +122,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Dựng thành prefab trong `Prefabs/UI/Cards`, sinh lúc chạy. Không đặt sẵn vào `Arena.unity`.
 - [x] **T-23** Đồng bộ chọn thẻ: đợt kế chỉ khởi động khi cả hai người đã chọn xong — **@Kang** · 24/09
   > Host thẩm định đề nghị/lượt đổi/lựa chọn theo kết nối, đồng bộ lịch sử định danh, chờ ACK animation, bỏ người rời mạng khỏi điều kiện chờ. `Cards/CardSelectionNetwork.cs` (partial `RunManager`) · `Core/WaveManager.cs`. Hai tiến trình với LatencySimulation đã đạt toàn bộ kiểm tra; xem `docs/CARD_TESTS.md`.
-- [ ] **T-24** Biên soạn 32 thẻ nền — **@Kang**
+- [x] **T-24** Biên soạn và cân bằng 12 thẻ nền — **@Kang** · 24/09
+  > Phạm vi thu gọn theo yêu cầu: 7 thẻ cũ + Khinh Thân, Âm Vang, Hồi Xuân, Thiết Bích, Cuồng Nộ. Tham số lưu trong `Data/Cards/Resources/Cards`; lọc thẻ đạn theo vũ khí, Sinh Lực theo máu gốc, giữ sát thương phần lẻ. `Cards/PlayerUpgradeState.cs` · `CardDefinition.cs` · `Editor/CardBalanceChecks.cs`. Đạt 45.000 lượt chọn mô phỏng và Play Mode 12/12 thẻ; cân bằng độ khó toàn game vẫn thuộc T-50/T-51.
 - [ ] **T-25** Hệ thống tiến hoá thẻ — kiểm tra công thức và thông báo — **@Kang**
 - [ ] **T-26** Chốt và triển khai 8 công thức tiến hoá — **@Kang**
 
@@ -133,7 +134,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-29** Nhân vật Tấm — sáo trúc, đòn tia; tăng sát thương áp cho **phát bắn kế tiếp** — **@Kiet**
 - [ ] **T-31** Sóng âm riêng cho từng nhạc cụ — **@Kiet**
 - [ ] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**
-- [ ] **T-33** Sprite Gióng, Tấm, 40 icon thẻ — **@artist**
+- [ ] **T-33** Sprite Gióng, Tấm, 20 icon thẻ (12 nền + 8 tiến hoá) — **@artist**
 
 ---
 

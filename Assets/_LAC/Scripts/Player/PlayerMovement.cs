@@ -44,7 +44,8 @@ namespace LAC.Player
         public bool IsMoving { get; private set; }
 
         private float MoveSpeed =>
-            _character != null && _character.Data != null ? _character.Data.MoveSpeed : _fallbackSpeed;
+            (_character != null && _character.Data != null ? _character.Data.MoveSpeed : _fallbackSpeed)
+            * (_character != null && _character.Upgrades != null ? _character.Upgrades.MoveSpeedMultiplier : 1f);
 
         public override void OnStartClient()
         {

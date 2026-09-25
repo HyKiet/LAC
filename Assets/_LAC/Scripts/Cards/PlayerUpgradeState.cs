@@ -5,51 +5,58 @@ using UnityEngine;
 
 namespace LAC.Cards
 {
-    /// <summary>Chỉ số nâng cấp của một người chơi trong đúng một ván.</summary>
+    /// <summary>Bản sao chỉ số của ván; nội dung hiệu ứng lấy từ CardDefinition.</summary>
     public sealed class PlayerUpgradeState : MonoBehaviour
     {
-        private readonly int[] _stacks = new int[7];
-
+        private readonly int[] _stacks = new int[Enum.GetValues(typeof(CardId)).Length];
+        private PlayerCharacter _character;
+        private float _healthRatio;
         public event Action Changed;
+        public float DamageMultiplier { get; private set; } = 1f;
+        public float AttackSpeedMultiplier { get; private set; } = 1f;
+        public float DashCooldownMultiplier { get; private set; } = 1f;
+        public float MoveSpeedMultiplier { get; private set; } = 1f;
+        public float AttackRangeMultiplier { get; private set; } = 1f;
+        public float HitInvulnerabilityMultiplier { get; private set; } = 1f;
+        public int WaveHeal { get; private set; }
+        public int ProjectileCount { get; private set; } = 1;
+        public float ProjectileDamageMultiplier { get; private set; } = 1f;
+        public int ProjectileHitLimit { get; private set; } = 1;
+        public bool Explodes => ExplosionRadius > 0f && ExplosionDamageRatio > 0f;
+        public float ProjectileSpreadDegrees { get; private set; }
+        public float ExplosionRadius { get; private set; }
+        public float ExplosionDamageRatio { get; private set; }
+        public int MaxHealthBonus => MaxHealthBonusFromBase(_character != null && _character.Data != null
+            ? _character.Data.MaxHealth : 0);
 
-        public float DamageMultiplier => 1f + 0.2f * GetStacks(CardId.CuongCong);
-        public float AttackSpeedMultiplier => 1f + 0.15f * GetStacks(CardId.LienKich);
-        public int MaxHealthBonus => 25 * GetStacks(CardId.SinhLuc);
-        public float DashCooldownMultiplier => GetStacks(CardId.BoPhap) > 0 ? 0.8f : 1f;
-        public int ProjectileCount => GetStacks(CardId.SongTien) > 0 ? 2 : 1;
-        public float ProjectileDamageMultiplier => ProjectileCount > 1 ? 0.7f : 1f;
-        public int ProjectileHitLimit => GetStacks(CardId.XuyenTam) > 0 ? 3 : 1;
-        public bool Explodes => GetStacks(CardId.BocPha) > 0;
-        public float ProjectileSpreadDegrees { get; private set; } = 7f;
-        public float ExplosionRadius { get; private set; } = 1.75f;
-        public float ExplosionDamageRatio { get; private set; } = 0.3f;
-
-        public int GetStacks(CardId id) => _stacks[(int)id];
-
-        public void ConfigureProjectileEffects(float spreadDegrees, float explosionRadius)
-        {
-            ProjectileSpreadDegrees = Mathf.Max(spreadDegrees, 0f);
-            ExplosionRadius = Mathf.Max(explosionRadius, 0f);
-        }
-
-        public int DamageFromBase(int baseDamage, bool projectile)
-        {
-            float value = baseDamage * DamageMultiplier;
-            if (projectile) value *= ProjectileDamageMultiplier;
-            return Mathf.Max(1, Mathf.RoundToInt(value));
-        }
-
-        public float AttackIntervalFromBase(float baseInterval) =>
-            baseInterval / AttackSpeedMultiplier;
+        private void Awake() => _character = GetComponent<PlayerCharacter>();
+        public int GetStacks(CardId id) => (uint)(int)id < _stacks.Length ? _stacks[(int)id] : 0;
+        public int MaxHealthBonusFromBase(int baseHealth) => Mathf.CeilToInt(baseHealth * _healthRatio - 0.00001f);
+        public float DamageFromBase(int baseDamage, bool projectile) =>
+            baseDamage * DamageMultiplier * (projectile ? ProjectileDamageMultiplier : 1f);
+        public float AttackIntervalFromBase(float baseInterval) => baseInterval / Mathf.Max(.1f, AttackSpeedMultiplier);
 
         public bool Apply(CardDefinition card, PlayerHealth health)
         {
-            if (card == null || GetStacks(card.Id) >= card.MaxStacks) return false;
+            if (card == null || (uint)(int)card.Id >= _stacks.Length || GetStacks(card.Id) >= card.MaxStacks) return false;
+            int oldHealthBonus = MaxHealthBonus;
             _stacks[(int)card.Id]++;
-
-            if (card.Id == CardId.SinhLuc && health != null && NetworkServer.active)
-                health.ServerApplyMaxHealthBonus(MaxHealthBonus, 25);
-
+            DamageMultiplier += card.DamageBonus;
+            AttackSpeedMultiplier += card.AttackSpeedBonus;
+            _healthRatio += card.HealthBonusRatio;
+            DashCooldownMultiplier -= card.DashCooldownReduction;
+            MoveSpeedMultiplier += card.MoveSpeedBonus;
+            AttackRangeMultiplier += card.AttackRangeBonus;
+            HitInvulnerabilityMultiplier += card.HitInvulnerabilityBonus;
+            WaveHeal += card.WaveHeal;
+            ProjectileCount += card.ExtraProjectiles;
+            ProjectileDamageMultiplier *= card.ProjectileDamageRatio;
+            ProjectileSpreadDegrees = Mathf.Max(ProjectileSpreadDegrees, card.ProjectileSpread);
+            ProjectileHitLimit += card.ExtraPierces;
+            ExplosionRadius = Mathf.Max(ExplosionRadius, card.ExplosionRadius);
+            ExplosionDamageRatio = Mathf.Max(ExplosionDamageRatio, card.ExplosionDamageRatio);
+            if (card.HealthBonusRatio > 0f && health != null && NetworkServer.active)
+                health.ServerApplyMaxHealthBonus(MaxHealthBonus, MaxHealthBonus - oldHealthBonus);
             Changed?.Invoke();
             return true;
         }
@@ -57,6 +64,12 @@ namespace LAC.Cards
         public void ResetRun()
         {
             Array.Clear(_stacks, 0, _stacks.Length);
+            DamageMultiplier = AttackSpeedMultiplier = DashCooldownMultiplier = 1f;
+            MoveSpeedMultiplier = AttackRangeMultiplier = HitInvulnerabilityMultiplier = 1f;
+            ProjectileCount = ProjectileHitLimit = 1;
+            ProjectileDamageMultiplier = 1f;
+            _healthRatio = ProjectileSpreadDegrees = ExplosionRadius = ExplosionDamageRatio = 0f;
+            WaveHeal = 0;
             Changed?.Invoke();
         }
     }

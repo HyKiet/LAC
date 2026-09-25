@@ -73,7 +73,8 @@ namespace LAC.Player
             if (!IsAlive || IsInvulnerable || amount <= 0) return false;
 
             _health = Mathf.Max(_health - amount, 0);
-            _invulnerableUntil = Time.time + _hitInvulnerability;
+            _invulnerableUntil = Time.time + _hitInvulnerability *
+                (_character != null && _character.Upgrades != null ? _character.Upgrades.HitInvulnerabilityMultiplier : 1f);
 
             if (_health == 0 && RunManager.Instance != null)
                 RunManager.Instance.ReportPlayerDown();

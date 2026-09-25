@@ -271,7 +271,7 @@ Nhóm phát triển chủ yếu bằng phương pháp AI-assisted. Ba quy địn
 | GDD | Quyết định hiện hành | Lý do |
 |---|---|---|
 | Unity 6.3 LTS · $6.99 | **6000.5.6f1** · **$2.99** | Phiên bản engine thực tế; định giá theo mặt bằng thể loại |
-| 48 thẻ · 4 cấp độ khó | **32 thẻ nền + 8 tiến hoá** · **1 cấp** | Cân đối phạm vi theo nguồn lực 16 tuần. Cấp độ khó thứ hai chuyển sang giai đoạn sau bảo vệ để lấy quỹ thời gian cho đạo diễn co-op |
+| 48 thẻ · 4 cấp độ khó | **12 thẻ nền + 8 tiến hoá** · **1 cấp** | T-24 thu gọn còn 12 thẻ nền theo quyết định ngày 24/09/2026; cân bằng theo giới hạn cộng dồn và 15 lượt nâng cấp. Cấp độ khó thứ hai để sau bảo vệ |
 | Không có vật phẩm rơi ra | **Bổ sung cơ chế Hồn** | Thể loại yêu cầu vòng phản hồi chu kỳ ngắn |
 | Không có Trống Đồng và tiến hoá thẻ | **Bổ sung — xem mục 2** | Yếu tố định vị sản phẩm |
 | AI Đạo Diễn chạy ở mọi chế độ | **Hoạt động ở cả hai chế độ.** Co-op dùng véc-tơ ngữ cảnh hợp thành, tầng an toàn theo người yếu nhất và số hạng công bằng | Yêu cầu bắt buộc từ giảng viên hướng dẫn. Đặc tả đầy đủ tại [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) mục 2.7 |

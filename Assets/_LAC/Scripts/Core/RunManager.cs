@@ -244,6 +244,10 @@ namespace LAC.Core
         [Server]
         private void StartWave(int waveIndex)
         {
+            if (waveIndex > 1)
+                foreach (PlayerCharacter player in PlayerRegistry.All)
+                    if (player != null && player.IsAlive && player.Upgrades.WaveHeal > 0)
+                        LAC.Combat.DamageSystem.HealPlayer(player, player.Upgrades.WaveHeal);
             _currentWave = waveIndex;
             _state = RunState.WaveActive;
         }

@@ -44,8 +44,8 @@ namespace LAC.Cards
             DontDestroyOnLoad(gameObject);
             _view = GetComponent<CardSelectionView>();
             if (_view == null) _view = gameObject.AddComponent<CardSelectionView>();
-            if (_definitions == null || _definitions.Length == 0)
-                _definitions = Resources.LoadAll<CardDefinition>("Cards");
+            // Prefab demo cũ chỉ chứa 7 tham chiếu; luôn nạp cùng danh mục với host.
+            _definitions = Resources.LoadAll<CardDefinition>("Cards");
         }
 
         private void OnDestroy()

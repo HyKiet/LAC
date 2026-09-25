@@ -48,6 +48,7 @@ namespace LAC.Combat
         private PlayerUpgradeState _upgrades;
 
         private CharacterData Data => _character != null ? _character.Data : null;
+        private float AttackRange => Data.AttackRange * (Upgrades != null ? Upgrades.AttackRangeMultiplier : 1f);
         private PlayerUpgradeState Upgrades
         {
             get
@@ -77,7 +78,7 @@ namespace LAC.Combat
             if (_health != null && !_health.IsAlive) return;
             if (CardSelectionController.CombatInputLocked) return;
 
-            CurrentTarget = EnemyRegistry.Nearest(transform.position, data.AttackRange);
+            CurrentTarget = EnemyRegistry.Nearest(transform.position, AttackRange);
             if (CurrentTarget == null) return;
 
             if (Time.time < _nextShotAt) return;
@@ -109,7 +110,7 @@ namespace LAC.Combat
         private void FireCircle(CharacterData data)
         {
             var alive = EnemyRegistry.Alive;
-            float rangeSqr = data.AttackRange * data.AttackRange;
+            float rangeSqr = AttackRange * AttackRange;
             Vector2 origin = transform.position;
 
             for (int i = alive.Count - 1; i >= 0; i--)
@@ -118,11 +119,11 @@ namespace LAC.Combat
                 if (enemy == null || !enemy.IsAlive) continue;
                 if ((enemy.Position - origin).sqrMagnitude > rangeSqr) continue;
 
-                int damage = Upgrades != null ? Upgrades.DamageFromBase(data.BaseDamage, false) : data.BaseDamage;
+                float damage = Upgrades != null ? Upgrades.DamageFromBase(data.BaseDamage, false) : data.BaseDamage;
                 DamageSystem.ApplyToEnemy(enemy, damage, origin);
             }
 
-            if (data.SpawnSoundWave) SpawnWave(origin, 0.5f, data.AttackRange);
+            if (data.SpawnSoundWave) SpawnWave(origin, 0.5f, AttackRange);
         }
 
         /// <summary>Hình cung hướng về mục tiêu gần nhất — roi sắt của Gióng.</summary>
@@ -141,7 +142,7 @@ namespace LAC.Combat
                 : (_movement != null && _movement.Facing.sqrMagnitude > 0f ? _movement.Facing.normalized : Vector2.down);
 
             var alive = EnemyRegistry.Alive;
-            float rangeSqr = data.AttackRange * data.AttackRange;
+            float rangeSqr = AttackRange * AttackRange;
             float cosLimit = Mathf.Cos(_arcHalfAngle * Mathf.Deg2Rad);
             Vector2 origin = transform.position;
 
@@ -154,14 +155,14 @@ namespace LAC.Combat
                 if (toEnemy.sqrMagnitude > rangeSqr) continue;
                 if (Vector2.Dot(facing, toEnemy.normalized) < cosLimit) continue;
 
-                int damage = Upgrades != null ? Upgrades.DamageFromBase(data.BaseDamage, false) : data.BaseDamage;
+                float damage = Upgrades != null ? Upgrades.DamageFromBase(data.BaseDamage, false) : data.BaseDamage;
                 DamageSystem.ApplyToEnemy(enemy, damage, origin);
             }
 
             // Vòng nhỏ đặt lệch về phía trước, đủ để đọc ra hướng vung roi — chỉ khi bản
             // thân hoạt ảnh chưa tả được đường roi.
             if (data.SpawnSoundWave)
-                SpawnWave(origin + facing * (data.AttackRange * 0.5f), 0.3f, data.AttackRange * 0.7f);
+                SpawnWave(origin + facing * (AttackRange * 0.5f), 0.3f, AttackRange * 0.7f);
         }
 
         /// <summary>Tia thẳng về phía mục tiêu gần nhất — sáo trúc của Tấm.</summary>
@@ -177,12 +178,12 @@ namespace LAC.Combat
 
             // Tuổi thọ tính từ tầm đánh, dư một phần ba để đạn không tắt ngay trước mũi mục
             // tiêu khi mục tiêu đang chạy ra xa.
-            float lifetime = data.AttackRange / data.ProjectileSpeed * 1.35f;
+            float lifetime = AttackRange / data.ProjectileSpeed * 1.35f;
 
             PlayerUpgradeState upgrades = Upgrades;
             int count = upgrades != null ? upgrades.ProjectileCount : 1;
             float spread = upgrades != null ? upgrades.ProjectileSpreadDegrees : 0f;
-            int damage = upgrades != null ? upgrades.DamageFromBase(data.BaseDamage, true) : data.BaseDamage;
+            float damage = upgrades != null ? upgrades.DamageFromBase(data.BaseDamage, true) : data.BaseDamage;
             int hitLimit = upgrades != null ? upgrades.ProjectileHitLimit : 1;
             bool explodes = upgrades != null && upgrades.Explodes;
             float explosionRadius = upgrades != null ? upgrades.ExplosionRadius : 0f;

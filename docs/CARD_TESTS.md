@@ -1,4 +1,4 @@
-# Kiểm thử T-22 và T-23
+# Kiểm thử T-22, T-23 và T-24
 
 Unity 6000.5.6f1. Không sửa mã khi đang ở Play Mode.
 
@@ -6,9 +6,21 @@ Unity 6000.5.6f1. Không sửa mã khi đang ở Play Mode.
 
 Mở Arena, vào Play Mode, chờ host sinh người chơi. Chạy
 `LAC > Demo > Check Card Resume (Play Mode - restarts run)`.
-Bài kiểm tra chạy đủ 7 thẻ, nhấp đôi, hit-stop, phục hồi input/vật lý,
+Bài kiểm tra chạy đủ 12 thẻ (thẻ đạn trên Tấm, thẻ chung trên Gióng), nhấp đôi, hit-stop, phục hồi input/vật lý,
 bảo toàn timeScale có trước và hủy animation của ván cũ khi chơi lại.
 Kết quả thành công: `[CardResume] ALL PASSED`.
+
+## Cân bằng bể thẻ
+
+Thoát Play Mode, chạy `LAC > Tests > Validate 12 Card Balance (Edit Mode)`.
+Bài kiểm tra dùng 1.000 seed cho mỗi kiểu vũ khí, 15 lượt chọn và 2 lần đổi mỗi ván.
+Kiểm tra 3 lựa chọn duy nhất, thẻ phù hợp, đủ lựa chọn đến lượt 15, giới hạn chỉ số,
+sát thương 0,7/0,21 không bị làm tròn lên, máu theo chỉ số gốc, reset và không sửa asset.
+Kết quả thành công: `[CardBalance] ALL PASSED` (45.000 lượt chọn).
+
+Play Mode còn kiểm tra Khinh Thân nối với di chuyển, Âm Vang nối với tầm vũ khí,
+Hồi Xuân hồi đúng 1 máu khi sang đợt, Thiết Bích kéo dài bảo vệ sau trúng đòn
+và Cuồng Nộ áp dụng cả tăng sát thương lẫn giảm tốc đánh.
 
 ## Hai tiến trình, giả lập độ trễ
 

@@ -80,7 +80,7 @@ namespace LAC.Core
                 var selection = new Selection
                 {
                     Player = player,
-                    Offer = CardDeck.Draw(CardDefinitions, player.Upgrades, 3)
+                    Offer = CardDeck.Draw(CardDefinitions, player.Upgrades, 3, shape: player.Data.WeaponShape)
                 };
                 selection.Picked = selection.Finished = selection.Offer.Count == 0;
                 _cardSelections.Add(connection.connectionId, selection);
@@ -127,7 +127,8 @@ namespace LAC.Core
                 || _cardRerolls[selection.Player.netId] <= 0) return;
             var avoid = new HashSet<CardId>();
             foreach (CardDefinition card in selection.Offer) avoid.Add(card.Id);
-            selection.Offer = CardDeck.Draw(CardDefinitions, selection.Player.Upgrades, 3, avoid);
+            selection.Offer = CardDeck.Draw(CardDefinitions, selection.Player.Upgrades, 3, avoid,
+                selection.Player.Data.WeaponShape);
             _cardRerolls[selection.Player.netId]--;
             selection.Revision++;
             SendCardOffer(sender, selection);

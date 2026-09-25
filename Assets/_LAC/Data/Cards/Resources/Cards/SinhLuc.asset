@@ -14,8 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
   _id: 2
   _displayName: "Sinh L\u1EF1c"
-  _description: "T\u0103ng 25 m\xE1u t\u1ED1i \u0111a v\xE0 h\u1ED3i ngay 25 m\xE1u."
+  _description: "+20% m\xE1u g\u1ED1c m\u1ED7i c\u1EA5p (t\u1ED5ng l\xE0m tr\xF2n
+    l\xEAn). H\u1ED3i ph\u1EA7n m\xE1u v\u1EEBa t\u0103ng."
   _icon: {fileID: 21300000, guid: 9cc43f0307aa38f46b878055a268bbab, type: 3}
   _maxStacks: 3
   _weight: 1
   _accent: {r: 0.30980393, g: 0.6509804, b: 0.5803922, a: 1}
+  _damageBonus: 0
+  _attackSpeedBonus: 0
+  _healthBonusRatio: 0.2
+  _dashCooldownReduction: 0
+  _moveSpeedBonus: 0
+  _attackRangeBonus: 0
+  _hitInvulnerabilityBonus: 0
+  _waveHeal: 0
+  _requiresProjectile: 0
+  _extraProjectiles: 0
+  _projectileDamageRatio: 1
+  _projectileSpread: 0
+  _extraPierces: 0
+  _explosionRadius: 0
+  _explosionDamageRatio: 0

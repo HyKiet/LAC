@@ -1,18 +1,20 @@
 using System.Collections.Generic;
 using LAC.Core;
+using LAC.Combat;
 
 namespace LAC.Cards
 {
     public static class CardDeck
     {
         public static List<CardDefinition> Draw(IReadOnlyList<CardDefinition> definitions,
-            PlayerUpgradeState state, int count, ISet<CardId> avoid = null)
+            PlayerUpgradeState state, int count, ISet<CardId> avoid = null, WeaponShape? shape = null)
         {
             var eligible = new List<CardDefinition>(definitions.Count);
             for (int i = 0; i < definitions.Count; i++)
             {
                 CardDefinition card = definitions[i];
-                if (card != null && state.GetStacks(card.Id) < card.MaxStacks)
+                if (card != null && state.GetStacks(card.Id) < card.MaxStacks
+                    && (!shape.HasValue || card.Supports(shape.Value)))
                     eligible.Add(card);
             }
 

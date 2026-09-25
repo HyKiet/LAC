@@ -11,12 +11,12 @@ liệu này.
 
 | Loại | Số lượng mục tiêu | Trạng thái |
 |---|---:|---|
-| Thẻ nền | 32 | 7 thẻ demo đã triển khai; 25 thẻ còn lại chờ T-24 |
+| Thẻ nền | 12 | Đã triển khai đủ 12 thẻ; cân bằng ban đầu ở T-24 |
 | Thẻ tiến hoá | 8 | Chờ T-25 và T-26 |
-| **Tổng** | **40** | Không tính các cấp cộng dồn là thẻ riêng |
+| **Tổng** | **20** | 12 thẻ nền đã làm + 8 tiến hoá chưa triển khai |
 
-Con số 48 thẻ trong GDD gốc đã lỗi thời. Phạm vi hiện hành là **32 thẻ nền + 8 thẻ
-tiến hoá** theo CLAUDE.md mục 7.
+Con số 48 thẻ trong GDD và mục tiêu 32 thẻ nền trước đây đã lỗi thời. Theo quyết định
+ngày 24/09/2026, phạm vi hiện hành là **12 thẻ nền + 8 thẻ tiến hoá**.
 
 ## 2. Quy tắc chung
 
@@ -25,12 +25,13 @@ tiến hoá** theo CLAUDE.md mục 7.
 - Đợt tiếp theo chỉ bắt đầu khi toàn bộ người chơi đã hoàn tất lựa chọn.
 - Bốc thẻ bằng `LAC.Core.RunRandom.Cards`; không dùng `UnityEngine.Random`.
 - Thẻ đã đạt giới hạn cộng dồn không còn hợp lệ để xuất hiện trong đề nghị.
+- Ba thẻ Song Tiễn, Xuyên Tâm, Bộc Phá chỉ xuất hiện cho vũ khí đạn (`WeaponShape.Line`).
 - Hiệu ứng chỉ áp lên `PlayerUpgradeState` của ván hiện tại, không sửa trực tiếp
   `CharacterData` hoặc asset `CardDefinition`.
 - Qua mạng chỉ đồng bộ định danh/lựa chọn thẻ; host giữ thẩm quyền với thay đổi gameplay,
   còn mỗi máy tự áp dụng phần biểu diễn.
 - Bộ 7 thẻ demo hiện dùng ảnh AI đồng nhất để kiểm chứng bố cục và tương tác. Đây là
-  **mỹ thuật tạm**, không thay thế bộ 40 icon chính thức do hoạ sĩ thực hiện ở T-33.
+  **mỹ thuật tạm**. Năm thẻ mới dùng ký hiệu chữ; bộ 20 icon chính thức thuộc T-33.
 
 ## 3. Giao diện và phản hồi tương tác hiện hành
 
@@ -138,36 +139,61 @@ Các hàng dưới đây phản ánh asset và logic đang chạy, không phải
 |---|---|---|---:|---:|---|
 | `CuongCong` | Cường Công | +20% sát thương cơ bản, cộng theo chỉ số gốc | 3 | 1 | Đã triển khai |
 | `LienKich` | Liên Kích | +15% tốc độ đánh cơ bản | 3 | 1 | Đã triển khai |
-| `SinhLuc` | Sinh Lực | +25 máu tối đa và hồi ngay 25 máu | 3 | 1 | Đã triển khai |
+| `SinhLuc` | Sinh Lực | +20% máu gốc; tổng làm tròn lên; hồi đúng phần máu vừa tăng | 3 | 1 | Đã triển khai |
 | `BoPhap` | Bộ Pháp | −20% thời gian hồi lướt | 1 | 1 | Đã triển khai |
-| `SongTien` | Song Tiễn | Bắn 2 đạn lệch 7°; mỗi đạn gây 70% sát thương hiện tại | 1 | 1 | Đã triển khai |
-| `XuyenTam` | Xuyên Tâm | Đạn xuyên thêm 2 địch, tối đa chạm 3 mục tiêu khác nhau | 1 | 1 | Đã triển khai |
-| `BocPha` | Bộc Phá | Lần chạm đầu phát nổ trong bán kính 1,75, gây 30% sát thương đạn | 1 | 1 | Đã triển khai |
+| `SongTien` | Song Tiễn | Chỉ vũ khí đạn: 2 đạn trong góc mở 7°, mỗi đạn 70% sát thương | 1 | 0,65 | Đã triển khai |
+| `XuyenTam` | Xuyên Tâm | Chỉ vũ khí đạn: xuyên thêm 2 địch, tối đa 3 mục tiêu | 1 | 0,65 | Đã triển khai |
+| `BocPha` | Bộc Phá | Chỉ vũ khí đạn: chạm đầu nổ bán kính 1,75; 30% sát thương lên địch khác | 1 | 0,65 | Đã triển khai |
+| `KhinhThan` | Khinh Thân | +8% tốc độ di chuyển gốc; không tăng tốc lướt | 3 | 1 | Đã triển khai |
+| `AmVang` | Âm Vang | +10% tầm đánh gốc; không tăng bán kính nổ | 3 | 1 | Đã triển khai |
+| `HoiXuan` | Hồi Xuân | Hồi 1 máu khi bắt đầu đợt 2 trở đi; không hồi sinh | 2 | 0,8 | Đã triển khai |
+| `ThietBich` | Thiết Bích | +15% thời gian bất tử sau khi trúng đòn; không tăng i-frame lướt | 2 | 1 | Đã triển khai |
+| `CuongNo` | Cuồng Nộ | +25% sát thương gốc, đổi lại −10% tốc độ đánh gốc | 2 | 0,75 | Đã triển khai |
 
 Ghi chú: `SongTien`, `XuyenTam` và `BocPha` đã kết hợp được trên cùng một viên đạn.
-Các tham số góc lệch và bán kính nổ hiện nằm trong `PlayerUpgradeState`; khi biên soạn
-đủ bể thẻ cần chuyển toàn bộ chỉ số nội dung sang dữ liệu thay vì hard-code.
+Mọi tham số hiệu ứng, giới hạn và trọng số nằm trong asset `CardDefinition`.
+`PlayerUpgradeState` chỉ cộng dồn lên bản sao trong ván. ID 0–6 được giữ nguyên,
+năm thẻ mới nối tiếp ID 7–11 để không làm lệch các tham chiếu cũ.
 
-## 6. Danh sách 32 thẻ nền
+## 6. Cân bằng bộ 12 thẻ
 
-T-24 sẽ chốt bảng này. Không điền chỉ số chưa được duyệt vào mã hoặc asset.
+Danh sách chính thức là 12 hàng ở mục 5. Có 9 thẻ chung và 3 thẻ dành cho vũ khí đạn.
+Hai kiểu vũ khí vòng tròn/hình cung có tổng 22 cấp có thể nhận; vũ khí đạn có 25.
+Muốn vét bể thẻ chung xuống còn dưới 3 ID phải tiêu ít nhất 16 lựa chọn: vì vậy
+trước lượt chọn thứ 15 vẫn còn ít nhất 3 thẻ hợp lệ, kể cả cách chọn bất lợi nhất.
 
-| # | ID | Tên | Nhóm | Hiệu ứng | Giới hạn | Trọng số | Nhân vật | Trạng thái |
-|---:|---|---|---|---|---:|---:|---|---|
-| 1 | `CuongCong` | Cường Công | Chỉ số | +20% sát thương cơ bản | 3 | 1 | Chung | Đã triển khai |
-| 2 | `LienKich` | Liên Kích | Chỉ số | +15% tốc độ đánh cơ bản | 3 | 1 | Chung | Đã triển khai |
-| 3 | `SinhLuc` | Sinh Lực | Chỉ số | +25 máu tối đa, hồi 25 máu | 3 | 1 | Chung | Đã triển khai |
-| 4 | `BoPhap` | Bộ Pháp | Chỉ số | −20% hồi chiêu lướt | 1 | 1 | Chung | Đã triển khai |
-| 5 | `SongTien` | Song Tiễn | Cải biến vũ khí | 2 đạn, mỗi đạn 70% sát thương | 1 | 1 | Chung | Đã triển khai |
-| 6 | `XuyenTam` | Xuyên Tâm | Cải biến vũ khí | Xuyên thêm 2 địch | 1 | 1 | Chung | Đã triển khai |
-| 7 | `BocPha` | Bộc Phá | Cải biến vũ khí | Nổ 30% sát thương khi chạm đầu | 1 | 1 | Chung | Đã triển khai |
-| 8–32 | — | — | — | — | — | — | — | Chờ biên soạn |
+| Hướng xây dựng | Trần từ thẻ | Đánh đổi/giới hạn |
+|---|---|---|
+| Sát thương + tốc đánh | Cường Công ×3, Liên Kích ×3, Cuồng Nộ ×2: 2,625× DPS gốc | Tốn 8 lựa chọn; Cuồng Nộ giảm tốc đánh |
+| Thêm Song Tiễn | 3,675× DPS gốc nếu cả hai đạn trúng một mục tiêu | Chỉ vũ khí đạn; tốn tổng 9 lựa chọn; chưa tính trượt/overkill |
+| Máu | Tấm 4→7, Thạch Sanh 6→10, Gióng 10→16 | Tốn 3 lựa chọn; thay mức +75 máu của demo cũ |
+| Di chuyển / tầm đánh | +24% / +30% | Mỗi hướng tốn 3 lựa chọn; không tăng lướt/bán kính nổ |
+| Hồi phục | 2 máu giữa các đợt | Tốn 2 lựa chọn; không hồi giữa giao tranh hoặc hồi sinh |
+| Phòng thủ | +30% bất tử sau trúng đòn (0,6→0,78 giây với cấu hình hiện tại) | Tốn 2 lựa chọn; không giảm sát thương và không tăng i-frame lướt |
+
+Các phần trăm cộng theo chỉ số gốc, không nhân lũy tiến qua từng cấp. Sát thương thật
+và máu quái giữ phần lẻ: đạn 0,7 không còn bị nâng thành 1; vụ nổ 30% của nó là 0,21.
+Số sát thương nổi vẫn làm tròn cho giao diện, không dùng để tính máu quái.
+Vụ nổ không đánh lại mục tiêu vừa trúng trực tiếp, không tạo chuỗi nổ và chỉ nổ một lần/đạn.
+
+Đã mô phỏng 1.000 seed × 15 lượt × 3 kiểu vũ khí = **45.000 lựa chọn**, kiểm tra đổi thẻ,
+lọc theo vũ khí, giới hạn cộng dồn, toàn bộ thẻ đều xuất hiện và không sửa asset.
+Đã kiểm thử Play Mode đủ 12 thẻ, gồm tác động thực của năm thẻ mới, reset và chuyển đợt;
+đã nhìn ảnh Game View của năm thẻ mới. Chạy lại bằng `LAC > Tests > Validate 12 Card Balance`.
+Hồi quy co-op Editor host + client Windows riêng với độ trễ 100 ms đã đạt toàn bộ
+kiểm tra; client nhận đúng định danh/cộng dồn mới, lượt hết giờ sang đợt sau 11,40 giây
+kể cả animation và truyền mạng. Console cuối phiên: 0 lỗi, 0 cảnh báo.
+
+Đây là cân bằng ban đầu của **bể thẻ**, chưa thay thế T-50/T-51: cần chơi thử với đủ
+quái/boss và thu thập tỉ lệ thắng, lựa chọn thẻ để chốt độ khó toàn game.
 
 ## 7. Công thức tiến hoá
 
 Khi đủ toàn bộ nguyên liệu, hệ thống tự hợp nhất thành thẻ tiến hoá. Tên nguyên liệu
 dưới đây là tên thiết kế từ CLAUDE.md; T-24/T-26 phải ánh xạ chúng sang ID chính thức
-trước khi triển khai.
+trước khi triển khai. Các công thức dưới đây là thiết kế lịch sử, chưa khớp bộ 12 thẻ;
+T-26 phải thiết kế lại nguyên liệu và số cấp theo danh mục mới, không tự bổ sung thẻ
+ngoài phạm vi 12 thẻ nền. Mục tiêu 8 tiến hoá vẫn giữ nguyên.
 
 | # | Nguyên liệu | Kết quả | Trạng thái |
 |---:|---|---|---|

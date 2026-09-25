@@ -108,7 +108,7 @@ namespace LAC.Enemies
 
         /// <summary>Gây sát thương lên quái. Chỉ host được gọi, qua `DamageSystem` ở T-13.</summary>
         [Server]
-        public void DamageEnemy(Enemy enemy, int amount)
+        public void DamageEnemy(Enemy enemy, float amount)
         {
             if (enemy == null || !enemy.IsAlive) return;
             if (!enemy.ApplyDamage(amount)) return;

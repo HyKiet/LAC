@@ -87,13 +87,14 @@ namespace LAC.Combat
         /// làm việc đó — xem T-14.
         /// </remarks>
         /// <returns>Đúng nếu sát thương thực sự được áp dụng.</returns>
-        public static bool ApplyToEnemy(Enemy enemy, int amount, Vector2 source)
+        public static bool ApplyToEnemy(Enemy enemy, float amount, Vector2 source)
         {
             if (!NetworkServer.active || enemy == null || !enemy.IsAlive || amount <= 0) return false;
             if (EnemySpawner.Instance == null) return false;
 
             EnemySpawner.Instance.DamageEnemy(enemy, amount);
-            GameEvents.RaiseEnemyDamaged(enemy, amount, source);
+            // Chỉ số nổi là số nguyên; không làm tròn sát thương thật của thẻ phần trăm.
+            GameEvents.RaiseEnemyDamaged(enemy, Mathf.Max(1, Mathf.RoundToInt(amount)), source);
             return true;
         }
 

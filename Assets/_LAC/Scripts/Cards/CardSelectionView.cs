@@ -167,7 +167,7 @@ namespace LAC.Cards
 
             _ownedText = CreateText("OwnedCards", canvasGo.transform, 20, TextAnchor.UpperLeft, Hex("E0CFAF"));
             SetRect(_ownedText.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f),
-                new Vector2(24f, -24f), new Vector2(320f, 260f), new Vector2(0f, 1f));
+                new Vector2(24f, -24f), new Vector2(320f, 340f), new Vector2(0f, 1f));
             _ownedText.raycastTarget = false;
 
             _overlay = CreateImage("SelectionOverlay", canvasGo.transform, Hex("15130F", 0.93f)).gameObject;

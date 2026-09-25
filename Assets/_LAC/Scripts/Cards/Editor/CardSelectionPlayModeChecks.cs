@@ -41,14 +41,20 @@ namespace LAC.Cards.Editor
             float originalScale = Time.timeScale;
             bool originalInput = input.enabled;
             float originalInvulnerability = Get<float>(health, "_invulnerableUntil");
+            CharacterId originalCharacter = player.CharacterId;
             try
             {
                 var cards = Resources.LoadAll<CardDefinition>("Cards");
-                Require(cards.Length == 7, "Thiếu định nghĩa thẻ.");
+                Require(cards.Length == 12, "Thiếu định nghĩa thẻ.");
                 foreach (var card in cards)
                 {
                     await Restart(run, health);
-                    // Giữ đúng asset thẻ, chỉ giới hạn bể rút của đối tượng chạy để thử đủ 7 loại.
+                    // Thẻ đạn được thử trên Tấm; các thẻ chung thử trên Gióng.
+                    player.SetCharacter(card.RequiresProjectile ? CharacterId.Tam : CharacterId.Giong);
+                    typeof(PlayerHealth).GetMethod("ServerRestore", Private).Invoke(health, null);
+                    if (card.Id == CardId.HoiXuan)
+                        DamageSystem.ApplyToPlayer(player, 2, player.transform.position);
+                    Set(health, "_invulnerableUntil", Time.time + 1000f);
                     var definitions = Get<CardDefinition[]>(run, "_cardDefinitions");
                     Set(run, "_cardDefinitions", new[] { card });
                     try
@@ -75,6 +81,7 @@ namespace LAC.Cards.Editor
                         Require(input.enabled && Get<InputActionMap>(input, "_map").enabled,
                             "Input/action map không được khôi phục.");
                         Require(EnemyRegistry.Count > 0, "Đợt mới không sinh quái.");
+                        CheckRuntimeEffect(card, player, health);
                         float before = Time.fixedTime;
                         await Task.Delay(100);
                         Require(Time.fixedTime > before, "Mô phỏng vật lý không tiếp tục.");
@@ -110,7 +117,7 @@ namespace LAC.Cards.Editor
                 Require(!Get<bool>(controller, "_committing") && Get<int>(controller, "_rerollsRemaining") == 2,
                     "Trạng thái lựa chọn không reset.");
                 foreach (var card in cards) Require(player.Upgrades.GetStacks(card.Id) == 0, "Còn thẻ ván cũ.");
-                Debug.Log("[CardResume] ALL PASSED: seven cards, kill hit-stop overlap, preserved pause/input, cancelled selection and run reset.");
+                Debug.Log("[CardResume] ALL PASSED: twelve cards, kill hit-stop overlap, preserved pause/input, cancelled selection and run reset.");
             }
             catch (Exception exception) { Debug.LogException(exception); }
             finally
@@ -123,6 +130,7 @@ namespace LAC.Cards.Editor
                     Time.timeScale = originalScale;
                     if (input != null) input.enabled = originalInput;
                     if (health != null) Set(health, "_invulnerableUntil", originalInvulnerability);
+                    if (player != null) player.SetCharacter(originalCharacter);
                 }
                 _running = false;
             }
@@ -139,6 +147,38 @@ namespace LAC.Cards.Editor
             health.GetComponent<PlayerInputReader>().enabled = true;
             Set(health, "_invulnerableUntil", Time.time + 1000f);
             await Task.Delay(100);
+        }
+
+        private static void CheckRuntimeEffect(CardDefinition card, PlayerCharacter player, PlayerHealth health)
+        {
+            switch (card.Id)
+            {
+                case CardId.SinhLuc:
+                    Require(health.MaxHealth == player.Data.MaxHealth + Mathf.CeilToInt(player.Data.MaxHealth * .2f), "Sinh Lực sai mức máu.");
+                    break;
+                case CardId.KhinhThan:
+                    float speed = (float)typeof(PlayerMovement).GetProperty("MoveSpeed", Private).GetValue(player.GetComponent<PlayerMovement>());
+                    Require(Mathf.Approximately(speed, player.Data.MoveSpeed * 1.08f), "Khinh Thân chưa nối vào di chuyển.");
+                    break;
+                case CardId.AmVang:
+                    float range = (float)typeof(WeaponAuto).GetProperty("AttackRange", Private).GetValue(player.GetComponent<WeaponAuto>());
+                    Require(Mathf.Approximately(range, player.Data.AttackRange * 1.1f), "Âm Vang chưa nối vào vũ khí.");
+                    break;
+                case CardId.HoiXuan:
+                    Require(health.Health == health.MaxHealth - 1, "Hồi Xuân chưa hồi đúng 1 máu khi sang đợt.");
+                    break;
+                case CardId.ThietBich:
+                    Set(health, "_invulnerableUntil", 0f);
+                    DamageSystem.ApplyToPlayer(player, 1, player.transform.position);
+                    Require(Mathf.Abs(Get<float>(health, "_invulnerableUntil") - Time.time - Get<float>(health, "_hitInvulnerability") * 1.15f) < .001f,
+                        "Thiết Bích chưa tăng thời gian bảo vệ.");
+                    Set(health, "_invulnerableUntil", Time.time + 1000f);
+                    break;
+                case CardId.CuongNo:
+                    Require(Mathf.Approximately(player.Upgrades.DamageMultiplier, 1.25f)
+                        && Mathf.Approximately(player.Upgrades.AttackSpeedMultiplier, .9f), "Cuồng Nộ thiếu đánh đổi.");
+                    break;
+            }
         }
 
         private static void ClearWave(WaveManager waves)

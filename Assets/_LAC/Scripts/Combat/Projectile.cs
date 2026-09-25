@@ -29,7 +29,7 @@ namespace LAC.Combat
 
         private ObjectPool<Projectile> _owner;
         private Vector2 _velocity;
-        private int _damage;
+        private float _damage;
         private float _diesAt;
         private int _remainingHits;
         private readonly HashSet<int> _hitEnemyIds = new HashSet<int>(8);
@@ -39,7 +39,7 @@ namespace LAC.Combat
         private float _explosionDamageRatio;
 
         public void Launch(ObjectPool<Projectile> owner, Vector2 direction, float speed,
-                           int damage, float lifetime, int hitLimit, bool explodes = false,
+                           float damage, float lifetime, int hitLimit, bool explodes = false,
                            float explosionRadius = 0f, float explosionDamageRatio = 0f)
         {
             _owner = owner;
@@ -137,7 +137,7 @@ namespace LAC.Combat
         {
             if (_explosionRadius <= 0f || _explosionDamageRatio <= 0f) return;
 
-            int splashDamage = Mathf.Max(1, Mathf.RoundToInt(_damage * _explosionDamageRatio));
+            float splashDamage = _damage * _explosionDamageRatio;
             float radiusSqr = _explosionRadius * _explosionRadius;
             var alive = EnemyRegistry.Alive;
 

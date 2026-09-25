@@ -51,15 +51,25 @@ namespace LAC.Cards.Editor
                 EnsureCard("LienKich", CardId.LienKich, "Liên Kích",
                     "Cộng 15% tốc độ đánh cơ bản (giảm khoảng nghỉ giữa hai đòn).", 3, Hex("FBDD82"), overwrite),
                 EnsureCard("SinhLuc", CardId.SinhLuc, "Sinh Lực",
-                    "Tăng 25 máu tối đa và hồi ngay 25 máu.", 3, Hex("4FA694"), overwrite),
+                    "+20% máu gốc mỗi cấp (tổng làm tròn lên). Hồi phần máu vừa tăng.", 3, Hex("4FA694"), overwrite),
                 EnsureCard("BoPhap", CardId.BoPhap, "Bộ Pháp",
                     "Giảm 20% thời gian hồi lướt.", 1, Hex("9CCFC0"), overwrite),
                 EnsureCard("SongTien", CardId.SongTien, "Song Tiễn",
-                    "Bắn 2 đạn lệch góc nhỏ; mỗi đạn gây 70% sát thương hiện tại.", 1, Hex("9CCFC0"), overwrite),
+                    "Vũ khí đạn: bắn 2 đạn, mỗi đạn gây 70% sát thương. Góc mở 7°.", 1, Hex("9CCFC0"), overwrite, .65f),
                 EnsureCard("XuyenTam", CardId.XuyenTam, "Xuyên Tâm",
-                    "Đạn xuyên thêm 2 kẻ địch, tối đa chạm 3 mục tiêu khác nhau.", 1, Hex("E0CFAF"), overwrite),
+                    "Vũ khí đạn: xuyên thêm 2 địch, tối đa 3 mục tiêu khác nhau.", 1, Hex("E0CFAF"), overwrite, .65f),
                 EnsureCard("BocPha", CardId.BocPha, "Bộc Phá",
-                    "Lần chạm đầu phát nổ, gây 30% sát thương đạn lên địch xung quanh.", 1, Hex("B37F4F"), overwrite)
+                    "Vũ khí đạn: chạm đầu nổ bán kính 1,75, gây 30% sát thương lên địch khác.", 1, Hex("B37F4F"), overwrite, .65f),
+                EnsureCard("KhinhThan", CardId.KhinhThan, "Khinh Thân",
+                    "+8% tốc độ di chuyển gốc mỗi cấp. Không tăng tốc độ lướt.", 3, Hex("9CCFC0"), overwrite),
+                EnsureCard("AmVang", CardId.AmVang, "Âm Vang",
+                    "+10% tầm đánh gốc mỗi cấp. Không tăng bán kính nổ.", 3, Hex("4FA694"), overwrite),
+                EnsureCard("HoiXuan", CardId.HoiXuan, "Hồi Xuân",
+                    "Hồi 1 máu mỗi cấp khi sang đợt mới. Không hồi giữa giao tranh, không hồi sinh.", 2, Hex("9CCFC0"), overwrite, .8f),
+                EnsureCard("ThietBich", CardId.ThietBich, "Thiết Bích",
+                    "+15% thời gian bất tử sau khi bị đánh mỗi cấp. Không tăng bất tử khi lướt.", 2, Hex("BFA981"), overwrite),
+                EnsureCard("CuongNo", CardId.CuongNo, "Cuồng Nộ",
+                    "+25% sát thương gốc nhưng −10% tốc độ đánh gốc mỗi cấp.", 2, Hex("EDBB3E"), overwrite, .75f)
             };
 
             EnsurePrefab(cards);
@@ -69,7 +79,7 @@ namespace LAC.Cards.Editor
         }
 
         private static CardDefinition EnsureCard(string fileName, CardId id, string displayName,
-            string description, int maxStacks, Color accent, bool overwrite)
+            string description, int maxStacks, Color accent, bool overwrite, float weight = 1f)
         {
             string path = $"{DataFolder}/{fileName}.asset";
             CardDefinition card = AssetDatabase.LoadAssetAtPath<CardDefinition>(path);
@@ -81,7 +91,11 @@ namespace LAC.Cards.Editor
             }
 
             if (overwrite)
-                card.EditorConfigure(id, displayName, description, maxStacks, 1f, accent);
+            {
+                card.EditorConfigure(id, displayName, description, maxStacks, weight, accent);
+                ConfigureEffects(card);
+                EditorUtility.SetDirty(card);
+            }
             var serialized = new SerializedObject(card);
             SerializedProperty icon = serialized.FindProperty("_icon");
             if (overwrite || icon.objectReferenceValue == null)
@@ -92,6 +106,25 @@ namespace LAC.Cards.Editor
                 EditorUtility.SetDirty(card);
             }
             return card;
+        }
+
+        private static void ConfigureEffects(CardDefinition card)
+        {
+            switch (card.Id)
+            {
+                case CardId.CuongCong: card.EditorConfigureEffects(damage: .2f); break;
+                case CardId.LienKich: card.EditorConfigureEffects(attackSpeed: .15f); break;
+                case CardId.SinhLuc: card.EditorConfigureEffects(health: .2f); break;
+                case CardId.BoPhap: card.EditorConfigureEffects(dash: .2f); break;
+                case CardId.SongTien: card.EditorConfigureEffects(projectileOnly: true, extraProjectiles: 1, projectileDamage: .7f, spread: 7f); break;
+                case CardId.XuyenTam: card.EditorConfigureEffects(projectileOnly: true, pierces: 2); break;
+                case CardId.BocPha: card.EditorConfigureEffects(projectileOnly: true, explosionRadius: 1.75f, explosionDamage: .3f); break;
+                case CardId.KhinhThan: card.EditorConfigureEffects(move: .08f); break;
+                case CardId.AmVang: card.EditorConfigureEffects(range: .1f); break;
+                case CardId.HoiXuan: card.EditorConfigureEffects(waveHeal: 1); break;
+                case CardId.ThietBich: card.EditorConfigureEffects(protection: .15f); break;
+                case CardId.CuongNo: card.EditorConfigureEffects(damage: .25f, attackSpeed: -.1f); break;
+            }
         }
 
         private static void EnsureIconImports()
@@ -151,7 +184,7 @@ namespace LAC.Cards.Editor
 
         private static void Validate(CardDefinition[] cards)
         {
-            if (cards.Length != 7) throw new InvalidOperationException("Card demo must contain exactly seven cards.");
+            if (cards.Length != 12) throw new InvalidOperationException("Card pool must contain exactly twelve cards.");
             var ids = new HashSet<CardId>();
             for (int i = 0; i < cards.Length; i++)
                 if (cards[i] == null || !ids.Add(cards[i].Id))

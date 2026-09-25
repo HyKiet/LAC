@@ -8,6 +8,11 @@ namespace LAC.Cards
         BoPhap,
         SongTien,
         XuyenTam,
-        BocPha
+        BocPha,
+        KhinhThan,
+        AmVang,
+        HoiXuan,
+        ThietBich,
+        CuongNo
     }
 }

@@ -20,3 +20,18 @@ MonoBehaviour:
   _maxStacks: 3
   _weight: 1
   _accent: {r: 0.9843137, g: 0.8666667, b: 0.50980395, a: 1}
+  _damageBonus: 0
+  _attackSpeedBonus: 0.15
+  _healthBonusRatio: 0
+  _dashCooldownReduction: 0
+  _moveSpeedBonus: 0
+  _attackRangeBonus: 0
+  _hitInvulnerabilityBonus: 0
+  _waveHeal: 0
+  _requiresProjectile: 0
+  _extraProjectiles: 0
+  _projectileDamageRatio: 1
+  _projectileSpread: 0
+  _extraPierces: 0
+  _explosionRadius: 0
+  _explosionDamageRatio: 0
