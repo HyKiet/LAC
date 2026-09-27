@@ -2,6 +2,16 @@
 
 Unity 6000.5.6f1. Không sửa mã khi đang ở Play Mode.
 
+## Hợp nhất vào main — 27/09/2026
+
+- Đã hợp nhất `gamingbite/feat/T-24-balanced-12-cards` (`83f4adb`) với gameplay T-27/T-28/T-29/T-44.
+- Build `Assembly-CSharp-Editor.csproj`: 0 lỗi, 11 cảnh báo từ Mirror và mã ví dụ.
+- `[CardBalance] ALL PASSED`: 45.000 lượt chọn, giới hạn cộng dồn, sát thương phần lẻ, reset và bảo toàn asset.
+- `[CardResume] ALL PASSED`: 12/12 thẻ, nhấp đôi, hit-stop, khôi phục input/vật lý, hủy chọn khi reset. Bài test đưa hết quái chờ trong lịch T-44 vào sân trước khi dọn đợt.
+- Kiểm tra tích hợp thưởng dash Tấm với Cường Công và Song Tiễn: sát thương thường 0,84; phát sau dash 1,68; phát kế tiếp 0,84.
+- Đã xem Game View có 3 lựa chọn, đồng hồ 10 giây và 2 lượt đổi. Không ghi nhận lỗi Console trong các bài kiểm tra.
+- Kiểm tra trên Editor host một người; chưa chạy lại bài hai tiến trình hoặc toàn bộ 16 đợt sau hợp nhất. Unity trên máy dùng cấu hình MCP cục bộ chưa commit.
+
 ## Hồi quy host
 
 Mở Arena, vào Play Mode, chờ host sinh người chơi. Chạy
