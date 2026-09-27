@@ -102,7 +102,7 @@ Hai máy cùng sinh quái từ một seed nên mô phỏng song song. Host gửi
 
 | Lớp | Trách nhiệm |
 |---|---|
-| `CardPool` | 32 thẻ nền, lọc theo nhân vật, bốc 3 thẻ bằng `RunRandom` |
+| `CardPool` | 12 thẻ nền, lọc theo kiểu vũ khí, bốc 3 thẻ bằng `RunRandom` |
 | `CardEffect` | Áp hiệu ứng lên `PlayerStats` |
 | `CardEvolution` | Kiểm tra 8 công thức sau mỗi lần nhận thẻ |
 | `CardPickUI` | Giao diện chọn thẻ, giới hạn 10 giây, 2 lượt đổi |
@@ -220,7 +220,7 @@ Toàn bộ thông số nằm tại `Assets/_LAC/Data/` dưới dạng Scriptable
 ```
 Data/
 ├── Characters/   ThachSanh.asset · Giong.asset · Tam.asset
-├── Cards/        32 thẻ nền + 8 thẻ tiến hoá
+├── Cards/        12 thẻ nền + 8 thẻ tiến hoá
 ├── Enemies/      CoHon · MaTroi · BuNhin · MaDa · QuyNho · ChanTinh
 └── Waves/        FixedWaveTable.asset — co-op và nhóm đối chứng
 ```

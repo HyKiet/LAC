@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using LAC.Core;
 using LAC.Enemies;
 using UnityEngine;
@@ -28,18 +29,29 @@ namespace LAC.Combat
 
         private ObjectPool<Projectile> _owner;
         private Vector2 _velocity;
-        private int _damage;
+        private float _damage;
         private float _diesAt;
         private int _remainingHits;
+        private readonly HashSet<int> _hitEnemyIds = new HashSet<int>(8);
+        private bool _explodes;
+        private bool _hasExploded;
+        private float _explosionRadius;
+        private float _explosionDamageRatio;
 
         public void Launch(ObjectPool<Projectile> owner, Vector2 direction, float speed,
-                           int damage, float lifetime, int pierce)
+                           float damage, float lifetime, int hitLimit, bool explodes = false,
+                           float explosionRadius = 0f, float explosionDamageRatio = 0f)
         {
             _owner = owner;
             _velocity = direction.normalized * speed;
             _damage = damage;
             _diesAt = Time.time + lifetime;
-            _remainingHits = Mathf.Max(pierce, 1);
+            _remainingHits = Mathf.Max(hitLimit, 1);
+            _explodes = explodes;
+            _explosionRadius = Mathf.Max(explosionRadius, 0f);
+            _explosionDamageRatio = Mathf.Clamp01(explosionDamageRatio);
+            _hasExploded = false;
+            _hitEnemyIds.Clear();
 
             if (direction.sqrMagnitude > 0f)
                 transform.right = direction;
@@ -48,12 +60,20 @@ namespace LAC.Combat
         public void OnSpawned()
         {
             _remainingHits = 1;
+            _hitEnemyIds.Clear();
+            _explodes = false;
+            _hasExploded = false;
+            _explosionRadius = 0f;
+            _explosionDamageRatio = 0f;
         }
 
         public void OnDespawned()
         {
             _owner = null;
             _velocity = Vector2.zero;
+            _hitEnemyIds.Clear();
+            _explodes = false;
+            _hasExploded = false;
         }
 
         private void FixedUpdate()
@@ -84,18 +104,51 @@ namespace LAC.Combat
             {
                 Enemy enemy = alive[i];
                 if (enemy == null || !enemy.IsAlive) continue;
+                if (_hitEnemyIds.Contains(enemy.Id)) continue;
 
                 float reach = _radius + 0.45f;
                 if ((enemy.Position - position).sqrMagnitude > reach * reach) continue;
 
                 // Trên client lời gọi này không có tác dụng và trả về false — đúng như thiết
                 // kế. Viên đạn vẫn biến mất để hình ảnh hai máy giống nhau.
+                _hitEnemyIds.Add(enemy.Id);
                 DamageSystem.ApplyToEnemy(enemy, _damage, position);
 
-                if (--_remainingHits > 0) continue;
+                if (_explodes && !_hasExploded)
+                {
+                    _hasExploded = true;
+                    Explode(position, enemy.Id);
+                }
+
+                if (--_remainingHits > 0)
+                {
+                    // DamageSystem có thể vừa loại một hay nhiều phần tử khỏi registry.
+                    // Kẹp lại chỉ số để lần lặp kế không đọc vượt cuối danh sách.
+                    i = Mathf.Min(i, alive.Count);
+                    continue;
+                }
 
                 Despawn();
                 return;
+            }
+        }
+
+        private void Explode(Vector2 position, int directTargetId)
+        {
+            if (_explosionRadius <= 0f || _explosionDamageRatio <= 0f) return;
+
+            float splashDamage = _damage * _explosionDamageRatio;
+            float radiusSqr = _explosionRadius * _explosionRadius;
+            var alive = EnemyRegistry.Alive;
+
+            for (int i = alive.Count - 1; i >= 0; i--)
+            {
+                Enemy enemy = alive[i];
+                if (enemy == null || !enemy.IsAlive || enemy.Id == directTargetId) continue;
+                if ((enemy.Position - position).sqrMagnitude > radiusSqr) continue;
+
+                // Sát thương vùng đi thẳng vào DamageSystem và không gọi lại Explode.
+                DamageSystem.ApplyToEnemy(enemy, splashDamage, position);
             }
         }
 

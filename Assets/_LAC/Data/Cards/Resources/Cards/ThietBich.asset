@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e205789dd1fd044a282048a047abd8, type: 3}
+  m_Name: ThietBich
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
+  _id: 10
+  _displayName: "Thi\u1EBFt B\xEDch"
+  _description: "+15% th\u1EDDi gian b\u1EA5t t\u1EED sau khi b\u1ECB \u0111\xE1nh
+    m\u1ED7i c\u1EA5p. Kh\xF4ng t\u0103ng b\u1EA5t t\u1EED khi l\u01B0\u1EDBt."
+  _icon: {fileID: 0}
+  _maxStacks: 2
+  _weight: 1
+  _accent: {r: 0.7490196, g: 0.6627451, b: 0.5058824, a: 1}
+  _damageBonus: 0
+  _attackSpeedBonus: 0
+  _healthBonusRatio: 0
+  _dashCooldownReduction: 0
+  _moveSpeedBonus: 0
+  _attackRangeBonus: 0
+  _hitInvulnerabilityBonus: 0.15
+  _waveHeal: 0
+  _requiresProjectile: 0
+  _extraProjectiles: 0
+  _projectileDamageRatio: 1
+  _projectileSpread: 0
+  _extraPierces: 0
+  _explosionRadius: 0
+  _explosionDamageRatio: 0

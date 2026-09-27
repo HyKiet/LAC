@@ -1,4 +1,5 @@
 using LAC.Core;
+using LAC.Cards;
 using LAC.VFX;
 using Mirror;
 using UnityEngine;
@@ -53,12 +54,21 @@ namespace LAC.Player
         private float _serverReadyAt;
 
         private ObjectPool<DashAfterimage> _afterimagePool;
+        private PlayerUpgradeState _upgrades;
 
         private float Duration => _character != null && _character.Data != null
             ? _character.Data.DashDuration : _fallbackDuration;
 
-        private float Cooldown => _character != null && _character.Data != null
-            ? _character.Data.DashCooldown : _fallbackCooldown;
+        private float Cooldown
+        {
+            get
+            {
+                float baseCooldown = _character != null && _character.Data != null
+                    ? _character.Data.DashCooldown : _fallbackCooldown;
+                if (_upgrades == null && _character != null) _upgrades = _character.Upgrades;
+                return _upgrades != null ? baseCooldown * _upgrades.DashCooldownMultiplier : baseCooldown;
+            }
+        }
 
         private float Speed => _character != null && _character.Data != null
             ? _character.Data.DashSpeed : _fallbackSpeed;

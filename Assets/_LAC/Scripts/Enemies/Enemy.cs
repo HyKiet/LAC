@@ -60,7 +60,7 @@ namespace LAC.Enemies
 
         private EnemyData _data;
         private int _id;
-        private int _health;
+        private float _health;
         private EnemyState _state;
         private float _stateEndsAt;
         private float _nextAttackAt;
@@ -69,7 +69,7 @@ namespace LAC.Enemies
         public int Id => _id;
         public EnemyData Data => _data;
         public EnemyState State => _state;
-        public int Health => _health;
+        public float Health => _health;
         public bool IsAlive => _state != EnemyState.Dead;
         public Vector2 Position => _rigidbody != null ? _rigidbody.position : (Vector2)transform.position;
 
@@ -119,12 +119,12 @@ namespace LAC.Enemies
         /// Trừ máu. Chỉ host được gọi, qua <see cref="EnemySpawner"/>.
         /// </summary>
         /// <returns>Đúng nếu cú này giết được quái.</returns>
-        public bool ApplyDamage(int amount)
+        public bool ApplyDamage(float amount)
         {
             if (!IsAlive) return false;
 
             _health -= Mathf.Max(amount, 0);
-            return _health <= 0;
+            return _health <= 0.00001f;
         }
 
         /// <summary>Thi hành cái chết trên máy này. Host quyết định, cả hai máy cùng gọi.</summary>

@@ -21,23 +21,28 @@ namespace LAC.VFX
 
         private static float _resumeAt;
         private static bool _active;
+        private static float _previousTimeScale = 1f;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics()
         {
             _active = false;
             _resumeAt = 0f;
+            _previousTimeScale = 1f;
         }
 
         /// <summary>Yêu cầu dừng hình. Lời gọi chồng lên nhau lấy hạn xa nhất, không cộng dồn.</summary>
         public static void Request(float duration)
         {
+            // Không chiếm quyền thời gian khi một màn hình khác đang tạm dừng game.
+            if (duration <= 0f || (!_active && Time.timeScale <= 0f)) return;
             float until = Time.unscaledTime + Mathf.Min(duration, MaxDuration);
             if (until <= _resumeAt) return;
 
             _resumeAt = until;
 
             if (_active) return;
+            _previousTimeScale = Time.timeScale;
             _active = true;
             Time.timeScale = 0f;
         }
@@ -47,8 +52,16 @@ namespace LAC.VFX
         {
             if (!_active || Time.unscaledTime < _resumeAt) return;
 
+            Cancel();
+        }
+
+        /// <summary>Kết thúc khựng hình trước khi bàn giao thời gian cho một màn tạm dừng.</summary>
+        public static void Cancel()
+        {
+            if (!_active) return;
             _active = false;
-            Time.timeScale = 1f;
+            _resumeAt = 0f;
+            Time.timeScale = _previousTimeScale;
         }
     }
 }

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e205789dd1fd044a282048a047abd8, type: 3}
+  m_Name: BocPha
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
+  _id: 6
+  _displayName: "B\u1ED9c Ph\xE1"
+  _description: "V\u0169 kh\xED \u0111\u1EA1n: ch\u1EA1m \u0111\u1EA7u n\u1ED5 b\xE1n
+    k\xEDnh 1,75, g\xE2y 30% s\xE1t th\u01B0\u01A1ng l\xEAn \u0111\u1ECBch kh\xE1c."
+  _icon: {fileID: 21300000, guid: 9b9339f854e42314c8e757e00811ecc3, type: 3}
+  _maxStacks: 1
+  _weight: 0.65
+  _accent: {r: 0.7019608, g: 0.49803922, b: 0.30980393, a: 1}
+  _damageBonus: 0
+  _attackSpeedBonus: 0
+  _healthBonusRatio: 0
+  _dashCooldownReduction: 0
+  _moveSpeedBonus: 0
+  _attackRangeBonus: 0
+  _hitInvulnerabilityBonus: 0
+  _waveHeal: 0
+  _requiresProjectile: 1
+  _extraProjectiles: 0
+  _projectileDamageRatio: 1
+  _projectileSpread: 0
+  _extraPierces: 0
+  _explosionRadius: 1.75
+  _explosionDamageRatio: 0.3

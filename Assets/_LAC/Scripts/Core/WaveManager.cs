@@ -62,19 +62,12 @@ namespace LAC.Core
         [Tooltip("Độ tãi quanh mỗi hướng, tính theo tỉ lệ chu vi sân. 0 là quái chồng lên nhau.")]
         [SerializeField, Range(0f, 0.25f)] private float _directionSpread = 0.06f;
 
-        [Header("Tạm thời — gỡ khi có hệ thống thẻ")]
-        [Tooltip("Tự chuyển sang đợt kế tiếp mà không cần chọn thẻ. Tắt khi T-22 và T-23 xong.")]
-        [SerializeField] private bool _autoAdvanceCardSelection = true;
-
-        [SerializeField, Min(0f)] private float _autoAdvanceDelay = 1.5f;
-
         private readonly List<ScheduledSpawn> _schedule = new List<ScheduledSpawn>(64);
         private int _nextSpawnIndex;
         private float _waveStartedAt;
 
         private int _spawnedWave;
         private RunState _lastState = RunState.Idle;
-        private float _advanceAt;
 
         private void Update()
         {
@@ -103,16 +96,8 @@ namespace LAC.Core
             {
                 run.ReportWaveCleared();
 
-                // Chỗ giữ tạm cho màn hình chọn thẻ. Khi T-22 và T-23 xong thì lớp thẻ mới
-                // là thứ gọi ReportCardSelectionComplete, và cờ ở trên được tắt.
-                if (_autoAdvanceCardSelection) _advanceAt = Time.time + _autoAdvanceDelay;
                 return;
             }
-
-            if (_advanceAt <= 0f || Time.time < _advanceAt) return;
-
-            _advanceAt = 0f;
-            run.ReportCardSelectionComplete();
         }
 
         /// <summary>
@@ -143,7 +128,6 @@ namespace LAC.Core
             _schedule.Clear();
             _nextSpawnIndex = 0;
             _spawnedWave = 0;
-            _advanceAt = 0f;
         }
 
         /// <summary>

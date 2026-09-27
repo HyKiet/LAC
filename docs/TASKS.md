@@ -72,7 +72,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Hai máy tự sinh cùng đàn quái từ seed chung; host gửi kết quả chết qua RPC. `Enemies/Enemy.cs` · `EnemyData.cs` · `EnemySpawner.cs` · `EnemyRegistry.cs`.
 - [x] **T-14B** `WaveManager` — sinh quái theo đợt, kết thúc đợt — @Kiet · 30/08
   > Mỗi đợt một luồng ngẫu nhiên riêng gieo từ seed + số đợt, để người vào giữa ván tính ra cùng kết quả. `Core/WaveManager.cs`. **Nội dung đợt đã chuyển sang bảng dữ liệu ở T-44.**
-  > **Còn một chỗ giữ tạm:** cờ `_autoAdvanceCardSelection` tự sang đợt kế sau 1.5 giây. **Tắt khi T-22 và T-23 xong.**
+  > T-23 đã gỡ cơ chế tự chuyển sau 1.5 giây; hệ thống thẻ quyết định khi nào được sang đợt.
 - [x] **T-15** Phản hồi khi đánh trúng — hit-stop, nháy sáng, đẩy lùi, số sát thương, rung màn — @Kiet · 30/08
   > Gom về một chỗ để điều tiết theo mức độ: đánh thường chỉ nháy, quái chết mới dừng hình. `VFX/HitFeedback.cs` · `SpriteFlash.cs` · `HitStop.cs` · `DamageNumber.cs` · `PixelNumber.cs`.
 - [x] **T-15B** HUD máu — @Kiet · 30/08
@@ -114,15 +114,18 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 ### Hệ thống thẻ — @Hung
 
-- [ ] **T-21** `CardData` và cơ chế áp hiệu ứng lên chỉ số — **@Hung**
+- [x] **T-21** `CardData` và cơ chế áp hiệu ứng lên chỉ số — **@Kang** · 06/09
   > **Không sửa trực tiếp `CharacterData`.** Đó là ScriptableObject; sửa lúc chạy sẽ ghi đè vĩnh viễn vào asset trong Editor. Cần một lớp chỉ số của ván, khởi tạo từ `CharacterData` rồi cho thẻ cộng dồn lên bản sao đó.
-- [ ] **T-22** Giao diện chọn 1 trong 3 thẻ — 10 giây, 2 lượt đổi thẻ — **@Hung**
+  > Demo 7 thẻ dùng `CardDefinition` và `PlayerUpgradeState`, áp sát thương/tốc đánh/máu/lướt cùng combo Song Tiễn–Xuyên Tâm–Bộc Phá mà không sửa asset nhân vật. `Scripts/Cards` · `Data/Cards` · `Combat/WeaponAuto.cs` · `Combat/Projectile.cs`.
+- [x] **T-22** Giao diện chọn 1 trong 3 thẻ — 10 giây, 2 lượt đổi thẻ — **@Kang** · 24/09
+  > Đồng hồ theo host, tự chọn khi hết 10 giây, 2 lượt đổi mỗi ván, khóa nhấp đôi và giao diện chờ đồng đội. `Cards/CardSelectionController.cs` · `CardSelectionView.cs` · `CardSelectionRulesData.cs`. Đã kiểm tra Play Mode và Game View.
   > Dựng thành prefab trong `Prefabs/UI/Cards`, sinh lúc chạy. Không đặt sẵn vào `Arena.unity`.
-- [ ] **T-23** Đồng bộ chọn thẻ: đợt kế chỉ khởi động khi cả hai người đã chọn xong — **@Hung**
-  > Chỗ nối đã có sẵn: gọi `RunManager.ReportCardSelectionComplete()`. Xong việc này thì tắt cờ `_autoAdvanceCardSelection` ở T-14B.
-- [ ] **T-24** Biên soạn 32 thẻ nền — **@Hung**
-- [ ] **T-25** Hệ thống tiến hoá thẻ — kiểm tra công thức và thông báo — **@Hung**
-- [ ] **T-26** Chốt và triển khai 8 công thức tiến hoá — **@Hung**
+- [x] **T-23** Đồng bộ chọn thẻ: đợt kế chỉ khởi động khi cả hai người đã chọn xong — **@Kang** · 24/09
+  > Host thẩm định đề nghị/lượt đổi/lựa chọn theo kết nối, đồng bộ lịch sử định danh, chờ ACK animation, bỏ người rời mạng khỏi điều kiện chờ. `Cards/CardSelectionNetwork.cs` (partial `RunManager`) · `Core/WaveManager.cs`. Hai tiến trình với LatencySimulation đã đạt toàn bộ kiểm tra; xem `docs/CARD_TESTS.md`.
+- [x] **T-24** Biên soạn và cân bằng 12 thẻ nền — **@Kang** · 24/09
+  > Phạm vi thu gọn theo yêu cầu: 7 thẻ cũ + Khinh Thân, Âm Vang, Hồi Xuân, Thiết Bích, Cuồng Nộ. Tham số lưu trong `Data/Cards/Resources/Cards`; lọc thẻ đạn theo vũ khí, Sinh Lực theo máu gốc, giữ sát thương phần lẻ. `Cards/PlayerUpgradeState.cs` · `CardDefinition.cs` · `Editor/CardBalanceChecks.cs`. Đạt 45.000 lượt chọn mô phỏng và Play Mode 12/12 thẻ; cân bằng độ khó toàn game vẫn thuộc T-50/T-51.
+- [ ] **T-25** Hệ thống tiến hoá thẻ — kiểm tra công thức và thông báo — **@Kang**
+- [ ] **T-26** Chốt và triển khai 8 công thức tiến hoá — **@Kang**
 
 ### Vòng lặp lõi — @Kiet
 
@@ -134,7 +137,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Phần thưởng nạp một lần khi lướt và **tiêu ngay lúc khai hoả**, không phải lúc đạn trúng — tiêu lúc trúng thì hai viên bắn liên tiếp cùng ăn một phần thưởng. Không dùng cửa sổ thời gian: hồi chiêu lướt 0.4 s ngắn hơn cửa sổ 1 s của GDD nên hiệu ứng sẽ bật vĩnh viễn, xem mục 7. `PlayerDash.Dashed` phát trên mọi máy để host cũng áp được phần thưởng cho nhân vật của client. `CharacterData.DashDamageMultiplier` = 2 · `Combat/WeaponAuto.ConsumeDamage` · `Player/PlayerDash.cs` · `Data/Animations/Tam.asset` (TinySwords Archer, tạm — chờ T-33).
 - [ ] **T-31** Sóng âm riêng cho từng nhạc cụ — **@Kiet**
 - [ ] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**
-- [ ] **T-33** Sprite Gióng, Tấm, 40 icon thẻ — **@artist**
+- [ ] **T-33** Sprite Gióng, Tấm, 20 icon thẻ (12 nền + 8 tiến hoá) — **@artist**
 
 ---
 

@@ -73,7 +73,8 @@ namespace LAC.Player
             if (!IsAlive || IsInvulnerable || amount <= 0) return false;
 
             _health = Mathf.Max(_health - amount, 0);
-            _invulnerableUntil = Time.time + _hitInvulnerability;
+            _invulnerableUntil = Time.time + _hitInvulnerability *
+                (_character != null && _character.Upgrades != null ? _character.Upgrades.HitInvulnerabilityMultiplier : 1f);
 
             if (_health == 0 && RunManager.Instance != null)
                 RunManager.Instance.ReportPlayerDown();
@@ -107,10 +108,22 @@ namespace LAC.Player
             _health = Mathf.Min(_health + amount, _maxHealth);
         }
 
-        private void OnHealthChanged(int _, int newHealth)
+        /// <summary>Áp máu cộng thêm của thẻ lên bản sao chỉ số trong ván.</summary>
+        [Server]
+        public void ServerApplyMaxHealthBonus(int totalBonus, int healAmount)
+        {
+            if (_character == null || _character.Data == null) return;
+
+            _maxHealth = _character.Data.MaxHealth + Mathf.Max(totalBonus, 0);
+            _health = Mathf.Min(_health + Mathf.Max(healAmount, 0), _maxHealth);
+            HealthChanged?.Invoke(_health, _maxHealth);
+        }
+
+        private void OnHealthChanged(int oldHealth, int newHealth)
         {
             HealthChanged?.Invoke(newHealth, _maxHealth);
-            ApplyAliveState();
+            // Hồi máu (ví dụ thẻ Sinh Lực) không được bật lại input đang bị UI khóa.
+            if ((oldHealth > 0) != (newHealth > 0)) ApplyAliveState();
         }
 
         /// <summary>

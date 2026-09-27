@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &855136282520191242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7444133654727662397}
+  - component: {fileID: 4456443025349415857}
+  - component: {fileID: 8027193858213242858}
+  m_Layer: 0
+  m_Name: CardSelection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7444133654727662397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855136282520191242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4456443025349415857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855136282520191242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b5481ba0db54b4b9b1f1ebd0da7646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardSelectionView
+--- !u!114 &8027193858213242858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855136282520191242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ef141cd1ed53d4497ce9de91614074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardSelectionController
+  _definitions:
+  - {fileID: 11400000, guid: aa34e65481a95fa4d93452dcd127cb60, type: 2}
+  - {fileID: 11400000, guid: 2c59bcdcba6e4bf41ba2b8167cc74411, type: 2}
+  - {fileID: 11400000, guid: ec4c111116df20d41896e1a6b8619b3d, type: 2}
+  - {fileID: 11400000, guid: 004ae78d930705f4bbd35386272b0978, type: 2}
+  - {fileID: 11400000, guid: ffa29188ff2c3ad458f1c60aa4285d73, type: 2}
+  - {fileID: 11400000, guid: ba47200616f6f024fa859b68260de89c, type: 2}
+  - {fileID: 11400000, guid: 06227cb16766c16418e7e25d392e1c77, type: 2}
+  _selectionFeedbackSeconds: 0.12
+  _songTienSpreadDegrees: 7
+  _bocPhaRadius: 1.75
