@@ -22,6 +22,9 @@ namespace LAC.UI
 
         private void Awake()
         {
+            // Prefab riêng để giao diện đợt không cần sửa scene đấu trường.
+            var waveHud = Resources.Load<WaveHud>("UI/WaveHud");
+            if (waveHud != null) Instantiate(waveHud, transform, false);
             if (_barRoot == null) return;
             var border = CreateImage("HealthBar", _barRoot, _borderColor);
             border.anchorMin = border.anchorMax = new Vector2(0f, 0.5f);
