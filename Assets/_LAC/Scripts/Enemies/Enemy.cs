@@ -72,6 +72,8 @@ namespace LAC.Enemies
         public float Health => _health;
         public bool IsAlive => _state != EnemyState.Dead;
         public Vector2 Position => _rigidbody != null ? _rigidbody.position : (Vector2)transform.position;
+        public float HitRadius => _collider != null
+            ? Mathf.Max(_collider.bounds.extents.x, _collider.bounds.extents.y) : 0f;
 
         /// <summary>Dựng một con quái vừa lấy từ pool. Hai máy gọi với cùng tham số.</summary>
         public void Initialize(int id, EnemyData data, Vector2 position)

@@ -59,7 +59,7 @@ namespace LAC.Enemies
                 if (candidate == null || !candidate.IsAlive) continue;
 
                 float sqr = (candidate.Position - position).sqrMagnitude;
-                if (sqr >= nearestSqr) continue;
+                if (sqr > nearestSqr || (nearest != null && sqr == nearestSqr)) continue;
 
                 nearestSqr = sqr;
                 nearest = candidate;

@@ -76,7 +76,9 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-15** Phản hồi khi đánh trúng — hit-stop, nháy sáng, đẩy lùi, số sát thương, rung màn — @Kiet · 30/08
   > Gom về một chỗ để điều tiết theo mức độ: đánh thường chỉ nháy, quái chết mới dừng hình. `VFX/HitFeedback.cs` · `SpriteFlash.cs` · `HitStop.cs` · `DamageNumber.cs` · `PixelNumber.cs`.
 - [x] **T-15B** HUD máu — @Kiet · 30/08
-  > Ô rời chứ không phải thanh liền, để người chơi đếm được còn chịu mấy đòn. `UI/PlayerHud.cs`.
+  > Ban đầu dùng ô rời; ngày 29/09 đổi sang thanh tiến trình liền theo yêu cầu, có số máu hiện tại/tối đa, cập nhật cả khi chỉ đổi máu tối đa. `UI/PlayerHud.cs`.
+- [x] **T-15D** HUD dạng thanh tiến trình và sửa độ chính xác tầm đánh — Codex · 29/09/2026
+  > HUD nền tối, màu chàm, kích thước cố định; chọn mục tiêu tính cả mép tầm; đạn bỏ phần bay dư 35%, quét va chạm theo đường bay và thứ tự chạm; cung Gióng khớp bán kính/góc sát thương. `UI/PlayerHud.cs` · `Combat/WeaponAuto.cs` · `Combat/Projectile.cs` · `Enemies/Enemy.cs` · `Enemies/EnemyRegistry.cs` · `VFX/ArcSlash.cs`. Đã kiểm tra host Play mode, ảnh Game View và Console; chi tiết/giới hạn tại `docs/HUD_RANGE_TESTS.md`.
 - [x] **T-15C** Sửa ba lỗi khi chơi thử — @Kiet · 03/09
   > Nháy trúng đòn (`SpriteRenderer.color` là hệ số nhân, truyền trắng là nhân với 1 nên vô hiệu từ T-15); quái vây xác người chơi (`PlayerRegistry.Nearest` chưa lọc người đã gục); tốc độ quái bằng Gióng nên không thoát được vòng vây — hạ quái xuống 2.2, nâng tầm Gióng lên 3.2.
 - [x] **T-16** Sóng âm Đông Sơn — @Kiet · 30/08

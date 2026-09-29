@@ -234,9 +234,8 @@ namespace LAC.Combat
             Vector2 direction = CurrentTarget.Position - origin;
             if (direction.sqrMagnitude < 0.0001f) direction = Vector2.down;
 
-            // Tuổi thọ tính từ tầm đánh, dư một phần ba để đạn không tắt ngay trước mũi mục
-            // tiêu khi mục tiêu đang chạy ra xa.
-            float lifetime = AttackRange / data.ProjectileSpeed * 1.35f;
+            // Tầm bay và tầm chọn mục tiêu dùng cùng một chỉ số, kể cả sau nâng cấp.
+            float lifetime = AttackRange / data.ProjectileSpeed;
 
             PlayerUpgradeState upgrades = Upgrades;
             int count = upgrades != null ? upgrades.ProjectileCount : 1;

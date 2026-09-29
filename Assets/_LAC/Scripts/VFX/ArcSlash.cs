@@ -29,17 +29,28 @@ namespace LAC.VFX
         [Tooltip("Độ mờ lúc mạnh nhất. Giữ thấp — xem ràng buộc ở mục 2.1.")]
         [SerializeField, Range(0f, 0.22f)] private float _peakAlpha = 0.2f;
 
-        [Tooltip("Phần góc nửa cung mà vệt quét qua. 1 là quét trọn vẹn từ mép này sang mép kia.")]
-        [SerializeField, Range(0f, 1f)] private float _sweepPortion = 0.6f;
-
-        [Tooltip("Bán kính của cung trong sprite, tính bằng đơn vị thế giới ở tỉ lệ 1.")]
-        [SerializeField, Min(0.01f)] private float _spriteArcRadius = 0.8125f;
+        [SerializeField, Min(0.01f)] private float _lineWidth = 0.06f;
 
         private ObjectPool<ArcSlash> _owner;
         private float _age;
-        private float _baseAngle;
-        private float _sweep;
+        private LineRenderer _arc;
+        private const int Segments = 48;
         private Color _tint = Color.white;
+
+        private void Awake()
+        {
+            _arc = gameObject.AddComponent<LineRenderer>();
+            _arc.useWorldSpace = false;
+            _arc.positionCount = Segments + 1;
+            _arc.widthMultiplier = _lineWidth;
+            _arc.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            _arc.receiveShadows = false;
+            if (_renderer == null) return;
+            _arc.sharedMaterial = _renderer.sharedMaterial;
+            _arc.sortingLayerID = _renderer.sortingLayerID;
+            _arc.sortingOrder = _renderer.sortingOrder;
+            _renderer.enabled = false;
+        }
 
         /// <param name="facing">Hướng vung, đã chuẩn hoá.</param>
         /// <param name="range">Tầm đánh. Cung được co giãn để nằm đúng ở mép tầm.</param>
@@ -50,13 +61,15 @@ namespace LAC.VFX
             _age = 0f;
             _tint = tint;
 
-            _baseAngle = Mathf.Atan2(facing.y, facing.x) * Mathf.Rad2Deg;
-            _sweep = halfAngle * _sweepPortion;
-
-            // Co giãn theo tầm đánh thật thay vì để một kích thước cố định: người chơi đọc
-            // tầm với của mình bằng chính vệt roi này, nên vẽ ngắn hơn tầm sẽ dạy họ đứng
-            // gần hơn mức cần thiết, còn vẽ dài hơn thì họ tưởng với tới mà thật ra không.
-            transform.localScale = Vector3.one * (range / Mathf.Max(_spriteArcRadius, 0.01f));
+            transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(facing.y, facing.x) * Mathf.Rad2Deg);
+            transform.localScale = Vector3.one;
+            // Biên ngoài nằm đúng tầm đánh; góc lấy trực tiếp từ vùng sát thương.
+            float radius = Mathf.Max(0f, range - _lineWidth * 0.5f);
+            for (int i = 0; i <= Segments; i++)
+            {
+                float angle = Mathf.Lerp(-halfAngle, halfAngle, i / (float)Segments) * Mathf.Deg2Rad;
+                _arc.SetPosition(i, new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * radius);
+            }
 
             Apply();
         }
@@ -83,16 +96,10 @@ namespace LAC.VFX
         {
             float t = Mathf.Clamp01(_age / _duration);
 
-            // Quét từ mép trên xuống mép dưới, nhanh ở giữa và chậm ở hai đầu, giống nhịp
-            // của một cú vung tay thật.
-            float eased = t * t * (3f - 2f * t);
-            transform.rotation = Quaternion.Euler(0f, 0f, _baseAngle + Mathf.Lerp(_sweep, -_sweep, eased));
-
-            if (_renderer == null) return;
-
-            // Hiện nhanh, tắt chậm: đầu đòn phải đọc được ngay tại khung hình gây sát thương.
-            float alpha = _peakAlpha * (1f - t) * Mathf.Min(1f, t * 6f);
-            _renderer.color = new Color(_tint.r, _tint.g, _tint.b, alpha);
+            if (_arc == null) return;
+            // Sát thương tức thời nên hiện cung ngay, không đợi đỉnh hoạt ảnh.
+            float alpha = _peakAlpha * (1f - t);
+            _arc.startColor = _arc.endColor = new Color(_tint.r, _tint.g, _tint.b, alpha);
         }
     }
 }

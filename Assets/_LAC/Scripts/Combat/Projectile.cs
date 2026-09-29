@@ -30,7 +30,7 @@ namespace LAC.Combat
         private ObjectPool<Projectile> _owner;
         private Vector2 _velocity;
         private float _damage;
-        private float _diesAt;
+        private float _remainingLifetime;
         private int _remainingHits;
         private readonly HashSet<int> _hitEnemyIds = new HashSet<int>(8);
         private bool _explodes;
@@ -45,7 +45,7 @@ namespace LAC.Combat
             _owner = owner;
             _velocity = direction.normalized * speed;
             _damage = damage;
-            _diesAt = Time.time + lifetime;
+            _remainingLifetime = Mathf.Max(0f, lifetime);
             _remainingHits = Mathf.Max(hitLimit, 1);
             _explodes = explodes;
             _explosionRadius = Mathf.Max(explosionRadius, 0f);
@@ -78,15 +78,20 @@ namespace LAC.Combat
 
         private void FixedUpdate()
         {
-            transform.position += (Vector3)(_velocity * Time.fixedDeltaTime);
-
-            if (Time.time >= _diesAt || OutsideArena())
+            if (_remainingLifetime <= 0f)
             {
                 Despawn();
                 return;
             }
 
-            CheckHit();
+            Vector2 start = transform.position;
+            float step = Mathf.Min(Time.fixedDeltaTime, _remainingLifetime);
+            Vector2 end = start + _velocity * step;
+            transform.position = end;
+            _remainingLifetime -= step;
+            // Quét cả đoạn đường và xét va chạm ở bước cuối trước khi trả về pool.
+            if (CheckHit(start, end)) return;
+            if (_remainingLifetime <= 0f || OutsideArena()) Despawn();
         }
 
         private bool OutsideArena()
@@ -95,19 +100,35 @@ namespace LAC.Combat
             return !ArenaBounds.Instance.Contains(transform.position);
         }
 
-        private void CheckHit()
+        private bool CheckHit(Vector2 start, Vector2 end)
         {
-            Vector2 position = transform.position;
             var alive = EnemyRegistry.Alive;
+            Vector2 segment = end - start;
+            float length = segment.magnitude;
+            Vector2 direction = length > 0f ? segment / length : Vector2.zero;
 
-            for (int i = alive.Count - 1; i >= 0; i--)
+            // Xét theo thứ tự chạm trên đường bay, không theo thứ tự sinh quái.
+            while (true)
             {
-                Enemy enemy = alive[i];
-                if (enemy == null || !enemy.IsAlive) continue;
-                if (_hitEnemyIds.Contains(enemy.Id)) continue;
-
-                float reach = _radius + 0.45f;
-                if ((enemy.Position - position).sqrMagnitude > reach * reach) continue;
+                Enemy enemy = null;
+                float nearest = float.MaxValue;
+                for (int i = 0; i < alive.Count; i++)
+                {
+                    Enemy candidate = alive[i];
+                    if (candidate == null || !candidate.IsAlive || _hitEnemyIds.Contains(candidate.Id)) continue;
+                    float reach = _radius + candidate.HitRadius;
+                    Vector2 offset = candidate.Position - start;
+                    float along = Vector2.Dot(offset, direction);
+                    float perpendicularSqr = Mathf.Max(0f, offset.sqrMagnitude - along * along);
+                    if (perpendicularSqr > reach * reach) continue;
+                    float halfChord = Mathf.Sqrt(reach * reach - perpendicularSqr);
+                    float contact = Mathf.Max(0f, along - halfChord);
+                    if (along + halfChord < 0f || contact > length || contact >= nearest) continue;
+                    nearest = contact;
+                    enemy = candidate;
+                }
+                if (enemy == null) return false;
+                Vector2 position = start + direction * nearest;
 
                 // Trên client lời gọi này không có tác dụng và trả về false — đúng như thiết
                 // kế. Viên đạn vẫn biến mất để hình ảnh hai máy giống nhau.
@@ -122,14 +143,11 @@ namespace LAC.Combat
 
                 if (--_remainingHits > 0)
                 {
-                    // DamageSystem có thể vừa loại một hay nhiều phần tử khỏi registry.
-                    // Kẹp lại chỉ số để lần lặp kế không đọc vượt cuối danh sách.
-                    i = Mathf.Min(i, alive.Count);
                     continue;
                 }
 
                 Despawn();
-                return;
+                return true;
             }
         }
 
