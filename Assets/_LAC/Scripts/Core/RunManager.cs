@@ -114,6 +114,7 @@ namespace LAC.Core
                 return;
             }
             Instance = this;
+            InitializeDrum();
         }
 
         private void OnDestroy()
@@ -157,6 +158,7 @@ namespace LAC.Core
             _alivePlayers = Mathf.Max(PlayerRegistry.Count, 1);
             _currentWave = 0;
             _soulsCollected = 0;
+            ResetDrum();
 
             // Host khởi tạo ngay; client khởi tạo trong hook khi SyncVar tới nơi.
             RunRandom.Initialize(_seed);
@@ -172,6 +174,8 @@ namespace LAC.Core
         {
             if (amount <= 0) return;
             _soulsCollected += amount;
+            if (_drumData != null && !IsOver && State != RunState.Idle)
+                _drumEnergy += Mathf.Min(amount, _drumData.SoulCost - _drumEnergy);
         }
 
         /// <summary>Báo cho bộ điều phối rằng đợt hiện tại đã sạch quái. Chỉ host được gọi.</summary>

@@ -52,6 +52,26 @@ namespace LAC.Player
 
         private float _serverInvulnerableUntil;
         private float _serverReadyAt;
+        private Vector2 _previousDashPosition;
+        private bool _checkDrumContact;
+        private int _dashRunSeed;
+        private RunManager _run;
+
+        private void Start() => _run = RunManager.Instance;
+
+        public bool ServerCanActivateDrum(Vector2 start, Vector2 end)
+        {
+            if (!isServer || _character == null || !_character.IsAlive || Time.time >= _serverInvulnerableUntil) return false;
+            if (!float.IsFinite(start.x) || !float.IsFinite(start.y) || !float.IsFinite(end.x) || !float.IsFinite(end.y)) return false;
+            return (end - start).sqrMagnitude <= Distance * Distance &&
+                (start - (Vector2)transform.position).sqrMagnitude <= (Distance + 1f) * (Distance + 1f);
+        }
+
+        [Command]
+        private void CmdTryActivateDrum(Vector2 start, Vector2 end, int runSeed)
+        {
+            if (_run != null && _run.Seed == runSeed) _run.TryActivateDrum(this, start, end);
+        }
 
         private ObjectPool<DashAfterimage> _afterimagePool;
         private PlayerUpgradeState _upgrades;
@@ -130,6 +150,16 @@ namespace LAC.Player
         /// </remarks>
         private void FixedUpdate()
         {
+            // Đọc đoạn ĐÃ đi ở bước vật lý trước, kể cả bước cuối của cú lướt.
+            if (isOwned && _checkDrumContact)
+            {
+                Vector2 current = _rigidbody.position;
+                if (_run != null && _run.DrumRules != null &&
+                    LAC.Drum.DrumShockwave.Intersects(_previousDashPosition, current, _run.DrumPosition, _run.DrumRules.ActivationRadius))
+                    CmdTryActivateDrum(_previousDashPosition, current, _dashRunSeed);
+                _previousDashPosition = current;
+                if (!_isDashing) _checkDrumContact = false;
+            }
             if (!_isDashing) return;
 
             // Nhân vật của người khác lấy vị trí từ NetworkTransform, không tự chạy vật lý.
@@ -163,6 +193,9 @@ namespace LAC.Player
                 : Vector2.down;
 
             _dashDirection = direction;
+            _previousDashPosition = _rigidbody.position;
+            _dashRunSeed = _run != null ? _run.Seed : 0;
+            _checkDrumContact = true;
             _dashRemaining = Distance;
             _isDashing = true;
             _dashTimeoutAt = Time.time + Duration * 2f;
@@ -189,6 +222,7 @@ namespace LAC.Player
         [Command]
         private void CmdDash()
         {
+            if (_character == null || !_character.IsAlive || _run == null || _run.State != RunState.WaveActive) return;
             float compensation = connectionToClient != null
                 ? Mathf.Min((float)connectionToClient.rtt * 0.5f, _maxLatencyCompensation)
                 : 0f;

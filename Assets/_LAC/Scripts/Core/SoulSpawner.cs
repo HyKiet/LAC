@@ -25,6 +25,15 @@ namespace LAC.Core
         [SerializeField, Min(1)] private int _softLimit = 256;
 
         private ObjectPool<SoulPickup> _pool;
+        private RunManager _run;
+
+        private void Start()
+        {
+            _run = RunManager.Instance;
+            if (_run != null) _run.RunStarted += ClearSouls;
+        }
+
+        private void ClearSouls() => _pool?.ReleaseAll();
 
         private void Awake()
         {
@@ -37,9 +46,17 @@ namespace LAC.Core
             _pool = PoolRegistry.Get(_soulPrefab, _prewarm, _softLimit);
         }
 
-        private void OnEnable() => GameEvents.EnemyDied += OnEnemyDied;
+        private void OnEnable()
+        {
+            GameEvents.EnemyDied += OnEnemyDied;
+            if (_run != null) _run.RunStarted += ClearSouls;
+        }
 
-        private void OnDisable() => GameEvents.EnemyDied -= OnEnemyDied;
+        private void OnDisable()
+        {
+            GameEvents.EnemyDied -= OnEnemyDied;
+            if (_run != null) _run.RunStarted -= ClearSouls;
+        }
 
         private void OnEnemyDied(Enemy enemy)
         {

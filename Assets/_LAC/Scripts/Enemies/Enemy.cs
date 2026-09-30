@@ -57,6 +57,8 @@ namespace LAC.Enemies
 
         private Vector2 _knockbackVelocity;
         private float _knockbackEndsAt;
+        private float _stunnedUntil;
+        public bool IsStunned => Time.time < _stunnedUntil;
 
         private EnemyData _data;
         private int _id;
@@ -84,6 +86,7 @@ namespace LAC.Enemies
             _target = null;
             _nextAttackAt = 0f;
             _knockbackEndsAt = 0f;
+            _stunnedUntil = 0f;
             _knockbackVelocity = Vector2.zero;
 
             _rigidbody.position = position;
@@ -155,7 +158,7 @@ namespace LAC.Enemies
         /// </remarks>
         public void ApplyKnockback(Vector2 fromPosition)
         {
-            if (!IsAlive || _knockbackDistance <= 0f) return;
+            if (!IsAlive || IsStunned || _knockbackDistance <= 0f) return;
 
             Vector2 away = Position - fromPosition;
             if (away.sqrMagnitude < 0.0001f) return;
@@ -174,6 +177,18 @@ namespace LAC.Enemies
         {
             if (!IsAlive) return;
             _rigidbody.position = Vector2.Lerp(_rigidbody.position, position, _snapshotBlend);
+        }
+
+        public void ApplyDrumShockwave(Vector2 origin, float distance, float duration)
+        {
+            if (!IsAlive) return;
+            Vector2 away = Position - origin;
+            if (away.sqrMagnitude < 0.0001f) away = Vector2.up;
+            _knockbackVelocity = away.normalized * (distance / _knockbackDuration);
+            _knockbackEndsAt = Time.time + _knockbackDuration;
+            _stunnedUntil = Mathf.Max(_stunnedUntil, Time.time + duration);
+            _nextAttackAt = Mathf.Max(_nextAttackAt, _stunnedUntil);
+            if (_animator != null) _animator.SetBaseState(AnimState.Idle);
         }
 
         private void EnterState(EnemyState next)
@@ -196,6 +211,13 @@ namespace LAC.Enemies
         private void FixedUpdate()
         {
             if (_data == null || !IsAlive) return;
+
+            if (IsStunned) { Step(Vector2.zero, 0f); return; }
+            if (_stunnedUntil > 0f)
+            {
+                _stunnedUntil = 0f;
+                EnterState(_state);
+            }
 
             switch (_state)
             {

@@ -50,6 +50,10 @@ namespace LAC.VFX
         private float _fromRadius;
         private float _toRadius;
         private Color _tint = Color.white;
+        private MaterialPropertyBlock _tintProperties;
+        private static readonly int TintId = Shader.PropertyToID("_Color");
+
+        private void Awake() => _tintProperties = new MaterialPropertyBlock();
 
         public void Play(ObjectPool<SoundWave> owner, float fromRadius, float toRadius, Color tint)
         {
@@ -107,7 +111,12 @@ namespace LAC.VFX
                 float falloff = 1f - i / (float)Mathf.Max(_rings.Length, 1) * 0.45f;
                 float alpha = _peakAlpha * falloff * Mathf.Sin(t * Mathf.PI);
 
-                ring.color = new Color(_tint.r, _tint.g, _tint.b, alpha);
+                // Pass tint explicitly: the URP 2D batcher does not supply SpriteRenderer.color
+                // as vertex COLOR to this custom additive shader on every rendering path.
+                ring.color = Color.white;
+                ring.GetPropertyBlock(_tintProperties);
+                _tintProperties.SetColor(TintId, new Color(_tint.r, _tint.g, _tint.b, alpha));
+                ring.SetPropertyBlock(_tintProperties);
             }
         }
 

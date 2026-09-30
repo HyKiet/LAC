@@ -152,9 +152,12 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 - [ ] **T-34** Bốn quái còn lại — Ma Trơi, Bù Nhìn, Ma Da, Quỷ Nhỏ — **@Kiet**
 - [ ] **T-35** Snapshot vị trí quái 2 lần/giây để hiệu chỉnh sai lệch — **@Kiet**
-- [ ] **T-36** Trống Đồng — kích hoạt bằng dash, xoá đạn, đẩy lùi, choáng 1 giây — **@Kiet**
-- [ ] **T-37** Thời gian hồi Trống Đồng dùng chung, host quản lý — **@Kiet**
-- [ ] **T-38** Hồn nạp năng lượng cho Trống Đồng, vòng nạp trên HUD — **@Kiet**
+- [x] **T-36** Trống Đồng — kích hoạt bằng dash, xoá đạn, đẩy lùi, choáng 1 giây — **@Kiet**
+  > Codex · 30/09/2026: `Drum/DongSonDrum.cs`, `Drum/DrumShockwave.cs`, `PlayerDash.cs`, `Enemy.cs`; kiểm tra đoạn lướt đã đi, đẩy lùi 2.5 đơn vị và choáng 1 giây. `EnemyProjectileClearable` xoá đạn đã đăng ký, giữ đạn người chơi; T-34 phải gắn marker khi thêm đạn địch. Sóng dùng pool, sửa truyền alpha qua MaterialPropertyBlock trong `SoundWave.cs`; đã xem Game View. Kiểm thử: [DRUM_TESTS.md](DRUM_TESTS.md).
+- [x] **T-37** Thời gian hồi Trống Đồng dùng chung, host quản lý — **@Kiet**
+  > Codex · 30/09/2026: `Drum/DrumNetwork.cs` mở rộng RunManager, SyncVar thời điểm hồi và RPC hiệu ứng, hồi chung 20 giây, khóa trước hiệu ứng chống kích hoạt kép. Đã thử host + client độc lập qua LatencySimulation, cú lướt client kích hoạt đúng một lần và nhận lại trạng thái hồi.
+- [x] **T-38** Hồn nạp năng lượng cho Trống Đồng, vòng nạp trên HUD — **@Kiet**
+  > Codex · 30/09/2026: `DrumData.cs`, `DrumRules.asset`, `UI/DrumHud.cs` và prefab HUD: 20 Hồn/lần, vòng năng lượng + vòng hồi, nhắc lướt khi sẵn sàng. `SoulSpawner` thu hồi Hồn cũ khi chơi lại. Đã thử nạp trong hồi, giới hạn nạp, reset và HUD; Console không lỗi đỏ.
 - [ ] **T-39** Trùm Chằn Tinh — hai pha, máu tỉ lệ theo số người chơi — **@Kiet**
 - [ ] **T-40** Mời bạn qua Steam overlay, chuyển sang FizzySteamworks — **@Kang**
   > Đổi transport phải sửa `Net/NetworkManagerLAC.cs` — file của @Kiet. Báo trước khi động vào.

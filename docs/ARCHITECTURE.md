@@ -113,20 +113,25 @@ Trong co-op, mỗi người chơi chọn thẻ độc lập nhưng đợt kế t
 
 | Lớp | Trách nhiệm |
 |---|---|
-| `DongSonDrum` | Đối tượng cố định tại tâm đấu trường. Giữ thời gian hồi dùng chung dưới dạng `SyncVar` do host quản lý |
-| `DrumShockwave` | Thi hành hiệu ứng: xoá đạn địch, đẩy lùi, gây choáng 1 giây |
+| `DongSonDrum` | Biểu diễn cố định tại tâm đấu trường, nhịp sáng khi sẵn sàng, phát sóng từ pool |
+| `DrumNetwork` (partial `RunManager`) | Giữ năng lượng, hồi chiêu và cờ sẵn sàng dưới dạng SyncVar; host kiểm tra dash, tiêu năng lượng, áp đẩy lùi/choáng và phát RPC |
+| `DrumShockwave` | Kiểm tra đoạn lướt chạm vùng trống, tránh bỏ sót khi lướt nhanh |
+| `EnemyProjectileClearable` | Đăng ký đạn địch cục bộ và callback thu hồi; xung kích chỉ xoá phe địch |
+| `DrumHud` | Vòng năng lượng và vòng hồi chiêu dùng chung, chỉ đọc trạng thái host |
 | `SoulPickup` | Hồn rơi ra khi quái chết, tự hút về người chơi, nạp năng lượng cho trống |
 
 **Luồng kích hoạt:**
 
 ```
 Client dash chạm trống
-  → CmdTryActivate()
-  → Host kiểm tra thời gian hồi
+  → PlayerDash.CmdTryActivateDrum()
+  → Host kiểm tra cú lướt, năng lượng và thời gian hồi
   → Nếu hợp lệ: host thi hành hiệu ứng, phát RpcPlayShockwave() cho phần biểu diễn
 ```
 
 Client không tự xác định trạng thái sẵn sàng của trống; client chỉ hiển thị giá trị `SyncVar` nhận từ host.
+
+T-36–38 dùng NetworkIdentity sẵn có của RunManager thay vì tạo thêm đối tượng mạng cho trống. Quy tắc 20 Hồn / 20 giây / choáng 1 giây đặt trong `DrumRules.asset`; chi tiết và cách kiểm tra tại [DRUM_TESTS.md](DRUM_TESTS.md).
 
 ### 2.7 Director — AI Đạo Diễn
 
