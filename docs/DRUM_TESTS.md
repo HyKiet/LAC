@@ -20,7 +20,7 @@ Khi chơi lại, trạng thái trống reset và SoulSpawner trả Hồn còn tr
 
 ## Đạn địch và T-34
 
-Hiện chưa có quái bắn xa hay hệ thống đạn địch. `EnemyProjectileClearable` cung cấp đăng ký cục bộ để xoá toàn bộ đạn địch; không chạm đến `Combat.Projectile` của người chơi. Khi triển khai T-34, gắn component này lên prefab đạn địch và gọi `BindRelease` lúc Launch với callback trả viên đạn về pool. Callback cần thu hồi đồng bộ. Đạn không có callback sẽ được tắt.
+T-34 đã nối `Enemies/EnemyProjectile` của Ma Trơi với `EnemyProjectileClearable`: `Launch` gắn callback trả viên đạn về pool; xung kích thu hồi trên host và client qua sự kiện trống. Không chạm đến `Combat.Projectile` của người chơi. Prefab đạn địch mới về sau cũng cần marker và `BindRelease`; callback phải thu hồi đồng bộ. Đạn không có callback sẽ được tắt. Kiểm thử bổ sung: [ENEMY_TESTS.md](ENEMY_TESTS.md).
 
 ## Kiểm tra có thể chạy lại
 

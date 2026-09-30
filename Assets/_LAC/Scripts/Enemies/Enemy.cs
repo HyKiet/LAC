@@ -20,7 +20,7 @@ namespace LAC.Enemies
     /// giữa 40 vật thể phụ thuộc vào thứ tự giải va chạm của engine và phân kỳ rất nhanh
     /// giữa hai máy — snapshot 2 Hz sẽ không kéo lại kịp và hình ảnh giật liên tục.
     /// </remarks>
-    public sealed class Enemy : MonoBehaviour, IPoolable
+    public sealed partial class Enemy : MonoBehaviour, IPoolable
     {
         [SerializeField] private SpriteRenderer _renderer;
 
@@ -88,6 +88,7 @@ namespace LAC.Enemies
             _knockbackEndsAt = 0f;
             _stunnedUntil = 0f;
             _knockbackVelocity = Vector2.zero;
+            ResetBehaviour();
 
             _rigidbody.position = position;
             transform.position = position;
@@ -176,7 +177,13 @@ namespace LAC.Enemies
         public void ApplySnapshot(Vector2 position)
         {
             if (!IsAlive) return;
-            _rigidbody.position = Vector2.Lerp(_rigidbody.position, position, _snapshotBlend);
+            _snapshotError = position - Position;
+            if (_snapshotError.sqrMagnitude > 16f)
+            {
+                _rigidbody.position = position;
+                transform.position = position;
+                _snapshotError = Vector2.zero;
+            }
         }
 
         public void ApplyDrumShockwave(Vector2 origin, float distance, float duration)
@@ -188,6 +195,9 @@ namespace LAC.Enemies
             _knockbackEndsAt = Time.time + _knockbackDuration;
             _stunnedUntil = Mathf.Max(_stunnedUntil, Time.time + duration);
             _nextAttackAt = Mathf.Max(_nextAttackAt, _stunnedUntil);
+            _chargeEndsAt = 0f;
+            _nextChargeAt = _stunnedUntil + (_data != null ? _data.ChargeInterval : 2f);
+            if (_chargeLine != null) _chargeLine.enabled = false;
             if (_animator != null) _animator.SetBaseState(AnimState.Idle);
         }
 
@@ -211,6 +221,7 @@ namespace LAC.Enemies
         private void FixedUpdate()
         {
             if (_data == null || !IsAlive) return;
+            if (_run != null && _run.State != RunState.WaveActive) return;
 
             if (IsStunned) { Step(Vector2.zero, 0f); return; }
             if (_stunnedUntil > 0f)
@@ -219,12 +230,15 @@ namespace LAC.Enemies
                 EnterState(_state);
             }
 
+            if (_state != EnemyState.Spawning && TickSpecialBehaviour()) return;
+
             switch (_state)
             {
                 case EnemyState.Spawning:
                     // Đứng yên và không gây sát thương trong pha báo trước. Quái hiện ra rồi
                     // lao vào ngay là không đọc kịp — xem ràng buộc đọc hiểu ở CLAUDE.md 2.1.
                     if (Time.time >= _stateEndsAt) EnterState(EnemyState.Chasing);
+                    Step(Vector2.zero, 0f);
                     return;
 
                 case EnemyState.Chasing:
@@ -245,6 +259,7 @@ namespace LAC.Enemies
                 // Khong con ai de duoi. Dung lai va tro ve dang dung yen thay vi giu tu the
                 // chay tai cho — de nguoi xem doc ra rang van da xong chu khong phai treo.
                 if (_animator != null) _animator.SetBaseState(AnimState.Idle);
+                Step(Vector2.zero, 0f);
                 return;
             }
 
@@ -278,9 +293,17 @@ namespace LAC.Enemies
             if (Time.time < _knockbackEndsAt)
                 wanted += _knockbackVelocity * Time.fixedDeltaTime;
 
+            if (!Mirror.NetworkServer.active && _snapshotError.sqrMagnitude > 0.000001f)
+            {
+                Vector2 correction = _snapshotError * (1f - Mathf.Pow(1f - _snapshotBlend, Time.fixedDeltaTime / 0.05f));
+                wanted += correction;
+                _snapshotError -= correction;
+            }
+
             if (ArenaBounds.Instance != null)
                 wanted = ArenaBounds.Instance.Clamp(wanted, Vector2.one * _arenaMargin);
 
+            Velocity = (wanted - Position) / Time.fixedDeltaTime;
             _rigidbody.MovePosition(wanted);
         }
 
@@ -353,8 +376,7 @@ namespace LAC.Enemies
             // vào đúng một điểm ngay khi chạm tầm đánh và trông như một con duy nhất — đo
             // được 40 con nằm trong bán kính 0.076 ở bản chỉ giãn cách lúc truy đuổi.
             Vector2 push = Separation();
-            if (push != Vector2.zero)
-                Step(push.normalized, _data.MoveSpeed * _crowdSpeedScale);
+            Step(push.normalized, _data.MoveSpeed * _crowdSpeedScale);
 
             if (Time.time < _nextAttackAt) return;
             _nextAttackAt = Time.time + _data.AttackInterval;

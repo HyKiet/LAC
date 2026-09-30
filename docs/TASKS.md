@@ -150,8 +150,10 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 **Nghiệm thu:** co-op qua Steam chạy được ngoài mạng LAN, hoàn tất 16 đợt không sai lệch trạng thái.
 
-- [ ] **T-34** Bốn quái còn lại — Ma Trơi, Bù Nhìn, Ma Da, Quỷ Nhỏ — **@Kiet**
-- [ ] **T-35** Snapshot vị trí quái 2 lần/giây để hiệu chỉnh sai lệch — **@Kiet**
+- [x] **T-34** Bốn quái còn lại — Ma Trơi, Bù Nhìn, Ma Da, Quỷ Nhỏ — **@Kiet**
+  > Codex · 30/09/2026: `Enemies/EnemyBehaviours.cs`, `EnemyData.cs`, `EnemyProjectile.cs`, bốn asset quái và `WaveTable_CoDinh.asset`. Ma Trơi giữ khoảng cách/bắn chậm; Bù Nhìn đánh 3 máu; Ma Da báo hướng rồi lao nhịp 2 giây; Quỷ Nhỏ tách hai Cô Hồn từ sự kiện host. Đạn dùng pool, nối Trống Đồng; ngân sách wave dự trù cả quái con. Sprite tạm, chờ T-47. Play Mode ALL PASSED, đã xem Game View và thử bắn/lao/xóa đạn trong co-op; [ENEMY_TESTS.md](ENEMY_TESTS.md).
+- [x] **T-35** Snapshot vị trí quái 2 lần/giây để hiệu chỉnh sai lệch — **@Kiet**
+  > Codex · 30/09/2026: `EnemySpawner.cs`, `Enemy.cs`, `EnemyCatalogData.cs`, `WaveManager.cs`: snapshot toàn roster mỗi 0.5 giây, bù độ trễ/triệt sai lệch dần, ID theo wave và ID con riêng, bỏ gói cũ/khác ván, sửa quái sinh thiếu/dư và reset khi seed đổi. Hai tiến trình RTT ~272 ms nhận đủ 70 quái; lệch 2 đơn vị còn 0.001 sau 1.5 giây; tách quái, roster rỗng và Restart wave 1 đạt. Build Windows thành công, Console không lỗi đỏ.
 - [x] **T-36** Trống Đồng — kích hoạt bằng dash, xoá đạn, đẩy lùi, choáng 1 giây — **@Kiet**
   > Codex · 30/09/2026: `Drum/DongSonDrum.cs`, `Drum/DrumShockwave.cs`, `PlayerDash.cs`, `Enemy.cs`; kiểm tra đoạn lướt đã đi, đẩy lùi 2.5 đơn vị và choáng 1 giây. `EnemyProjectileClearable` xoá đạn đã đăng ký, giữ đạn người chơi; T-34 phải gắn marker khi thêm đạn địch. Sóng dùng pool, sửa truyền alpha qua MaterialPropertyBlock trong `SoundWave.cs`; đã xem Game View. Kiểm thử: [DRUM_TESTS.md](DRUM_TESTS.md).
 - [x] **T-37** Thời gian hồi Trống Đồng dùng chung, host quản lý — **@Kiet**
@@ -166,7 +168,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-43** Thu thập telemetry ra CSV cho phần đánh giá khoá luận — **@Kiet**
 - [x] **T-44** Bảng đợt cố định — quái vào sân theo nhịp, theo hướng, theo thành phần — @Kiet · 10/09
   > Thay công thức tuyến tính hard-code trong `WaveManager` bằng một tài sản dữ liệu. Ba thay đổi về lối chơi: quái **vào sân theo nhịp** thay vì đổ hết trong một khung hình; mỗi đợt có **số hướng vào sân riêng**, trải đều trên chu vi rồi xoay ngẫu nhiên; nhiều loại quái trong một đợt **đan xen theo vòng** chứ không hết loại này tới loại kia. `WaveManager` giờ chỉ biết `WaveSpec` — đúng đầu ra của AI Đạo Diễn ở docs/GDD.md mục 7.3 — nên T-45 lắp vào không phải sửa tệp này. Trần 40 quái được kẹp **lúc dựng đặc tả**, không phải lúc sinh, vì đếm quái sống trên sân cho ra hai con số khác nhau ở hai máy. Tổng số đợt chuyển từ `RunManager` sang bảng. `Core/WaveSpec.cs` · `Core/WaveTable.cs` · `Core/WaveManager.cs` · `Core/RunManager.cs` · `Data/Waves/WaveTable_CoDinh.asset`.
-  > **Còn hai chỗ hở, cố ý.** Thành phần đợt hiện chỉ có Cô Hồn vì bốn quái còn lại thuộc T-34; cấu trúc đã sẵn sàng, chỉ cần thêm dòng vào bảng. Luật cấm sinh trong bán kính 3 quanh người chơi (GDD mục 7.6) **chưa cài** — nó cần vị trí người chơi, mà vị trí đó lệch nhau giữa hai máy; luật này thuộc tầng an toàn của đạo diễn ở T-45 nơi host quyết một mình.
+  > T-34 đã bổ sung bốn loại quái vào thành phần đợt, dự trù quái con khi tính trần 40. Luật cấm sinh trong bán kính 3 quanh người chơi (GDD mục 7.6) **chưa cài** — nó cần vị trí người chơi, mà vị trí đó lệch nhau giữa hai máy; luật này thuộc tầng an toàn của đạo diễn ở T-45 nơi host quyết một mình.
 - [ ] **T-45** AI Đạo Diễn (LinUCB) — lõi thuật toán, `ContextVector`, `WaveSpec` — **@Kiet**
 - [ ] **T-45B** Đạo diễn trong co-op — hợp thành ngữ cảnh N người, số hạng công bằng, tầng an toàn theo người yếu nhất — **@Kiet**
 - [ ] **T-46** Điều tiết bất đối xứng, đòn bẩy chia cắt và dồn ép; hiển thị hoạt động đạo diễn trên HUD — **@Kiet**

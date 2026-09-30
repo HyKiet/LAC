@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace LAC.Enemies
 {
+    public enum EnemyBehaviour { Pursuer, Ranged, Charger, Splitter }
     /// <summary>Chỉ số và hình dạng của một loại quái.</summary>
     /// <remarks>
     /// Độ thử thách của LẠC đến từ thành phần đợt chứ không từ trí thông minh của từng con
@@ -12,6 +13,30 @@ namespace LAC.Enemies
     public sealed class EnemyData : ScriptableObject
     {
         [SerializeField] private string _displayName = "Cô Hồn";
+        [SerializeField] private EnemyBehaviour _behaviour;
+        [Header("Hành vi đặc biệt")]
+        [SerializeField, Min(0f)] private float _keepDistance = 5f;
+        [SerializeField, Min(0.1f)] private float _projectileSpeed = 3f;
+        [SerializeField, Min(0.1f)] private float _projectileLifetime = 6f;
+        [SerializeField, Min(0.01f)] private float _projectileRadius = 0.16f;
+        [SerializeField, Min(0.1f)] private float _chargeInterval = 2f;
+        [SerializeField, Min(0.05f)] private float _chargeWarning = 0.45f;
+        [SerializeField, Min(0.05f)] private float _chargeDuration = 0.5f;
+        [SerializeField] private EnemyData _splitChild;
+        [SerializeField, Min(0.1f)] private float _splitOffset = 0.6f;
+
+        public EnemyBehaviour Behaviour => _behaviour;
+        public float KeepDistance => _keepDistance;
+        public float ProjectileSpeed => _projectileSpeed;
+        public float ProjectileLifetime => _projectileLifetime;
+        public float ProjectileRadius => _projectileRadius;
+        public float ChargeInterval => _chargeInterval;
+        public float ChargeWarning => _chargeWarning;
+        public float ChargeDuration => _chargeDuration;
+        public EnemyData SplitChild => _splitChild;
+        public float SplitOffset => _splitOffset;
+        // Dự trù hai con sau khi tách; không vượt trần 40 khi nhiều Quỷ Nhỏ chết cùng lúc.
+        public int PopulationCost => _behaviour == EnemyBehaviour.Splitter && _splitChild != null ? 2 : 1;
 
         [Header("Chỉ số")]
         [SerializeField, Min(1)] private int _maxHealth = 10;

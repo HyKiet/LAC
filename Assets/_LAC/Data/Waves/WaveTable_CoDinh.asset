@@ -17,111 +17,239 @@ MonoBehaviour:
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
       _count: 6
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 0
     _spawnInterval: 2.4
     _burst: 1
     _directions: 1
   - _label: "02 \xB7 S\xE2n \u0110\xECnh"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 8
+      _count: 6
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 2
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 0
     _spawnInterval: 2.2
     _burst: 1
     _directions: 1
   - _label: "03 \xB7 S\xE2n \u0110\xECnh \u2014 hai h\u01B0\u1EDBng"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 10
+      _count: 8
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 2
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 0
     _spawnInterval: 2.6
     _burst: 2
     _directions: 2
   - _label: "04 \xB7 S\xE2n \u0110\xECnh"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 12
+      _count: 9
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 2
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 1
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 0
     _spawnInterval: 2.4
     _burst: 2
     _directions: 2
   - _label: "05 \xB7 S\xE2n \u0110\xECnh"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 14
+      _count: 10
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 1
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 0
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 0
     _spawnInterval: 2.4
     _burst: 2
     _directions: 2
   - _label: "06 \xB7 Ru\u1ED9ng L\xFAa \u2014 ba h\u01B0\u1EDBng"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 16
+      _count: 8
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 2
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 0
     _spawnInterval: 2.2
     _burst: 2
     _directions: 3
   - _label: "07 \xB7 Ru\u1ED9ng L\xFAa"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 18
+      _count: 10
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 2
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 0
     _spawnInterval: 2.6
     _burst: 3
     _directions: 3
   - _label: "08 \xB7 Ru\u1ED9ng L\xFAa"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 20
+      _count: 8
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 2
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 2
     _spawnInterval: 2.4
     _burst: 3
     _directions: 3
   - _label: "09 \xB7 Ru\u1ED9ng L\xFAa"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 22
+      _count: 9
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 2
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 2
     _spawnInterval: 2.4
     _burst: 3
     _directions: 3
   - _label: "10 \xB7 Ru\u1ED9ng L\xFAa \u2014 b\u1ED1n h\u01B0\u1EDBng"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 24
+      _count: 11
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 2
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 2
     _spawnInterval: 2.2
     _burst: 3
     _directions: 4
   - _label: "11 \xB7 \xC2m Ph\u1EE7"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 26
+      _count: 11
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 2
     _spawnInterval: 2.4
     _burst: 4
     _directions: 4
   - _label: "12 \xB7 \xC2m Ph\u1EE7"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 28
+      _count: 13
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 2
     _spawnInterval: 2.2
     _burst: 4
     _directions: 4
   - _label: "13 \xB7 \xC2m Ph\u1EE7"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 30
+      _count: 12
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 5
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 3
     _spawnInterval: 2.2
     _burst: 4
     _directions: 4
   - _label: "14 \xB7 \xC2m Ph\u1EE7"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 33
+      _count: 14
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 5
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 3
     _spawnInterval: 2.2
     _burst: 5
     _directions: 5
   - _label: "15 \xB7 \xC2m Ph\u1EE7 \u2014 tr\u01B0\u1EDBc tr\xF9m"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 36
+      _count: 16
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 5
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 3
     _spawnInterval: 2
     _burst: 5
     _directions: 5
   - _label: "16 \xB7 \xC2m Ph\u1EE7 \u2014 Ch\u1EB1n Tinh (T-39)"
     _groups:
     - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 40
+      _count: 18
+    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
+      _count: 5
+    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
+      _count: 3
+    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
+      _count: 4
+    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
+      _count: 3
     _spawnInterval: 1.8
     _burst: 6
     _directions: 6

@@ -124,8 +124,8 @@ namespace LAC.Core
                 Group group = entry.Groups[i];
                 if (group == null || group.Enemy == null || group.Count <= 0) continue;
 
-                int count = Mathf.Min(group.Count, budget);
-                budget -= count;
+                int count = Mathf.Min(group.Count, budget / group.Enemy.PopulationCost);
+                budget -= count * group.Enemy.PopulationCost;
                 mix.Add(new WaveSpec.Group(group.Enemy, count));
             }
 
@@ -163,7 +163,7 @@ namespace LAC.Core
                 for (int g = 0; g < entry.Groups.Length; g++)
                 {
                     Group group = entry.Groups[g];
-                    if (group != null && group.Enemy != null) total += group.Count;
+                    if (group != null && group.Enemy != null) total += group.Count * group.Enemy.PopulationCost;
                 }
 
                 if (total > _maxConcurrent)

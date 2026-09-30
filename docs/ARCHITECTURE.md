@@ -98,6 +98,10 @@ Máy trạng thái ba trạng thái: `Spawning` → `Chasing` → `Attacking`. `
 
 Hai máy cùng sinh quái từ một seed nên mô phỏng song song. Host gửi snapshot vị trí 2 lần/giây để hiệu chỉnh sai lệch tích luỹ. Sự kiện chết do host phát qua RPC.
 
+T-34: `EnemyBehaviours` bổ sung giữ khoảng cách/bắn chậm cho Ma Trơi và báo trước/lao thẳng cho Ma Da. Bù Nhìn dùng truy đuổi với chỉ số riêng. Quỷ Nhỏ tách thành hai Cô Hồn từ sự kiện chết của host. `EnemyCatalogData` ánh xạ định danh loại quái trong gói mạng; `EnemyProjectile` dùng pool và chỉ host kiểm tra sát thương, có `EnemyProjectileClearable` để Trống Đồng thu hồi.
+
+T-35: ID theo đợt (`wave × 1000 + thứ tự`); quái con dùng ID âm từ ID cha, không tiêu bộ đếm lịch sinh. Snapshot reliable chứa toàn bộ ID, loại, vị trí, vận tốc, mốc thời gian, số thứ tự và mã ván/đợt. Client bù độ trễ tối đa một chu kỳ snapshot rồi triệt sai lệch dần trong các bước vật lý; lệch trên 4 đơn vị được đưa về ngay. Roster khôi phục quái chưa sinh ở client, loại quái đã chết và chặn lịch sinh trễ làm sống lại quái. Gói khác ván/đợt hoặc cũ bị bỏ qua. Chi tiết và cách kiểm thử: [ENEMY_TESTS.md](ENEMY_TESTS.md).
+
 ### 2.5 Cards
 
 | Lớp | Trách nhiệm |

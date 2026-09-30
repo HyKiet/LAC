@@ -67,12 +67,26 @@ namespace LAC.Core
         private float _waveStartedAt;
 
         private int _spawnedWave;
+        private int _runSeed;
+        private bool _hasRunSeed;
         private RunState _lastState = RunState.Idle;
 
         private void Update()
         {
             RunManager run = RunManager.Instance;
             if (run == null) return;
+
+            // Defeat và Restart có thể cùng một lần cập nhật mạng: client chỉ thấy wave 1
+            // trước/sau như nhau. Seed mới vẫn phải dọn lịch sinh và sequence snapshot cũ.
+            if (!_hasRunSeed || _runSeed != run.Seed)
+            {
+                _hasRunSeed = true;
+                _runSeed = run.Seed;
+                _spawnedWave = 0;
+                _schedule.Clear();
+                _nextSpawnIndex = 0;
+                if (EnemySpawner.Instance != null) EnemySpawner.Instance.ResetRun();
+            }
 
             if (run.State != _lastState)
             {
@@ -160,6 +174,7 @@ namespace LAC.Core
             // Ván mới bắt đầu: dọn nốt đàn quái của ván trước, thứ được cố ý giữ lại để người
             // chơi nhìn được thứ đã giết mình.
             if (waveIndex == 1) EnemySpawner.Instance.ResetRun();
+            EnemySpawner.Instance.BeginWave(waveIndex);
 
             var stream = new RandomStream(RunRandom.Seed, "wave" + waveIndex);
             WaveSpec spec = _table.BuildSpec(waveIndex, stream);
