@@ -144,6 +144,9 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Phần thưởng nạp một lần khi lướt và **tiêu ngay lúc khai hoả**, không phải lúc đạn trúng — tiêu lúc trúng thì hai viên bắn liên tiếp cùng ăn một phần thưởng. Không dùng cửa sổ thời gian: hồi chiêu lướt 0.4 s ngắn hơn cửa sổ 1 s của GDD nên hiệu ứng sẽ bật vĩnh viễn, xem mục 7. `PlayerDash.Dashed` phát trên mọi máy để host cũng áp được phần thưởng cho nhân vật của client. `CharacterData.DashDamageMultiplier` = 2 · `Combat/WeaponAuto.ConsumeDamage` · `Player/PlayerDash.cs` · `Data/Animations/Tam.asset` (TinySwords Archer, tạm — chờ T-33).
 - [ ] **T-31** Sóng âm riêng cho từng nhạc cụ — **@Kiet**
 - [ ] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**
+  > Đã đo baseline T-32A bên dưới; chưa đóng T-32 vì fixture dày che nhân vật/số sát thương, pool DamageNumber vượt ngưỡng 128 và còn hitch. Cần kiểm standalone + đạn địch sau T-34; xem `docs/T32_TESTS.md`.
+- [x] **T-32A** Fixture tải 40 quái/200 đạn và baseline Editor, không sửa mã lõi — Codex · 01/10/2026
+  > `docs/tools/T32LoadProbe.cs` dùng pool/component thật, đo hai tình huống ở 720p/1080p, mỗi lượt warmup 3 s + đo 30 s; đủ 40/200 suốt lấy mẫu, P95 toàn khung 3,90–7,45 ms. Đã nhìn ảnh Game View, Console cuối lượt 0 lỗi đỏ và cảnh báo DamageNumber được ghi nguyên trạng. JSON: `docs/measurements/`; giới hạn, phát hiện đọc hiểu và cách chạy: `docs/T32_TESTS.md`. Không thay gameplay, asset hay scene.
 - [ ] **T-33** Sprite Gióng, Tấm, 20 icon thẻ (12 nền + 8 tiến hoá) — **@artist**
   > Phần icon đã hoàn tất ở T-33A bên dưới; T-33 còn sprite Gióng và Tấm.
 - [x] **T-33A** Bộ 20 icon thẻ đồng nhất, gán vào dữ liệu và kiểm tra trong Unity — 01/10/2026

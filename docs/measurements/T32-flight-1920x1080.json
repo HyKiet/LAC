@@ -1,0 +1,62 @@
+{
+  "scenario": "flight",
+  "environment": "Unity Editor Play Mode; synthetic host fixture, not standalone benchmark",
+  "unity": "6000.5.6f1",
+  "cpu": "12th Gen Intel(R) Core(TM) i7-12650H",
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "api": "Direct3D12",
+  "width": 1920,
+  "height": 1080,
+  "samples": 12855,
+  "warmupSeconds": 3,
+  "minEnemies": 40,
+  "minProjectiles": 200,
+  "minWaves": 10,
+  "launches": 4279,
+  "wallFramesOverBudget": 6,
+  "measuredSeconds": 30.229572299999745,
+  "estimatedFps": 428.48504461743454,
+  "physicsStep": 0.0199999921,
+  "frameTimingEnabled": true,
+  "enemyDataUnchanged": true,
+  "wallMs": {
+    "count": 12855,
+    "mean": 2.3338037407882757,
+    "p50": 1.9643991254270077,
+    "p95": 3.8969032466411591,
+    "p99": 7.6947985216975212,
+    "max": 27.286294847726822
+  },
+  "playerLoopMs": {
+    "count": 12855,
+    "mean": 1.267986059898869,
+    "p50": 1.0017,
+    "p95": 2.5508,
+    "p99": 4.608,
+    "max": 27.6155
+  },
+  "cpuMainWithoutPresentWaitMs": {
+    "count": 12855,
+    "mean": 1.2672901750291738,
+    "p50": 1.0008000000000001,
+    "p95": 2.5503,
+    "p99": 4.6065,
+    "max": 27.6098
+  },
+  "gpuMs": {
+    "count": 12386,
+    "mean": 0.4840951319231388,
+    "p50": 0.485376,
+    "p95": 0.617472,
+    "p99": 0.642048,
+    "max": 0.698368
+  },
+  "gcBytesPerFrame": {
+    "count": 12855,
+    "mean": 13980.070556203811,
+    "p50": 13745.0,
+    "p95": 13797.0,
+    "p99": 22245.0,
+    "max": 57779.0
+  }
+}
