@@ -122,6 +122,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Dựng thành prefab trong `Prefabs/UI/Cards`, sinh lúc chạy. Không đặt sẵn vào `Arena.unity`.
 - [x] **T-22B** Làm lại khung và khu vực chọn thẻ, bỏ nhịp thở, thêm lóe sáng nhẹ — 01/10/2026
   > `Cards/CardFrameGraphic.cs` vẽ khung đồng vát góc/viền kép, lóe sáng chỉ trên viền; `CardHoverVisual.cs` giữ thẻ đứng yên khi nghỉ/hover; `CardSelectionView.cs` nới bố cục, tăng chữ, tách chân bảng và dọn màn chờ. Đạt hồi quy host 12/12 thẻ, đo chữ không tràn, kiểm tra transform cố định/timer chạy ở timeScale=0, đã nhìn ảnh Game View và Console cuối lượt 0 lỗi. Chi tiết: `docs/CARD_FRAME_UI.md`.
+- [x] **T-22C** Tối ưu độ rõ chữ và bố cục thẻ ở 720p/1080p — Codex · 01/10/2026
+  > `Cards/CardSelectionView.cs` dùng canvas căn pixel, thiết kế 720p, mô tả 22/33 px tại 720p/1080p, căn trái và không best-fit/hiệu ứng làm nhòe; `CardFrameGraphic.cs` sửa nan khung nút thấp. `Cards/Editor/CardTypographyChecks.cs` kiểm 12 thẻ + 8 tiến hoá, dấu tiếng Việt, không tràn và tương phản >=7:1; hồi quy host 12/12 đạt, đã nhìn ảnh Game View, Console 0 lỗi đỏ. Bằng chứng: `docs/CARD_READABILITY.md`.
 - [x] **T-23** Đồng bộ chọn thẻ: đợt kế chỉ khởi động khi cả hai người đã chọn xong — **@Kang** · 24/09
   > Host thẩm định đề nghị/lượt đổi/lựa chọn theo kết nối, đồng bộ lịch sử định danh, chờ ACK animation, bỏ người rời mạng khỏi điều kiện chờ. `Cards/CardSelectionNetwork.cs` (partial `RunManager`) · `Core/WaveManager.cs`. Hai tiến trình với LatencySimulation đã đạt toàn bộ kiểm tra; xem `docs/CARD_TESTS.md`.
 - [x] **T-24** Biên soạn và cân bằng 12 thẻ nền — **@Kang** · 24/09

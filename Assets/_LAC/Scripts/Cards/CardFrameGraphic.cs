@@ -73,7 +73,8 @@ namespace LAC.Cards
                 Bar(vh, new Rect(left, y - 1f, 25f, 2f), trim);
                 Bar(vh, new Rect(right - 25f, y - 1f, 25f, 2f), trim);
             }
-            for (int i = 0; i < 2; i++)
+            // Nút chân bảng thấp hơn thẻ: bỏ nan dọc để không vẽ ra ngoài mép nút.
+            for (int i = 0; rect.height >= 128f && i < 2; i++)
             {
                 float x = i == 0 ? rect.xMin + 8f : rect.xMax - 8f;
                 Bar(vh, new Rect(x - 1f, rect.yMin + 29f, 2f, 25f), trim);

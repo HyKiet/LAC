@@ -2,6 +2,10 @@
 
 Ngày: 01/10/2026. Theo yêu cầu: bỏ nhịp thở, tự dựng khung và thêm lóe sáng nhẹ.
 
+**Cập nhật T-22C:** bố cục và chữ đã được tối ưu lại ở 720p/1080p; kích thước và ảnh
+dưới đây là bằng chứng của phiên bản T-22B trước đó. Xem [CARD_READABILITY.md](CARD_READABILITY.md)
+cho cấu hình đang dùng.
+
 ## Thiết kế
 
 - Thẻ đứng yên lúc nghỉ và hover. Hover đổi viền sang ngọc xanh.
