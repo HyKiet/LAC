@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b5486a6b4d2a428f4857e310b6a00, type: 3}
+  m_Name: NoThan
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
+  _id: NoThan
+  _displayName: "N\u1ecf Th\u1ea7n"
+  _description: "\u0110\u1ea1n xuy\u00ean th\u00eam 2 \u0111\u1ecbch; +20% t\u1ea7m \u0111\u00e1nh g\u1ed1c."
+  _icon: {fileID: 0}
+  _ingredients:
+  - _card: {fileID: 11400000, guid: ba47200616f6f024fa859b68260de89c, type: 2}
+    _stacks: 1
+  - _card: {fileID: 11400000, guid: 4a3a230b9acc03a4483c3a0b3b581057, type: 2}
+    _stacks: 3
+  _bonus: {fileID: 11400000, guid: e207e38b909545408d5fd26407858baf, type: 2}

@@ -36,6 +36,7 @@ namespace LAC.Cards
         private bool _requestPending;
         private CardId[] _pendingOffer;
         private Coroutine _finishSelection;
+        private string[] _acceptedEvolutions;
 
         private void Awake()
         {
@@ -180,11 +181,12 @@ namespace LAC.Cards
             _run.CmdPickCard(_token, _revision, card.Id);
         }
 
-        public void ReceiveAccepted(int token, CardId id)
+        public void ReceiveAccepted(int token, CardId id, string[] evolvedIds = null)
         {
             if (token != _token || _committing) return;
             if (_pendingOffer != null) { FindLocalPlayer(); if (_state != null) ShowPendingOffer(); }
             _committing = true;
+            _acceptedEvolutions = evolvedIds;
             _view.MarkSelected(FindCard(id), _player != null ? _player.transform : null);
             _view.SetStatus("ĐÃ CHỌN NÂNG CẤP");
             _finishSelection = StartCoroutine(FinishSelectionAfterFeedback());
@@ -193,6 +195,16 @@ namespace LAC.Cards
         private IEnumerator FinishSelectionAfterFeedback()
         {
             yield return new WaitForSecondsRealtime(Mathf.Max(_selectionFeedbackSeconds, CardHoverVisual.ConsumeDuration));
+            if (_acceptedEvolutions != null)
+            {
+                foreach (string id in _acceptedEvolutions)
+                {
+                    CardEvolutionData recipe = CardEvolutionCatalog.Find(id);
+                    if (recipe == null) continue;
+                    _view.ShowEvolution(recipe);
+                    yield return new WaitForSecondsRealtime(CardSelectionView.EvolutionSeconds);
+                }
+            }
             _finishSelection = null;
             _view.RefreshOwned(_definitions, _state);
             _view.ShowWaiting();
@@ -216,6 +228,7 @@ namespace LAC.Cards
             if (_finishSelection != null) StopCoroutine(_finishSelection);
             _finishSelection = null;
             _pendingOffer = null;
+            _acceptedEvolutions = null;
             _committing = _selectionOpen = _requestPending = false;
             if (_view != null) _view.Hide();
             if (!_ownsPause) return;

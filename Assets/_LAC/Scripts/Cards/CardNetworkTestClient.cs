@@ -1,6 +1,7 @@
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
 using System;
 using System.Reflection;
+using System.Linq;
 using LAC.Core;
 using LAC.Net;
 using LAC.Player;
@@ -19,6 +20,7 @@ namespace LAC.Cards
         private int _step;
         private double _nextAction;
         private int _reportedWave;
+        private double _reportAt;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Install()
@@ -49,11 +51,23 @@ namespace LAC.Cards
                 if (_reportedWave != run.CurrentWave)
                 {
                     _reportedWave = run.CurrentWave;
+                    _reportAt = Time.realtimeSinceStartupAsDouble + .5d;
+                }
+                if (Time.realtimeSinceStartupAsDouble >= _reportAt)
+                {
+                    _reportAt = double.MaxValue;
                     foreach (var player in PlayerRegistry.All)
                     {
                         string stacks = "";
                         foreach (CardId id in Enum.GetValues(typeof(CardId))) stacks += $"{id}:{player.Upgrades.GetStacks(id)},";
-                        Debug.Log($"[CardNetClient] wave={run.CurrentWave} player={player.netId} cards={stacks} timeScale={Time.timeScale}");
+                        Debug.Log($"[CardNetClient] wave={run.CurrentWave} player={player.netId} cards={stacks} timeScale={Time.timeScale} evolutions={player.Upgrades.Evolutions.Count} damage={player.Upgrades.DamageMultiplier}");
+                        var s = player.Upgrades;
+                        string ids = string.Join(",", s.Evolutions.Select(r => r.Id).OrderBy(id => id));
+                        Debug.Log($"[EvolutionClient] wave={run.CurrentWave} player={player.netId} {ids}"
+                            + $"|{s.DamageMultiplier:F4}|{s.AttackSpeedMultiplier:F4}|{s.DashCooldownMultiplier:F4}|{s.MoveSpeedMultiplier:F4}"
+                            + $"|{s.AttackRangeMultiplier:F4}|{s.HitInvulnerabilityMultiplier:F4}|{s.MaxHealthBonus}|{s.WaveHeal}"
+                            + $"|{s.ProjectileCount}|{s.ProjectileDamageMultiplier:F4}|{s.ProjectileHitLimit}|{s.ProjectileSpreadDegrees:F4}"
+                            + $"|{s.ExplosionRadius:F4}|{s.ExplosionDamageRatio:F4}");
                     }
                 }
                 return;

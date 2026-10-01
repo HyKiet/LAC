@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b5486a6b4d2a428f4857e310b6a00, type: 3}
+  m_Name: KimCang
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
+  _id: KimCang
+  _displayName: "Kim Cang"
+  _description: "+20% m\u00e1u g\u1ed1c; +30% th\u1eddi gian b\u1ea3o v\u1ec7 sau tr\u00fang \u0111\u00f2n."
+  _icon: {fileID: 0}
+  _ingredients:
+  - _card: {fileID: 11400000, guid: ec4c111116df20d41896e1a6b8619b3d, type: 2}
+    _stacks: 2
+  - _card: {fileID: 11400000, guid: 5041ab7698ea4b14193947399d5c4410, type: 2}
+    _stacks: 2
+  _bonus: {fileID: 11400000, guid: 8040a24b17c94a6c981af66fccf7801e, type: 2}

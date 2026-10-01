@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: d2ac2dff719d26e4d9c00b2f76f4fdfd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2356999083636783951
+    second: EvolutionEmblem_0
+  - first:
+      213: -4881103097322250426
+    second: EvolutionEmblem_1
+  - first:
+      213: 134815221866442029
+    second: EvolutionEmblem_2
+  - first:
+      213: 1794257865376872955
+    second: EvolutionEmblem_3
+  - first:
+      213: -4579326112564512303
+    second: EvolutionEmblem_4
+  - first:
+      213: 3922785789721868107
+    second: EvolutionEmblem_5
+  - first:
+      213: -5292003501435133935
+    second: EvolutionEmblem_6
+  - first:
+      213: 8079800078450258613
+    second: EvolutionEmblem_7
+  - first:
+      213: 5425067725063413399
+    second: EvolutionEmblem_8
+  - first:
+      213: -6708198307475820508
+    second: EvolutionEmblem_9
+  - first:
+      213: 7282496288441864867
+    second: EvolutionEmblem_10
+  - first:
+      213: 8843516056262276319
+    second: EvolutionEmblem_11
+  - first:
+      213: 546512646464124069
+    second: EvolutionEmblem_12
+  - first:
+      213: -8290644884118434688
+    second: EvolutionEmblem_13
+  - first:
+      213: -3098939197536092337
+    second: EvolutionEmblem_14
+  - first:
+      213: -5111722756890858105
+    second: EvolutionEmblem_15
+  - first:
+      213: -5691349219137977051
+    second: EvolutionEmblem_16
+  - first:
+      213: 4828897905543336350
+    second: EvolutionEmblem_17
+  - first:
+      213: -7925023546790035537
+    second: EvolutionEmblem_18
+  - first:
+      213: 2945583751240264567
+    second: EvolutionEmblem_19
+  - first:
+      213: 6947821691439030290
+    second: EvolutionEmblem_20
+  - first:
+      213: 4463063107292516161
+    second: EvolutionEmblem_21
+  - first:
+      213: -2779689626636481619
+    second: EvolutionEmblem_22
+  - first:
+      213: -7731930934761809962
+    second: EvolutionEmblem_23
+  - first:
+      213: -4816048845478444860
+    second: EvolutionEmblem_24
+  - first:
+      213: 8680326068421282695
+    second: EvolutionEmblem_25
+  - first:
+      213: -645307755742313311
+    second: EvolutionEmblem_26
+  - first:
+      213: 1501037198969611234
+    second: EvolutionEmblem_27
+  - first:
+      213: 3089358674373126146
+    second: EvolutionEmblem_28
+  - first:
+      213: 8778960470915922599
+    second: EvolutionEmblem_29
+  - first:
+      213: -2850003776357030839
+    second: EvolutionEmblem_30
+  - first:
+      213: -8263914914524343253
+    second: EvolutionEmblem_31
+  - first:
+      213: -6193329030139568464
+    second: EvolutionEmblem_32
+  - first:
+      213: 4004744981870617878
+    second: EvolutionEmblem_33
+  - first:
+      213: 6262017870921944893
+    second: EvolutionEmblem_34
+  - first:
+      213: -1833735375551938285
+    second: EvolutionEmblem_35
+  - first:
+      213: 3635690794445130618
+    second: EvolutionEmblem_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EvolutionEmblem_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1241
+        height: 1246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b488e342d14a4fd0800000000000000
+      internalID: -2356999083636783951
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1212
+        width: 106
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64f5c0c1896d24cb0800000000000000
+      internalID: -4881103097322250426
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_2
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 1213
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2d2aa1eab5fed100800000000000000
+      internalID: 134815221866442029
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_3
+      rect:
+        serializedVersion: 2
+        x: 1077
+        y: 1221
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf93d3da50c76e810800000000000000
+      internalID: 1794257865376872955
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_4
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 1205
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d9fbe5b927f270c0800000000000000
+      internalID: -4579326112564512303
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_5
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 1197
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b47725654e8807630800000000000000
+      internalID: 3922785789721868107
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_6
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 1197
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 110e5da8ad60f86b0800000000000000
+      internalID: -5292003501435133935
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 1122
+        width: 114
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b2733cdc57312070800000000000000
+      internalID: 8079800078450258613
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_8
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1183
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79e57da4a56b94b40800000000000000
+      internalID: 5425067725063413399
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_9
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 1042
+        width: 122
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 420f6005e21b7e2a0800000000000000
+      internalID: -6708198307475820508
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_10
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 1164
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a29dae3acf901560800000000000000
+      internalID: 7282496288441864867
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_11
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 1162
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd4f9fa8ffa7aba70800000000000000
+      internalID: 8843516056262276319
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_12
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 1164
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a4b0cd3b5a959700800000000000000
+      internalID: 546512646464124069
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_13
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 1160
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08c06335766b1fc80800000000000000
+      internalID: -8290644884118434688
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_14
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 1123
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4fb35ef73b5ef4d0800000000000000
+      internalID: -3098939197536092337
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_15
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 1129
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78d6d355c338f09b0800000000000000
+      internalID: -5111722756890858105
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_16
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 1126
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 525859c0a044401b0800000000000000
+      internalID: -5691349219137977051
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_17
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 1113
+        width: 28
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e91d98c7f01b30340800000000000000
+      internalID: 4828897905543336350
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_18
+      rect:
+        serializedVersion: 2
+        x: 1099
+        y: 1132
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faf39f0a219a40290800000000000000
+      internalID: -7925023546790035537
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_19
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 1108
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77ba6dcb0d0d0e820800000000000000
+      internalID: 2945583751240264567
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_20
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 1110
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2102af8640f9b6060800000000000000
+      internalID: 6947821691439030290
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_21
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 1096
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14f4250ff3cffed30800000000000000
+      internalID: 4463063107292516161
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_22
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 1106
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dab8e72130f8c69d0800000000000000
+      internalID: -2779689626636481619
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_23
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 994
+        width: 65
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d71ba5c7c9a2b490800000000000000
+      internalID: -7731930934761809962
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_24
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 1078
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c0c3507715f92db0800000000000000
+      internalID: -4816048845478444860
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_25
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 1044
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78b40d2a196b67870800000000000000
+      internalID: 8680326068421282695
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_26
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 530
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a4cc20e3086b07f0800000000000000
+      internalID: -645307755742313311
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_27
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 377
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e32b3f2161c4d410800000000000000
+      internalID: 1501037198969611234
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_28
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 306
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20828c1a85b9fda20800000000000000
+      internalID: 3089358674373126146
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_29
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 308
+        width: 21
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aab32e090225d970800000000000000
+      internalID: 8778960470915922599
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_30
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 298
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 944a7b55aa0c278d0800000000000000
+      internalID: -2850003776357030839
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_31
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 120
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2459b95b2da05d80800000000000000
+      internalID: -8263914914524343253
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_32
+      rect:
+        serializedVersion: 2
+        x: 943
+        y: 113
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0be9a6d8f00ec0aa0800000000000000
+      internalID: -6193329030139568464
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_33
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 67
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6152d6cc756b39730800000000000000
+      internalID: 4004744981870617878
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_34
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 89
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3f4375731827e650800000000000000
+      internalID: 6262017870921944893
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_35
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 55
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 311c82834634d86e0800000000000000
+      internalID: -1833735375551938285
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EvolutionEmblem_36
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 17
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7b4f0cc381947230800000000000000
+      internalID: 3635690794445130618
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      EvolutionEmblem_0: -2356999083636783951
+      EvolutionEmblem_1: -4881103097322250426
+      EvolutionEmblem_10: 7282496288441864867
+      EvolutionEmblem_11: 8843516056262276319
+      EvolutionEmblem_12: 546512646464124069
+      EvolutionEmblem_13: -8290644884118434688
+      EvolutionEmblem_14: -3098939197536092337
+      EvolutionEmblem_15: -5111722756890858105
+      EvolutionEmblem_16: -5691349219137977051
+      EvolutionEmblem_17: 4828897905543336350
+      EvolutionEmblem_18: -7925023546790035537
+      EvolutionEmblem_19: 2945583751240264567
+      EvolutionEmblem_2: 134815221866442029
+      EvolutionEmblem_20: 6947821691439030290
+      EvolutionEmblem_21: 4463063107292516161
+      EvolutionEmblem_22: -2779689626636481619
+      EvolutionEmblem_23: -7731930934761809962
+      EvolutionEmblem_24: -4816048845478444860
+      EvolutionEmblem_25: 8680326068421282695
+      EvolutionEmblem_26: -645307755742313311
+      EvolutionEmblem_27: 1501037198969611234
+      EvolutionEmblem_28: 3089358674373126146
+      EvolutionEmblem_29: 8778960470915922599
+      EvolutionEmblem_3: 1794257865376872955
+      EvolutionEmblem_30: -2850003776357030839
+      EvolutionEmblem_31: -8263914914524343253
+      EvolutionEmblem_32: -6193329030139568464
+      EvolutionEmblem_33: 4004744981870617878
+      EvolutionEmblem_34: 6262017870921944893
+      EvolutionEmblem_35: -1833735375551938285
+      EvolutionEmblem_36: 3635690794445130618
+      EvolutionEmblem_4: -4579326112564512303
+      EvolutionEmblem_5: 3922785789721868107
+      EvolutionEmblem_6: -5292003501435133935
+      EvolutionEmblem_7: 8079800078450258613
+      EvolutionEmblem_8: 5425067725063413399
+      EvolutionEmblem_9: -6708198307475820508
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

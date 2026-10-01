@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b5486a6b4d2a428f4857e310b6a00, type: 3}
+  m_Name: LacPhong
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
+  _id: LacPhong
+  _displayName: "L\u1ea1c Phong"
+  _description: "Gi\u1ea3m th\u00eam 15% h\u1ed3i l\u01b0\u1edbt g\u1ed1c; +12% t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n g\u1ed1c."
+  _icon: {fileID: 0}
+  _ingredients:
+  - _card: {fileID: 11400000, guid: 004ae78d930705f4bbd35386272b0978, type: 2}
+    _stacks: 1
+  - _card: {fileID: 11400000, guid: 0bb0871027ce9024b88263c15411e4fe, type: 2}
+    _stacks: 3
+  _bonus: {fileID: 11400000, guid: 2f53d5f878e349dfa6da5ee9fa463d0b, type: 2}

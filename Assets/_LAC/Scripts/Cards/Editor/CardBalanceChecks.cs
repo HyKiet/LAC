@@ -20,6 +20,8 @@ namespace LAC.Cards.Editor
             Require(cards.Length == 12 && cards.Select(c => c.Id).Distinct().Count() == 12, "Danh mục không đủ 12 ID duy nhất.");
             var originals = cards.Select(EditorJsonUtility.ToJson).ToArray();
             var go = new GameObject("CardBalanceChecks") { hideFlags = HideFlags.HideAndDontSave };
+            // Bài hồi quy T-24 đo riêng thẻ nền; T-26 kiểm cả danh mục tiến hoá.
+            CardEvolutionCatalog.EditorSetTestRecipes(Array.Empty<CardEvolutionData>());
             try
             {
                 var state = go.AddComponent<PlayerUpgradeState>();
@@ -87,7 +89,7 @@ namespace LAC.Cards.Editor
                 for (int i = 0; i < cards.Length; i++) Require(originals[i] == EditorJsonUtility.ToJson(cards[i]), "Đã ghi đè asset.");
                 Debug.Log("[CardBalance] ALL PASSED: 45,000 picks, applicability, caps, fractional damage, health scaling, reset, immutable assets.");
             }
-            finally { UnityEngine.Object.DestroyImmediate(go); }
+            finally { UnityEngine.Object.DestroyImmediate(go); CardEvolutionCatalog.EditorSetTestRecipes(null); }
         }
 
         private static void CheckOffer(List<CardDefinition> offer, PlayerUpgradeState state, WeaponShape shape)

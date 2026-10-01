@@ -125,8 +125,10 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-24** Biên soạn và cân bằng 12 thẻ nền — **@Kang** · 24/09
   > Phạm vi thu gọn theo yêu cầu: 7 thẻ cũ + Khinh Thân, Âm Vang, Hồi Xuân, Thiết Bích, Cuồng Nộ. Tham số lưu trong `Data/Cards/Resources/Cards`; lọc thẻ đạn theo vũ khí, Sinh Lực theo máu gốc, giữ sát thương phần lẻ. `Cards/PlayerUpgradeState.cs` · `CardDefinition.cs` · `Editor/CardBalanceChecks.cs`. Đạt 45.000 lượt chọn mô phỏng và Play Mode 12/12 thẻ; cân bằng độ khó toàn game vẫn thuộc T-50/T-51.
   > Hợp nhất vào `main` ngày 27/09: giữ gameplay T-27/T-28/T-29/T-44, ghép nâng cấp với thưởng dash, kiểm tra 45.000 lượt chọn và 12/12 thẻ trên host. Chi tiết và giới hạn kiểm chứng: `docs/CARD_TESTS.md`.
-- [ ] **T-25** Hệ thống tiến hoá thẻ — kiểm tra công thức và thông báo — **@Hung**
-- [ ] **T-26** Chốt và triển khai 8 công thức tiến hoá — **@Hung**
+- [x] **T-25** Hệ thống tiến hoá thẻ — kiểm tra công thức và thông báo — **@Hung** · 01/10
+  > Tự kiểm nguyên liệu sau lựa chọn host duyệt, cộng thưởng một lần mỗi ván, giữ cấp thẻ nền; replay bằng định danh, thông báo nối hàng và chờ ACK trong co-op. `Cards/CardEvolutionData.cs` · `CardEvolutionCatalog.cs` · `PlayerUpgradeState.cs` · `CardSelectionController.cs` · `CardSelectionNetwork.cs` · `CardSelectionView.cs`. Đã kiểm Play Mode, Game View và hai tiến trình với độ trễ 100 ms; xem `docs/EVOLUTION_TESTS.md`.
+- [x] **T-26** Chốt và triển khai 8 công thức tiến hoá — **@Hung** · 01/10
+  > Đủ Nỏ Thần, Lửa Thiêng, Trăm Trứng, Thánh Gióng, Tiếng Đàn Thần, Lạc Phong, Bất Tử, Kim Cang từ 12 thẻ nền; bonus tách khỏi bể bốc. `Data/Cards/Resources/Evolutions` · `Data/Cards/EvolutionBonuses` · `Cards/Editor/CardEvolutionCatalogChecks.cs`. Đạt 8 công thức × 3 nhân vật, 8/8 trong Play Mode và 16/16 chữ ký chỉ số client khớp host; cân bằng cả ván vẫn thuộc T-50/T-51.
 
 ### Vòng lặp lõi — @Kiet
 

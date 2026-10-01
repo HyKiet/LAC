@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e205789dd1fd044a282048a047abd8, type: 3}
+  m_Name: NoThanBonus
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
+  _id: 0
+  _displayName: "N\u1ecf Th\u1ea7n"
+  _description: "\u0110\u1ea1n xuy\u00ean th\u00eam 2 \u0111\u1ecbch; +20% t\u1ea7m \u0111\u00e1nh g\u1ed1c."
+  _icon: {fileID: 0}
+  _maxStacks: 1
+  _weight: 1
+  _accent: {r: 0.984, g: 0.867, b: 0.51, a: 1}
+  _damageBonus: 0
+  _attackSpeedBonus: 0
+  _healthBonusRatio: 0
+  _dashCooldownReduction: 0
+  _moveSpeedBonus: 0
+  _attackRangeBonus: 0.2
+  _hitInvulnerabilityBonus: 0
+  _waveHeal: 0
+  _requiresProjectile: 1
+  _extraProjectiles: 0
+  _projectileDamageRatio: 1
+  _projectileSpread: 0
+  _extraPierces: 2
+  _explosionRadius: 0
+  _explosionDamageRatio: 0

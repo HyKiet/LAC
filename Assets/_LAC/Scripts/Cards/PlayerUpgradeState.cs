@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using LAC.Combat;
 using LAC.Player;
 using Mirror;
 using UnityEngine;
@@ -11,6 +13,13 @@ namespace LAC.Cards
         private readonly int[] _stacks = new int[Enum.GetValues(typeof(CardId)).Length];
         private PlayerCharacter _character;
         private float _healthRatio;
+        private readonly List<CardEvolutionData> _evolutions = new List<CardEvolutionData>();
+        public IReadOnlyList<CardEvolutionData> Evolutions => _evolutions;
+        public bool HasEvolution(string id)
+        {
+            foreach (CardEvolutionData recipe in _evolutions) if (recipe.Id == id) return true;
+            return false;
+        }
         public event Action Changed;
         public float DamageMultiplier { get; private set; } = 1f;
         public float AttackSpeedMultiplier { get; private set; } = 1f;
@@ -41,6 +50,22 @@ namespace LAC.Cards
             if (card == null || (uint)(int)card.Id >= _stacks.Length || GetStacks(card.Id) >= card.MaxStacks) return false;
             int oldHealthBonus = MaxHealthBonus;
             _stacks[(int)card.Id]++;
+            ApplyEffects(card);
+            WeaponShape shape = _character != null && _character.Data != null ? _character.Data.WeaponShape : WeaponShape.Circle;
+            foreach (CardEvolutionData recipe in CardEvolutionCatalog.Recipes)
+            {
+                if (!recipe.IsReady(this, shape)) continue;
+                _evolutions.Add(recipe);
+                ApplyEffects(recipe.Bonus);
+            }
+            if (MaxHealthBonus != oldHealthBonus && health != null && NetworkServer.active)
+                health.ServerApplyMaxHealthBonus(MaxHealthBonus, Mathf.Max(0, MaxHealthBonus - oldHealthBonus));
+            Changed?.Invoke();
+            return true;
+        }
+
+        private void ApplyEffects(CardDefinition card)
+        {
             DamageMultiplier += card.DamageBonus;
             AttackSpeedMultiplier += card.AttackSpeedBonus;
             _healthRatio += card.HealthBonusRatio;
@@ -55,15 +80,12 @@ namespace LAC.Cards
             ProjectileHitLimit += card.ExtraPierces;
             ExplosionRadius = Mathf.Max(ExplosionRadius, card.ExplosionRadius);
             ExplosionDamageRatio = Mathf.Max(ExplosionDamageRatio, card.ExplosionDamageRatio);
-            if (card.HealthBonusRatio > 0f && health != null && NetworkServer.active)
-                health.ServerApplyMaxHealthBonus(MaxHealthBonus, MaxHealthBonus - oldHealthBonus);
-            Changed?.Invoke();
-            return true;
         }
 
         public void ResetRun()
         {
             Array.Clear(_stacks, 0, _stacks.Length);
+            _evolutions.Clear();
             DamageMultiplier = AttackSpeedMultiplier = DashCooldownMultiplier = 1f;
             MoveSpeedMultiplier = AttackRangeMultiplier = HitInvulnerabilityMultiplier = 1f;
             ProjectileCount = ProjectileHitLimit = 1;

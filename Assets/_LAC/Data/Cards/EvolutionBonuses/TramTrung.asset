@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e205789dd1fd044a282048a047abd8, type: 3}
+  m_Name: TramTrungBonus
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
+  _id: 0
+  _displayName: "Tr\u0103m Tr\u1ee9ng"
+  _description: "B\u1eafn 4 \u0111\u1ea1n trong g\u00f3c 14\u00b0. M\u1ed7i \u0111\u1ea1n c\u00f2n 52,5% s\u00e1t th\u01b0\u01a1ng."
+  _icon: {fileID: 0}
+  _maxStacks: 1
+  _weight: 1
+  _accent: {r: 0.984, g: 0.867, b: 0.51, a: 1}
+  _damageBonus: 0
+  _attackSpeedBonus: 0
+  _healthBonusRatio: 0
+  _dashCooldownReduction: 0
+  _moveSpeedBonus: 0
+  _attackRangeBonus: 0
+  _hitInvulnerabilityBonus: 0
+  _waveHeal: 0
+  _requiresProjectile: 1
+  _extraProjectiles: 2
+  _projectileDamageRatio: 0.75
+  _projectileSpread: 14
+  _extraPierces: 0
+  _explosionRadius: 0
+  _explosionDamageRatio: 0

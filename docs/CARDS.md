@@ -12,8 +12,8 @@ liệu này.
 | Loại | Số lượng mục tiêu | Trạng thái |
 |---|---:|---|
 | Thẻ nền | 12 | Đã triển khai đủ 12 thẻ; cân bằng ban đầu ở T-24 |
-| Thẻ tiến hoá | 8 | Chờ T-25 và T-26 |
-| **Tổng** | **20** | 12 thẻ nền đã làm + 8 tiến hoá chưa triển khai |
+| Thẻ tiến hoá | 8 | Đã triển khai T-25/T-26; nghiệm thu co-op 01/10/2026 |
+| **Tổng** | **20** | Đủ 12 thẻ nền + 8 tiến hoá; cân bằng toàn game ở T-50/T-51 |
 
 Con số 48 thẻ trong GDD và mục tiêu 32 thẻ nền trước đây đã lỗi thời. Theo quyết định
 ngày 24/09/2026, phạm vi hiện hành là **12 thẻ nền + 8 thẻ tiến hoá**.
@@ -187,20 +187,35 @@ kể cả animation và truyền mạng. Console cuối phiên: 0 lỗi, 0 cản
 Đây là cân bằng ban đầu của **bể thẻ**, chưa thay thế T-50/T-51: cần chơi thử với đủ
 quái/boss và thu thập tỉ lệ thắng, lựa chọn thẻ để chốt độ khó toàn game.
 
-## 7. Công thức tiến hoá
+## 7. Tám công thức tiến hoá — T-25/T-26
 
-Khi đủ toàn bộ nguyên liệu, hệ thống tự hợp nhất thành thẻ tiến hoá. Tên nguyên liệu
-dưới đây là tên thiết kế từ CLAUDE.md; T-24/T-26 phải ánh xạ chúng sang ID chính thức
-trước khi triển khai. Các công thức dưới đây là thiết kế lịch sử, chưa khớp bộ 12 thẻ;
-T-26 phải thiết kế lại nguyên liệu và số cấp theo danh mục mới, không tự bổ sung thẻ
-ngoài phạm vi 12 thẻ nền. Mục tiêu 8 tiến hoá vẫn giữ nguyên.
+Đủ nguyên liệu sẽ tự mở tiến hoá sau khi host chấp nhận thẻ. Mỗi công thức chỉ
+áp dụng một lần mỗi ván; không tốn lượt chọn hay lượt đổi. Nguyên liệu giữ cấp và
+hiệu ứng, phần thưởng dưới đây cộng thêm đúng một lần, không nhân đôi chỉ số nền.
+Một nguyên liệu có thể dùng cho nhiều công thức; các tiến hoá cùng đủ điều kiện
+được áp dụng và thông báo lần lượt. Không có nguyên liệu tiến hoá dây chuyền.
 
-| # | Nguyên liệu | Kết quả | Trạng thái |
-|---:|---|---|---|
-| 1 | Xuyên thấu ×3 + Nảy tường ×3 | Nỏ Thần | Đã chốt ở mức thiết kế |
-| 2 | Nổ ×3 + Vệt cháy ×3 | Lửa Thiêng | Đã chốt ở mức thiết kế |
-| 3 | +2 đạn ×3 + Tách đạn ×3 | Trăm Trứng | Đã chốt ở mức thiết kế |
-| 4–8 | Chưa chốt | Chưa chốt | Chờ T-26 |
+| Tiến hoá | Nguyên liệu | Phần thưởng thêm | Phạm vi |
+|---|---|---|---|
+| Nỏ Thần | Xuyên Tâm ×1 + Âm Vang ×3 | Đạn xuyên thêm 2 địch; +20% tầm đánh gốc. | Vũ khí đạn |
+| Lửa Thiêng | Bộc Phá ×1 + Cuồng Nộ ×2 | Nổ rộng 2,5 đơn vị, gây 60% sát thương đạn lên địch khác. | Vũ khí đạn |
+| Trăm Trứng | Song Tiễn ×1 + Liên Kích ×3 | Bắn 4 đạn trong góc 14°. Mỗi đạn còn 52,5% sát thương. | Vũ khí đạn |
+| Thánh Gióng | Cường Công ×3 + Thiết Bích ×2 | +40% sát thương gốc; +15% thời gian bảo vệ sau trúng đòn. | Cả ba nhân vật |
+| Tiếng Đàn Thần | Cường Công ×2 + Âm Vang ×3 | +25% sát thương gốc; +15% tốc độ đánh gốc. | Cả ba nhân vật |
+| Lạc Phong | Bộ Pháp ×1 + Khinh Thân ×3 | Giảm thêm 15% hồi lướt gốc; +12% tốc độ di chuyển gốc. | Cả ba nhân vật |
+| Bất Tử | Sinh Lực ×3 + Hồi Xuân ×2 | +20% máu gốc; hồi thêm 1 máu đầu đợt. Không hồi sinh. | Cả ba nhân vật |
+| Kim Cang | Sinh Lực ×2 + Thiết Bích ×2 | +20% máu gốc; +30% thời gian bảo vệ sau trúng đòn. | Cả ba nhân vật |
+
+Tất cả chỉ số phần trăm cộng theo chỉ số gốc, trừ hệ số sát thương đạn nhân nhau.
+Trăm Trứng nhân thêm 0,75 vào 0,7 của Song Tiễn nên mỗi viên còn 0,525; tổng 4 viên
+là 2,1 lần sát thương trước hệ số đạn nếu đều trúng. Nỏ Thần đạt 5 mục tiêu/viên.
+Lửa Thiêng nâng bán kính và hệ số nổ bằng giá trị lớn nhất, không cộng bán kính.
+Bất Tử chỉ tăng máu/hồi đầu đợt, không cung cấp hồi sinh hoặc bất tử vĩnh viễn.
+
+Tám công thức dùng 3–5 lượt chọn nguyên liệu, nằm trong 15 lượt của một ván.
+Bonus nằm ngoài `Resources/Cards` nên bể bốc vẫn đúng 12 thẻ. Đây là cân bằng ban
+đầu của tiến hoá; đường cong độ khó toàn game vẫn thuộc T-50/T-51.
+Chi tiết dữ liệu và kiểm thử: [EVOLUTION_TESTS.md](EVOLUTION_TESTS.md).
 
 ## 8. Mẫu biên soạn thẻ mới
 

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b5486a6b4d2a428f4857e310b6a00, type: 3}
+  m_Name: ThanhGiong
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
+  _id: ThanhGiong
+  _displayName: "Th\u00e1nh Gi\u00f3ng"
+  _description: "+40% s\u00e1t th\u01b0\u01a1ng g\u1ed1c; +15% th\u1eddi gian b\u1ea3o v\u1ec7 sau tr\u00fang \u0111\u00f2n."
+  _icon: {fileID: 0}
+  _ingredients:
+  - _card: {fileID: 11400000, guid: aa34e65481a95fa4d93452dcd127cb60, type: 2}
+    _stacks: 3
+  - _card: {fileID: 11400000, guid: 5041ab7698ea4b14193947399d5c4410, type: 2}
+    _stacks: 2
+  _bonus: {fileID: 11400000, guid: 2dff28eaeef04bd3a8582c7a7b051f9a, type: 2}

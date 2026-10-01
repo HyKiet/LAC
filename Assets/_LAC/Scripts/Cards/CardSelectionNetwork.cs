@@ -146,18 +146,23 @@ namespace LAC.Core
 
         private void AcceptCard(NetworkConnectionToClient connection, Selection selection, CardDefinition card)
         {
+            int previousEvolutions = selection.Player.Upgrades.Evolutions.Count;
             if (!selection.Player.Upgrades.Apply(card, selection.Player.GetComponent<PlayerHealth>())) return;
+            var evolutions = selection.Player.Upgrades.Evolutions;
+            var evolvedIds = new string[evolutions.Count - previousEvolutions];
+            for (int i = 0; i < evolvedIds.Length; i++) evolvedIds[i] = evolutions[previousEvolutions + i].Id;
             selection.Picked = true;
             // ACK giữ animation trên máy chậm; thời hạn chặn client treo cả ván vô hạn.
-            selection.FeedbackDeadline = NetworkTime.time + CardHoverVisual.ConsumeDuration + 3d;
+            selection.FeedbackDeadline = NetworkTime.time + CardHoverVisual.ConsumeDuration
+                + evolvedIds.Length * CardSelectionView.EvolutionSeconds + 3d;
             _cardGrants.Add(new CardGrant { Player = selection.Player.netId, Card = card.Id });
-            TargetCardAccepted(connection, _selectionToken, card.Id);
+            TargetCardAccepted(connection, _selectionToken, card.Id, evolvedIds);
         }
 
         [TargetRpc]
-        private void TargetCardAccepted(NetworkConnectionToClient target, int token, CardId card)
+        private void TargetCardAccepted(NetworkConnectionToClient target, int token, CardId card, string[] evolvedIds)
         {
-            CardSelectionController.Instance?.ReceiveAccepted(token, card);
+            CardSelectionController.Instance?.ReceiveAccepted(token, card, evolvedIds);
         }
 
         [Command(requiresAuthority = false)]

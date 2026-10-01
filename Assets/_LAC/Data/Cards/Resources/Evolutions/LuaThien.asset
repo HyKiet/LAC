@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b5486a6b4d2a428f4857e310b6a00, type: 3}
+  m_Name: LuaThien
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
+  _id: LuaThien
+  _displayName: "L\u1eeda Thi\u00eang"
+  _description: "N\u1ed5 r\u1ed9ng 2,5 \u0111\u01a1n v\u1ecb, g\u00e2y 60% s\u00e1t th\u01b0\u01a1ng \u0111\u1ea1n l\u00ean \u0111\u1ecbch kh\u00e1c."
+  _icon: {fileID: 0}
+  _ingredients:
+  - _card: {fileID: 11400000, guid: 06227cb16766c16418e7e25d392e1c77, type: 2}
+    _stacks: 1
+  - _card: {fileID: 11400000, guid: 6bbb9f930e5c90f49b3738ae86cbb3e1, type: 2}
+    _stacks: 2
+  _bonus: {fileID: 11400000, guid: 2bb2846d9d9e464284a971b69730e7f2, type: 2}

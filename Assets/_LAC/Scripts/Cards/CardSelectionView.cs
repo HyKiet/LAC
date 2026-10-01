@@ -9,6 +9,14 @@ namespace LAC.Cards
 {
     public sealed class CardSelectionView : MonoBehaviour
     {
+        public const float EvolutionSeconds = 2.4f;
+        private GameObject _evolutionPanel;
+        private Image _evolutionIcon;
+        private Text _evolutionName;
+        private Text _evolutionDescription;
+        private Text _evolutionIngredients;
+        private Text _evolvedText;
+        private Sprite _evolutionEmblem;
         private static EventSystem _fallbackEventSystem;
 
         private sealed class Slot
@@ -43,6 +51,7 @@ namespace LAC.Cards
         {
             EnsureBuilt();
             _overlay.SetActive(true);
+            _evolutionPanel.SetActive(false);
             SetRect(_statusText.rectTransform, BottomCenter, BottomCenter,
                 new Vector2(-325f, 52f), new Vector2(380f, 48f), Center);
 
@@ -110,11 +119,26 @@ namespace LAC.Cards
         {
             EnsureBuilt();
             _overlay.SetActive(true);
+            _evolutionPanel.SetActive(false);
             foreach (Slot slot in _slots) slot.Root.SetActive(false);
             _rerollButton.interactable = false;
             SetRect(_statusText.rectTransform, Center, Center,
                 Vector2.zero, new Vector2(900f, 60f), Center);
             SetStatus("ĐANG CHỜ NGƯỜI CHƠI CÒN LẠI…");
+        }
+
+        public void ShowEvolution(CardEvolutionData recipe)
+        {
+            ShowWaiting();
+            _evolutionPanel.SetActive(true);
+            _evolutionIcon.sprite = recipe.Icon != null ? recipe.Icon : _evolutionEmblem;
+            _evolutionName.text = recipe.DisplayName;
+            _evolutionDescription.text = recipe.Description;
+            var parts = new List<string>();
+            foreach (var ingredient in recipe.Ingredients)
+                parts.Add($"{ingredient.Card.DisplayName} ×{ingredient.Stacks}");
+            _evolutionIngredients.text = string.Join("  +  ", parts);
+            SetStatus("");
         }
 
         public void Hide()
@@ -124,6 +148,7 @@ namespace LAC.Cards
             for (int i = 0; i < _slots.Length; i++)
                 _slots[i]?.Hover?.ResetPresentation();
             _overlay.SetActive(false);
+            _evolutionPanel.SetActive(false);
         }
 
         public void RefreshOwned(IReadOnlyList<CardDefinition> definitions, PlayerUpgradeState state)
@@ -132,6 +157,7 @@ namespace LAC.Cards
             if (state == null || definitions == null)
             {
                 _ownedText.text = "NÂNG CẤP: Chưa có";
+                _evolvedText.text = "";
                 return;
             }
 
@@ -145,6 +171,9 @@ namespace LAC.Cards
             }
             if (lines.Count == 1) lines.Add("Chưa có");
             _ownedText.text = string.Join("\n", lines);
+            lines.Clear();
+            foreach (var recipe in state.Evolutions) lines.Add(recipe.DisplayName);
+            _evolvedText.text = lines.Count == 0 ? "" : "TIẾN HOÁ\n" + string.Join("\n", lines);
         }
 
         private void EnsureBuilt()
@@ -169,6 +198,10 @@ namespace LAC.Cards
             SetRect(_ownedText.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f),
                 new Vector2(24f, -24f), new Vector2(320f, 340f), new Vector2(0f, 1f));
             _ownedText.raycastTarget = false;
+
+            _evolvedText = CreateText("EvolvedCards", canvasGo.transform, 20, TextAnchor.UpperRight, Hex("FBDD82"));
+            SetRect(_evolvedText.rectTransform, Vector2.one, Vector2.one,
+                new Vector2(-24f, -24f), new Vector2(340f, 270f), Vector2.one);
 
             _overlay = CreateImage("SelectionOverlay", canvasGo.transform, Hex("15130F", 0.93f)).gameObject;
             Stretch((RectTransform)_overlay.transform);
@@ -200,6 +233,30 @@ namespace LAC.Cards
                 new Vector2(0f, 28f), new Vector2(270f, 52f), BottomCenter);
             _rerollText.fontSize = 20;
             _rerollText.fontStyle = FontStyle.Bold;
+
+            _evolutionEmblem = Resources.Load<Sprite>("EvolutionEmblem");
+            _evolutionPanel = CreateImage("EvolutionPanel", _overlay.transform, Hex("15130F")).gameObject;
+            SetRect((RectTransform)_evolutionPanel.transform, Center, Center, Vector2.zero,
+                new Vector2(1080f, 710f), Center);
+            Text evolutionTitle = CreateText("EvolutionTitle", _evolutionPanel.transform, 34,
+                TextAnchor.MiddleCenter, Hex("9CCFC0"));
+            evolutionTitle.text = "TIẾN HOÁ THẺ";
+            SetRect(evolutionTitle.rectTransform, Center, Center, new Vector2(0, 282), new Vector2(950, 60), Center);
+            _evolutionIcon = CreateImage("EvolutionEmblem", _evolutionPanel.transform, Color.white);
+            _evolutionIcon.preserveAspect = true;
+            _evolutionIcon.raycastTarget = false;
+            SetRect(_evolutionIcon.rectTransform, Center, Center, new Vector2(0, 105), new Vector2(250, 250), Center);
+            _evolutionName = CreateText("EvolutionName", _evolutionPanel.transform, 38,
+                TextAnchor.MiddleCenter, Hex("FBDD82"));
+            _evolutionName.fontStyle = FontStyle.Bold;
+            SetRect(_evolutionName.rectTransform, Center, Center, new Vector2(0, -65), new Vector2(950, 64), Center);
+            _evolutionIngredients = CreateText("EvolutionIngredients", _evolutionPanel.transform, 23,
+                TextAnchor.MiddleCenter, Hex("9CCFC0"));
+            SetRect(_evolutionIngredients.rectTransform, Center, Center, new Vector2(0, -133), new Vector2(950, 66), Center);
+            _evolutionDescription = CreateText("EvolutionDescription", _evolutionPanel.transform, 24,
+                TextAnchor.MiddleCenter, Hex("F4EADA"));
+            SetRect(_evolutionDescription.rectTransform, Center, Center, new Vector2(0, -215), new Vector2(900, 95), Center);
+            _evolutionPanel.SetActive(false);
 
             _overlay.SetActive(false);
             RefreshOwned(null, null);

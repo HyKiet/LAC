@@ -55,7 +55,7 @@ namespace LAC.Cards
         public float ExplosionDamageRatio => _explosionDamageRatio;
         public bool Supports(WeaponShape shape) => !_requiresProjectile || shape == WeaponShape.Line;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         public void EditorConfigureEffects(float damage = 0f, float attackSpeed = 0f,
             float health = 0f, float dash = 0f, float move = 0f, float range = 0f,
             float protection = 0f, int waveHeal = 0, bool projectileOnly = false,
