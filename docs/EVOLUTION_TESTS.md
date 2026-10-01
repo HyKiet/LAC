@@ -34,7 +34,8 @@ Một nguyên liệu có thể dùng cho nhiều công thức; các tiến hoá 
    chuyền: nguyên liệu chỉ là thẻ nền. Công thức duyệt theo ID ordinal ổn định.
 6. Danh mục sai (ID trùng, nguyên liệu không tồn tại/vượt cấp, bonus nằm trong bể
    nền) bị từ chối toàn bộ và ghi lỗi Console; không chọn bản đầu tuỳ thứ tự tải.
-7. Có thể gán icon riêng; nếu chưa có, dùng huy hiệu Đông Sơn chung.
+7. Cả 8 recipe đã gán icon riêng theo [CARD_ART.md](CARD_ART.md); huy hiệu Đông Sơn
+   chung chỉ còn là fallback nếu một recipe mới chưa có ảnh.
 
 Host chỉ kiểm tra sau khi chấp nhận thẻ. Client dựng cùng kết quả từ lịch sử
 định danh thẻ đã được host duyệt, không tự gửi yêu cầu tiến hoá. TargetRpc gửi

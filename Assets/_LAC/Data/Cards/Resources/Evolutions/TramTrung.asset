@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: TramTrung
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
   _id: TramTrung
-  _displayName: "Tr\u0103m Tr\u1ee9ng"
-  _description: "B\u1eafn 4 \u0111\u1ea1n trong g\u00f3c 14\u00b0. M\u1ed7i \u0111\u1ea1n c\u00f2n 52,5% s\u00e1t th\u01b0\u01a1ng."
-  _icon: {fileID: 0}
+  _displayName: "Tr\u0103m Tr\u1EE9ng"
+  _description: "B\u1EAFn 4 \u0111\u1EA1n trong g\xF3c 14\xB0. M\u1ED7i \u0111\u1EA1n
+    c\xF2n 52,5% s\xE1t th\u01B0\u01A1ng."
+  _icon: {fileID: 21300000, guid: 751e6cede3a3c884e92c4da6b5005bf8, type: 3}
   _ingredients:
   - _card: {fileID: 11400000, guid: ffa29188ff2c3ad458f1c60aa4285d73, type: 2}
     _stacks: 1

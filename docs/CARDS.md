@@ -30,8 +30,8 @@ ngày 24/09/2026, phạm vi hiện hành là **12 thẻ nền + 8 thẻ tiến h
   `CharacterData` hoặc asset `CardDefinition`.
 - Qua mạng chỉ đồng bộ định danh/lựa chọn thẻ; host giữ thẩm quyền với thay đổi gameplay,
   còn mỗi máy tự áp dụng phần biểu diễn.
-- Bộ 7 thẻ demo hiện dùng ảnh AI đồng nhất để kiểm chứng bố cục và tương tác. Đây là
-  **mỹ thuật tạm**. Năm thẻ mới dùng ký hiệu chữ; bộ 20 icon chính thức thuộc T-33.
+- Toàn bộ 12 thẻ nền và 8 tiến hoá dùng bộ ảnh AI đồng nhất đồng cổ–ngọc xanh.
+  Nguồn ảnh, prompt và cách nhập lại được lưu tại [CARD_ART.md](CARD_ART.md).
 
 ## 3. Giao diện và phản hồi tương tác hiện hành
 
@@ -39,17 +39,21 @@ Hướng mỹ thuật của bản demo lấy cảm hứng từ màn chọn nâng
 khung kim loại vàng, hoạ tiết xanh lam-ngọc và icon lớn ở nửa trên thẻ. Chỉ lấy cảm
 hứng về nhịp thị giác, không sao chép asset hoặc bố cục của Liên Minh Huyền Thoại.
 
-### 3.1. Bộ icon demo
+### 3.1. Bộ icon đồng nhất
 
-- Có 7 ảnh vuông 512×512 tương ứng với 7 `CardDefinition`, đặt tại
-  `Assets/_LAC/Art/Sprites/UI/Cards/AI_Demo/`.
-- Các ảnh dùng chung ngôn ngữ mỹ thuật: nền xanh đen, vật thể vàng, dòng năng lượng
-  xanh ngọc và độ tương phản phù hợp pixel-art UI.
+- Có 20 ảnh riêng tại `Assets/_LAC/Art/Sprites/UI/Cards/DongHo_2026/`;
+  12 ảnh gắn vào `CardDefinition`, 8 ảnh gắn vào recipe và bonus tương ứng.
+- Cùng nền than tối, đồng vàng, ngọc xanh, hoạ tiết mặt trời/chim Lạc và ánh sáng
+  góc trên trái. Mỗi biểu tượng diễn giải một công dụng khác nhau.
 - Texture được import dạng `Sprite/Single`, không mipmap, kích thước tối đa 512,
-  `Bilinear` và `CompressedHQ`.
+  `Point`, không nén, Full Rect. Bản PNG sinh gốc được giữ nguyên trong dự án.
+- `LAC/Art/Apply Unified Card Icons` gán lại toàn bộ ảnh;
+  `LAC/Art/Validate Unified Card Icons` kiểm tra đủ 20 ảnh và đúng ánh xạ.
+- Bộ 7 ảnh cũ trong `AI_Demo/` được giữ để tham khảo, không còn được thẻ dùng.
 - `CardDemoAssetGenerator` chỉ tự bổ sung asset/icon còn thiếu sau reload script;
   không tự ghi đè chỉ số hoặc nội dung của `CardDefinition` đang tồn tại. Menu
-  `LAC/Demo/Rebuild Card Demo Assets` mới chủ động dựng lại và chạy validation.
+  `LAC/Demo/Rebuild Card Demo Assets` mới chủ động dựng lại và chạy validation;
+  khi gán ảnh, ưu tiên bộ mới nếu có.
 
 ### 3.2. Màu và trạng thái thẻ
 
@@ -241,4 +245,6 @@ mục 7. Mô tả phải nêu rõ giá trị, cách cộng dồn và mọi bất
 | Hover/nhịp đập/animation chọn | `Assets/_LAC/Scripts/Cards/CardHoverVisual.cs` |
 | Asset | `Assets/_LAC/Data/Cards/Resources/Cards/` |
 | Icon demo AI | `Assets/_LAC/Art/Sprites/UI/Cards/AI_Demo/` |
+| 20 icon đang dùng | `Assets/_LAC/Art/Sprites/UI/Cards/DongHo_2026/` |
+| Prompt và kiểm chứng ảnh | `docs/CARD_ART.md` |
 | Prefab | `Assets/_LAC/Prefabs/UI/Cards/Resources/CardSelection.prefab` |

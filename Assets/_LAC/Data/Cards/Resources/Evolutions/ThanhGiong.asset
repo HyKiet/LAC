@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: ThanhGiong
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
   _id: ThanhGiong
-  _displayName: "Th\u00e1nh Gi\u00f3ng"
-  _description: "+40% s\u00e1t th\u01b0\u01a1ng g\u1ed1c; +15% th\u1eddi gian b\u1ea3o v\u1ec7 sau tr\u00fang \u0111\u00f2n."
-  _icon: {fileID: 0}
+  _displayName: "Th\xE1nh Gi\xF3ng"
+  _description: "+40% s\xE1t th\u01B0\u01A1ng g\u1ED1c; +15% th\u1EDDi gian b\u1EA3o
+    v\u1EC7 sau tr\xFAng \u0111\xF2n."
+  _icon: {fileID: 21300000, guid: ce6376ef3903ffb4f89dc6d681d8fa2a, type: 3}
   _ingredients:
   - _card: {fileID: 11400000, guid: aa34e65481a95fa4d93452dcd127cb60, type: 2}
     _stacks: 3

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BatTu
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
   _id: BatTu
-  _displayName: "B\u1ea5t T\u1eed"
-  _description: "+20% m\u00e1u g\u1ed1c; h\u1ed3i th\u00eam 1 m\u00e1u \u0111\u1ea7u \u0111\u1ee3t. Kh\u00f4ng h\u1ed3i sinh."
-  _icon: {fileID: 0}
+  _displayName: "B\u1EA5t T\u1EED"
+  _description: "+20% m\xE1u g\u1ED1c; h\u1ED3i th\xEAm 1 m\xE1u \u0111\u1EA7u \u0111\u1EE3t.
+    Kh\xF4ng h\u1ED3i sinh."
+  _icon: {fileID: 21300000, guid: a5187ff75d4271741a5db4cad0fb1ade, type: 3}
   _ingredients:
   - _card: {fileID: 11400000, guid: ec4c111116df20d41896e1a6b8619b3d, type: 2}
     _stacks: 3

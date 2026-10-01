@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: LuaThienBonus
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
   _id: 0
-  _displayName: "L\u1eeda Thi\u00eang"
-  _description: "N\u1ed5 r\u1ed9ng 2,5 \u0111\u01a1n v\u1ecb, g\u00e2y 60% s\u00e1t th\u01b0\u01a1ng \u0111\u1ea1n l\u00ean \u0111\u1ecbch kh\u00e1c."
-  _icon: {fileID: 0}
+  _displayName: "L\u1EEDa Thi\xEAng"
+  _description: "N\u1ED5 r\u1ED9ng 2,5 \u0111\u01A1n v\u1ECB, g\xE2y 60% s\xE1t th\u01B0\u01A1ng
+    \u0111\u1EA1n l\xEAn \u0111\u1ECBch kh\xE1c."
+  _icon: {fileID: 21300000, guid: e07438ebd913140478d384499ba642be, type: 3}
   _maxStacks: 1
   _weight: 1
   _accent: {r: 0.984, g: 0.867, b: 0.51, a: 1}

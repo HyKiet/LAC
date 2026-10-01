@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: NoThanBonus
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
   _id: 0
-  _displayName: "N\u1ecf Th\u1ea7n"
-  _description: "\u0110\u1ea1n xuy\u00ean th\u00eam 2 \u0111\u1ecbch; +20% t\u1ea7m \u0111\u00e1nh g\u1ed1c."
-  _icon: {fileID: 0}
+  _displayName: "N\u1ECF Th\u1EA7n"
+  _description: "\u0110\u1EA1n xuy\xEAn th\xEAm 2 \u0111\u1ECBch; +20% t\u1EA7m \u0111\xE1nh
+    g\u1ED1c."
+  _icon: {fileID: 21300000, guid: 60ec6df572f0ebc469cf66b422f00e7a, type: 3}
   _maxStacks: 1
   _weight: 1
   _accent: {r: 0.984, g: 0.867, b: 0.51, a: 1}

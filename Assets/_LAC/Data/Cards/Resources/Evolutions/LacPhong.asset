@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: LacPhong
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
   _id: LacPhong
-  _displayName: "L\u1ea1c Phong"
-  _description: "Gi\u1ea3m th\u00eam 15% h\u1ed3i l\u01b0\u1edbt g\u1ed1c; +12% t\u1ed1c \u0111\u1ed9 di chuy\u1ec3n g\u1ed1c."
-  _icon: {fileID: 0}
+  _displayName: "L\u1EA1c Phong"
+  _description: "Gi\u1EA3m th\xEAm 15% h\u1ED3i l\u01B0\u1EDBt g\u1ED1c; +12% t\u1ED1c
+    \u0111\u1ED9 di chuy\u1EC3n g\u1ED1c."
+  _icon: {fileID: 21300000, guid: af57749e4a2c34147a436997ef68daec, type: 3}
   _ingredients:
   - _card: {fileID: 11400000, guid: 004ae78d930705f4bbd35386272b0978, type: 2}
     _stacks: 1

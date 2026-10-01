@@ -16,7 +16,7 @@ MonoBehaviour:
   _displayName: "C\u01B0\u1EDDng C\xF4ng"
   _description: "C\u1ED9ng 20% s\xE1t th\u01B0\u01A1ng c\u01A1 b\u1EA3n. C\u1ED9ng
     theo ch\u1EC9 s\u1ED1 g\u1ED1c."
-  _icon: {fileID: 21300000, guid: b41985cfdd8f7444bb962f56fbcd5913, type: 3}
+  _icon: {fileID: 21300000, guid: bfc39865660bf83448d7e9a763a4fe38, type: 3}
   _maxStacks: 3
   _weight: 1
   _accent: {r: 0.92941177, g: 0.73333335, b: 0.24313726, a: 1}

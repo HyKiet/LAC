@@ -16,7 +16,7 @@ MonoBehaviour:
   _displayName: "Cu\u1ED3ng N\u1ED9"
   _description: "+25% s\xE1t th\u01B0\u01A1ng g\u1ED1c nh\u01B0ng \u221210% t\u1ED1c
     \u0111\u1ED9 \u0111\xE1nh g\u1ED1c m\u1ED7i c\u1EA5p."
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 27499bc5f5e914c4498c80554a3ae198, type: 3}
   _maxStacks: 2
   _weight: 0.75
   _accent: {r: 0.92941177, g: 0.73333335, b: 0.24313726, a: 1}

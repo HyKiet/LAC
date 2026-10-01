@@ -141,6 +141,9 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-31** Sóng âm riêng cho từng nhạc cụ — **@Kiet**
 - [ ] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**
 - [ ] **T-33** Sprite Gióng, Tấm, 20 icon thẻ (12 nền + 8 tiến hoá) — **@artist**
+  > Phần icon đã hoàn tất ở T-33A bên dưới; T-33 còn sprite Gióng và Tấm.
+- [x] **T-33A** Bộ 20 icon thẻ đồng nhất, gán vào dữ liệu và kiểm tra trong Unity — 01/10/2026
+  > `Art/Sprites/UI/Cards/DongHo_2026/` có 12 ảnh nền + 8 ảnh tiến hoá tạo bằng imagegen, cùng chất liệu đồng cổ–ngọc xanh và ánh sáng góc trên trái. `Cards/Editor/CardArtSetup.cs` nhập Sprite/Single, Point, không mipmap và kiểm tra ánh xạ; 8 bonus dùng ảnh recipe tương ứng. Đã chạy Mirror host trong Play mode, nhìn ảnh cả bộ/màn chọn thẻ/thông báo tiến hoá, kiểm tra 8/8 panel dùng đúng icon, Console cuối lượt có 0 lỗi đỏ. Prompt và bằng chứng: `docs/CARD_ART.md`. Ảnh demo cũ được giữ nguyên.
 
 ---
 

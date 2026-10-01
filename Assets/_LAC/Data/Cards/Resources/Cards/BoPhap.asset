@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: 3
   _displayName: "B\u1ED9 Ph\xE1p"
   _description: "Gi\u1EA3m 20% th\u1EDDi gian h\u1ED3i l\u01B0\u1EDBt."
-  _icon: {fileID: 21300000, guid: 22324ab03149e954980f052c25c3062a, type: 3}
+  _icon: {fileID: 21300000, guid: 89d3b2e920d753b4fb4780a70677ff1f, type: 3}
   _maxStacks: 1
   _weight: 1
   _accent: {r: 0.6117647, g: 0.8117647, b: 0.7529412, a: 1}

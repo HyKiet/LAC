@@ -101,7 +101,8 @@ namespace LAC.Cards.Editor
             if (overwrite || icon.objectReferenceValue == null)
             {
                 icon.objectReferenceValue =
-                    AssetDatabase.LoadAssetAtPath<Sprite>($"{IconFolder}/CardIcon_{fileName}.png");
+                    AssetDatabase.LoadAssetAtPath<Sprite>(CardArtSetup.PathFor(fileName))
+                    ?? AssetDatabase.LoadAssetAtPath<Sprite>($"{IconFolder}/CardIcon_{fileName}.png");
                 serialized.ApplyModifiedPropertiesWithoutUndo();
                 EditorUtility.SetDirty(card);
             }
