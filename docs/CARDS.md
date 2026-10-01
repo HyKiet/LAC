@@ -70,10 +70,12 @@ thẻ mới.
 
 ### 3.3. Chuyển động
 
-- Mỗi thẻ có nhịp đập kép với pha lệch nhau, gồm thay đổi nhẹ kích thước, độ cao và
-  độ sáng khung. Animation dùng `Time.unscaledTime`/`Time.unscaledDeltaTime`, vì lúc
-  chọn thẻ gameplay đang có `Time.timeScale = 0`.
-- Thẻ đang hover vẫn tiếp tục nhịp đập, đồng thời nhấc lên và phóng lớn nhẹ.
+- Thẻ giữ nguyên vị trí, kích thước và góc xoay lúc nghỉ/hover; đã bỏ nhịp thở.
+- Khung đồng vát góc được vẽ bằng UI mesh trong `CardFrameGraphic`: hai đường viền,
+  nét sáng/tối, thanh góc và họa tiết hình thoi, cùng bảng màu vàng–ngọc của icon.
+- Vệt sáng mảnh chỉ chạy trên viền trong 0,72 giây, cách nhau khoảng 5,2 giây;
+  các thẻ bắt đầu lệch pha. Hover/nhấn cũng kích hoạt vệt sáng; ảnh và chữ giữ nguyên.
+- Hiệu ứng dùng `Time.unscaledDeltaTime`, tiếp tục khi chọn thẻ tạm dừng gameplay.
 - Khi chọn: thẻ xoay đủ một vòng tại chỗ trong 0,38 giây; chỉ sau đó mới bắt đầu bay
   ở mốc 0,42 giây về toạ độ màn hình của player, đồng thời thu nhỏ và mờ dần.
 - Tổng thời lượng phản hồi là 1,05 giây. Sau animation, client xác nhận với host và
@@ -242,7 +244,8 @@ mục 7. Mô tả phải nêu rõ giá trị, cách cộng dồn và mọi bất
 | Điều phối mạng trên host | `Assets/_LAC/Scripts/Cards/CardSelectionNetwork.cs` |
 | Cấu hình lượt chọn | `Assets/_LAC/Data/Cards/Resources/CardSelectionRules.asset` |
 | Giao diện | `Assets/_LAC/Scripts/Cards/CardSelectionView.cs` |
-| Hover/nhịp đập/animation chọn | `Assets/_LAC/Scripts/Cards/CardHoverVisual.cs` |
+| Hover/animation chọn | `Assets/_LAC/Scripts/Cards/CardHoverVisual.cs` |
+| Khung đồng và lóe sáng viền | `Assets/_LAC/Scripts/Cards/CardFrameGraphic.cs` |
 | Asset | `Assets/_LAC/Data/Cards/Resources/Cards/` |
 | Icon demo AI | `Assets/_LAC/Art/Sprites/UI/Cards/AI_Demo/` |
 | 20 icon đang dùng | `Assets/_LAC/Art/Sprites/UI/Cards/DongHo_2026/` |

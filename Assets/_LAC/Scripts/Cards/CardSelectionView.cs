@@ -39,6 +39,9 @@ namespace LAC.Cards
         private Button _rerollButton;
         private Text _ownedText;
         private Text _statusText;
+        private Text _title;
+        private Text _subtitle;
+        private Text _selectionHint;
         private bool _built;
 
         private void Awake()
@@ -52,8 +55,12 @@ namespace LAC.Cards
             EnsureBuilt();
             _overlay.SetActive(true);
             _evolutionPanel.SetActive(false);
+            _title.text = "CHỌN NÂNG CẤP";
+            _subtitle.text = "Chọn một thẻ để tăng sức mạnh";
+            _rerollButton.gameObject.SetActive(true);
+            _selectionHint.gameObject.SetActive(true);
             SetRect(_statusText.rectTransform, BottomCenter, BottomCenter,
-                new Vector2(-325f, 52f), new Vector2(380f, 48f), Center);
+                new Vector2(-310f, 77f), new Vector2(520f, 48f), Center);
 
             for (int i = 0; i < _slots.Length; i++)
             {
@@ -122,6 +129,10 @@ namespace LAC.Cards
             _evolutionPanel.SetActive(false);
             foreach (Slot slot in _slots) slot.Root.SetActive(false);
             _rerollButton.interactable = false;
+            _rerollButton.gameObject.SetActive(false);
+            _selectionHint.gameObject.SetActive(false);
+            _title.text = "ĐANG CHỜ ĐỒNG ĐỘI";
+            _subtitle.text = "Đợt mới bắt đầu khi mọi người chọn xong";
             SetRect(_statusText.rectTransform, Center, Center,
                 Vector2.zero, new Vector2(900f, 60f), Center);
             SetStatus("ĐANG CHỜ NGƯỜI CHƠI CÒN LẠI…");
@@ -206,38 +217,64 @@ namespace LAC.Cards
             _overlay = CreateImage("SelectionOverlay", canvasGo.transform, Hex("15130F", 0.93f)).gameObject;
             Stretch((RectTransform)_overlay.transform);
 
-            Image panelGlow = CreateImage("PanelGlow", _overlay.transform, Hex("C08D20", 0.30f));
-            SetRect(panelGlow.rectTransform, Center, Center, Vector2.zero,
-                new Vector2(1090f, 720f), Center);
-            Image panel = CreateImage("Panel", panelGlow.transform, Hex("15130F"));
-            Inset(panel.rectTransform, 3f);
+            Image panelShadow = CreateImage("PanelShadow", _overlay.transform, Hex("15130F", 0.65f));
+            SetRect(panelShadow.rectTransform, Center, Center, new Vector2(0f, -12f),
+                new Vector2(1400f, 892f), Center);
+            Image panel = CreateImage("Panel", _overlay.transform, Hex("15130F"));
+            SetRect(panel.rectTransform, Center, Center, Vector2.zero,
+                new Vector2(1360f, 860f), Center);
+            Image panelInset = CreateImage("PanelInset", panel.transform, Hex("2B2724", 0.30f));
+            Inset(panelInset.rectTransform, 22f);
+            panelInset.raycastTarget = false;
+            CardFrameGraphic panelFrame = CreateFrame("PanelFrame", panel.transform, false, 0f);
+            Stretch(panelFrame.rectTransform);
+            panelFrame.color = new Color(1f, 1f, 1f, 0.65f);
 
-            Image titleRule = CreateImage("TitleRule", panel.transform, Hex("C08D20", 0.75f));
+            Image titleRule = CreateImage("TitleRule", panel.transform, Hex("C08D20", 0.38f));
             SetRect(titleRule.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -92f), new Vector2(880f, 2f), Center);
-            Text title = CreateText("Title", panel.transform, 39, TextAnchor.MiddleCenter, Hex("FBDD82"));
+                new Vector2(0f, -146f), new Vector2(1190f, 2f), Center);
+            Text title = CreateText("Title", panel.transform, 44, TextAnchor.MiddleCenter, Hex("FBDD82"));
+            _title = title;
             title.text = "CHỌN NÂNG CẤP";
             title.fontStyle = FontStyle.Bold;
             SetRect(title.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -48f), new Vector2(900f, 62f), Center);
+                new Vector2(0f, -66f), new Vector2(1000f, 64f), Center);
+            Text subtitle = CreateText("Subtitle", panel.transform, 23, TextAnchor.MiddleCenter, Hex("BFA981"));
+            _subtitle = subtitle;
+            subtitle.text = "Chọn một thẻ để tăng sức mạnh";
+            SetRect(subtitle.rectTransform, TopCenter, TopCenter,
+                new Vector2(0f, -111f), new Vector2(1000f, 36f), Center);
 
-            _statusText = CreateText("SelectionStatus", panel.transform, 20, TextAnchor.MiddleCenter, Hex("9CCFC0"));
+            _statusText = CreateText("SelectionStatus", panel.transform, 23, TextAnchor.MiddleCenter, Hex("9CCFC0"));
             SetRect(_statusText.rectTransform, BottomCenter, BottomCenter,
-                new Vector2(-325f, 52f), new Vector2(380f, 48f), Center);
+                new Vector2(-310f, 77f), new Vector2(520f, 48f), Center);
 
-            float[] x = { -330f, 0f, 330f };
-            for (int i = 0; i < _slots.Length; i++) _slots[i] = CreateSlot(panel.transform, x[i]);
+            float[] x = { -390f, 0f, 390f };
+            for (int i = 0; i < _slots.Length; i++) _slots[i] = CreateSlot(panel.transform, x[i], i);
+
+            Image footerRule = CreateImage("PanelFooterRule", panel.transform, Hex("C08D20", 0.30f));
+            SetRect(footerRule.rectTransform, BottomCenter, BottomCenter,
+                new Vector2(0f, 122f), new Vector2(1190f, 1f), Center);
 
             _rerollButton = CreateButton("Reroll", panel.transform, out _rerollText);
             SetRect((RectTransform)_rerollButton.transform, BottomCenter, BottomCenter,
-                new Vector2(0f, 28f), new Vector2(270f, 52f), BottomCenter);
-            _rerollText.fontSize = 20;
+                new Vector2(310f, 77f), new Vector2(330f, 58f), Center);
+            _rerollText.fontSize = 23;
             _rerollText.fontStyle = FontStyle.Bold;
+            CardFrameGraphic rerollFrame = CreateFrame("RerollFrame", _rerollButton.transform, false, 0f);
+            Stretch(rerollFrame.rectTransform);
+            Text hint = CreateText("SelectionHint", panel.transform, 18, TextAnchor.MiddleCenter, Hex("94805C"));
+            _selectionHint = hint;
+            hint.text = "Chọn 1 trong 3  •  Tối đa 2 lượt đổi mỗi ván";
+            SetRect(hint.rectTransform, BottomCenter, BottomCenter,
+                new Vector2(0f, 29f), new Vector2(1050f, 30f), Center);
 
             _evolutionEmblem = Resources.Load<Sprite>("EvolutionEmblem");
             _evolutionPanel = CreateImage("EvolutionPanel", _overlay.transform, Hex("15130F")).gameObject;
             SetRect((RectTransform)_evolutionPanel.transform, Center, Center, Vector2.zero,
-                new Vector2(1080f, 710f), Center);
+                new Vector2(1340f, 840f), Center);
+            CardFrameGraphic evolutionFrame = CreateFrame("EvolutionFrame", _evolutionPanel.transform, false, 0f);
+            Stretch(evolutionFrame.rectTransform);
             Text evolutionTitle = CreateText("EvolutionTitle", _evolutionPanel.transform, 34,
                 TextAnchor.MiddleCenter, Hex("9CCFC0"));
             evolutionTitle.text = "TIẾN HOÁ THẺ";
@@ -262,56 +299,62 @@ namespace LAC.Cards
             RefreshOwned(null, null);
         }
 
-        private Slot CreateSlot(Transform parent, float x)
+        private Slot CreateSlot(Transform parent, float x, int index)
         {
-            Image glow = CreateImage("CardGlow", parent, Hex("C08D20", 0.16f));
-            Button button = glow.gameObject.AddComponent<Button>();
+            Image shadow = CreateImage("CardShadow", parent, Hex("15130F", 0.75f));
+            SetRect(shadow.rectTransform, Center, Center,
+                new Vector2(x + 7f, -23f), new Vector2(346f, 562f), Center);
+            shadow.raycastTarget = false;
+            Image root = CreateImage("Card", parent, Color.clear);
+            Button button = root.gameObject.AddComponent<Button>();
             button.transition = Selectable.Transition.None;
             SetRect((RectTransform)button.transform, Center, Center,
-                new Vector2(x, 6f), new Vector2(300f, 486f), Center);
+                new Vector2(x, -15f), new Vector2(340f, 560f), Center);
+            shadow.transform.SetParent(button.transform, false);
+            SetRect(shadow.rectTransform, Center, Center,
+                new Vector2(7f, -8f), new Vector2(346f, 562f), Center);
 
-            Image border = CreateImage("BronzeBorder", button.transform, Hex("C08D20", 0.74f));
-            Inset(border.rectTransform, 5f);
-            Image surface = CreateImage("CardSurface", border.transform, Hex("15130F"));
-            Inset(surface.rectTransform, 4f);
+            Image surface = CreateImage("CardSurface", button.transform, Hex("15130F"));
+            Inset(surface.rectTransform, 16f);
 
-            Image artWell = CreateImage("ArtWell", surface.transform, Hex("112E3E"));
+            Image artWell = CreateImage("ArtWell", surface.transform, Hex("15130F"));
             SetRect(artWell.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -18f), new Vector2(260f, 230f), TopCenter);
-            Image artLine = CreateImage("ArtLine", artWell.transform, Hex("4FA694", 0.48f));
+                new Vector2(0f, -22f), new Vector2(280f, 252f), TopCenter);
+            Image artLine = CreateImage("ArtLine", artWell.transform, Hex("C08D20", 0.48f));
             SetRect(artLine.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f),
-                Vector2.zero, new Vector2(0f, 3f), new Vector2(0.5f, 0f));
+                Vector2.zero, new Vector2(0f, 2f), new Vector2(0.5f, 0f));
 
             Image icon = CreateImage("Icon", artWell.transform, Color.white);
             SetRect(icon.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -4f), new Vector2(220f, 220f), TopCenter);
+                new Vector2(0f, -4f), new Vector2(244f, 244f), TopCenter);
             icon.preserveAspect = true;
             icon.raycastTarget = false;
 
             Text placeholder = CreateText("Placeholder", icon.transform, 54, TextAnchor.MiddleCenter, Color.white);
             Stretch(placeholder.rectTransform);
 
-            Image namePlate = CreateImage("NamePlate", surface.transform, Hex("2B2724"));
+            Image namePlate = CreateImage("NamePlate", surface.transform, Hex("2B2724", 0.75f));
             SetRect(namePlate.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -256f), new Vector2(260f, 58f), TopCenter);
-            Text name = CreateText("Name", namePlate.transform, 28, TextAnchor.MiddleCenter, Hex("FBDD82"));
+                new Vector2(0f, -289f), new Vector2(280f, 58f), TopCenter);
+            Text name = CreateText("Name", namePlate.transform, 30, TextAnchor.MiddleCenter, Hex("FBDD82"));
             name.fontStyle = FontStyle.Bold;
             Stretch(name.rectTransform);
 
-            Text description = CreateText("Description", surface.transform, 19, TextAnchor.UpperCenter, Hex("F4EADA"));
+            Text description = CreateText("Description", surface.transform, 22, TextAnchor.UpperCenter, Hex("F4EADA"));
             SetRect(description.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -326f), new Vector2(244f, 104f), TopCenter);
+                new Vector2(0f, -361f), new Vector2(274f, 110f), TopCenter);
 
             Image footerRule = CreateImage("FooterRule", surface.transform, Hex("C08D20", 0.38f));
             SetRect(footerRule.rectTransform, BottomCenter, BottomCenter,
-                new Vector2(0f, 46f), new Vector2(226f, 1f), BottomCenter);
-            Text stacks = CreateText("Stacks", surface.transform, 16, TextAnchor.MiddleCenter, Hex("BFA981"));
+                new Vector2(0f, 47f), new Vector2(254f, 1f), BottomCenter);
+            Text stacks = CreateText("Stacks", surface.transform, 18, TextAnchor.MiddleCenter, Hex("BFA981"));
             SetRect(stacks.rectTransform, BottomCenter, BottomCenter,
-                new Vector2(0f, 22f), new Vector2(240f, 32f), BottomCenter);
+                new Vector2(0f, 16f), new Vector2(272f, 32f), BottomCenter);
 
+            CardFrameGraphic frame = CreateFrame("BronzeFrame", button.transform, true, 1.2f + index * 1.1f);
+            Stretch(frame.rectTransform);
             CardHoverVisual hover = button.gameObject.AddComponent<CardHoverVisual>();
-            hover.Configure(glow, border, surface, new[] { artLine, footerRule },
-                x / 990f, SetHighlightedSlot);
+            hover.Configure(frame, surface, new[] { artLine, footerRule }, SetHighlightedSlot);
             return new Slot
             {
                 Root = button.gameObject,
@@ -350,6 +393,15 @@ namespace LAC.Cards
             Image image = go.GetComponent<Image>();
             image.color = color;
             return image;
+        }
+
+        private static CardFrameGraphic CreateFrame(string name, Transform parent, bool glint, float delay)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(CardFrameGraphic));
+            go.transform.SetParent(parent, false);
+            var frame = go.GetComponent<CardFrameGraphic>();
+            frame.Configure(glint, delay);
+            return frame;
         }
 
         private Text CreateText(string name, Transform parent, int size, TextAnchor alignment, Color color)

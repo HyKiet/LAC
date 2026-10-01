@@ -120,6 +120,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-22** Giao diện chọn 1 trong 3 thẻ — 10 giây, 2 lượt đổi thẻ — **@Kang** · 24/09
   > Đồng hồ theo host, tự chọn khi hết 10 giây, 2 lượt đổi mỗi ván, khóa nhấp đôi và giao diện chờ đồng đội. `Cards/CardSelectionController.cs` · `CardSelectionView.cs` · `CardSelectionRulesData.cs`. Đã kiểm tra Play Mode và Game View.
   > Dựng thành prefab trong `Prefabs/UI/Cards`, sinh lúc chạy. Không đặt sẵn vào `Arena.unity`.
+- [x] **T-22B** Làm lại khung và khu vực chọn thẻ, bỏ nhịp thở, thêm lóe sáng nhẹ — 01/10/2026
+  > `Cards/CardFrameGraphic.cs` vẽ khung đồng vát góc/viền kép, lóe sáng chỉ trên viền; `CardHoverVisual.cs` giữ thẻ đứng yên khi nghỉ/hover; `CardSelectionView.cs` nới bố cục, tăng chữ, tách chân bảng và dọn màn chờ. Đạt hồi quy host 12/12 thẻ, đo chữ không tràn, kiểm tra transform cố định/timer chạy ở timeScale=0, đã nhìn ảnh Game View và Console cuối lượt 0 lỗi. Chi tiết: `docs/CARD_FRAME_UI.md`.
 - [x] **T-23** Đồng bộ chọn thẻ: đợt kế chỉ khởi động khi cả hai người đã chọn xong — **@Kang** · 24/09
   > Host thẩm định đề nghị/lượt đổi/lựa chọn theo kết nối, đồng bộ lịch sử định danh, chờ ACK animation, bỏ người rời mạng khỏi điều kiện chờ. `Cards/CardSelectionNetwork.cs` (partial `RunManager`) · `Core/WaveManager.cs`. Hai tiến trình với LatencySimulation đã đạt toàn bộ kiểm tra; xem `docs/CARD_TESTS.md`.
 - [x] **T-24** Biên soạn và cân bằng 12 thẻ nền — **@Kang** · 24/09
