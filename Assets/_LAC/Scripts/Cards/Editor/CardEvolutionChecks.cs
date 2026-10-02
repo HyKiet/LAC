@@ -44,11 +44,11 @@ namespace LAC.Cards.Editor
                 state.Apply(power, null);
                 Require(state.Evolutions.Count == 0, "Tiến hoá khi thiếu nguyên liệu.");
                 state.Apply(speed, null);
-                Require(state.Evolutions.Count == 2 && Mathf.Approximately(state.DamageMultiplier, 1.3f)
+                Require(state.Evolutions.Count == 2 && Mathf.Approximately(state.DamageMultiplier, 1.4f)
                     && Mathf.Approximately(state.AttackRangeMultiplier, 1.1f), "Không áp hai phần thưởng độc lập.");
                 Require(replay.Evolutions.Count == 0, "Tiến hoá bị dùng chung giữa người chơi.");
                 state.Apply(power, null);
-                Require(state.Evolutions.Count == 2 && Mathf.Approximately(state.DamageMultiplier, 1.5f), "Áp phần thưởng lần hai.");
+                Require(state.Evolutions.Count == 2 && Mathf.Approximately(state.DamageMultiplier, 1.55f), "Áp phần thưởng lần hai.");
                 for (int i = 0; i < 3; i++)
                 {
                     replay.ResetRun(); replay.Apply(power, null); replay.Apply(speed, null); replay.Apply(power, null);
@@ -120,7 +120,7 @@ namespace LAC.Cards.Editor
                 // Cho client ghi chữ ký sau khi nhận trạng thái đợt mới, trước khi test reset ván.
                 await Task.Delay(600);
                 foreach (var player in PlayerRegistry.All)
-                    Require(player.Upgrades.Evolutions.Count == 2 && Mathf.Approximately(player.Upgrades.DamageMultiplier, 1.3f),
+                    Require(player.Upgrades.Evolutions.Count == 2 && Mathf.Approximately(player.Upgrades.DamageMultiplier, 1.4f),
                         "Sai tiến hoá của người chơi.");
                 Require(Time.timeScale == 1f && !CardSelectionController.CombatInputLocked, "Kẹt input/pause.");
                 run.ReportPlayerDown(); run.ReportPlayerDown(); await Task.Delay(150); run.RestartRun(); await Task.Delay(300);

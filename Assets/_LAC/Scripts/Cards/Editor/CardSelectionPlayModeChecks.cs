@@ -209,16 +209,24 @@ namespace LAC.Cards.Editor
         {
             switch (card.Id)
             {
+                case CardId.CuongCong:
+                    Require(Mathf.Approximately(player.Upgrades.DamageFromBase(player.Data.BaseDamage, false),
+                        player.Data.BaseDamage * 1.3f), "Cường Công cấp đầu chưa tăng 30% sát thương thật.");
+                    break;
+                case CardId.LienKich:
+                    Require(Mathf.Approximately(player.Upgrades.AttackIntervalFromBase(player.Data.AttackInterval),
+                        player.Data.AttackInterval / 1.225f), "Liên Kích cấp đầu chưa tăng 22,5% tốc độ đánh.");
+                    break;
                 case CardId.SinhLuc:
                     Require(health.MaxHealth == player.Data.MaxHealth + Mathf.CeilToInt(player.Data.MaxHealth * .2f), "Sinh Lực sai mức máu.");
                     break;
                 case CardId.KhinhThan:
                     float speed = (float)typeof(PlayerMovement).GetProperty("MoveSpeed", Private).GetValue(player.GetComponent<PlayerMovement>());
-                    Require(Mathf.Approximately(speed, player.Data.MoveSpeed * 1.08f), "Khinh Thân chưa nối vào di chuyển.");
+                    Require(Mathf.Approximately(speed, player.Data.MoveSpeed * 1.12f), "Khinh Thân chưa nối vào di chuyển.");
                     break;
                 case CardId.AmVang:
                     float range = (float)typeof(WeaponAuto).GetProperty("AttackRange", Private).GetValue(player.GetComponent<WeaponAuto>());
-                    Require(Mathf.Approximately(range, player.Data.AttackRange * 1.1f), "Âm Vang chưa nối vào vũ khí.");
+                    Require(Mathf.Approximately(range, player.Data.AttackRange * 1.15f), "Âm Vang chưa nối vào vũ khí.");
                     break;
                 case CardId.HoiXuan:
                     Require(health.Health == health.MaxHealth - 1, "Hồi Xuân chưa hồi đúng 1 máu khi sang đợt.");
@@ -226,13 +234,13 @@ namespace LAC.Cards.Editor
                 case CardId.ThietBich:
                     Set(health, "_invulnerableUntil", 0f);
                     DamageSystem.ApplyToPlayer(player, 1, player.transform.position);
-                    Require(Mathf.Abs(Get<float>(health, "_invulnerableUntil") - Time.time - Get<float>(health, "_hitInvulnerability") * 1.15f) < .001f,
+                    Require(Mathf.Abs(Get<float>(health, "_invulnerableUntil") - Time.time - Get<float>(health, "_hitInvulnerability") * 1.225f) < .001f,
                         "Thiết Bích chưa tăng thời gian bảo vệ.");
                     Set(health, "_invulnerableUntil", Time.time + 1000f);
                     break;
                 case CardId.CuongNo:
-                    Require(Mathf.Approximately(player.Upgrades.DamageMultiplier, 1.25f)
-                        && Mathf.Approximately(player.Upgrades.AttackSpeedMultiplier, .92f), "Cuồng Nộ thiếu đánh đổi.");
+                    Require(Mathf.Approximately(player.Upgrades.DamageMultiplier, 1.375f)
+                        && Mathf.Approximately(player.Upgrades.AttackSpeedMultiplier, .88f), "Cuồng Nộ thiếu đánh đổi.");
                     break;
             }
         }

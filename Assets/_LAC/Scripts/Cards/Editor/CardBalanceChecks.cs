@@ -91,6 +91,7 @@ namespace LAC.Cards.Editor
                 Debug.Log("[CardBalance] ALL PASSED: 45,000 picks, applicability, caps, fractional damage, health scaling, reset, immutable assets.");
             }
             finally { UnityEngine.Object.DestroyImmediate(go); CardEvolutionCatalog.EditorSetTestRecipes(null); }
+            CardImpactBalanceChecks.Run();
             ValidateCuongNoMarginals(cards);
         }
 
@@ -131,15 +132,17 @@ namespace LAC.Cards.Editor
                         minimum = Mathf.Min(minimum, delta);
                         checkedCount++;
                     }
-                    // Build từng giảm 2.025→2.000 với −10%: giờ phải tăng 2.070→2.100.
+                    // Cấp đầu nặng hơn nhưng cấp hai vẫn phải tăng DPS, không thành bẫy.
                     state.ResetRun(); Grant(CardId.CuongCong, 3); Grant(CardId.ThietBich, 2);
                     Require(state.HasEvolution("ThanhGiong"), "Thiếu tiến hoá trong build hồi quy.");
-                    Grant(CardId.CuongNo, 1); Near(state.DamageMultiplier * state.AttackSpeedMultiplier, 2.07f);
+                    Grant(CardId.CuongNo, 1); Near(state.DamageMultiplier * state.AttackSpeedMultiplier, 2.09f);
                     Grant(CardId.CuongNo, 1); Near(state.DamageMultiplier * state.AttackSpeedMultiplier, 2.1f);
                 }
-                Debug.Log($"[CardBalance] CuongNo marginal PASS: {checkedCount} real-state cases / 3 characters / 8 recipes; min gain={minimum:F4} baseline DPS; evolved trap 2.070→2.100.");
+                Require(checkedCount == 1152, "Thiếu tổ hợp cấp cần kiểm tra.");
+                Near(minimum, .01f);
+                Debug.Log($"[CardBalance] CuongNo marginal PASS: {checkedCount} real-state cases / 3 characters / 8 recipes; min gain={minimum:F4} baseline DPS; evolved trap 2.090→2.100.");
             }
-            finally { UnityEngine.Object.DestroyImmediate(go); }
+            finally { UnityEngine.Object.DestroyImmediate(go); CardEvolutionCatalog.EditorSetTestRecipes(null); }
 
             void Grant(CardId id, int count)
             {

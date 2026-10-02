@@ -77,7 +77,7 @@ namespace LAC.Cards.Editor
                 var snapshot = Get<IList<RunManager.CardGrant>>(grants, "objects");
                 snapshot.Clear(); snapshot.Add(Grant(101, CardId.LienKich));
                 run.OnStartClient(); tick(); CheckState(one);
-                Near(one.Upgrades.DamageMultiplier, 1f); Near(one.Upgrades.AttackSpeedMultiplier, 1.15f);
+                Near(one.Upgrades.DamageMultiplier, 1f); Near(one.Upgrades.AttackSpeedMultiplier, 1.225f);
                 // Hook stop/start không nhân đăng ký callback.
                 Require(grants.OnChange.GetInvocationList().Length == 1, "Bind callback trùng.");
                 Debug.Log("[CardHistoryCache] ALL PASSED: initial/quiet snapshot, ADD/INSERT/SET/REMOVE/CLEAR, affected players only, 10,000 idle ticks, late player/data, replacement same ID, run reset ordering, reconnect.");

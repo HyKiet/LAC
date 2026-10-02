@@ -1,9 +1,11 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using LAC.Core;
+using LAC.Player;
 using Mirror;
 using UnityEditor;
 using UnityEngine;
@@ -32,8 +34,13 @@ namespace LAC.Cards.Editor
                 _preview.AddComponent<CardSelectionView>();
             }
             Time.timeScale = 0f;
+            var state = _preview.GetComponent<PlayerUpgradeState>();
+            for (int i = 0; i < PlayerRegistry.All.Count; i++)
+                if (PlayerRegistry.All[i].isLocalPlayer)
+                    typeof(PlayerUpgradeState).GetField("_character", BindingFlags.Instance | BindingFlags.NonPublic)
+                        .SetValue(state, PlayerRegistry.All[i]);
             ShowSample(_preview.GetComponent<CardSelectionView>(),
-                _preview.GetComponent<PlayerUpgradeState>());
+                state);
         }
 
         [MenuItem("LAC/Tests/Validate Card Typography (Play Mode)")]
@@ -49,31 +56,73 @@ namespace LAC.Cards.Editor
             Require(canvas.pixelPerfect, "Canvas chưa căn pixel.");
             Require(canvas.scaleFactor >= 1f - .001f,
                 "Đặt Game View tối thiểu 1280×720 trước khi kiểm chữ.");
+            const BindingFlags privateFields = BindingFlags.Instance | BindingFlags.NonPublic;
+            FieldInfo stateCharacter = typeof(PlayerUpgradeState).GetField("_character", privateFields);
+            object originalCharacter = stateCharacter.GetValue(state);
+            var fixture = new GameObject("TypographyCharacterData") { hideFlags = HideFlags.HideAndDontSave };
+            fixture.SetActive(false);
+            var fixtureCharacter = fixture.AddComponent<PlayerCharacter>();
+            stateCharacter.SetValue(state, fixtureCharacter);
+            var characters = AssetDatabase.FindAssets("t:CharacterData", new[] { "Assets/_LAC/Data/Characters" })
+                .Select(g => AssetDatabase.LoadAssetAtPath<CharacterData>(AssetDatabase.GUIDToAssetPath(g))).ToArray();
+            int checkedRanks = 0;
             try
             {
-                foreach (var card in cards)
+                foreach (var character in characters)
                 {
-                    view.Show(new[] { card }, state, 2, _ => { }, () => { });
-                    view.SetStatus("TỰ CHỌN SAU 10 GIÂY");
-                    ValidateVisibleText();
-                    Text description = FindText("Description");
-                    Require(description.fontSize * canvas.scaleFactor >= 21.9f,
-                        "Mô tả nhỏ hơn 22 pixel tại 720p.");
-                    Require(description.alignment == TextAnchor.UpperLeft, "Mô tả chưa căn trái.");
-                    CheckContrast(description.color, ColorOf("15130F"));
-                    CheckContrast(description.color, ColorOf("112E3E"));
-                    Text name = FindText("Name");
-                    CheckContrast(name.color, ColorOf("2B2724"));
-                    foreach (var hover in _preview.GetComponentsInChildren<CardHoverVisual>())
+                    typeof(PlayerCharacter).GetField("_data", privateFields).SetValue(fixtureCharacter, character);
+                    foreach (var card in cards)
                     {
-                        Vector3 before = hover.transform.localPosition;
-                        hover.SetHighlighted(true);
-                        Require(hover.transform.localPosition == before
-                            && hover.transform.localScale == Vector3.one
-                            && hover.transform.localRotation == Quaternion.identity,
-                            "Hover đổi transform, gây chữ dao động.");
+                        state.ResetRun();
+                        for (int rank = 0; rank < card.MaxStacks; rank++)
+                        {
+                            view.Show(new[] { card }, state, 2, _ => { }, () => { });
+                            view.SetStatus("TỰ CHỌN SAU 10 GIÂY");
+                            ValidateVisibleText();
+                            Text description = FindText("Description");
+                            Require(description.fontSize * canvas.scaleFactor >= 21.9f,
+                                "Mô tả nhỏ hơn 22 pixel tại 720p.");
+                            Require(description.alignment == TextAnchor.UpperLeft, "Mô tả chưa căn trái.");
+                            CheckContrast(description.color, ColorOf("15130F"));
+                            CheckContrast(description.color, ColorOf("112E3E"));
+                            CheckContrast(FindText("Impact").color, ColorOf("15130F"));
+                            CheckContrast(FindText("Stacks").color, ColorOf("15130F"));
+                            Require(FindText("Impact").text.Contains("→"), "Thiếu trước → sau.");
+                            Text name = FindText("Name");
+                            CheckContrast(name.color, ColorOf("2B2724"));
+                            foreach (var hover in _preview.GetComponentsInChildren<CardHoverVisual>())
+                            {
+                                Vector3 before = hover.transform.localPosition;
+                                hover.SetHighlighted(true);
+                                Require(hover.transform.localPosition == before
+                                    && hover.transform.localScale == Vector3.one
+                                    && hover.transform.localRotation == Quaternion.identity,
+                                    "Hover đổi transform, gây chữ dao động.");
+                            }
+                            state.Apply(card, null);
+                            checkedRanks++;
+                        }
+                    }
+                    foreach (var recipe in recipes)
+                    {
+                        if (!recipe.Bonus.Supports(character.WeaponShape)
+                            || recipe.Ingredients.Any(i => !i.Card.Supports(character.WeaponShape))) continue;
+                        state.ResetRun();
+                        var history = recipe.Ingredients.SelectMany(i => Enumerable.Repeat(i.Card, i.Stacks)).ToArray();
+                        for (int i = 0; i < history.Length - 1; i++) state.Apply(history[i], null);
+                        view.Show(new[] { history.Last() }, state, 2, _ => { }, () => { });
+                        ValidateVisibleText();
+                        Require(FindText("Impact").text.Contains(recipe.DisplayName), "Chân thẻ thiếu tên tiến hoá.");
                     }
                 }
+                typeof(PlayerCharacter).GetField("_data", privateFields)
+                    .SetValue(fixtureCharacter, characters.First(c => c.WeaponShape == LAC.Combat.WeaponShape.Arc));
+                state.ResetRun();
+                Apply(CardId.CuongCong, 3); Apply(CardId.SinhLuc, 2); Apply(CardId.ThietBich, 1);
+                view.Show(new[] { Find(cards, CardId.ThietBich) }, state, 2, _ => { }, () => { });
+                ValidateVisibleText();
+                Require(FindText("Impact").text.Contains("Thánh Gióng") && FindText("Impact").text.Contains("Kim Cang"),
+                    "Không hiển thị hai tiến hoá đồng thời.");
                 foreach (var recipe in recipes)
                 {
                     view.ShowEvolution(recipe);
@@ -86,13 +135,28 @@ namespace LAC.Cards.Editor
                 ShowSample(view, state);
                 await Task.Delay(150);
                 Require(Application.isPlaying && _preview != null, "Preview đã đóng trong khi kiểm.");
+                state.ResetRun();
                 ValidateInteractions(view, state, cards);
-                Debug.Log($"[CardTypography] PASS: 12 cards, 8 evolutions, waiting, Vietnamese glyphs, no clipping; "
+                Debug.Log($"[CardTypography] PASS: {checkedRanks} next-rank views / 3 characters, 8 evolution previews and panels, simultaneous previews, waiting, Vietnamese glyphs, no clipping; "
                     + $"screen={Screen.width}x{Screen.height}, scale={canvas.scaleFactor:F3}, "
                     + $"description={22f * canvas.scaleFactor:F1}px, pixelPerfect, no best-fit/blur effects; contrast >= 7:1.");
+
+                void Apply(CardId id, int count)
+                {
+                    for (int i = 0; i < count; i++) state.Apply(Find(cards, id), null);
+                }
             }
             catch (Exception exception) { Debug.LogException(exception); }
-            finally { if (_preview != null) ShowSample(view, state); }
+            finally
+            {
+                if (_preview != null)
+                {
+                    state.ResetRun();
+                    stateCharacter.SetValue(state, originalCharacter);
+                    ShowSample(view, state);
+                }
+                UnityEngine.Object.DestroyImmediate(fixture);
+            }
         }
 
         private static void ValidateInteractions(CardSelectionView view, PlayerUpgradeState state,

@@ -71,7 +71,8 @@ tăng tương ứng; kết thúc ván/mất kết nối huỷ coroutine và ẩn
   Editor rồi mở `Builds/CardNetworkTests/CardClient.exe` với cả hai tham số
   `--lac-card-test-client --lac-evolution-test-client`. Chạy menu kiểm thử tiến hoá
   khi `PlayerRegistry.Count == 2`. Client thử đổi thẻ/đợi hết giờ theo bộ test mạng.
-  Log client phải có wave=3, evolutions=2, damage=1.3 cho cả hai người.
+  Log client phải có wave=3, evolutions=2, damage=1.4 cho cả hai người
+  (curve cấp đầu T-24B; log nghiệm thu cũ bên dưới dùng curve trước đó).
 
 Không dùng các fixture để đánh giá cân bằng T-26. Không lưu scene trong Play Mode.
 

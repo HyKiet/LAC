@@ -28,6 +28,7 @@ namespace LAC.Cards
             public Text Name;
             public Text Description;
             public Text Stacks;
+            public Text Impact;
             public CardHoverVisual Hover;
             public CardDefinition Card;
         }
@@ -59,7 +60,7 @@ namespace LAC.Cards
             SetInventoryVisible(false);
             _evolutionPanel.SetActive(false);
             _title.text = "CHỌN NÂNG CẤP";
-            _subtitle.text = "Chọn một thẻ để tăng sức mạnh";
+            _subtitle.text = "Xem chỉ số trước → sau, rồi chọn hướng nâng cấp";
             _rerollButton.gameObject.SetActive(true);
             _selectionHint.gameObject.SetActive(true);
             SetRect(_statusText.rectTransform, BottomCenter, BottomCenter,
@@ -75,8 +76,10 @@ namespace LAC.Cards
                 CardDefinition card = cards[i];
                 slot.Card = card;
                 slot.Name.text = card.DisplayName;
-                slot.Description.text = card.Description;
-                slot.Stacks.text = $"ĐÃ NHẬN  {state.GetStacks(card.Id)}/{card.MaxStacks}";
+                CardUpgradePreview projected = state.ProjectCard(card);
+                slot.Description.text = CardImpactPreview.Description(card, state);
+                slot.Impact.text = CardImpactPreview.Metrics(card, state, projected);
+                slot.Stacks.text = $"CẤP\n{state.GetStacks(card.Id)} / {card.MaxStacks}";
                 slot.Icon.sprite = card.Icon;
                 slot.Icon.color = card.Icon != null ? Color.white : card.Accent;
                 slot.Placeholder.gameObject.SetActive(card.Icon == null);
@@ -326,23 +329,27 @@ namespace LAC.Cards
 
             Image artWell = CreateImage("ArtWell", surface.transform, Hex("15130F"));
             SetRect(artWell.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -12f), new Vector2(280f, 184f), TopCenter);
+                new Vector2(0f, -12f), new Vector2(280f, 168f), TopCenter);
             Image artLine = CreateImage("ArtLine", artWell.transform, Hex("C08D20", 0.48f));
             SetRect(artLine.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f),
                 Vector2.zero, new Vector2(0f, 2f), new Vector2(0.5f, 0f));
 
             Image icon = CreateImage("Icon", artWell.transform, Color.white);
             SetRect(icon.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -4f), new Vector2(176f, 176f), TopCenter);
+                new Vector2(-6f, -4f), new Vector2(160f, 160f), TopCenter);
             icon.preserveAspect = true;
             icon.raycastTarget = false;
 
             Text placeholder = CreateText("Placeholder", icon.transform, 54, TextAnchor.MiddleCenter, Color.white);
             Stretch(placeholder.rectTransform);
 
+            Text stacks = CreateText("Stacks", artWell.transform, 18, TextAnchor.UpperRight, Hex("E0CFAF"));
+            SetRect(stacks.rectTransform, Vector2.one, Vector2.one,
+                new Vector2(0f, -8f), new Vector2(60f, 46f), Vector2.one);
+
             Image namePlate = CreateImage("NamePlate", surface.transform, Hex("2B2724"));
             SetRect(namePlate.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -206f), new Vector2(284f, 44f), TopCenter);
+                new Vector2(0f, -190f), new Vector2(284f, 44f), TopCenter);
             Text name = CreateText("Name", namePlate.transform, 26, TextAnchor.MiddleCenter, Hex("FBDD82"));
             name.fontStyle = FontStyle.Bold;
             Stretch(name.rectTransform);
@@ -350,14 +357,14 @@ namespace LAC.Cards
             Text description = CreateText("Description", surface.transform, 22, TextAnchor.UpperLeft, Hex("F4EADA"));
             description.lineSpacing = 1.08f;
             SetRect(description.rectTransform, TopCenter, TopCenter,
-                new Vector2(0f, -264f), new Vector2(284f, 96f), TopCenter);
+                new Vector2(0f, -244f), new Vector2(284f, 96f), TopCenter);
 
             Image footerRule = CreateImage("FooterRule", surface.transform, Hex("C08D20", 0.38f));
             SetRect(footerRule.rectTransform, BottomCenter, BottomCenter,
-                new Vector2(0f, 38f), new Vector2(284f, 1f), BottomCenter);
-            Text stacks = CreateText("Stacks", surface.transform, 18, TextAnchor.MiddleCenter, Hex("E0CFAF"));
-            SetRect(stacks.rectTransform, BottomCenter, BottomCenter,
-                new Vector2(0f, 9f), new Vector2(284f, 26f), BottomCenter);
+                new Vector2(0f, 60f), new Vector2(284f, 1f), BottomCenter);
+            Text impact = CreateText("Impact", surface.transform, 20, TextAnchor.MiddleLeft, Hex("9CCFC0"));
+            SetRect(impact.rectTransform, BottomCenter, BottomCenter,
+                new Vector2(0f, 7f), new Vector2(284f, 52f), BottomCenter);
 
             CardFrameGraphic frame = CreateFrame("BronzeFrame", button.transform, true, 1.2f + index * 1.1f);
             Stretch(frame.rectTransform);
@@ -372,6 +379,7 @@ namespace LAC.Cards
                 Name = name,
                 Description = description,
                 Stacks = stacks,
+                Impact = impact,
                 Hover = hover
             };
         }

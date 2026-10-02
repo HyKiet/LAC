@@ -60,7 +60,13 @@ namespace LAC.Cards.Editor
                         Require(state.HasEvolution(recipe.Id) == supported, "Sai lọc vũ khí: " + recipe.Id);
                         if (supported) CheckDocumentedEffects(recipe.Id, state, data.MaxHealth);
                         // Tính độc lập từ asset: nguyên liệu một lần, mỗi bonus đủ điều kiện một lần.
-                        float expectedDamage = 1 + history.Sum(c => c.DamageBonus)
+                        var ranks = new Dictionary<CardId, int>();
+                        float expectedDamage = 1 + history.Sum(c =>
+                            {
+                                int rank = ranks.TryGetValue(c.Id, out int current) ? current + 1 : 1;
+                                ranks[c.Id] = rank;
+                                return c.DamageBonus * c.StatScaleAtStack(rank);
+                            })
                             + state.Evolutions.Sum(r => r.Bonus.DamageBonus);
                         Near(state.DamageMultiplier, expectedDamage);
                         for (int attempt = 0; attempt < 3; attempt++)
@@ -91,7 +97,11 @@ namespace LAC.Cards.Editor
                 for (int i = 0; i < assets.Length; i++) Require(before[i] == EditorJsonUtility.ToJson(assets[i]), "Asset bị thay đổi.");
                 Debug.Log("[EvolutionCatalog] ALL PASSED: eight recipes x three characters, thresholds, effects, weapon filter, reverse replay, simultaneous, reset, immutable assets.");
             }
-            finally { UnityEngine.Object.DestroyImmediate(go); UnityEngine.Object.DestroyImmediate(replayGo); }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(go); UnityEngine.Object.DestroyImmediate(replayGo);
+                CardEvolutionCatalog.EditorSetTestRecipes(null);
+            }
         }
 
         // Dùng cả ở host một người lẫn Editor host + development client riêng.
@@ -193,7 +203,7 @@ namespace LAC.Cards.Editor
                     Near(state.DamageMultiplier, 2f); Near(state.HitInvulnerabilityMultiplier, 1.45f);
                     break;
                 case "TiengDan":
-                    Near(state.DamageMultiplier, 1.65f); Near(state.AttackSpeedMultiplier, 1.15f);
+                    Near(state.DamageMultiplier, 1.7f); Near(state.AttackSpeedMultiplier, 1.15f);
                     Near(state.AttackRangeMultiplier, 1.3f);
                     break;
                 case "TramTrung":

@@ -47,9 +47,9 @@ namespace LAC.Cards.Editor
             CardDefinition[] cards =
             {
                 EnsureCard("CuongCong", CardId.CuongCong, "Cường Công",
-                    "Cộng 20% sát thương cơ bản. Cộng theo chỉ số gốc.", 3, Hex("EDBB3E"), overwrite),
+                    "Cấp đầu +30% sát thương gốc; cấp sau +15%.", 3, Hex("EDBB3E"), overwrite),
                 EnsureCard("LienKich", CardId.LienKich, "Liên Kích",
-                    "Cộng 15% tốc độ đánh cơ bản (giảm khoảng nghỉ giữa hai đòn).", 3, Hex("FBDD82"), overwrite),
+                    "Cấp đầu +22,5% tốc đánh gốc; cấp sau +11,25%.", 3, Hex("FBDD82"), overwrite),
                 EnsureCard("SinhLuc", CardId.SinhLuc, "Sinh Lực",
                     "+20% máu gốc mỗi cấp (tổng làm tròn lên). Hồi phần máu vừa tăng.", 3, Hex("4FA694"), overwrite),
                 EnsureCard("BoPhap", CardId.BoPhap, "Bộ Pháp",
@@ -61,15 +61,15 @@ namespace LAC.Cards.Editor
                 EnsureCard("BocPha", CardId.BocPha, "Bộc Phá",
                     "Vũ khí đạn: chạm đầu nổ bán kính 1,75, gây 30% sát thương lên địch khác.", 1, Hex("B37F4F"), overwrite, .65f),
                 EnsureCard("KhinhThan", CardId.KhinhThan, "Khinh Thân",
-                    "+8% tốc độ di chuyển gốc mỗi cấp. Không tăng tốc độ lướt.", 3, Hex("9CCFC0"), overwrite),
+                    "Cấp đầu +12% tốc chạy gốc; cấp sau +6%. Không tăng tốc lướt.", 3, Hex("9CCFC0"), overwrite),
                 EnsureCard("AmVang", CardId.AmVang, "Âm Vang",
-                    "+10% tầm đánh gốc mỗi cấp. Không tăng bán kính nổ.", 3, Hex("4FA694"), overwrite),
+                    "Cấp đầu +15% tầm đánh gốc; cấp sau +7,5%. Không tăng bán kính nổ.", 3, Hex("4FA694"), overwrite),
                 EnsureCard("HoiXuan", CardId.HoiXuan, "Hồi Xuân",
                     "Hồi 1 máu mỗi cấp khi sang đợt mới. Không hồi giữa giao tranh, không hồi sinh.", 2, Hex("9CCFC0"), overwrite, .8f),
                 EnsureCard("ThietBich", CardId.ThietBich, "Thiết Bích",
-                    "+15% thời gian bất tử sau khi bị đánh mỗi cấp. Không tăng bất tử khi lướt.", 2, Hex("BFA981"), overwrite),
+                    "Cấp đầu +22,5% bất tử sau trúng đòn; cấp 2 +7,5%. Không tăng bất tử lướt.", 2, Hex("BFA981"), overwrite),
                 EnsureCard("CuongNo", CardId.CuongNo, "Cuồng Nộ",
-                    "+25% sát thương gốc nhưng −8% tốc độ đánh gốc mỗi cấp.", 2, Hex("EDBB3E"), overwrite, .75f)
+                    "Sát thương / tốc đánh gốc: cấp đầu +37,5% / −12%; cấp 2 +12,5% / −4%.", 2, Hex("EDBB3E"), overwrite, .75f)
             };
 
             EnsurePrefab(cards);
@@ -111,20 +111,39 @@ namespace LAC.Cards.Editor
 
         private static void ConfigureEffects(CardDefinition card)
         {
+            card.EditorConfigureStatScales();
             switch (card.Id)
             {
-                case CardId.CuongCong: card.EditorConfigureEffects(damage: .2f); break;
-                case CardId.LienKich: card.EditorConfigureEffects(attackSpeed: .15f); break;
+                case CardId.CuongCong:
+                    card.EditorConfigureEffects(damage: .2f);
+                    card.EditorConfigureStatScales(1.5f, .75f, .75f);
+                    break;
+                case CardId.LienKich:
+                    card.EditorConfigureEffects(attackSpeed: .15f);
+                    card.EditorConfigureStatScales(1.5f, .75f, .75f);
+                    break;
                 case CardId.SinhLuc: card.EditorConfigureEffects(health: .2f); break;
                 case CardId.BoPhap: card.EditorConfigureEffects(dash: .2f); break;
                 case CardId.SongTien: card.EditorConfigureEffects(projectileOnly: true, extraProjectiles: 1, projectileDamage: .7f, spread: 7f); break;
                 case CardId.XuyenTam: card.EditorConfigureEffects(projectileOnly: true, pierces: 2); break;
                 case CardId.BocPha: card.EditorConfigureEffects(projectileOnly: true, explosionRadius: 1.75f, explosionDamage: .3f); break;
-                case CardId.KhinhThan: card.EditorConfigureEffects(move: .08f); break;
-                case CardId.AmVang: card.EditorConfigureEffects(range: .1f); break;
+                case CardId.KhinhThan:
+                    card.EditorConfigureEffects(move: .08f);
+                    card.EditorConfigureStatScales(1.5f, .75f, .75f);
+                    break;
+                case CardId.AmVang:
+                    card.EditorConfigureEffects(range: .1f);
+                    card.EditorConfigureStatScales(1.5f, .75f, .75f);
+                    break;
                 case CardId.HoiXuan: card.EditorConfigureEffects(waveHeal: 1); break;
-                case CardId.ThietBich: card.EditorConfigureEffects(protection: .15f); break;
-                case CardId.CuongNo: card.EditorConfigureEffects(damage: .25f, attackSpeed: -.08f); break;
+                case CardId.ThietBich:
+                    card.EditorConfigureEffects(protection: .15f);
+                    card.EditorConfigureStatScales(1.5f, .5f);
+                    break;
+                case CardId.CuongNo:
+                    card.EditorConfigureEffects(damage: .25f, attackSpeed: -.08f);
+                    card.EditorConfigureStatScales(1.5f, .5f);
+                    break;
             }
         }
 

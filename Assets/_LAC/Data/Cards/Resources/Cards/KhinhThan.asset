@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
   _id: 7
   _displayName: "Khinh Th\xE2n"
-  _description: "+8% t\u1ED1c \u0111\u1ED9 di chuy\u1EC3n g\u1ED1c m\u1ED7i c\u1EA5p.
-    Kh\xF4ng t\u0103ng t\u1ED1c \u0111\u1ED9 l\u01B0\u1EDBt."
+  _description: "Cấp đầu +12% tốc chạy gốc; cấp sau +6%. Không tăng tốc lướt."
   _icon: {fileID: 21300000, guid: 417aa80d0effc1c429daf6d0e814d61b, type: 3}
   _maxStacks: 3
   _weight: 1
   _accent: {r: 0.6117647, g: 0.8117647, b: 0.7529412, a: 1}
+  _statScales:
+  - 1.5
+  - 0.75
+  - 0.75
   _damageBonus: 0
   _attackSpeedBonus: 0
   _healthBonusRatio: 0

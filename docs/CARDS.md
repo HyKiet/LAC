@@ -136,6 +136,7 @@ Mỗi thẻ nền là một `CardDefinition` ScriptableObject tại
 | `MaxStacks` | Số lần tối đa có thể nhận trong một ván |
 | `Weight` | Trọng số xuất hiện trong bể thẻ |
 | `Accent` | Màu nhấn giao diện; không dùng nhóm Son dành riêng cho đòn địch |
+| `StatScaleAtStack` | Curve phần trăm theo cấp trong asset; trống = đều. Không nhân số đạn/hồi máu/bonus tiến hoá |
 
 ## 5. Thẻ nền đã triển khai
 
@@ -143,18 +144,18 @@ Các hàng dưới đây phản ánh asset và logic đang chạy, không phải
 
 | ID | Tên | Hiệu ứng mỗi lần nhận | Cộng dồn tối đa | Trọng số | Trạng thái |
 |---|---|---|---:|---:|---|
-| `CuongCong` | Cường Công | +20% sát thương cơ bản, cộng theo chỉ số gốc | 3 | 1 | Đã triển khai |
-| `LienKich` | Liên Kích | +15% tốc độ đánh cơ bản | 3 | 1 | Đã triển khai |
+| `CuongCong` | Cường Công | Sát thương gốc: +30% / +15% / +15% theo cấp | 3 | 1 | Đã triển khai |
+| `LienKich` | Liên Kích | Tốc đánh gốc: +22,5% / +11,25% / +11,25% theo cấp | 3 | 1 | Đã triển khai |
 | `SinhLuc` | Sinh Lực | +20% máu gốc; tổng làm tròn lên; hồi đúng phần máu vừa tăng | 3 | 1 | Đã triển khai |
 | `BoPhap` | Bộ Pháp | −20% thời gian hồi lướt | 1 | 1 | Đã triển khai |
 | `SongTien` | Song Tiễn | Chỉ vũ khí đạn: 2 đạn trong góc mở 7°, mỗi đạn 70% sát thương | 1 | 0,65 | Đã triển khai |
 | `XuyenTam` | Xuyên Tâm | Chỉ vũ khí đạn: xuyên thêm 2 địch, tối đa 3 mục tiêu | 1 | 0,65 | Đã triển khai |
 | `BocPha` | Bộc Phá | Chỉ vũ khí đạn: chạm đầu nổ bán kính 1,75; 30% sát thương lên địch khác | 1 | 0,65 | Đã triển khai |
-| `KhinhThan` | Khinh Thân | +8% tốc độ di chuyển gốc; không tăng tốc lướt | 3 | 1 | Đã triển khai |
-| `AmVang` | Âm Vang | +10% tầm đánh gốc; không tăng bán kính nổ | 3 | 1 | Đã triển khai |
+| `KhinhThan` | Khinh Thân | Tốc đi bộ gốc: +12% / +6% / +6%; không tăng tốc lướt | 3 | 1 | Đã triển khai |
+| `AmVang` | Âm Vang | Tầm gốc: +15% / +7,5% / +7,5%; không tăng bán kính nổ | 3 | 1 | Đã triển khai |
 | `HoiXuan` | Hồi Xuân | Hồi 1 máu khi bắt đầu đợt 2 trở đi; không hồi sinh | 2 | 0,8 | Đã triển khai |
-| `ThietBich` | Thiết Bích | +15% thời gian bất tử sau khi trúng đòn; không tăng i-frame lướt | 2 | 1 | Đã triển khai |
-| `CuongNo` | Cuồng Nộ | +25% sát thương gốc, đổi lại −8% tốc độ đánh gốc | 2 | 0,75 | Đã triển khai |
+| `ThietBich` | Thiết Bích | Bảo vệ sau trúng đòn: +22,5% / +7,5%; không tăng i-frame lướt | 2 | 1 | Đã triển khai |
+| `CuongNo` | Cuồng Nộ | Cấp 1: +37,5% sát thương / −12% tốc đánh; cấp 2: +12,5% / −4% | 2 | 0,75 | Đã triển khai |
 
 Ghi chú: `SongTien`, `XuyenTam` và `BocPha` đã kết hợp được trên cùng một viên đạn.
 Mọi tham số hiệu ứng, giới hạn và trọng số nằm trong asset `CardDefinition`.
@@ -182,6 +183,11 @@ và máu quái giữ phần lẻ: đạn 0,7 không còn bị nâng thành 1; v�
 Số sát thương nổi vẫn làm tròn cho giao diện, không dùng để tính máu quái.
 Vụ nổ không đánh lại mục tiêu vừa trúng trực tiếp, không tạo chuỗi nổ và chỉ nổ một lần/đạn.
 
+T-24B dồn tác động vào cấp đầu của sáu thẻ nhưng giữ trần ở bảng trên. Màn chọn
+hiển thị đúng cấp sắp nhận và chỉ số trước → sau (gồm bonus mới đủ công thức),
+không chỉ một mô tả chung cho mọi cấp. Sinh Lực, hồi đầu đợt, lướt và cải biến đạn
+giữ nguyên. Chi tiết và giới hạn cân bằng: [CARD_IMPACT_BALANCE.md](CARD_IMPACT_BALANCE.md).
+
 Đã mô phỏng 1.000 seed × 15 lượt × 3 kiểu vũ khí = **45.000 lựa chọn**, kiểm tra đổi thẻ,
 lọc theo vũ khí, giới hạn cộng dồn, toàn bộ thẻ đều xuất hiện và không sửa asset.
 Đã kiểm thử Play Mode đủ 12 thẻ, gồm tác động thực của năm thẻ mới, reset và chuyển đợt;
@@ -193,13 +199,17 @@ kể cả animation và truyền mạng. Console cuối phiên: 0 lỗi, 0 cản
 Đây là cân bằng ban đầu của **bể thẻ**, chưa thay thế T-50/T-51: cần chơi thử với đủ
 quái/boss và thu thập tỉ lệ thắng, lựa chọn thẻ để chốt độ khó toàn game.
 
-Rà soát 02/10/2026: giảm bất lợi Cuồng Nộ từ −10% xuống −8% mỗi cấp, giữ +25%
+Rà soát T-24A ngày 02/10/2026 (trước curve T-24B): giảm bất lợi Cuồng Nộ từ −10% xuống −8% mỗi cấp, giữ +25%
 sát thương, giới hạn 2 và trọng số 0,75. Build Cường Công ×3 + Thiết Bích ×2
 (Thánh Gióng) + Cuồng Nộ ×1 từng có DPS 2,025×; cấp Cuồng Nộ tiếp theo làm giảm
 xuống 2,000×. Dữ liệu mới cho 2,070→2,100×. Kiểm 1.152 tổ hợp cấp liên quan trên
 ba nhân vật và danh mục tiến hoá thật: mọi cấp Cuồng Nộ tiếp theo đều tăng DPS,
 mức tăng nhỏ nhất 0,030× DPS gốc. Đây là phép tính chỉ số, không phải đo tỉ lệ thắng.
 Chi tiết tối ưu/kiểm thử: [CARD_OPTIMIZATION.md](CARD_OPTIMIZATION.md).
+
+Curve T-24B sau đó giữ tổng Cuồng Nộ +50%/−16%, nhưng cấp đầu +37,5%/−12% và
+cấp sau +12,5%/−4%. Build Thánh Gióng + Cuồng Nộ cấp 1→2 là 2,090→2,100×;
+mọi cấp vẫn phải tăng DPS qua bộ kiểm 1.152 tổ hợp. Đây không phải nghiệm thu T-50/T-51.
 
 ## 7. Tám công thức tiến hoá — T-25/T-26
 
@@ -230,6 +240,11 @@ Tám công thức dùng 3–5 lượt chọn nguyên liệu, nằm trong 15 lư�
 Bonus nằm ngoài `Resources/Cards` nên bể bốc vẫn đúng 12 thẻ. Đây là cân bằng ban
 đầu của tiến hoá; đường cong độ khó toàn game vẫn thuộc T-50/T-51.
 Chi tiết dữ liệu và kiểm thử: [EVOLUTION_TESTS.md](EVOLUTION_TESTS.md).
+
+T-24B không sửa nguyên liệu hoặc bonus. Tiếng Đàn Thần mở ở Cường Công ×2,
+khi curve mới đã cho +45% thay +40%, nên sát thương lúc mở là 1,70× (cũ 1,65×).
+Cường Công ×3 vẫn kết thúc ở 1,85× với Tiếng Đàn; các công thức dùng đủ cấp của
+nguyên liệu vẫn giữ tổng chỉ số như trước. Preview tính bonus một lần ở hệ số 1.
 
 ## 8. Mẫu biên soạn thẻ mới
 
