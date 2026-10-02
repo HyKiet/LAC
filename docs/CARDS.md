@@ -154,7 +154,7 @@ Các hàng dưới đây phản ánh asset và logic đang chạy, không phải
 | `AmVang` | Âm Vang | +10% tầm đánh gốc; không tăng bán kính nổ | 3 | 1 | Đã triển khai |
 | `HoiXuan` | Hồi Xuân | Hồi 1 máu khi bắt đầu đợt 2 trở đi; không hồi sinh | 2 | 0,8 | Đã triển khai |
 | `ThietBich` | Thiết Bích | +15% thời gian bất tử sau khi trúng đòn; không tăng i-frame lướt | 2 | 1 | Đã triển khai |
-| `CuongNo` | Cuồng Nộ | +25% sát thương gốc, đổi lại −10% tốc độ đánh gốc | 2 | 0,75 | Đã triển khai |
+| `CuongNo` | Cuồng Nộ | +25% sát thương gốc, đổi lại −8% tốc độ đánh gốc | 2 | 0,75 | Đã triển khai |
 
 Ghi chú: `SongTien`, `XuyenTam` và `BocPha` đã kết hợp được trên cùng một viên đạn.
 Mọi tham số hiệu ứng, giới hạn và trọng số nằm trong asset `CardDefinition`.
@@ -170,8 +170,8 @@ trước lượt chọn thứ 15 vẫn còn ít nhất 3 thẻ hợp lệ, kể 
 
 | Hướng xây dựng | Trần từ thẻ | Đánh đổi/giới hạn |
 |---|---|---|
-| Sát thương + tốc đánh | Cường Công ×3, Liên Kích ×3, Cuồng Nộ ×2: 2,625× DPS gốc | Tốn 8 lựa chọn; Cuồng Nộ giảm tốc đánh |
-| Thêm Song Tiễn | 3,675× DPS gốc nếu cả hai đạn trúng một mục tiêu | Chỉ vũ khí đạn; tốn tổng 9 lựa chọn; chưa tính trượt/overkill |
+| Sát thương + tốc đánh | Cường Công ×3, Liên Kích ×3, Cuồng Nộ ×2: 2,709× DPS gốc | Tốn 8 lựa chọn; Cuồng Nộ giảm tốc đánh |
+| Thêm Song Tiễn | 3,7926× DPS gốc nếu cả hai đạn trúng một mục tiêu | Chỉ vũ khí đạn; tốn tổng 9 lựa chọn; chưa tính trượt/overkill |
 | Máu | Tấm 4→7, Thạch Sanh 6→10, Gióng 10→16 | Tốn 3 lựa chọn; thay mức +75 máu của demo cũ |
 | Di chuyển / tầm đánh | +24% / +30% | Mỗi hướng tốn 3 lựa chọn; không tăng lướt/bán kính nổ |
 | Hồi phục | 2 máu giữa các đợt | Tốn 2 lựa chọn; không hồi giữa giao tranh hoặc hồi sinh |
@@ -192,6 +192,14 @@ kể cả animation và truyền mạng. Console cuối phiên: 0 lỗi, 0 cản
 
 Đây là cân bằng ban đầu của **bể thẻ**, chưa thay thế T-50/T-51: cần chơi thử với đủ
 quái/boss và thu thập tỉ lệ thắng, lựa chọn thẻ để chốt độ khó toàn game.
+
+Rà soát 02/10/2026: giảm bất lợi Cuồng Nộ từ −10% xuống −8% mỗi cấp, giữ +25%
+sát thương, giới hạn 2 và trọng số 0,75. Build Cường Công ×3 + Thiết Bích ×2
+(Thánh Gióng) + Cuồng Nộ ×1 từng có DPS 2,025×; cấp Cuồng Nộ tiếp theo làm giảm
+xuống 2,000×. Dữ liệu mới cho 2,070→2,100×. Kiểm 1.152 tổ hợp cấp liên quan trên
+ba nhân vật và danh mục tiến hoá thật: mọi cấp Cuồng Nộ tiếp theo đều tăng DPS,
+mức tăng nhỏ nhất 0,030× DPS gốc. Đây là phép tính chỉ số, không phải đo tỉ lệ thắng.
+Chi tiết tối ưu/kiểm thử: [CARD_OPTIMIZATION.md](CARD_OPTIMIZATION.md).
 
 ## 7. Tám công thức tiến hoá — T-25/T-26
 

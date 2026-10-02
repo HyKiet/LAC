@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using LAC.Combat;
 using LAC.Core;
 using LAC.Player;
@@ -64,8 +65,8 @@ namespace LAC.Cards.Editor
                     Require(!state.Apply(card, null), "Vượt giới hạn cộng dồn.");
                 }
                 Near(state.DamageMultiplier, 2.1f);
-                Near(state.AttackSpeedMultiplier, 1.25f);
-                Near(state.DamageMultiplier * state.AttackSpeedMultiplier * state.ProjectileCount * state.ProjectileDamageMultiplier, 3.675f);
+                Near(state.AttackSpeedMultiplier, 1.29f);
+                Near(state.DamageMultiplier * state.AttackSpeedMultiplier * state.ProjectileCount * state.ProjectileDamageMultiplier, 3.7926f);
                 Near(state.MoveSpeedMultiplier, 1.24f);
                 Near(state.AttackRangeMultiplier, 1.3f);
                 Near(state.HitInvulnerabilityMultiplier, 1.3f);
@@ -90,6 +91,61 @@ namespace LAC.Cards.Editor
                 Debug.Log("[CardBalance] ALL PASSED: 45,000 picks, applicability, caps, fractional damage, health scaling, reset, immutable assets.");
             }
             finally { UnityEngine.Object.DestroyImmediate(go); CardEvolutionCatalog.EditorSetTestRecipes(null); }
+            ValidateCuongNoMarginals(cards);
+        }
+
+        // Các thẻ khác không đổi damage/tốc đánh; thử mọi cấp của các nguyên liệu
+        // liên quan và cả tiến hoá thật, không chỉ một build điển hình.
+        private static void ValidateCuongNoMarginals(CardDefinition[] cards)
+        {
+            const BindingFlags fields = BindingFlags.Instance | BindingFlags.NonPublic;
+            var go = new GameObject("CuongNoMarginalChecks") { hideFlags = HideFlags.HideAndDontSave };
+            var character = go.AddComponent<PlayerCharacter>();
+            var state = go.GetComponent<PlayerUpgradeState>() ?? go.AddComponent<PlayerUpgradeState>();
+            typeof(PlayerUpgradeState).GetField("_character", fields).SetValue(state, character);
+            var characters = AssetDatabase.FindAssets("t:CharacterData", new[] { "Assets/_LAC/Data/Characters" })
+                .Select(g => AssetDatabase.LoadAssetAtPath<CharacterData>(AssetDatabase.GUIDToAssetPath(g))).ToArray();
+            int checkedCount = 0;
+            float minimum = float.PositiveInfinity;
+            try
+            {
+                Require(characters.Length == 3, "Phải kiểm cả ba nhân vật.");
+                Require(CardEvolutionCatalog.Recipes.Count == 8, "Phải dùng danh mục tiến hoá thật.");
+                foreach (var data in characters)
+                {
+                    typeof(PlayerCharacter).GetField("_data", fields).SetValue(character, data);
+                    for (int damage = 0; damage <= 3; damage++)
+                    for (int protection = 0; protection <= 2; protection++)
+                    for (int range = 0; range <= 3; range++)
+                    for (int speed = 0; speed <= 3; speed++)
+                    for (int rage = 0; rage < 2; rage++)
+                    {
+                        Require(damage + protection + range + speed + rage + 1 <= 15, "Build vượt 15 lượt.");
+                        state.ResetRun();
+                        Grant(CardId.CuongCong, damage); Grant(CardId.ThietBich, protection);
+                        Grant(CardId.AmVang, range); Grant(CardId.LienKich, speed); Grant(CardId.CuongNo, rage);
+                        float before = state.DamageMultiplier * state.AttackSpeedMultiplier;
+                        Grant(CardId.CuongNo, 1);
+                        float delta = state.DamageMultiplier * state.AttackSpeedMultiplier - before;
+                        Require(delta > .0001f, $"Cuồng Nộ giảm DPS: {data.name}, C{damage}/T{protection}/A{range}/L{speed}/N{rage}, delta={delta}.");
+                        minimum = Mathf.Min(minimum, delta);
+                        checkedCount++;
+                    }
+                    // Build từng giảm 2.025→2.000 với −10%: giờ phải tăng 2.070→2.100.
+                    state.ResetRun(); Grant(CardId.CuongCong, 3); Grant(CardId.ThietBich, 2);
+                    Require(state.HasEvolution("ThanhGiong"), "Thiếu tiến hoá trong build hồi quy.");
+                    Grant(CardId.CuongNo, 1); Near(state.DamageMultiplier * state.AttackSpeedMultiplier, 2.07f);
+                    Grant(CardId.CuongNo, 1); Near(state.DamageMultiplier * state.AttackSpeedMultiplier, 2.1f);
+                }
+                Debug.Log($"[CardBalance] CuongNo marginal PASS: {checkedCount} real-state cases / 3 characters / 8 recipes; min gain={minimum:F4} baseline DPS; evolved trap 2.070→2.100.");
+            }
+            finally { UnityEngine.Object.DestroyImmediate(go); }
+
+            void Grant(CardId id, int count)
+            {
+                CardDefinition card = cards.Single(c => c.Id == id);
+                for (int i = 0; i < count; i++) Require(state.Apply(card, null), "Cấp không hợp lệ: " + id);
+            }
         }
 
         private static void CheckOffer(List<CardDefinition> offer, PlayerUpgradeState state, WeaponShape shape)

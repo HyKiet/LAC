@@ -34,6 +34,13 @@ và Cuồng Nộ áp dụng cả tăng sát thương lẫn giảm tốc đánh.
 
 ## Hai tiến trình, giả lập độ trễ
 
+Lưu ý rà soát 02/10/2026: `CardNetworkPlayModeChecks.ClearWave` cũ chỉ dọn quái
+đang sống, chưa đẩy hết quái chờ trong lịch T-44. Fixture fast-forward ở các kiểm
+tiến hoá cũng chỉ đẩy lịch host; có thể làm lệch ID quái với client chưa sinh đủ.
+Các chữ ký nâng cấp khớp không chứng minh toàn bộ gameplay đã đồng bộ. Trước khi
+nghiệm thu lại hai tiến trình, phải chờ cả hai máy sinh hết đợt hoặc đồng bộ fixture
+trên cả hai. Lượt tối ưu Cards 02/10 chỉ chạy host một người; không sửa mã quái.
+
 1. Thoát Play Mode, chạy `LAC > Tests > Build Card Network Client`.
 2. Vào Play Mode ở Arena để chạy host.
 3. Chạy `Builds/CardNetworkTests/CardClient.exe --lac-card-test-client -batchmode -nographics -logFile <đường-dẫn-log>`.

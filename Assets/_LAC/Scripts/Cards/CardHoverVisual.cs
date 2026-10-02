@@ -25,6 +25,8 @@ namespace LAC.Cards
         private Vector2 _restPosition;
         private Vector2 _consumeStart;
         private Transform _consumeTarget;
+        private Camera _consumeCamera;
+        private RectTransform _consumeParent;
         private float _consumeElapsed;
         private bool _highlighted;
         private bool _dimmed;
@@ -51,6 +53,8 @@ namespace LAC.Cards
             _dimmed = false;
             _consuming = false;
             _consumeTarget = null;
+            _consumeCamera = null;
+            _consumeParent = null;
             _consumeElapsed = 0f;
             _interactable = true;
             if (_rect == null) return;
@@ -63,17 +67,21 @@ namespace LAC.Cards
 
         public void SetHighlighted(bool highlighted)
         {
-            _highlighted = _interactable && highlighted;
+            bool next = _interactable && highlighted;
+            if (_highlighted == next) return;
+            _highlighted = next;
             ApplyColors(IsActive);
         }
 
         public void SetDimmed(bool dimmed)
         {
+            if (_dimmed == dimmed) return;
             _dimmed = dimmed;
             if (dimmed)
             {
                 _highlighted = false;
             }
+            ApplyColors(IsActive);
         }
 
         public void PlayConsume(Transform target)
@@ -83,6 +91,8 @@ namespace LAC.Cards
             _dimmed = false;
             _consuming = true;
             _consumeTarget = target;
+            _consumeCamera = Camera.main;
+            _consumeParent = _rect.parent as RectTransform;
             _consumeElapsed = 0f;
             _consumeStart = _rect.anchoredPosition;
             transform.SetAsLastSibling();
@@ -91,6 +101,7 @@ namespace LAC.Cards
 
         public void SetInteractable(bool interactable)
         {
+            if (_interactable == interactable) return;
             _interactable = interactable;
             if (!interactable)
             {
@@ -110,17 +121,15 @@ namespace LAC.Cards
                 return;
             }
 
-            _rect.anchoredPosition = _restPosition;
-            _rect.localScale = Vector3.one;
-            _rect.localRotation = Quaternion.identity;
-            _group.alpha = Mathf.MoveTowards(_group.alpha, _dimmed ? 0.24f : 1f,
-                Time.unscaledDeltaTime * 4f);
-            ApplyColors(IsActive);
+            float targetAlpha = _dimmed ? 0.24f : 1f;
+            if (_group.alpha == targetAlpha) return;
+            _group.alpha = Mathf.MoveTowards(_group.alpha, targetAlpha, Time.unscaledDeltaTime * 4f);
         }
 
         private void UpdateConsume()
         {
-            _consumeElapsed += Time.unscaledDeltaTime;
+            if (_consumeElapsed >= ConsumeDuration) return;
+            _consumeElapsed = Mathf.Min(ConsumeDuration, _consumeElapsed + Time.unscaledDeltaTime);
             float spinT = Mathf.Clamp01(_consumeElapsed / SpinDuration);
             float easedSpin = 1f - Mathf.Pow(1f - spinT, 3f);
             if (_consumeElapsed < FlightStart)
@@ -141,16 +150,15 @@ namespace LAC.Cards
                 _rect.localScale = Vector3.one * Mathf.Lerp(1f, 0.04f, easedFly);
                 _group.alpha = 1f - Mathf.Clamp01((flyT - 0.76f) / 0.24f);
             }
-            ApplyColors(true);
         }
 
         private Vector2 ResolveTargetPosition()
         {
-            if (_consumeTarget == null || Camera.main == null || _rect.parent is not RectTransform parent)
+            if (_consumeTarget == null || _consumeCamera == null || _consumeParent == null)
                 return new Vector2(0f, -320f);
 
-            Vector2 screenPoint = Camera.main.WorldToScreenPoint(_consumeTarget.position);
-            return RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screenPoint, null,
+            Vector2 screenPoint = _consumeCamera.WorldToScreenPoint(_consumeTarget.position);
+            return RectTransformUtility.ScreenPointToLocalPointInRectangle(_consumeParent, screenPoint, null,
                 out Vector2 localPoint) ? localPoint : new Vector2(0f, -320f);
         }
 

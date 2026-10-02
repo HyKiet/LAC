@@ -219,7 +219,7 @@ namespace LAC.Cards
             SetRect(_evolvedText.rectTransform, Vector2.one, Vector2.one,
                 new Vector2(-16f, -16f), new Vector2(260f, 270f), Vector2.one);
 
-            _overlay = CreateImage("SelectionOverlay", canvasGo.transform, Hex("15130F", 0.93f)).gameObject;
+            _overlay = CreateImage("SelectionOverlay", canvasGo.transform, Hex("15130F", 0.93f), true).gameObject;
             Stretch((RectTransform)_overlay.transform);
 
             Image panelShadow = CreateImage("PanelShadow", _overlay.transform, Hex("15130F", 0.65f));
@@ -310,7 +310,7 @@ namespace LAC.Cards
             SetRect(shadow.rectTransform, Center, Center,
                 new Vector2(x + 7f, -18f), new Vector2(350f, 434f), Center);
             shadow.raycastTarget = false;
-            Image root = CreateImage("Card", parent, Color.clear);
+            Image root = CreateImage("Card", parent, Color.clear, true);
             Button button = root.gameObject.AddComponent<Button>();
             button.transition = Selectable.Transition.None;
             SetRect((RectTransform)button.transform, Center, Center,
@@ -376,7 +376,7 @@ namespace LAC.Cards
 
         private Button CreateButton(string name, Transform parent, out Text label)
         {
-            Image image = CreateImage(name, parent, Hex("2B2724"));
+            Image image = CreateImage(name, parent, Hex("2B2724"), true);
             var button = image.gameObject.AddComponent<Button>();
             ColorBlock colors = button.colors;
             colors.normalColor = Hex("2B2724");
@@ -392,12 +392,13 @@ namespace LAC.Cards
             return button;
         }
 
-        private Image CreateImage(string name, Transform parent, Color color)
+        private Image CreateImage(string name, Transform parent, Color color, bool raycastTarget = false)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
             go.transform.SetParent(parent, false);
             Image image = go.GetComponent<Image>();
             image.color = color;
+            image.raycastTarget = raycastTarget;
             return image;
         }
 

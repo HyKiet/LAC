@@ -30,6 +30,7 @@ namespace LAC.Cards
         private int _token;
         private int _revision;
         private double _deadline;
+        private int _displayedCountdown = -1;
         private bool _selectionOpen;
         private bool _committing;
         private bool _ownsPause;
@@ -82,8 +83,13 @@ namespace LAC.Cards
             if (_selectionOpen && !_committing)
             {
                 float remaining = Mathf.Max(0f, (float)(_deadline - NetworkTime.time));
-                _view.SetStatus(remaining > 0f ? $"TỰ CHỌN SAU {Mathf.CeilToInt(remaining)} GIÂY" : "ĐANG TỰ CHỌN…");
-                if (remaining <= 0f) _view.SetButtonsEnabled(false);
+                int seconds = Mathf.CeilToInt(remaining);
+                if (seconds != _displayedCountdown)
+                {
+                    _displayedCountdown = seconds;
+                    _view.SetStatus(seconds > 0 ? $"TỰ CHỌN SAU {seconds} GIÂY" : "ĐANG TỰ CHỌN…");
+                    if (seconds == 0) _view.SetButtonsEnabled(false);
+                }
             }
         }
 
@@ -155,6 +161,7 @@ namespace LAC.Cards
             }
             _pendingOffer = null;
             _selectionOpen = true;
+            _displayedCountdown = -1;
             _view.Show(offer, _state, _rerollsRemaining, Pick, Reroll);
             if (offer.Count == 0) { _committing = true; _view.ShowWaiting(); }
         }
@@ -229,6 +236,7 @@ namespace LAC.Cards
             _finishSelection = null;
             _pendingOffer = null;
             _acceptedEvolutions = null;
+            _displayedCountdown = -1;
             _committing = _selectionOpen = _requestPending = false;
             if (_view != null) _view.Hide();
             if (!_ownsPause) return;

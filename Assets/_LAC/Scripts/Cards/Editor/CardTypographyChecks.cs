@@ -1,9 +1,13 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Threading.Tasks;
 using LAC.Core;
 using Mirror;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace LAC.Cards.Editor
@@ -33,7 +37,7 @@ namespace LAC.Cards.Editor
         }
 
         [MenuItem("LAC/Tests/Validate Card Typography (Play Mode)")]
-        public static void Validate()
+        public static async void Validate()
         {
             Preview();
             var view = _preview.GetComponent<CardSelectionView>();
@@ -78,11 +82,81 @@ namespace LAC.Cards.Editor
                 view.ShowWaiting();
                 ValidateVisibleText();
                 Require(!FindInactive("Reroll").activeSelf, "Màn chờ còn nút đổi.");
+                // Graphic depth/culling phải qua một khung render sau màn chờ.
+                ShowSample(view, state);
+                await Task.Delay(150);
+                Require(Application.isPlaying && _preview != null, "Preview đã đóng trong khi kiểm.");
+                ValidateInteractions(view, state, cards);
                 Debug.Log($"[CardTypography] PASS: 12 cards, 8 evolutions, waiting, Vietnamese glyphs, no clipping; "
                     + $"screen={Screen.width}x{Screen.height}, scale={canvas.scaleFactor:F3}, "
                     + $"description={22f * canvas.scaleFactor:F1}px, pixelPerfect, no best-fit/blur effects; contrast >= 7:1.");
             }
-            finally { ShowSample(view, state); }
+            catch (Exception exception) { Debug.LogException(exception); }
+            finally { if (_preview != null) ShowSample(view, state); }
+        }
+
+        private static void ValidateInteractions(CardSelectionView view, PlayerUpgradeState state,
+            CardDefinition[] cards)
+        {
+            const BindingFlags fields = BindingFlags.Instance | BindingFlags.NonPublic;
+            int picks = 0;
+            view.Show(new[] { Find(cards, CardId.CuongNo), Find(cards, CardId.SongTien),
+                Find(cards, CardId.ThietBich) }, state, 2, _ => picks++, () => { });
+            Canvas.ForceUpdateCanvases();
+            int targets = 0;
+            foreach (var graphic in _preview.GetComponentsInChildren<Graphic>())
+            {
+                if (!graphic.raycastTarget) continue;
+                targets++;
+                Require(graphic.name == "SelectionOverlay" || graphic.name == "Card" || graphic.name == "Reroll",
+                    "Trang trí nhận raycast: " + graphic.name);
+            }
+            Require(targets == 5, "Phải có đúng overlay + 3 thẻ + đổi thẻ nhận raycast.");
+            var hovers = _preview.GetComponentsInChildren<CardHoverVisual>();
+            Require(hovers.Length == 3, "Thiếu slot.");
+            var data = new PointerEventData(EventSystem.current);
+            hovers[0].OnPointerEnter(data); hovers[1].OnPointerEnter(data);
+            hovers[0].OnPointerExit(data);
+            Require(!(bool)Get(hovers[0], "_highlighted") && (bool)Get(hovers[1], "_highlighted"),
+                "PointerExit cũ xoá highlight mới.");
+            EventSystem.current.SetSelectedGameObject(hovers[2].gameObject);
+            Require(!(bool)Get(hovers[1], "_highlighted") && (bool)Get(hovers[2], "_highlighted"),
+                "Focus điều hướng không độc lập với hover.");
+            EventSystem.current.SetSelectedGameObject(null);
+            var hover = hovers[0];
+            hover.ResetPresentation();
+            var rect = (RectTransform)hover.transform;
+            var update = (Action)Delegate.CreateDelegate(typeof(Action), hover,
+                typeof(CardHoverVisual).GetMethod("Update", fields));
+            int dirtyColors = 0;
+            foreach (var image in hover.GetComponentsInChildren<Image>())
+                image.RegisterDirtyVerticesCallback(() => dirtyColors++);
+            rect.hasChanged = false;
+            for (int i = 0; i < 10000; i++) update();
+            Require(!rect.hasChanged && dirtyColors == 0, "Idle vẫn ghi transform/màu.");
+            // Raycast ngay tâm ảnh: graphic trang trí không cản Button root.
+            Image icon = hover.transform.Find("CardSurface/ArtWell/Icon").GetComponent<Image>();
+            data.position = RectTransformUtility.WorldToScreenPoint(null,
+                icon.rectTransform.TransformPoint(icon.rectTransform.rect.center));
+            var hits = new List<RaycastResult>();
+            _preview.GetComponentInChildren<GraphicRaycaster>().Raycast(data, hits);
+            Require(hits.Count > 0 && hits[0].gameObject == hover.gameObject, "Bấm ảnh không tới thẻ.");
+            ExecuteEvents.Execute(hits[0].gameObject, data, ExecuteEvents.pointerClickHandler);
+            Require(picks == 1, "Bấm thẻ không gọi callback đúng một lần.");
+            hover.SetDimmed(true);
+            for (int i = 0; i < 10000; i++) update();
+            Require(Mathf.Approximately(hover.GetComponent<CanvasGroup>().alpha, .24f), "Không dim thẻ.");
+            hover.ResetPresentation(); hover.PlayConsume(null);
+            typeof(CardHoverVisual).GetField("_consumeElapsed", fields).SetValue(hover, CardHoverVisual.ConsumeDuration - .00001f);
+            update();
+            Require(hover.GetComponent<CanvasGroup>().alpha < .001f && rect.localScale.x < .041f,
+                "Consume không kết thúc mờ/thu nhỏ.");
+            hover.ResetPresentation();
+            Require(rect.localScale == Vector3.one && rect.localRotation == Quaternion.identity
+                && hover.GetComponent<CanvasGroup>().alpha == 1f, "Reset giữ animation cũ.");
+            Debug.Log("[CardUI] PASS: 5 raycast targets; icon click, pointer/focus isolation; 10,000 idle updates without transform/color writes; dim/consume/reset.");
+
+            object Get(object instance, string name) => instance.GetType().GetField(name, fields).GetValue(instance);
         }
 
         [MenuItem("LAC/Tests/Close Card Typography Preview")]

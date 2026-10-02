@@ -182,7 +182,7 @@ namespace LAC.Cards.Editor
                     Near(state.DashCooldownMultiplier, .65f); Near(state.MoveSpeedMultiplier, 1.36f);
                     break;
                 case "LuaThien":
-                    Near(state.DamageMultiplier, 1.5f); Near(state.AttackSpeedMultiplier, .8f);
+                    Near(state.DamageMultiplier, 1.5f); Near(state.AttackSpeedMultiplier, .84f);
                     Near(state.ExplosionRadius, 2.5f); Near(state.ExplosionDamageRatio, .6f);
                     break;
                 case "NoThan":

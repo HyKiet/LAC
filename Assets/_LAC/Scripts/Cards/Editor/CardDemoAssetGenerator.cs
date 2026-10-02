@@ -69,7 +69,7 @@ namespace LAC.Cards.Editor
                 EnsureCard("ThietBich", CardId.ThietBich, "Thiết Bích",
                     "+15% thời gian bất tử sau khi bị đánh mỗi cấp. Không tăng bất tử khi lướt.", 2, Hex("BFA981"), overwrite),
                 EnsureCard("CuongNo", CardId.CuongNo, "Cuồng Nộ",
-                    "+25% sát thương gốc nhưng −10% tốc độ đánh gốc mỗi cấp.", 2, Hex("EDBB3E"), overwrite, .75f)
+                    "+25% sát thương gốc nhưng −8% tốc độ đánh gốc mỗi cấp.", 2, Hex("EDBB3E"), overwrite, .75f)
             };
 
             EnsurePrefab(cards);
@@ -124,7 +124,7 @@ namespace LAC.Cards.Editor
                 case CardId.AmVang: card.EditorConfigureEffects(range: .1f); break;
                 case CardId.HoiXuan: card.EditorConfigureEffects(waveHeal: 1); break;
                 case CardId.ThietBich: card.EditorConfigureEffects(protection: .15f); break;
-                case CardId.CuongNo: card.EditorConfigureEffects(damage: .25f, attackSpeed: -.1f); break;
+                case CardId.CuongNo: card.EditorConfigureEffects(damage: .25f, attackSpeed: -.08f); break;
             }
         }
 
