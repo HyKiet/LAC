@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Core.PerformanceTestData
   _projectile: {fileID: 6566557113357108523, guid: e216bff48a434ab4087c4ae1a2b3830a, type: 3}
   _wave: {fileID: 1705836828421816138, guid: 34bd6c31d67b6bb46bd4ba29b042d3e2, type: 3}
+  _instruments:
+  - {fileID: 11400000, guid: a74f06f43a88d4f46a849d33e2e4eaac, type: 2}
+  - {fileID: 11400000, guid: 0ad05b7b5a0180949b9ea29ef0838d6a, type: 2}
+  - {fileID: 11400000, guid: 64fb97bfb9791ff46a90aed1abc5e355, type: 2}

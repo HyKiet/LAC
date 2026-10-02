@@ -59,6 +59,8 @@ namespace LAC.Player
         [SerializeField, Range(1f, 4f)] private float _dashDamageMultiplier = 1f;
 
         [Header("Hiển thị")]
+        [SerializeField] private VFX.InstrumentWaveData _instrumentWave;
+        public VFX.InstrumentWaveData InstrumentWave => _instrumentWave;
         [SerializeField] private Sprite _bodySprite;
         [SerializeField] private Sprite _portrait;
 

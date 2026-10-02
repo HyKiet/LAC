@@ -128,6 +128,8 @@ namespace LAC.Player
 
         private void Update()
         {
+            if (_character != null && !_character.IsAlive)
+            { _isDashing = false; _checkDrumContact = false; return; }
             if (IsDashing) EmitAfterimage();
 
             if (!isOwned || _input == null) return;

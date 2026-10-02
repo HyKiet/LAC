@@ -17,7 +17,7 @@ namespace LAC.Player
     /// qua <see cref="Combat.DamageSystem"/> — một điểm vào duy nhất, nơi các quy tắc bất tử
     /// được kiểm tra một lần thay vì rải rác ở từng nguồn sát thương.
     /// </remarks>
-    public sealed class PlayerHealth : NetworkBehaviour
+    public sealed partial class PlayerHealth : NetworkBehaviour
     {
         [SerializeField] private PlayerCharacter _character;
         [SerializeField] private PlayerDash _dash;
@@ -94,6 +94,7 @@ namespace LAC.Player
         [Server]
         internal void ServerRestore()
         {
+            ResetRevive();
             int max = _character != null && _character.Data != null ? _character.Data.MaxHealth : 1;
             _maxHealth = max;
             _health = max;
@@ -115,7 +116,7 @@ namespace LAC.Player
             if (_character == null || _character.Data == null) return;
 
             _maxHealth = _character.Data.MaxHealth + Mathf.Max(totalBonus, 0);
-            _health = Mathf.Min(_health + Mathf.Max(healAmount, 0), _maxHealth);
+            if (IsAlive) _health = Mathf.Min(_health + Mathf.Max(healAmount, 0), _maxHealth);
             HealthChanged?.Invoke(_health, _maxHealth);
         }
 

@@ -78,7 +78,7 @@ namespace LAC.Net
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
         {
             if (conn.identity != null && RunManager.Instance != null)
-                RunManager.Instance.UnregisterPlayer();
+                RunManager.Instance.UnregisterPlayer(conn.identity.GetComponent<PlayerCharacter>().IsAlive);
 
             base.OnServerDisconnect(conn);
         }

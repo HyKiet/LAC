@@ -140,9 +140,10 @@ namespace LAC.Core
 
         /// <summary>Ghi nhận một người chơi rời ván. Chỉ host được gọi.</summary>
         [Server]
-        public void UnregisterPlayer()
+        public void UnregisterPlayer(bool wasAlive = true)
         {
-            _alivePlayers = Mathf.Max(_alivePlayers - 1, 0);
+            if (wasAlive) _alivePlayers = Mathf.Max(_alivePlayers - 1, 0);
+            if (_alivePlayers == 0 && _state == RunState.WaveActive) EndRun(false);
         }
 
         /// <summary>Bắt đầu một ván mới. Chỉ host được gọi.</summary>

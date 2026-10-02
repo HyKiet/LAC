@@ -29,6 +29,7 @@ MonoBehaviour:
   _dashDuration: 0.15
   _dashCooldown: 0.4
   _dashDamageMultiplier: 2
+  _instrumentWave: {fileID: 11400000, guid: 64fb97bfb9791ff46a90aed1abc5e355, type: 2}
   _bodySprite: {fileID: 7257567913506708742, guid: 0a6bd1c879129944d93cb980a8928b74, type: 3}
   _portrait: {fileID: 0}
   _animationSet: {fileID: 11400000, guid: 70ff7324b8ac1d2418e2accefe0b4a9a, type: 2}

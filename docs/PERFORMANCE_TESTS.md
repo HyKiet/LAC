@@ -12,6 +12,8 @@ Prefab kiểm thử lấy từ `Data/Tests/Resources/Tests/Performance.asset`.
   LateUpdate; số tối thiểu báo cáo là số đo tại thời điểm đó mỗi khung hình.
 - Ma Trơi vẫn bắn, Ma Da vẫn lao. Đạn địch được cộng thêm ngoài 200 đạn người chơi.
 - Người chơi di chuyển theo vòng, bất tử; 10 hiệu ứng sóng âm mỗi giây.
+- Từ T-31 (03/10/2026), thêm 10 hiệu ứng nhạc cụ/giây, luân phiên ba profile
+  trong Performance.asset. Kết quả tải mở rộng: [INSTRUMENT_REVIVE_TESTS.md](INSTRUMENT_REVIVE_TESTS.md).
 - Tắt VSync, giới hạn ở 240 FPS trong thời gian đo; trả lại cấu hình sau khi đo.
 - Khởi động 10 giây, lấy mẫu 30 giây. Không ghi file trong khoảng lấy mẫu.
 

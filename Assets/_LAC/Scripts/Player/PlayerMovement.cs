@@ -53,7 +53,7 @@ namespace LAC.Player
             // thì hai bên tranh nhau ghi transform, kết quả là hình ảnh giật liên tục.
             _rigidbody.bodyType = isOwned ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
 
-            if (_input != null) _input.enabled = isOwned;
+            if (_input != null) _input.enabled = isOwned && (_character == null || _character.IsAlive);
 
             _lastPosition = transform.position;
         }
@@ -160,6 +160,8 @@ namespace LAC.Player
         private void FixedUpdate()
         {
             if (!isOwned) return;
+            if (_character != null && !_character.IsAlive)
+            { _rigidbody.linearVelocity = Vector2.zero; return; }
 
             // Trong pha lướt, PlayerDash mới là thứ đặt vận tốc. Không nhường thì hai thành
             // phần cùng ghi vào một Rigidbody trong cùng một bước vật lý, và cú lướt bị kéo

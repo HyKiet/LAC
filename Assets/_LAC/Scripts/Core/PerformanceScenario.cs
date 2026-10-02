@@ -19,6 +19,9 @@ namespace LAC.Core
     {
         private ObjectPool<Projectile> _shots;
         private ObjectPool<SoundWave> _waves;
+        private ObjectPool<InstrumentWave> _instrumentPool;
+        private InstrumentWaveData[] _instruments;
+        private int _instrumentSerial;
         private PlayerCharacter _player;
         private PlayerMovement _movement;
         private WeaponAuto _weapon;
@@ -75,6 +78,9 @@ namespace LAC.Core
             var data=Resources.Load<PerformanceTestData>("Tests/Performance");
             _shots=PoolRegistry.Get(data.Projectile,200,256);
             _waves=PoolRegistry.Get(data.Wave,16,64);
+            _instruments = data.Instruments;
+            if (_instruments != null && _instruments.Length > 0)
+                _instrumentPool = PoolRegistry.Get(_instruments[0].Prefab, 24, 256);
             _mainRecorder=ProfilerRecorder.StartNew(ProfilerCategory.Internal,"Main Thread",1);
             _gcRecorder=ProfilerRecorder.StartNew(ProfilerCategory.Memory,"GC Allocated In Frame",1);
             _began=Time.unscaledTime; _ready=true;
@@ -105,6 +111,13 @@ namespace LAC.Core
                 _nextWave=Time.time+.2f;
                 for(int i=0;i<2;i++) _waves.Get(_player.transform.position,Quaternion.identity)
                     .Play(_waves,.2f,4,new Color32(79,166,148,255));
+                if (_instrumentPool != null)
+                    for (int i = 0; i < 2; i++)
+                    {
+                        var profile = _instruments[_instrumentSerial++ % _instruments.Length];
+                        _instrumentPool.Get(_player.transform.position, Quaternion.identity)
+                            .Play(_instrumentPool, profile, Vector2.right, 4, 55, 12);
+                    }
             }
             float elapsed=Time.unscaledTime-_began;
             if(elapsed<10) return;

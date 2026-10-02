@@ -49,6 +49,7 @@ namespace LAC.Combat
         private ObjectPool<Projectile> _projectilePool;
         private ObjectPool<VFX.SoundWave> _wavePool;
         private ObjectPool<VFX.ArcSlash> _slashPool;
+        private ObjectPool<VFX.InstrumentWave> _instrumentPool;
         // Phát bắn kế tiếp sau khi lướt được nhân sát thương — xem CharacterData.
         private bool _empoweredShot;
         private PlayerUpgradeState _upgrades;
@@ -172,7 +173,8 @@ namespace LAC.Combat
                 DamageSystem.ApplyToEnemy(enemy, damage, origin);
             }
 
-            if (data.SpawnSoundWave) SpawnWave(origin, 0.5f, AttackRange);
+            if (data.InstrumentWave != null) SpawnInstrument(origin, Vector2.right, data);
+            else if (data.SpawnSoundWave) SpawnWave(origin, 0.5f, AttackRange);
         }
 
         /// <summary>Hình cung hướng về mục tiêu gần nhất — roi sắt của Gióng.</summary>
@@ -215,11 +217,12 @@ namespace LAC.Combat
                 DamageSystem.ApplyToEnemy(enemy, damage, origin);
             }
 
-            SpawnSlash(origin, facing, data);
+            if (data.InstrumentWave != null) SpawnInstrument(origin, facing, data);
+            else SpawnSlash(origin, facing, data);
 
             // Vòng nhỏ đặt lệch về phía trước, đủ để đọc ra hướng vung roi — chỉ khi bản
             // thân hoạt ảnh chưa tả được đường roi.
-            if (data.SpawnSoundWave)
+            if (data.InstrumentWave == null && data.SpawnSoundWave)
                 SpawnWave(origin + facing * (AttackRange * 0.5f), 0.3f, AttackRange * 0.7f);
         }
 
@@ -252,6 +255,7 @@ namespace LAC.Combat
                 Projectile shot = _projectilePool.Get(origin, Quaternion.identity);
                 shot.Launch(_projectilePool, shotDirection, data.ProjectileSpeed, damage, lifetime,
                     hitLimit, explodes, explosionRadius, explosionRatio);
+                if (data.InstrumentWave != null) SpawnInstrument(origin, shotDirection, data);
             }
         }
 
@@ -261,6 +265,15 @@ namespace LAC.Combat
         /// mọi phía, vệt cung nghĩa là đòn chỉ trúng phía trước. Gióng vẽ sóng tròn thì người
         /// chơi học sai tầm đánh và đứng sai chỗ.
         /// </remarks>
+        private void SpawnInstrument(Vector2 origin, Vector2 facing, CharacterData data)
+        {
+            var visual = data.InstrumentWave;
+            if (visual == null || visual.Prefab == null) return;
+            _instrumentPool ??= PoolRegistry.Get(visual.Prefab, prewarm: 24, softLimit: 256);
+            _instrumentPool.Get(origin, Quaternion.identity).Play(_instrumentPool, visual,
+                facing, AttackRange, data.ArcHalfAngle, data.ProjectileSpeed);
+        }
+
         private void SpawnSlash(Vector2 origin, Vector2 facing, CharacterData data)
         {
             if (_arcSlashPrefab == null) return;
