@@ -42,6 +42,7 @@ namespace LAC.Cards
         private Text _title;
         private Text _subtitle;
         private Text _selectionHint;
+        private int _rerollsRemaining;
         private bool _built;
 
         private void Awake()
@@ -53,6 +54,7 @@ namespace LAC.Cards
             int rerollsRemaining, Action<CardDefinition> onPick, Action onReroll)
         {
             EnsureBuilt();
+            _rerollsRemaining = rerollsRemaining;
             _overlay.SetActive(true);
             SetInventoryVisible(false);
             _evolutionPanel.SetActive(false);
@@ -120,7 +122,7 @@ namespace LAC.Cards
                 slot.Button.interactable = enabled;
                 slot.Hover.SetInteractable(enabled);
             }
-            _rerollButton.interactable = enabled;
+            _rerollButton.interactable = enabled && _rerollsRemaining > 0;
         }
 
         public void ShowWaiting()
@@ -376,7 +378,7 @@ namespace LAC.Cards
 
         private Button CreateButton(string name, Transform parent, out Text label)
         {
-            Image image = CreateImage(name, parent, Hex("2B2724"), true);
+            Image image = CreateImage(name, parent, Color.white, true);
             var button = image.gameObject.AddComponent<Button>();
             ColorBlock colors = button.colors;
             colors.normalColor = Hex("2B2724");

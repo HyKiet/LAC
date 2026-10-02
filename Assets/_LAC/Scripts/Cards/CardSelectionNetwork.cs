@@ -28,7 +28,18 @@ namespace LAC.Core
         private readonly SyncList<CardGrant> _cardGrants = new SyncList<CardGrant>();
         private readonly Dictionary<int, Selection> _cardSelections = new Dictionary<int, Selection>();
         private readonly Dictionary<uint, int> _cardRerolls = new Dictionary<uint, int>();
-        private readonly Dictionary<uint, int> _clientGrantCounts = new Dictionary<uint, int>();
+        private sealed class ClientCardReplay
+        {
+            internal PlayerUpgradeState State;
+            internal CharacterData Data;
+            internal IReadOnlyList<CardDefinition> Cards;
+        }
+
+        private readonly Dictionary<uint, List<CardDefinition>> _clientCardHistories = new Dictionary<uint, List<CardDefinition>>();
+        private readonly Dictionary<uint, ClientCardReplay> _clientCardReplays = new Dictionary<uint, ClientCardReplay>();
+        private static readonly CardDefinition[] EmptyCardHistory = System.Array.Empty<CardDefinition>();
+        private bool _clientHistoryDirty = true;
+        private bool _clientHistoryBound;
         private CardDefinition[] _cardDefinitions;
         private CardSelectionRulesData _cardRules;
         private CardSelectionRulesData CardRules => _cardRules != null ? _cardRules :
@@ -208,24 +219,91 @@ namespace LAC.Core
 
         private void ApplyCardHistory()
         {
+            BindClientCardHistory();
             if (_clientCardRun != _cardRun)
             {
                 _clientCardRun = _cardRun;
-                _clientGrantCounts.Clear();
+                _clientCardReplays.Clear();
+                _clientHistoryDirty = true;
+            }
+            if (_clientHistoryDirty)
+            {
+                // Giữ thứ tự grant; dựng lại chỉ khi SyncList đổi, không quét mỗi frame.
+                _clientCardHistories.Clear();
+                for (int i = 0; i < _cardGrants.Count; i++)
+                {
+                    CardGrant grant = _cardGrants[i];
+                    if (!_clientCardHistories.TryGetValue(grant.Player, out var history))
+                    {
+                        history = new List<CardDefinition>(15);
+                        _clientCardHistories.Add(grant.Player, history);
+                    }
+                    history.Add(FindCard(grant.Card));
+                }
+                _clientHistoryDirty = false;
             }
             // Lịch sử chỉ chứa định danh, tự đồng bộ cho người vào muộn. Không gửi chỉ số.
-            foreach (PlayerCharacter player in PlayerRegistry.All)
+            var players = PlayerRegistry.All;
+            for (int i = 0; i < players.Count; i++)
             {
-                if (player == null) continue;
-                int count = 0;
-                foreach (CardGrant grant in _cardGrants)
-                    if (grant.Player == player.netId) count++;
-                if (_clientGrantCounts.TryGetValue(player.netId, out int previous) && previous == count) continue;
-                player.Upgrades.ResetRun();
-                foreach (CardGrant grant in _cardGrants)
-                    if (grant.Player == player.netId) player.Upgrades.Apply(FindCard(grant.Card), null);
-                _clientGrantCounts[player.netId] = count;
+                PlayerCharacter player = players[i];
+                // Grant có thể tới trước nhân vật/dữ liệu; đợi để tiến hoá đúng kiểu vũ khí.
+                if (player == null || player.Data == null || player.Upgrades == null) continue;
+                IReadOnlyList<CardDefinition> history = _clientCardHistories.TryGetValue(player.netId, out var cards)
+                    ? cards : EmptyCardHistory;
+                if (_clientCardReplays.TryGetValue(player.netId, out var replay)
+                    && replay.State == player.Upgrades && replay.Data == player.Data
+                    && SameCardHistory(replay.Cards, history))
+                {
+                    replay.Cards = history;
+                    continue;
+                }
+                player.Upgrades.ReplayCards(history);
+                _clientCardReplays[player.netId] = new ClientCardReplay
+                { State = player.Upgrades, Data = player.Data, Cards = history };
             }
+        }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            // Initial deserialize không phát OnChange; luôn nạp snapshot đầu phiên.
+            ResetClientCardHistory();
+            BindClientCardHistory();
+        }
+
+        public override void OnStopClient()
+        {
+            if (_clientHistoryBound) _cardGrants.OnChange -= OnClientCardHistoryChanged;
+            _clientHistoryBound = false;
+            ResetClientCardHistory();
+            base.OnStopClient();
+        }
+
+        private void BindClientCardHistory()
+        {
+            if (_clientHistoryBound) return;
+            _cardGrants.OnChange += OnClientCardHistoryChanged;
+            _clientHistoryBound = true;
+        }
+
+        private void OnClientCardHistoryChanged(SyncList<CardGrant>.Operation operation, int index, CardGrant grant)
+            => _clientHistoryDirty = true;
+
+        private void ResetClientCardHistory()
+        {
+            _clientCardRun = -1;
+            _clientHistoryDirty = true;
+            _clientCardHistories.Clear();
+            _clientCardReplays.Clear();
+        }
+
+        private static bool SameCardHistory(IReadOnlyList<CardDefinition> previous, IReadOnlyList<CardDefinition> current)
+        {
+            if (ReferenceEquals(previous, current)) return true;
+            if (previous.Count != current.Count) return false;
+            for (int i = 0; i < current.Count; i++) if (previous[i] != current[i]) return false;
+            return true;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace LAC.Cards
         private readonly int[] _stacks = new int[Enum.GetValues(typeof(CardId)).Length];
         private PlayerCharacter _character;
         private float _healthRatio;
+        private bool _replayingCards;
         private readonly List<CardEvolutionData> _evolutions = new List<CardEvolutionData>();
         public IReadOnlyList<CardEvolutionData> Evolutions => _evolutions;
         public bool HasEvolution(string id)
@@ -60,8 +61,23 @@ namespace LAC.Cards
             }
             if (MaxHealthBonus != oldHealthBonus && health != null && NetworkServer.active)
                 health.ServerApplyMaxHealthBonus(MaxHealthBonus, Mathf.Max(0, MaxHealthBonus - oldHealthBonus));
-            Changed?.Invoke();
+            if (!_replayingCards) Changed?.Invoke();
             return true;
+        }
+
+        // Client dựng lại cùng lịch sử nhưng HUD chỉ được thấy trạng thái cuối, không thấy reset tạm.
+        internal void ReplayCards(IReadOnlyList<CardDefinition> history)
+        {
+            bool previousReplay = _replayingCards;
+            _replayingCards = true;
+            try
+            {
+                ResetRun();
+                if (history != null)
+                    for (int i = 0; i < history.Count; i++) Apply(history[i], null);
+            }
+            finally { _replayingCards = previousReplay; }
+            if (!_replayingCards) Changed?.Invoke();
         }
 
         private void ApplyEffects(CardDefinition card)
@@ -92,7 +108,7 @@ namespace LAC.Cards
             ProjectileDamageMultiplier = 1f;
             _healthRatio = ProjectileSpreadDegrees = ExplosionRadius = ExplosionDamageRatio = 0f;
             WaveHeal = 0;
-            Changed?.Invoke();
+            if (!_replayingCards) Changed?.Invoke();
         }
     }
 }

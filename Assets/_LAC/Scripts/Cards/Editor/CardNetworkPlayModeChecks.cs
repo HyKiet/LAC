@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -59,7 +60,7 @@ namespace LAC.Cards.Editor
                     Set(health, "_invulnerableUntil", Time.time + 10000f);
                 }
                 await Task.Delay(700);
-                ClearWave();
+                await ClearWave();
                 await Task.Delay(600);
                 int token = Get<int>(ui, "_token");
                 int revision = Get<int>(ui, "_revision");
@@ -81,7 +82,7 @@ namespace LAC.Cards.Editor
                 Debug.Log("[CardNet] PASS remote choice, independent rerolls, both players upgraded.");
 
                 await Task.Delay(600);
-                ClearWave();
+                await ClearWave();
                 double openedAt = Time.realtimeSinceStartupAsDouble;
                 await Task.Delay(600);
                 // Hai yêu cầu cùng revision: chỉ một lượt đổi được trừ.
@@ -105,7 +106,7 @@ namespace LAC.Cards.Editor
                 Debug.Log($"[CardNet] PASS timeout {elapsed:F2}s, duplicate reroll, per-run limit.");
 
                 await Task.Delay(600);
-                ClearWave();
+                await ClearWave();
                 await Task.Delay(600);
                 PickFirst(ui);
                 await Task.Delay(1500);
@@ -135,10 +136,23 @@ namespace LAC.Cards.Editor
             foreach (CardId id in Enum.GetValues(typeof(CardId))) count += player.Upgrades.GetStacks(id);
             return count;
         }
-        private static void ClearWave()
+        private static async Task ClearWave()
         {
+            var run = RunManager.Instance;
+            var waves = UnityEngine.Object.FindAnyObjectByType<WaveManager>();
+            Require(run != null && waves != null, "Thiếu bộ điều phối đợt thử.");
+            int wave = run.CurrentWave;
+            // T-44 chạy cùng lịch trên hai máy; không đẩy riêng lịch host làm lệch ID quái.
+            await Wait(() => Get<int>(waves, "_spawnedWave") == wave
+                && Get<ICollection>(waves, "_schedule").Count > 0
+                && Get<int>(waves, "_nextSpawnIndex") >= Get<ICollection>(waves, "_schedule").Count, 30000);
+            await Task.Delay(500);
+            Require(run.CurrentWave == wave, "Đợt đổi trước khi dọn xong lịch thử.");
             for (int i = EnemyRegistry.Count - 1; i >= 0; i--)
                 DamageSystem.ApplyToEnemy(EnemyRegistry.Alive[i], int.MaxValue, Vector2.zero);
+            await Wait(() => run.State == RunState.CardSelection, 3000);
+            Require(run.CurrentWave == wave && run.State == RunState.CardSelection,
+                "Không mở chọn thẻ sau khi dọn hết lịch và quái.");
         }
         private static void PickFirst(CardSelectionController ui)
         {

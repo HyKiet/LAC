@@ -98,6 +98,14 @@ Nguồn dash: [`PlayerDash.cs`](../Assets/_LAC/Scripts/Player/PlayerDash.cs),
 
 ## 5. Điều kiện để chốt cân bằng toàn game
 
+Cập nhật bàn giao 02/10/2026 sau kiểm snapshot Cards: đổi host sang Tấm và dùng
+Nỏ Thần ghi cảnh báo `SpriteAnimator`: Attack dài 0,13 s, vượt trần 0,10 s và tự
+chạy nhanh 1,30× trên host/client. Không có lỗi đỏ. Đây là thời lượng animation
+VFX/Player, chưa sửa ngoài Cards; @Kiet/artist cần xem chuyển trạng thái hình ảnh
+khi bắn nhanh, không tự giảm thẻ để xoá cảnh báo. HUD demo/nút Stop Host/Client
+cũng còn chồng góc trên màn chọn thẻ; xem ảnh ở
+[CARD_HISTORY_OPTIMIZATION.md](CARD_HISTORY_OPTIMIZATION.md).
+
 Ưu tiên bàn giao: kiểm dash/RTT và T-32 → bổ sung quái/boss → thu telemetry T-43 →
 chạy đủ 16 đợt với ba nhân vật, nhiều build và cả host một người/co-op hai người.
 Cần ghi tỉ lệ chọn thẻ, tiến hoá, thắng/thua và máu mất theo đợt để phân biệt thẻ mạnh

@@ -154,6 +154,11 @@ namespace LAC.Cards.Editor
             hover.ResetPresentation();
             Require(rect.localScale == Vector3.one && rect.localRotation == Quaternion.identity
                 && hover.GetComponent<CanvasGroup>().alpha == 1f, "Reset giữ animation cũ.");
+            view.Show(new[] { Find(cards, CardId.CuongNo) }, state, 0, _ => { }, () => { });
+            view.SetButtonsEnabled(false); view.SetButtonsEnabled(true);
+            var reroll = FindInactive("Reroll").GetComponent<Button>();
+            Require(!reroll.interactable, "Bật tương tác mở khoá đổi khi hết lượt.");
+            Require(reroll.GetComponent<Image>().color == Color.white, "Nút đổi bị nhân tint hai lần.");
             Debug.Log("[CardUI] PASS: 5 raycast targets; icon click, pointer/focus isolation; 10,000 idle updates without transform/color writes; dim/consume/reset.");
 
             object Get(object instance, string name) => instance.GetType().GetField(name, fields).GetValue(instance);
