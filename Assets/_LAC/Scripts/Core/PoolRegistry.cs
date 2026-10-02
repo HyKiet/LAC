@@ -36,7 +36,7 @@ namespace LAC.Core
         /// <summary>
         /// Lấy pool của một prefab, tạo mới nếu chưa tồn tại.
         /// </summary>
-        /// <param name="prewarm">Chỉ có tác dụng ở lần gọi đầu tiên với prefab này.</param>
+        /// <param name="prewarm">Nâng dung lượng tối thiểu nếu prefab đã có pool dùng chung.</param>
         public static ObjectPool<T> Get<T>(T prefab, int prewarm = 0, int softLimit = 256) where T : Component
         {
             if (prefab == null)
@@ -45,7 +45,12 @@ namespace LAC.Core
                 return null;
             }
 
-            if (Pools.TryGetValue(prefab, out IPool existing)) return (ObjectPool<T>)existing;
+            if (Pools.TryGetValue(prefab, out IPool existing))
+            {
+                var shared = (ObjectPool<T>)existing;
+                shared.EnsureCapacity(prewarm, softLimit);
+                return shared;
+            }
 
             var pool = new ObjectPool<T>(prefab, EnsureRoot(), prewarm, softLimit);
             Pools.Add(prefab, pool);

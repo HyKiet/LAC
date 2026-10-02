@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace LAC.Enemies
 {
-    public enum EnemyBehaviour { Pursuer, Ranged, Charger, Splitter }
+    public enum EnemyBehaviour { Pursuer, Ranged, Charger, Splitter, Boss }
     /// <summary>Chỉ số và hình dạng của một loại quái.</summary>
     /// <remarks>
     /// Độ thử thách của LẠC đến từ thành phần đợt chứ không từ trí thông minh của từng con
@@ -14,6 +14,8 @@ namespace LAC.Enemies
     {
         [SerializeField] private string _displayName = "Cô Hồn";
         [SerializeField] private EnemyBehaviour _behaviour;
+        [SerializeField] private BossData _boss;
+        public BossData Boss => _boss;
         [Header("Hành vi đặc biệt")]
         [SerializeField, Min(0f)] private float _keepDistance = 5f;
         [SerializeField, Min(0.1f)] private float _projectileSpeed = 3f;

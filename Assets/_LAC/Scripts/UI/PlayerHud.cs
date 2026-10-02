@@ -27,6 +27,8 @@ namespace LAC.UI
             if (waveHud != null) Instantiate(waveHud, transform, false);
             var drumHud = Resources.Load<DrumHud>("UI/DrumHud");
             if (drumHud != null) Instantiate(drumHud, transform, false);
+            var bossHud = Resources.Load<BossHud>("UI/BossHud");
+            if (bossHud != null) Instantiate(bossHud, transform, false);
             if (_barRoot == null) return;
             var border = CreateImage("HealthBar", _barRoot, _borderColor);
             border.anchorMin = border.anchorMax = new Vector2(0f, 0.5f);

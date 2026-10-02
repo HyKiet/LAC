@@ -141,7 +141,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-29** Nhân vật Tấm — sáo trúc, đòn tia; tăng sát thương áp cho **phát bắn kế tiếp** — @Kiet · 08/09
   > Phần thưởng nạp một lần khi lướt và **tiêu ngay lúc khai hoả**, không phải lúc đạn trúng — tiêu lúc trúng thì hai viên bắn liên tiếp cùng ăn một phần thưởng. Không dùng cửa sổ thời gian: hồi chiêu lướt 0.4 s ngắn hơn cửa sổ 1 s của GDD nên hiệu ứng sẽ bật vĩnh viễn, xem mục 7. `PlayerDash.Dashed` phát trên mọi máy để host cũng áp được phần thưởng cho nhân vật của client. `CharacterData.DashDamageMultiplier` = 2 · `Combat/WeaponAuto.ConsumeDamage` · `Player/PlayerDash.cs` · `Data/Animations/Tam.asset` (TinySwords Archer, tạm — chờ T-33).
 - [ ] **T-31** Sóng âm riêng cho từng nhạc cụ — **@Kiet**
-- [ ] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**
+- [x] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**
+  > Codex · 02/10/2026: `Core/PerformanceScenario.cs` duy trì 40 quái, 200 đạn và 10 sóng âm/giây; Windows Development 1080p đạt p95 4.187 ms trên i9-12900H/RTX 3060 Laptop. Sửa dung lượng pool dùng chung trong `ObjectPool.cs`/`PoolRegistry.cs`, đổi đạn người chơi sang gỉ đồng trong suốt. Đã xem Game View; Console không lỗi đỏ. Kịch bản, JSON và giới hạn phép đo: [PERFORMANCE_TESTS.md](PERFORMANCE_TESTS.md).
 - [ ] **T-33** Sprite Gióng, Tấm, 20 icon thẻ (12 nền + 8 tiến hoá) — **@artist**
 
 ---
@@ -160,7 +161,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Codex · 30/09/2026: `Drum/DrumNetwork.cs` mở rộng RunManager, SyncVar thời điểm hồi và RPC hiệu ứng, hồi chung 20 giây, khóa trước hiệu ứng chống kích hoạt kép. Đã thử host + client độc lập qua LatencySimulation, cú lướt client kích hoạt đúng một lần và nhận lại trạng thái hồi.
 - [x] **T-38** Hồn nạp năng lượng cho Trống Đồng, vòng nạp trên HUD — **@Kiet**
   > Codex · 30/09/2026: `DrumData.cs`, `DrumRules.asset`, `UI/DrumHud.cs` và prefab HUD: 20 Hồn/lần, vòng năng lượng + vòng hồi, nhắc lướt khi sẵn sàng. `SoulSpawner` thu hồi Hồn cũ khi chơi lại. Đã thử nạp trong hồi, giới hạn nạp, reset và HUD; Console không lỗi đỏ.
-- [ ] **T-39** Trùm Chằn Tinh — hai pha, máu tỉ lệ theo số người chơi — **@Kiet**
+- [x] **T-39** Trùm Chằn Tinh — hai pha, máu tỉ lệ theo số người chơi — **@Kiet**
+  > Codex · 02/10/2026: `Enemies/EnemyBoss.cs`, `BossNetwork.cs`, `BossData.cs`, dữ liệu Chằn Tinh và `UI/BossHud.cs`; wave 16 có boss 800/1600 máu, lao/phun đạn rồi quét đuôi/triệu hồi Ma Da ở 50% máu, Trống Đồng ngắt đòn. Play Mode ALL PASSED; hai tiến trình với giả lập 100 ms xác nhận chuyển pha, vào giữa trận, từ chối sát thương client, Victory và Restart. Đã xem HUD/vùng báo đòn, Console cuối 0 lỗi/0 cảnh báo. Sprite tạm chờ T-47; [BOSS_TESTS.md](BOSS_TESTS.md).
 - [ ] **T-40** Mời bạn qua Steam overlay, chuyển sang FizzySteamworks — **@Kang**
   > Đổi transport phải sửa `Net/NetworkManagerLAC.cs` — file của @Kiet. Báo trước khi động vào.
 - [ ] **T-41** Hạ gục và hồi sinh — đồng đội đứng cạnh 3 giây — **@Kiet**

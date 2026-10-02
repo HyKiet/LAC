@@ -25,12 +25,24 @@ namespace LAC.Core
         private readonly Transform _root;
         private readonly Stack<T> _idle;
         private readonly HashSet<T> _active;
-        private readonly int _softLimit;
+        private int _softLimit;
         private bool _limitWarningShown;
 
         public int CountActive => _active.Count;
         public int CountIdle => _idle.Count;
         public int CountTotal => _active.Count + _idle.Count;
+
+        /// <summary>Chuẩn bị thêm khi nhiều hệ thống dùng chung prefab, không thu hẹp pool cũ.</summary>
+        public void EnsureCapacity(int prewarm, int softLimit)
+        {
+            _softLimit = Mathf.Max(_softLimit, softLimit);
+            while (CountTotal < prewarm)
+            {
+                T instance = CreateInstance();
+                instance.gameObject.SetActive(false);
+                _idle.Push(instance);
+            }
+        }
 
         /// <param name="prefab">Prefab gốc. Không được là null.</param>
         /// <param name="root">Transform chứa các đối tượng nhàn rỗi.</param>

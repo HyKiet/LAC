@@ -238,18 +238,10 @@ MonoBehaviour:
     _spawnInterval: 2
     _burst: 5
     _directions: 5
-  - _label: "16 \xB7 \xC2m Ph\u1EE7 \u2014 Ch\u1EB1n Tinh (T-39)"
+  - _label: "Ch\u1EB1n Tinh"
     _groups:
-    - _enemy: {fileID: 11400000, guid: 42508c11239813941924512be2142bf8, type: 2}
-      _count: 18
-    - _enemy: {fileID: 11400000, guid: 58f163150cae46e428c13495eb8fdd88, type: 2}
-      _count: 5
-    - _enemy: {fileID: 11400000, guid: 3fba26e150db7ad4d963cb9caeae0343, type: 2}
-      _count: 3
-    - _enemy: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}
-      _count: 4
-    - _enemy: {fileID: 11400000, guid: 83f7373854742e64098d4a27b31574ca, type: 2}
-      _count: 3
+    - _enemy: {fileID: 11400000, guid: d9dd518410d87c9449d7ec91cde7aaca, type: 2}
+      _count: 1
     _spawnInterval: 1.8
     _burst: 6
     _directions: 6

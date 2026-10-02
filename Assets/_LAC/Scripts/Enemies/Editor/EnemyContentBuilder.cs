@@ -97,6 +97,7 @@ namespace LAC.Enemies.Editor
                 for(int i=0;i<5;i++){var g=groups.GetArrayElementAtIndex(i);g.FindPropertyRelative("_enemy").objectReferenceValue=all[i];g.FindPropertyRelative("_count").intValue=counts[i];}
             }
             so.ApplyModifiedPropertiesWithoutUndo(); AssetDatabase.SaveAssets(); AssetDatabase.Refresh();
+            BossContentBuilder.Build();
             Debug.Log("[EnemyContent] T34 assets ready");
         }
     }

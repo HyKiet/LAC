@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11722cc2dfa6d6f428c4b1d1317e9b01, type: 3}
+  m_Name: ChanTinhRules
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Enemies.BossData
+  _healthPerExtraPlayer: 1
+  _phaseThreshold: 0.5
+  _warning: 0.9
+  _recovery: 1.2
+  _chargeSpeed: 10
+  _chargeDuration: 0.8
+  _fanCount: 5
+  _fanAngle: 60
+  _sweepRadius: 3.5
+  _summonInterval: 8
+  _summonCount: 4
+  _populationLimit: 40
+  _summonRadius: 4
+  _summon: {fileID: 11400000, guid: 7515ae02630071c46869d97ba7aa08c9, type: 2}

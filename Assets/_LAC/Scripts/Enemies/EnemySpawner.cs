@@ -6,7 +6,7 @@ using UnityEngine;
 namespace LAC.Enemies
 {
     // Chỉ manager có NetworkIdentity. Quái, đạn và đường báo lao đều dùng pool cục bộ.
-    public sealed class EnemySpawner : NetworkBehaviour
+    public sealed partial class EnemySpawner : NetworkBehaviour
     {
         private static EnemySpawner _instance;
         public static EnemySpawner Instance
@@ -75,6 +75,7 @@ namespace LAC.Enemies
             _pool ??= PoolRegistry.Get(_enemyPrefab, _prewarm, _softLimit);
             var enemy = _pool.Get(position, Quaternion.identity);
             enemy.Initialize(id, data, position);
+            if (enemy.IsBoss && isServer) RegisterBoss(enemy);
             return enemy;
         }
         public void ResetRun()
@@ -90,11 +91,15 @@ namespace LAC.Enemies
             _receivedHighWater = -1;
             _deadIds.Clear();
             _lastRoster.Clear();
+            ResetBossEncounter();
         }
         [Server]
         public void DamageEnemy(Enemy enemy, float amount)
         {
-            if (enemy != null && enemy.IsAlive && enemy.ApplyDamage(amount)) KillEnemy(enemy);
+            if (enemy == null || !enemy.IsAlive) return;
+            bool killed = enemy.ApplyDamage(amount);
+            if (enemy.IsBoss) UpdateBossHealth(enemy);
+            if (killed) KillEnemy(enemy);
         }
         [Server]
         public void KillEnemy(Enemy enemy)
@@ -104,12 +109,14 @@ namespace LAC.Enemies
             Vector2 position = enemy.Position;
             var child = enemy.Data.Behaviour == EnemyBehaviour.Splitter ? enemy.Data.SplitChild : null;
             float offset = enemy.Data.SplitOffset;
+            bool boss = enemy.IsBoss;
             enemy.Kill();
             int childIndex = child != null ? _catalog.IndexOf(child) : -1;
             ApplySplit(id, childIndex, position, offset);
             // Không tái dùng chính object cha làm con ngay trong callback sát thương của cha.
             _pool?.Release(enemy);
             RpcEnemyDied(id, childIndex, position, offset, Run.Seed, Run.CurrentWave);
+            if (boss) EndBossEncounter();
         }
         private void ApplySplit(int parent, int childIndex, Vector2 position, float offset)
         {
@@ -163,9 +170,9 @@ namespace LAC.Enemies
             if (!isServer && Matches(seed, wave) && EnemyRegistry.TryGet(id, out var enemy))
                 enemy.BeginCharge(direction, Mathf.Max(0f, (float)(NetworkTime.time - time)));
         }
-        [ServerCallback]
         private void Update()
         {
+            if (!isServer) { ApplyBossStatus(); return; }
             if (Run == null || Run.State != RunState.WaveActive || Time.unscaledTime < _nextSnapshotAt) return;
             _nextSnapshotAt = Time.unscaledTime + _snapshotInterval;
             BroadcastSnapshot();

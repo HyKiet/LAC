@@ -1,0 +1,56 @@
+--- Logs/BossClient-final.log ---
+[BossClient] seed=542827223 wave=1 state=WaveActive hp=0/0 phase=0 count=0 action=none shots=0
+[BossClient] seed=542827223 wave=1 state=WaveActive hp=0/0 phase=0 count=1 action=none shots=0
+[BossClient] seed=542827223 wave=1 state=WaveActive hp=0/0 phase=0 count=2 action=none shots=0
+[BossClient] seed=542827223 wave=1 state=WaveActive hp=0/0 phase=0 count=3 action=none shots=0
+[BossClient] seed=542827223 wave=1 state=WaveActive hp=0/0 phase=0 count=4 action=none shots=0
+[BossClient] seed=542827223 wave=1 state=WaveActive hp=0/0 phase=0 count=5 action=none shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Rest shots=0
+[BossClient] client damage rejected=True; health synchronized=True
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Charge shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Fan shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Fan shots=5
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Charge shots=5
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Charge shots=3
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Charge shots=1
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Charge shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=1 action=Transition shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=1 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=5 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=5 action=Sweep shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=5 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=9 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=9 action=Sweep shots=0
+--- Logs/BossClient-latejoin.log ---
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=0 action=none shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=13 action=Summon shots=0
+[BossClient] client damage rejected=True; health synchronized=True
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=13 action=Sweep shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=12 action=Sweep shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=11 action=Sweep shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=11 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=15 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=14 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=13 action=Sweep shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=12 action=Sweep shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=11 action=Sweep shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=11 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=10 action=Summon shots=0
+[BossClient] seed=542827223 wave=16 state=WaveActive hp=799/1600 phase=2 count=10 action=Sweep shots=0
+--- Logs/BossClient-victory.log ---
+[BossClient] seed=543138391 wave=1 state=Defeat hp=0/0 phase=0 count=0 action=none shots=0
+[BossClient] seed=543138391 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Rest shots=0
+[BossClient] client damage rejected=True; health synchronized=True
+[BossClient] seed=543138391 wave=16 state=WaveActive hp=1600/1600 phase=1 count=1 action=Charge shots=0
+[BossClient] seed=543138391 wave=16 state=WaveActive hp=799/1600 phase=2 count=1 action=Transition shots=0
+[BossClient] seed=543138391 wave=16 state=WaveActive hp=799/1600 phase=2 count=1 action=Summon shots=0
+[BossClient] seed=543138391 wave=16 state=WaveActive hp=799/1600 phase=2 count=5 action=Summon shots=0
+[BossClient] seed=543138391 wave=16 state=WaveActive hp=799/1600 phase=2 count=5 action=Sweep shots=0
+[BossClient] seed=543138391 wave=16 state=Victory hp=0/1600 phase=2 count=0 action=none shots=0
+[BossClient] seed=543057480 wave=1 state=WaveActive hp=0/0 phase=0 count=1 action=none shots=0
+[BossClient] seed=543057480 wave=1 state=WaveActive hp=0/0 phase=0 count=2 action=none shots=0
+[BossClient] seed=543057480 wave=1 state=WaveActive hp=0/0 phase=0 count=3 action=none shots=0
+[BossClient] seed=543057480 wave=1 state=WaveActive hp=0/0 phase=0 count=4 action=none shots=0
+[BossClient] seed=543057480 wave=1 state=WaveActive hp=0/0 phase=0 count=5 action=none shots=0
+[BossClient] seed=543057480 wave=1 state=WaveActive hp=0/0 phase=0 count=6 action=none shots=0
+[BossClient] seed=543057480 wave=1 state=Defeat hp=0/0 phase=0 count=6 action=none shots=0

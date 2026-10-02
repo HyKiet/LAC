@@ -72,6 +72,7 @@ namespace LAC.Enemies
         public EnemyData Data => _data;
         public EnemyState State => _state;
         public float Health => _health;
+        public float MaxHealth { get; private set; }
         public bool IsAlive => _state != EnemyState.Dead;
         public Vector2 Position => _rigidbody != null ? _rigidbody.position : (Vector2)transform.position;
         public float HitRadius => _collider != null
@@ -83,12 +84,14 @@ namespace LAC.Enemies
             _id = id;
             _data = data;
             _health = data.MaxHealth;
+            MaxHealth = _health;
             _target = null;
             _nextAttackAt = 0f;
             _knockbackEndsAt = 0f;
             _stunnedUntil = 0f;
             _knockbackVelocity = Vector2.zero;
             ResetBehaviour();
+            ResetBoss();
 
             _rigidbody.position = position;
             transform.position = position;
@@ -119,6 +122,7 @@ namespace LAC.Enemies
             EnemyRegistry.Unregister(this);
             _target = null;
             _data = null;
+            if (_chargeLine != null) _chargeLine.enabled = false;
         }
 
         /// <summary>
@@ -159,7 +163,7 @@ namespace LAC.Enemies
         /// </remarks>
         public void ApplyKnockback(Vector2 fromPosition)
         {
-            if (!IsAlive || IsStunned || _knockbackDistance <= 0f) return;
+            if (!IsAlive || IsStunned || _knockbackDistance <= 0f || IsBoss) return;
 
             Vector2 away = Position - fromPosition;
             if (away.sqrMagnitude < 0.0001f) return;
@@ -198,6 +202,7 @@ namespace LAC.Enemies
             _chargeEndsAt = 0f;
             _nextChargeAt = _stunnedUntil + (_data != null ? _data.ChargeInterval : 2f);
             if (_chargeLine != null) _chargeLine.enabled = false;
+            if (IsBoss && Mirror.NetworkServer.active) EnemySpawner.Instance.InterruptBoss(this, duration);
             if (_animator != null) _animator.SetBaseState(AnimState.Idle);
         }
 
@@ -221,7 +226,8 @@ namespace LAC.Enemies
         private void FixedUpdate()
         {
             if (_data == null || !IsAlive) return;
-            if (_run != null && _run.State != RunState.WaveActive) return;
+            if (_run != null && _run.State != RunState.WaveActive)
+            { if (_chargeLine != null) _chargeLine.enabled = false; return; }
 
             if (IsStunned) { Step(Vector2.zero, 0f); return; }
             if (_stunnedUntil > 0f)
@@ -230,6 +236,7 @@ namespace LAC.Enemies
                 EnterState(_state);
             }
 
+            if (_state != EnemyState.Spawning && IsBoss) { TickBoss(); return; }
             if (_state != EnemyState.Spawning && TickSpecialBehaviour()) return;
 
             switch (_state)
