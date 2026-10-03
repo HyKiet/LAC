@@ -176,6 +176,17 @@ namespace LAC.Cards.Editor
                     "Trang trí nhận raycast: " + graphic.name);
             }
             Require(targets == 5, "Phải có đúng overlay + 3 thẻ + đổi thẻ nhận raycast.");
+            view.SetCountdown(5f, 10f);
+            Image countdown = FindInactive("CountdownFill").GetComponent<Image>();
+            Require(countdown.rectTransform.rect.width == 210f && !countdown.raycastTarget,
+                "Thanh thời gian không khớp thời hạn hoặc cản click.");
+            countdown.rectTransform.hasChanged = false;
+            for (int i = 0; i < 10000; i++) view.SetCountdown(5f, 10f);
+            Require(!countdown.rectTransform.hasChanged, "Thanh thời gian ghi lại cùng pixel.");
+            view.SetCountdown(-1f, 10f);
+            Require(countdown.rectTransform.rect.width == 0f, "Thanh thời gian không về 0.");
+            view.SetCountdown(20f, 10f);
+            Require(countdown.rectTransform.rect.width == 420f, "Thanh thời gian vượt khung.");
             var hovers = _preview.GetComponentsInChildren<CardHoverVisual>();
             Require(hovers.Length == 3, "Thiếu slot.");
             var data = new PointerEventData(EventSystem.current);
@@ -211,6 +222,10 @@ namespace LAC.Cards.Editor
             for (int i = 0; i < 10000; i++) update();
             Require(Mathf.Approximately(hover.GetComponent<CanvasGroup>().alpha, .24f), "Không dim thẻ.");
             hover.ResetPresentation(); hover.PlayConsume(null);
+            typeof(CardHoverVisual).GetField("_consumeElapsed", fields).SetValue(hover, .10f);
+            update();
+            Require(rect.localScale == Vector3.one && rect.localRotation == Quaternion.identity,
+                "Nhịp xác nhận vẫn xoay/thu phóng chữ.");
             typeof(CardHoverVisual).GetField("_consumeElapsed", fields).SetValue(hover, CardHoverVisual.ConsumeDuration - .00001f);
             update();
             Require(hover.GetComponent<CanvasGroup>().alpha < .001f && rect.localScale.x < .041f,
@@ -223,7 +238,7 @@ namespace LAC.Cards.Editor
             var reroll = FindInactive("Reroll").GetComponent<Button>();
             Require(!reroll.interactable, "Bật tương tác mở khoá đổi khi hết lượt.");
             Require(reroll.GetComponent<Image>().color == Color.white, "Nút đổi bị nhân tint hai lần.");
-            Debug.Log("[CardUI] PASS: 5 raycast targets; icon click, pointer/focus isolation; 10,000 idle updates without transform/color writes; dim/consume/reset.");
+            Debug.Log("[CardUI] PASS: 5 raycast targets; icon click, pointer/focus isolation; 10,000 idle/countdown updates without redundant writes; dim/legible confirmation/consume/reset.");
 
             object Get(object instance, string name) => instance.GetType().GetField(name, fields).GetValue(instance);
         }

@@ -11,8 +11,8 @@ namespace LAC.Cards
     {
         public const float ConsumeDuration = 1.05f;
 
-        private const float SpinDuration = 0.38f;
         private const float FlightStart = 0.42f;
+        private const float RevealDuration = 0.22f;
         private static readonly Color IdleGold = new Color(0.753f, 0.553f, 0.125f, 1f);
         private static readonly Color HoverBlue = new Color(0.184f, 0.455f, 0.502f, 1f);
 
@@ -28,6 +28,8 @@ namespace LAC.Cards
         private Camera _consumeCamera;
         private RectTransform _consumeParent;
         private float _consumeElapsed;
+        private float _revealElapsed = -1f;
+        private float _revealDelay;
         private bool _highlighted;
         private bool _dimmed;
         private bool _consuming;
@@ -56,6 +58,7 @@ namespace LAC.Cards
             _consumeCamera = null;
             _consumeParent = null;
             _consumeElapsed = 0f;
+            _revealElapsed = -1f;
             _interactable = true;
             if (_rect == null) return;
             _rect.anchoredPosition = _restPosition;
@@ -63,6 +66,13 @@ namespace LAC.Cards
             _rect.localRotation = Quaternion.identity;
             _group.alpha = 1f;
             ApplyColors(false);
+        }
+
+        public void PlayReveal(float delay)
+        {
+            _revealDelay = Mathf.Max(0f, delay);
+            _revealElapsed = 0f;
+            _group.alpha = 0f;
         }
 
         public void SetHighlighted(bool highlighted)
@@ -90,6 +100,7 @@ namespace LAC.Cards
             _highlighted = false;
             _dimmed = false;
             _consuming = true;
+            _revealElapsed = -1f;
             _consumeTarget = target;
             _consumeCamera = Camera.main;
             _consumeParent = _rect.parent as RectTransform;
@@ -97,6 +108,7 @@ namespace LAC.Cards
             _consumeStart = _rect.anchoredPosition;
             transform.SetAsLastSibling();
             ApplyColors(true);
+            _frame.PlayGlint();
         }
 
         public void SetInteractable(bool interactable)
@@ -121,6 +133,17 @@ namespace LAC.Cards
                 return;
             }
 
+            if (_revealElapsed >= 0f && !_dimmed)
+            {
+                float before = _revealElapsed;
+                _revealElapsed += Time.unscaledDeltaTime;
+                if (before <= _revealDelay && _revealElapsed > _revealDelay) _frame.PlayGlint();
+                float t = Mathf.Clamp01((_revealElapsed - _revealDelay) / RevealDuration);
+                _group.alpha = Mathf.SmoothStep(0f, 1f, t);
+                if (t >= 1f) _revealElapsed = -1f;
+                return;
+            }
+
             float targetAlpha = _dimmed ? 0.24f : 1f;
             if (_group.alpha == targetAlpha) return;
             _group.alpha = Mathf.MoveTowards(_group.alpha, targetAlpha, Time.unscaledDeltaTime * 4f);
@@ -130,13 +153,12 @@ namespace LAC.Cards
         {
             if (_consumeElapsed >= ConsumeDuration) return;
             _consumeElapsed = Mathf.Min(ConsumeDuration, _consumeElapsed + Time.unscaledDeltaTime);
-            float spinT = Mathf.Clamp01(_consumeElapsed / SpinDuration);
-            float easedSpin = 1f - Mathf.Pow(1f - spinT, 3f);
             if (_consumeElapsed < FlightStart)
             {
                 _rect.anchoredPosition = _consumeStart;
-                _rect.localRotation = Quaternion.Euler(0f, 0f, easedSpin * 360f);
-                _rect.localScale = Vector3.one * (1f + Mathf.Sin(spinT * Mathf.PI) * 0.12f);
+                // Giữ tên/chỉ số đọc được trong nhịp xác nhận trước khi thẻ bay về nhân vật.
+                _rect.localRotation = Quaternion.identity;
+                _rect.localScale = Vector3.one;
                 _group.alpha = 1f;
             }
             else
@@ -146,7 +168,7 @@ namespace LAC.Cards
                 float easedFly = flyT * flyT * (3f - 2f * flyT);
                 _rect.localRotation = Quaternion.identity;
                 _rect.anchoredPosition = Vector2.LerpUnclamped(_consumeStart,
-                    ResolveTargetPosition(), easedFly);
+                    ResolveTargetPosition(), easedFly) + Vector2.up * Mathf.Sin(flyT * Mathf.PI) * 64f;
                 _rect.localScale = Vector3.one * Mathf.Lerp(1f, 0.04f, easedFly);
                 _group.alpha = 1f - Mathf.Clamp01((flyT - 0.76f) / 0.24f);
             }

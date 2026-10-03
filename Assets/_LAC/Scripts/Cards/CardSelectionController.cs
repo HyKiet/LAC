@@ -20,6 +20,7 @@ namespace LAC.Cards
         [SerializeField] private CardDefinition[] _definitions;
         [SerializeField, Min(0f)] private float _selectionFeedbackSeconds = 0.12f;
         private CardSelectionView _view;
+        private CardSelectionRulesData _rules;
         private RunManager _run;
         private PlayerCharacter _player;
         private PlayerUpgradeState _state;
@@ -48,6 +49,7 @@ namespace LAC.Cards
             if (_view == null) _view = gameObject.AddComponent<CardSelectionView>();
             // Prefab demo cũ chỉ chứa 7 tham chiếu; luôn nạp cùng danh mục với host.
             _definitions = Resources.LoadAll<CardDefinition>("Cards");
+            _rules = Resources.Load<CardSelectionRulesData>("CardSelectionRules");
             if (!TryGetComponent<CardBattleFeedback>(out _)) gameObject.AddComponent<CardBattleFeedback>();
         }
 
@@ -84,6 +86,7 @@ namespace LAC.Cards
             if (_selectionOpen && !_committing)
             {
                 float remaining = Mathf.Max(0f, (float)(_deadline - NetworkTime.time));
+                if (_rules != null) _view.SetCountdown(remaining, _rules.SelectionSeconds);
                 int seconds = Mathf.CeilToInt(remaining);
                 if (seconds != _displayedCountdown)
                 {

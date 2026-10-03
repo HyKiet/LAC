@@ -102,8 +102,26 @@ namespace LAC.Cards
             if (_kind != Kind.Wind && _target != null)
                 transform.position = _target.transform.position + Vector3.up * _anchorY
                     + (_kind == Kind.Heal ? Vector3.up * t * .65f : Vector3.zero);
-            float scale = _kind == Kind.Upgrade ? Mathf.Lerp(.65f, 1.15f, t) : 1f;
-            transform.localScale = _kind == Kind.Shield ? new Vector3(1.4f, 1.8f, 1f) : Vector3.one * scale;
+            float settle = 1f - (1f - t) * (1f - t);
+            switch (_kind)
+            {
+                case Kind.Upgrade:
+                    transform.localScale = Vector3.one * Mathf.Lerp(.55f, 1.15f, settle);
+                    transform.localRotation = Quaternion.Euler(0f, 0f, t * 24f);
+                    break;
+                case Kind.Shield:
+                    float snap = Mathf.SmoothStep(.82f, 1f, Mathf.Clamp01(t / .24f));
+                    transform.localScale = new Vector3(1.4f * snap, 1.8f * snap, 1f);
+                    break;
+                case Kind.Wind:
+                    transform.localScale = new Vector3(Mathf.Lerp(.85f, 1.35f, settle),
+                        Mathf.Lerp(1f, .65f, settle), 1f);
+                    break;
+                default:
+                    // Số hồi máu giữ tỷ lệ cố định để nét pixel không bị dao động.
+                    transform.localScale = Vector3.one;
+                    break;
+            }
             Color tint = _color; tint.a *= fade;
             _properties.SetColor(Tint, tint);
             _renderer.SetPropertyBlock(_properties);
@@ -134,6 +152,8 @@ namespace LAC.Cards
                     Cross(new Vector2(-.28f, .75f), .09f);
                     Cross(new Vector2(-.48f, .28f), .075f);
                     Cross(new Vector2(.48f, .42f), .06f);
+                    Spark(new Vector2(.35f, .92f), .07f);
+                    Spark(new Vector2(-.60f, .60f), .045f);
                     break;
                 case Kind.Shield:
                     Line(new Vector2(-.42f, .65f), new Vector2(0, .76f));
@@ -142,6 +162,9 @@ namespace LAC.Cards
                     Line(new Vector2(.36f, .15f), new Vector2(0, -.15f));
                     Line(new Vector2(0, -.15f), new Vector2(-.36f, .15f));
                     Line(new Vector2(-.36f, .15f), new Vector2(-.42f, .65f));
+                    Line(new Vector2(-.55f, .56f), new Vector2(-.59f, .28f));
+                    Line(new Vector2(.55f, .56f), new Vector2(.59f, .28f));
+                    Spark(new Vector2(0, .45f), .07f);
                     break;
                 case Kind.Wind:
                     for (int i = 0; i < 3; i++)
@@ -156,6 +179,13 @@ namespace LAC.Cards
 
         private void Cross(Vector2 p, float radius)
         { Line(p - Vector2.right * radius, p + Vector2.right * radius); Line(p - Vector2.up * radius, p + Vector2.up * radius); }
+        private void Spark(Vector2 p, float radius)
+        {
+            Line(p + Vector2.up * radius, p + Vector2.right * radius * .65f);
+            Line(p + Vector2.right * radius * .65f, p + Vector2.down * radius);
+            Line(p + Vector2.down * radius, p + Vector2.left * radius * .65f);
+            Line(p + Vector2.left * radius * .65f, p + Vector2.up * radius);
+        }
         private static Vector2 Polar(float angle, float radius) => new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
         private void Line(Vector2 a, Vector2 b)
         {

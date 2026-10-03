@@ -17,6 +17,7 @@ namespace LAC.Cards
         private Text _evolutionIngredients;
         private Text _evolvedText;
         private Sprite _evolutionEmblem;
+        private CardRitualGraphic _evolutionHalo;
         private static EventSystem _fallbackEventSystem;
 
         private sealed class Slot
@@ -43,6 +44,9 @@ namespace LAC.Cards
         private Text _title;
         private Text _subtitle;
         private Text _selectionHint;
+        private Image _countdownFill;
+        private GameObject _countdownTrack;
+        private int _countdownPixels = 420;
         private int _rerollsRemaining;
         private bool _built;
 
@@ -63,6 +67,8 @@ namespace LAC.Cards
             _subtitle.text = "Xem chỉ số trước → sau, rồi chọn hướng nâng cấp";
             _rerollButton.gameObject.SetActive(true);
             _selectionHint.gameObject.SetActive(true);
+            _countdownTrack.SetActive(true);
+            SetCountdown(1f, 1f);
             SetRect(_statusText.rectTransform, BottomCenter, BottomCenter,
                 new Vector2(-260f, 56f), new Vector2(520f, 44f), Center);
 
@@ -87,6 +93,7 @@ namespace LAC.Cards
                     ? "?" : card.DisplayName.Substring(0, 1).ToUpperInvariant();
                 slot.Button.interactable = true;
                 slot.Hover.ResetPresentation();
+                slot.Hover.PlayReveal(i * .06f);
                 slot.Hover.SetInteractable(true);
                 slot.Button.onClick.RemoveAllListeners();
                 slot.Button.onClick.AddListener(() => onPick(card));
@@ -104,6 +111,7 @@ namespace LAC.Cards
 
         public void MarkSelected(CardDefinition selected, Transform playerTarget)
         {
+            _countdownTrack.SetActive(false);
             for (int i = 0; i < _slots.Length; i++)
             {
                 Slot slot = _slots[i];
@@ -117,6 +125,15 @@ namespace LAC.Cards
         }
 
         public void SetStatus(string message) => _statusText.text = message;
+
+        public void SetCountdown(float remaining, float total)
+        {
+            // Căn theo pixel của thanh; không rebuild mesh nhiều lần cho cùng một pixel.
+            int pixels = Mathf.RoundToInt(Mathf.Clamp01(remaining / Mathf.Max(.01f, total)) * 420f);
+            if (_countdownPixels == pixels) return;
+            _countdownPixels = pixels;
+            _countdownFill.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pixels);
+        }
 
         public void SetButtonsEnabled(bool enabled)
         {
@@ -138,6 +155,7 @@ namespace LAC.Cards
             _rerollButton.interactable = false;
             _rerollButton.gameObject.SetActive(false);
             _selectionHint.gameObject.SetActive(false);
+            _countdownTrack.SetActive(false);
             _title.text = "ĐANG CHỜ ĐỒNG ĐỘI";
             _subtitle.text = "Đợt mới bắt đầu khi mọi người chọn xong";
             SetRect(_statusText.rectTransform, Center, Center,
@@ -149,6 +167,7 @@ namespace LAC.Cards
         {
             ShowWaiting();
             _evolutionPanel.SetActive(true);
+            _evolutionHalo.Restart();
             _evolutionIcon.sprite = recipe.Icon != null ? recipe.Icon : _evolutionEmblem;
             _evolutionName.text = recipe.DisplayName;
             _evolutionDescription.text = recipe.Description;
@@ -236,9 +255,16 @@ namespace LAC.Cards
             Image panelInset = CreateImage("PanelInset", panel.transform, Hex("2B2724", 0.30f));
             Inset(panelInset.rectTransform, 22f);
             panelInset.raycastTarget = false;
-            CardFrameGraphic panelFrame = CreateFrame("PanelFrame", panel.transform, false, 0f);
+            CardFrameGraphic panelFrame = CreateFrame("PanelFrame", panel.transform, true, 0f);
             Stretch(panelFrame.rectTransform);
             panelFrame.color = new Color(1f, 1f, 1f, 0.65f);
+
+            for (int side = -1; side <= 1; side += 2)
+            {
+                CardRitualGraphic seal = CreateRitual("HeaderSeal", panel.transform, false, Hex("C08D20", .65f));
+                SetRect(seal.rectTransform, TopCenter, TopCenter,
+                    new Vector2(side * 460f, -57f), new Vector2(70f, 70f), Center);
+            }
 
             Image titleRule = CreateImage("TitleRule", panel.transform, Hex("C08D20", 0.38f));
             SetRect(titleRule.rectTransform, TopCenter, TopCenter,
@@ -258,6 +284,13 @@ namespace LAC.Cards
             _statusText = CreateText("SelectionStatus", panel.transform, 20, TextAnchor.MiddleCenter, Hex("9CCFC0"));
             SetRect(_statusText.rectTransform, BottomCenter, BottomCenter,
                 new Vector2(-260f, 56f), new Vector2(520f, 44f), Center);
+            Image countdownTrack = CreateImage("CountdownTrack", panel.transform, Hex("2F7480", .35f));
+            _countdownTrack = countdownTrack.gameObject;
+            SetRect(countdownTrack.rectTransform, BottomCenter, BottomCenter,
+                new Vector2(-260f, 32f), new Vector2(420f, 3f), Center);
+            _countdownFill = CreateImage("CountdownFill", countdownTrack.transform, Hex("9CCFC0"));
+            SetRect(_countdownFill.rectTransform, new Vector2(0f, .5f), new Vector2(0f, .5f),
+                Vector2.zero, new Vector2(420f, 3f), new Vector2(0f, .5f));
 
             float[] x = { -368f, 0f, 368f };
             for (int i = 0; i < _slots.Length; i++) _slots[i] = CreateSlot(panel.transform, x[i], i);
@@ -271,7 +304,7 @@ namespace LAC.Cards
                 new Vector2(280f, 56f), new Vector2(330f, 46f), Center);
             _rerollText.fontSize = 20;
             _rerollText.fontStyle = FontStyle.Bold;
-            CardFrameGraphic rerollFrame = CreateFrame("RerollFrame", _rerollButton.transform, false, 0f);
+            CardFrameGraphic rerollFrame = CreateFrame("RerollFrame", _rerollButton.transform, true, 3.2f);
             Stretch(rerollFrame.rectTransform);
             Text hint = CreateText("SelectionHint", panel.transform, 18, TextAnchor.MiddleCenter, Hex("BFA981"));
             _selectionHint = hint;
@@ -283,12 +316,15 @@ namespace LAC.Cards
             _evolutionPanel = CreateImage("EvolutionPanel", _overlay.transform, Hex("15130F")).gameObject;
             SetRect((RectTransform)_evolutionPanel.transform, Center, Center, Vector2.zero,
                 new Vector2(1184f, 656f), Center);
-            CardFrameGraphic evolutionFrame = CreateFrame("EvolutionFrame", _evolutionPanel.transform, false, 0f);
+            CardFrameGraphic evolutionFrame = CreateFrame("EvolutionFrame", _evolutionPanel.transform, true, 0f);
             Stretch(evolutionFrame.rectTransform);
+            evolutionFrame.SetHighlighted(true);
             Text evolutionTitle = CreateText("EvolutionTitle", _evolutionPanel.transform, 34,
                 TextAnchor.MiddleCenter, Hex("9CCFC0"));
             evolutionTitle.text = "TIẾN HOÁ THẺ";
             SetRect(evolutionTitle.rectTransform, Center, Center, new Vector2(0, 252), new Vector2(950, 52), Center);
+            _evolutionHalo = CreateRitual("EvolutionHalo", _evolutionPanel.transform, true, Hex("9CCFC0", .60f));
+            SetRect(_evolutionHalo.rectTransform, Center, Center, new Vector2(0, 103), new Vector2(282, 282), Center);
             _evolutionIcon = CreateImage("EvolutionEmblem", _evolutionPanel.transform, Color.white);
             _evolutionIcon.preserveAspect = true;
             _evolutionIcon.raycastTarget = false;
@@ -333,6 +369,9 @@ namespace LAC.Cards
             Image artLine = CreateImage("ArtLine", artWell.transform, Hex("C08D20", 0.48f));
             SetRect(artLine.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f),
                 Vector2.zero, new Vector2(0f, 2f), new Vector2(0.5f, 0f));
+
+            CardRitualGraphic artSeal = CreateRitual("ArtSeal", artWell.transform, false, Hex("C08D20", .35f));
+            SetRect(artSeal.rectTransform, Center, Center, Vector2.zero, new Vector2(172f, 172f), Center);
 
             Image icon = CreateImage("Icon", artWell.transform, Color.white);
             SetRect(icon.rectTransform, TopCenter, TopCenter,
@@ -419,6 +458,16 @@ namespace LAC.Cards
             var frame = go.GetComponent<CardFrameGraphic>();
             frame.Configure(glint, delay);
             return frame;
+        }
+
+        private static CardRitualGraphic CreateRitual(string name, Transform parent, bool animated, Color tint)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(CardRitualGraphic));
+            go.transform.SetParent(parent, false);
+            var ritual = go.GetComponent<CardRitualGraphic>();
+            ritual.color = tint;
+            ritual.Configure(animated);
+            return ritual;
         }
 
         private Text CreateText(string name, Transform parent, int size, TextAnchor alignment, Color color)
