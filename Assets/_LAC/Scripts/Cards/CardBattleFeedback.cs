@@ -50,7 +50,7 @@ namespace LAC.Cards
         internal void Emit(CardBattleEffect.Kind kind, PlayerCharacter player, Vector2 direction, int amount = 0)
         {
             // Là biểu diễn: khi đầy, bỏ nét trang trí thay vì cấp phát hay ảnh hưởng gameplay.
-            if (_pool == null || _pool.CountIdle == 0 || player == null || !player.IsAlive) return;
+            if (_pool == null || _pool.CountIdle == 0 || player == null || !player.isActiveAndEnabled || !player.IsAlive) return;
             Vector3 position = player.transform.position + Vector3.down * .2f;
             _pool.Get(position, Quaternion.identity).Play(_pool, _data, kind, player, direction, amount);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -74,7 +74,6 @@ namespace LAC.Cards
         private void OnRunEnded(bool _) => ResetRun();
         private void ClearPlayers()
         {
-            if (_players.Count == 0) return;
             foreach (var player in _players) player.Dispose();
             _players.Clear();
             _pool?.ReleaseAll();

@@ -65,6 +65,57 @@ nhàn rỗi, bỏ yêu cầu trang trí mới; không mở rộng pool giữa tr
 Các giới hạn này kiểm soát chi phí của phần Cards, chưa chứng minh ngân sách
 60 FPS với 40 quái/200 đạn và mọi hiệu ứng chiến đấu cùng hoạt động.
 
+## Hoàn thiện vòng đời và vệt gió — 03/10/2026
+
+Vệt Khinh Thân nay nghe sự kiện `Dashed` hiện có và chờ hết thời lượng dash
+cộng 0,35 s trước khi phát lại. Bộ lọc độ dời cũng loại bước nhanh hơn
+1,75 lần tốc đi thật, dùng bước thời gian tối thiểu bằng `fixedDeltaTime` để
+không loại nhầm di chuyển ở FPS cao. Hai tham số trang trí lưu trong
+`CardBattleFeedback.asset`; không thay quãng đường, hồi chiêu hoặc bất tử dash.
+Điều này chặn bước vật lý cuối và đuôi nội suy mạng bị nhận nhầm là đi bộ.
+
+Hiệu ứng đang chạy được trả pool ngay khi target bị disable/ẩn hoặc đổi
+`CharacterData`. Disable Feedback thu hồi cả pool khi danh sách observer đã
+rỗng. Observer tháo đăng ký `Dashed`, máu và thẻ khi rời vòng đời; bật lại không
+nhân đôi phản hồi. `Emit` cũng từ chối target đang bị ẩn.
+
+Bộ kiểm host mở rộng đạt `HOST ALL PASSED`: dash qua input thật, đi tiếp sau
+dash, disable component/GameObject/Feedback, pool còn active với observer rỗng,
+đổi nhân vật khi hồi đang chờ, kiểm số subscriber và hit/heal sau re-enable.
+Các thay đổi dữ liệu của fixture được khôi phục, asset hiệu ứng giữ nguyên.
+
+Kiểm co-op bổ sung bằng `CardBattleCoopChecks.PrepareLateJoin()`:
+host nhận Khinh Thân rồi mở chọn Sinh Lực ở đợt 2, client mới chạy với
+`--lac-card-battle-probe` vào ngay màn chọn. Fixture tự tiếp tục khi đủ hai
+người, chọn Khinh Thân cho cả hai ở lượt sau và kiểm walk/dash/idle/resume
+qua Input System trên client. Chỉ lượt chờ khởi chạy client trong fixture được
+nới 300 s; cấu hình chọn thẻ của game vẫn 10 s. Cleanup trả danh mục thẻ và
+thời gian bảo vệ về giá trị cũ. Host ghi `LATE JOIN PASSED`,
+`REMOTE MOVEMENT PASSED` và `ALL PASSED`; client ghi `MOVEMENT PASSED`.
+
+| Trường hợp | Host / client |
+|---|---|
+| Client mới vào màn chọn đợt 2 | Client dựng Khinh Thân cấp 1 của host, 0 vòng nâng cấp/0 hồi giả |
+| Sinh Lực trong lượt đã mở trước khi client vào | Chỉ host nhận thẻ/hồi; người vào muộn bắt đầu chọn ở lượt sau |
+| Đồng đội đi bộ | 5 / 5 vệt gió |
+| Dash và đuôi nội suy | 0 / 0 vệt gió |
+| Đứng yên rồi đi tiếp | Client báo idle 0, resume 4; host có tổng 9 vệt trước khi tự di chuyển |
+| Reset ván co-op | Pool active 0, không lặp vòng nâng cấp hoặc hồi cũ |
+
+Pool hai máy vẫn 24. Transport giữ LatencySimulation 100 ms, jitter 0,02,
+loss/scramble 2%. Đây là kiểm trigger Cards: code review còn chỉ ra bộ đếm ID
+quái của `EnemySpawner` không replay các đợt đã qua cho client vào ở màn chọn.
+Vì vậy không dùng lượt này để xác nhận đồng bộ quái; vấn đề lõi được ghi nhận
+ngoài phạm vi chỉnh sửa Cards.
+
+Điều kiện chạy Editor: phép thử cần một lần nạp domain sạch. Với tuỳ chọn
+`DisableDomainReload` bật, phiên khởi động đầu đã gặp trạng thái Mirror/Input
+System cũ và lỗi hoạt ảnh ngoài Cards. Đã bật domain reload tạm cho kiểm thử;
+tuỳ chọn Editor gốc được khôi phục khi dọn lượt. Một lời gọi MCP trúng lúc nạp
+domain còn ghi 7 lỗi `ThreadAbortException`/tool và 4 cảnh báo plugin; stack
+đều ngoài Cards. Đã tách log khởi động đó và chạy lại host ổn định cuối:
+`HOST ALL PASSED`, Console 0 lỗi đỏ/0 cảnh báo.
+
 ## Mã và tài sản
 
 - `Assets/_LAC/Scripts/Cards/CardBattleFeedback.cs`: gắn observer, quản lý pool và vòng đời ván.
@@ -74,6 +125,8 @@ Các giới hạn này kiểm soát chi phí của phần Cards, chưa chứng m
 - `Assets/_LAC/Prefabs/UI/Cards/CardBattleEffect.prefab`: prefab trong phạm vi Cards, dùng lại vật liệu/`PixelNumber` hiện có.
 - `Assets/_LAC/Scripts/Cards/Editor/CardBattleFeedbackSetup.cs`: tạo tài sản thiếu, giữ nguyên tài sản đã có.
 - `Assets/_LAC/Scripts/Cards/Editor/CardBattleFeedbackChecks.cs`: kiểm thử tích hợp host trong Play mode.
+- `Assets/_LAC/Scripts/Cards/Editor/CardBattleCoopChecks.cs`: chuẩn bị và tự kiểm client vào muộn, chuyển động qua mạng, reset và cleanup fixture.
+- `Assets/_LAC/Scripts/Cards/CardBattleNetworkProbe.cs`: chỉ cài trong Editor/Development khi có flag `--lac-card-battle-probe`; nhập walk/dash và báo bộ đếm client.
 
 ## Kiểm chứng
 
@@ -107,8 +160,8 @@ Ngay khi đợt 3 bắt đầu, fixture gây một sát thương thật lên m�
 
 Bộ đếm cộng dồn trên cả hai nhân vật. Client vào giữa đợt trước khi fixture
 restart nhận đúng lịch sử có sẵn và báo 0 hiệu ứng mới, không hiện lại nâng cấp
-cũ. Lượt này chưa kiểm vào đúng giữa màn chọn thẻ hoặc vệt gió của người ở xa;
-không dùng kết quả trên để khẳng định đã bao phủ hai trường hợp đó. Client chạy
+cũ. Phép thử T-24C ban đầu chưa kiểm vào đúng giữa màn chọn thẻ hoặc vệt gió
+của người ở xa; hai trường hợp đã được bổ sung trong lượt hoàn thiện trên. Client chạy
 không đồ hoạ nên phép thử mạng kiểm trigger/bộ đếm, không thay ảnh Game View.
 
 Ảnh Game View trực tiếp trong Mirror host, tạm giữ thời gian và gọi từng hiệu ứng
@@ -119,6 +172,12 @@ lượng máu của lần chọn thẻ đó. Trigger được kiểm riêng bằ
 - [Hồi máu +3](screenshots/card-battle-heal-1080p.png)
 - [Dấu Thiết Bích](screenshots/card-battle-shield-1080p.png)
 - [Vệt tốc độ](screenshots/card-battle-wind-1080p.png)
+- [Hồi máu +3 ở 720p](screenshots/card-battle-heal-720p.png)
+- [Vệt tốc độ ở 720p](screenshots/card-battle-wind-720p.png)
+
+Đã nhìn cả bốn hình nét ở 1280×720 trong lượt hoàn thiện; số hồi vẫn đọc được,
+viền khiên bao quanh thân và các nét không phủ lên nhân vật. Lưu thêm hai ảnh
+720p trên bằng render texture Game View gốc, không phóng ảnh 1080p xuống.
 
 T-32, T-50 và T-51 vẫn mở. Phần này không đóng kiểm thử hiệu năng toàn trận,
 không chốt sát thương gốc ba vũ khí hoặc cân bằng đường cong 16 đợt. Các hiệu

@@ -19,6 +19,7 @@ namespace LAC.Cards
         private MaterialPropertyBlock _properties;
         private ObjectPool<CardBattleEffect> _owner;
         private PlayerCharacter _target;
+        private CharacterData _targetData;
         private Kind _kind;
         private Color _color;
         private float _age, _duration, _width, _anchorY;
@@ -48,6 +49,7 @@ namespace LAC.Cards
             Kind kind, PlayerCharacter target, Vector2 direction, int healAmount = 0)
         {
             _owner = owner; _target = target; _kind = kind; _age = 0f;
+            _targetData = target != null ? target.Data : null;
             _duration = data.SecondsFor(kind); _width = data.StrokeWidth;
             _color = data.ColorFor(kind);
             _color.a = Mathf.Clamp(_color.a, 0f, .22f);
@@ -75,7 +77,7 @@ namespace LAC.Cards
         public void OnSpawned() => _age = 0f;
         public void OnDespawned()
         {
-            _owner = null; _target = null;
+            _owner = null; _target = null; _targetData = null;
             _number.gameObject.SetActive(false);
             transform.localScale = Vector3.one;
         }
@@ -83,7 +85,8 @@ namespace LAC.Cards
         private void LateUpdate()
         {
             if (_owner == null) return;
-            if (_target == null || !_target.IsAlive || RunManager.Instance == null || RunManager.Instance.IsOver)
+            if (_target == null || !_target.isActiveAndEnabled || !_target.IsAlive || _target.Data != _targetData
+                || RunManager.Instance == null || RunManager.Instance.IsOver)
             { _owner.Release(this); return; }
             _age += Time.deltaTime;
             if (_age >= _duration) { _owner.Release(this); return; }

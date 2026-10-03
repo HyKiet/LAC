@@ -16,10 +16,14 @@ namespace LAC.Cards
         [SerializeField, Min(.1f)] private float _windSeconds = .4f;
         [SerializeField, Min(.1f)] private float _shieldSeconds = .35f;
         [SerializeField, Min(.1f)] private float _windInterval = .2f;
+        [SerializeField, Min(0f)] private float _windDashQuietSeconds = .35f;
+        [SerializeField, Min(1f)] private float _windMaxWalkSpeedRatio = 1.75f;
         [SerializeField, Min(.01f)] private float _strokeWidth = .055f;
         public CardBattleEffect EffectPrefab => _effectPrefab;
         public int Capacity => Mathf.Clamp(_capacity, 8, 32);
         public float WindInterval => Mathf.Max(.1f, _windInterval);
+        public float WindDashQuietSeconds => Mathf.Max(0f, _windDashQuietSeconds);
+        public float WindMaxWalkSpeedRatio => Mathf.Max(1f, _windMaxWalkSpeedRatio);
         public float StrokeWidth => _strokeWidth;
         public Color ColorFor(CardBattleEffect.Kind kind) => kind switch
         {

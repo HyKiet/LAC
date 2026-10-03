@@ -23,4 +23,6 @@ MonoBehaviour:
   _windSeconds: 0.4
   _shieldSeconds: 0.35
   _windInterval: 0.2
+  _windDashQuietSeconds: 0.35
+  _windMaxWalkSpeedRatio: 1.75
   _strokeWidth: 0.055

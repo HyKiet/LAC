@@ -32,6 +32,7 @@ namespace LAC.Cards
             Reset();
             _state.Changed += OnUpgrades;
             if (_health != null) _health.HealthChanged += OnHealth;
+            if (_dash != null) _dash.Dashed += OnDash;
         }
 
         public void Reset()
@@ -73,6 +74,13 @@ namespace LAC.Cards
             if (delta < 0 && _state.HitInvulnerabilityMultiplier > 1f) _pendingShield = true;
         }
 
+        private void OnDash()
+        {
+            // RPC lướt có thể kết thúc trước đuôi nội suy vị trí trên máy quan sát.
+            float duration = Player.Data != null ? Player.Data.DashDuration : 0f;
+            _nextWindAt = Mathf.Max(_nextWindAt, Time.time + duration + _data.WindDashQuietSeconds);
+        }
+
         public void Tick(RunManager run)
         {
             if (_characterData != Player.Data) Reset();
@@ -94,6 +102,9 @@ namespace LAC.Cards
             // Bỏ rung mạng khi đứng yên và bước nhảy vị trí khi hồi sinh/teleport.
             float distance = displacement.sqrMagnitude;
             if (distance < Mathf.Pow(.35f * Time.deltaTime, 2) || distance > 2.25f) return;
+            float dt = Mathf.Max(Time.deltaTime, Time.fixedDeltaTime);
+            float maxStep = Player.Data.MoveSpeed * _state.MoveSpeedMultiplier * _data.WindMaxWalkSpeedRatio * dt;
+            if (distance > maxStep * maxStep) return;
             _nextWindAt = Time.time + _data.WindInterval;
             _feedback.Emit(CardBattleEffect.Kind.Wind, Player, displacement.normalized);
         }
@@ -102,6 +113,7 @@ namespace LAC.Cards
         {
             if (_state != null) _state.Changed -= OnUpgrades;
             if (_health != null) _health.HealthChanged -= OnHealth;
+            if (_dash != null) _dash.Dashed -= OnDash;
         }
     }
 }
