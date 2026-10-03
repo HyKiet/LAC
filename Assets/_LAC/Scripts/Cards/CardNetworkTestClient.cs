@@ -56,6 +56,11 @@ namespace LAC.Cards
                 if (Time.realtimeSinceStartupAsDouble >= _reportAt)
                 {
                     _reportAt = double.MaxValue;
+                    var feedback = ui.GetComponent<CardBattleFeedback>();
+                    if (feedback != null)
+                        Debug.Log($"[CardBattleClient] wave={run.CurrentWave} upgrade={feedback.Presented(CardBattleEffect.Kind.Upgrade)}"
+                            + $" heal={feedback.Presented(CardBattleEffect.Kind.Heal)} shield={feedback.Presented(CardBattleEffect.Kind.Shield)}"
+                            + $" wind={feedback.Presented(CardBattleEffect.Kind.Wind)} amount={feedback.LastHealAmount} pool={feedback.PooledEffects}");
                     foreach (var player in PlayerRegistry.All)
                     {
                         string stacks = "";

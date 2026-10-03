@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09cc446dd6b1610459166c02559859f4, type: 3}
+  m_Name: CardBattleFeedback
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardBattleFeedbackData
+  _effectPrefab: {fileID: 4806575539025635874, guid: ed3ed462241173646b6b8438c460b379, type: 3}
+  _capacity: 24
+  _upgradeColor: {r: 0.92941177, g: 0.73333335, b: 0.24313726, a: 0.22}
+  _healColor: {r: 0.6117647, g: 0.8117647, b: 0.7529412, a: 0.22}
+  _windColor: {r: 0.30980393, g: 0.6509804, b: 0.5803922, a: 0.18}
+  _shieldColor: {r: 0.6117647, g: 0.8117647, b: 0.7529412, a: 0.22}
+  _upgradeSeconds: 0.85
+  _healSeconds: 0.9
+  _windSeconds: 0.4
+  _shieldSeconds: 0.35
+  _windInterval: 0.2
+  _strokeWidth: 0.055
