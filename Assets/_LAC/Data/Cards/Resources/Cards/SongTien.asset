@@ -16,7 +16,7 @@ MonoBehaviour:
   _displayName: "Song Ti\u1EC5n"
   _description: "V\u0169 kh\xED \u0111\u1EA1n: b\u1EAFn 2 \u0111\u1EA1n, m\u1ED7i
     \u0111\u1EA1n g\xE2y 70% s\xE1t th\u01B0\u01A1ng. G\xF3c m\u1EDF 7\xB0."
-  _icon: {fileID: 21300000, guid: d622335cd7c3a3240958747495ae07f7, type: 3}
+  _icon: {fileID: 21300000, guid: e65e41e7176508349a29479a1e9bcc95, type: 3}
   _maxStacks: 1
   _weight: 0.65
   _accent: {r: 0.6117647, g: 0.8117647, b: 0.7529412, a: 1}

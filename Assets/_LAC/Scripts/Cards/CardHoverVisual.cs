@@ -11,15 +11,13 @@ namespace LAC.Cards
     {
         public const float ConsumeDuration = 1.05f;
 
-        private const float SpinDuration = 0.38f;
         private const float FlightStart = 0.42f;
+        private const float RevealDuration = 0.22f;
         private static readonly Color IdleGold = new Color(0.753f, 0.553f, 0.125f, 1f);
         private static readonly Color HoverBlue = new Color(0.184f, 0.455f, 0.502f, 1f);
-        private static readonly Color HoverBlueLight = new Color(0.612f, 0.812f, 0.753f, 1f);
 
         private RectTransform _rect;
-        private Image _glow;
-        private Image _border;
+        private CardFrameGraphic _frame;
         private Image _surface;
         private Image[] _accentImages;
         private CanvasGroup _group;
@@ -27,26 +25,26 @@ namespace LAC.Cards
         private Vector2 _restPosition;
         private Vector2 _consumeStart;
         private Transform _consumeTarget;
-        private float _heartbeatPhase;
+        private Camera _consumeCamera;
+        private RectTransform _consumeParent;
         private float _consumeElapsed;
+        private float _revealElapsed = -1f;
+        private float _revealDelay;
         private bool _highlighted;
-        private bool _pressed;
         private bool _dimmed;
         private bool _consuming;
         private bool _interactable = true;
 
-        public void Configure(Image glow, Image border, Image surface, Image[] accentImages,
-            float heartbeatPhase, Action<CardHoverVisual> requestHighlight)
+        public void Configure(CardFrameGraphic frame, Image surface, Image[] accentImages,
+            Action<CardHoverVisual> requestHighlight)
         {
             _rect = (RectTransform)transform;
-            _glow = glow;
-            _border = border;
+            _frame = frame;
             _surface = surface;
             _accentImages = accentImages;
             _requestHighlight = requestHighlight;
             _group = GetComponent<CanvasGroup>();
             if (_group == null) _group = gameObject.AddComponent<CanvasGroup>();
-            _heartbeatPhase = heartbeatPhase;
             _restPosition = _rect.anchoredPosition;
             ResetPresentation();
         }
@@ -54,60 +52,74 @@ namespace LAC.Cards
         public void ResetPresentation()
         {
             _highlighted = false;
-            _pressed = false;
             _dimmed = false;
             _consuming = false;
             _consumeTarget = null;
+            _consumeCamera = null;
+            _consumeParent = null;
             _consumeElapsed = 0f;
+            _revealElapsed = -1f;
             _interactable = true;
             if (_rect == null) return;
             _rect.anchoredPosition = _restPosition;
             _rect.localScale = Vector3.one;
             _rect.localRotation = Quaternion.identity;
             _group.alpha = 1f;
-            ApplyColors(false, 0f);
+            ApplyColors(false);
+        }
+
+        public void PlayReveal(float delay)
+        {
+            _revealDelay = Mathf.Max(0f, delay);
+            _revealElapsed = 0f;
+            _group.alpha = 0f;
         }
 
         public void SetHighlighted(bool highlighted)
         {
-            _highlighted = _interactable && highlighted;
-            if (!_highlighted) _pressed = false;
-            ApplyColors(IsActive, 0f);
+            bool next = _interactable && highlighted;
+            if (_highlighted == next) return;
+            _highlighted = next;
+            ApplyColors(IsActive);
         }
 
         public void SetDimmed(bool dimmed)
         {
+            if (_dimmed == dimmed) return;
             _dimmed = dimmed;
             if (dimmed)
             {
                 _highlighted = false;
-                _pressed = false;
             }
+            ApplyColors(IsActive);
         }
 
         public void PlayConsume(Transform target)
         {
             _interactable = false;
             _highlighted = false;
-            _pressed = false;
             _dimmed = false;
             _consuming = true;
+            _revealElapsed = -1f;
             _consumeTarget = target;
+            _consumeCamera = Camera.main;
+            _consumeParent = _rect.parent as RectTransform;
             _consumeElapsed = 0f;
             _consumeStart = _rect.anchoredPosition;
             transform.SetAsLastSibling();
-            ApplyColors(true, 1f);
+            ApplyColors(true);
+            _frame.PlayGlint();
         }
 
         public void SetInteractable(bool interactable)
         {
+            if (_interactable == interactable) return;
             _interactable = interactable;
             if (!interactable)
             {
                 _highlighted = false;
-                _pressed = false;
             }
-            ApplyColors(IsActive, 0f);
+            ApplyColors(IsActive);
         }
 
         private bool IsActive => _interactable && _highlighted;
@@ -121,30 +133,32 @@ namespace LAC.Cards
                 return;
             }
 
-            bool active = IsActive;
-            float beat = Heartbeat();
-            float lift = active ? 13f + beat * 1.5f : beat * 1.5f;
-            float scale = _pressed ? 1.025f : active ? 1.045f + beat * 0.012f : 1f + beat * 0.018f;
-            float blend = 1f - Mathf.Exp(-14f * Time.unscaledDeltaTime);
-            _rect.anchoredPosition = Vector2.Lerp(_rect.anchoredPosition,
-                _restPosition + Vector2.up * lift, blend);
-            _rect.localScale = Vector3.Lerp(_rect.localScale, Vector3.one * scale, blend);
-            _rect.localRotation = Quaternion.Slerp(_rect.localRotation, Quaternion.identity, blend);
-            _group.alpha = Mathf.MoveTowards(_group.alpha, _dimmed ? 0.24f : 1f,
-                Time.unscaledDeltaTime * 4f);
-            ApplyColors(active, beat);
+            if (_revealElapsed >= 0f && !_dimmed)
+            {
+                float before = _revealElapsed;
+                _revealElapsed += Time.unscaledDeltaTime;
+                if (before <= _revealDelay && _revealElapsed > _revealDelay) _frame.PlayGlint();
+                float t = Mathf.Clamp01((_revealElapsed - _revealDelay) / RevealDuration);
+                _group.alpha = Mathf.SmoothStep(0f, 1f, t);
+                if (t >= 1f) _revealElapsed = -1f;
+                return;
+            }
+
+            float targetAlpha = _dimmed ? 0.24f : 1f;
+            if (_group.alpha == targetAlpha) return;
+            _group.alpha = Mathf.MoveTowards(_group.alpha, targetAlpha, Time.unscaledDeltaTime * 4f);
         }
 
         private void UpdateConsume()
         {
-            _consumeElapsed += Time.unscaledDeltaTime;
-            float spinT = Mathf.Clamp01(_consumeElapsed / SpinDuration);
-            float easedSpin = 1f - Mathf.Pow(1f - spinT, 3f);
+            if (_consumeElapsed >= ConsumeDuration) return;
+            _consumeElapsed = Mathf.Min(ConsumeDuration, _consumeElapsed + Time.unscaledDeltaTime);
             if (_consumeElapsed < FlightStart)
             {
                 _rect.anchoredPosition = _consumeStart;
-                _rect.localRotation = Quaternion.Euler(0f, 0f, easedSpin * 360f);
-                _rect.localScale = Vector3.one * (1f + Mathf.Sin(spinT * Mathf.PI) * 0.12f);
+                // Giữ tên/chỉ số đọc được trong nhịp xác nhận trước khi thẻ bay về nhân vật.
+                _rect.localRotation = Quaternion.identity;
+                _rect.localScale = Vector3.one;
                 _group.alpha = 1f;
             }
             else
@@ -154,46 +168,30 @@ namespace LAC.Cards
                 float easedFly = flyT * flyT * (3f - 2f * flyT);
                 _rect.localRotation = Quaternion.identity;
                 _rect.anchoredPosition = Vector2.LerpUnclamped(_consumeStart,
-                    ResolveTargetPosition(), easedFly);
+                    ResolveTargetPosition(), easedFly) + Vector2.up * Mathf.Sin(flyT * Mathf.PI) * 64f;
                 _rect.localScale = Vector3.one * Mathf.Lerp(1f, 0.04f, easedFly);
                 _group.alpha = 1f - Mathf.Clamp01((flyT - 0.76f) / 0.24f);
             }
-            ApplyColors(true, 1f);
         }
 
         private Vector2 ResolveTargetPosition()
         {
-            if (_consumeTarget == null || Camera.main == null || _rect.parent is not RectTransform parent)
+            if (_consumeTarget == null || _consumeCamera == null || _consumeParent == null)
                 return new Vector2(0f, -320f);
 
-            Vector2 screenPoint = Camera.main.WorldToScreenPoint(_consumeTarget.position);
-            return RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screenPoint, null,
+            Vector2 screenPoint = _consumeCamera.WorldToScreenPoint(_consumeTarget.position);
+            return RectTransformUtility.ScreenPointToLocalPointInRectangle(_consumeParent, screenPoint, null,
                 out Vector2 localPoint) ? localPoint : new Vector2(0f, -320f);
         }
 
-        private float Heartbeat()
+        private void ApplyColors(bool active)
         {
-            float cycle = Mathf.Repeat(Time.unscaledTime * 0.82f + _heartbeatPhase, 1f);
-            float first = Mathf.Exp(-Mathf.Pow((cycle - 0.10f) / 0.055f, 2f));
-            float second = 0.55f * Mathf.Exp(-Mathf.Pow((cycle - 0.25f) / 0.075f, 2f));
-            return Mathf.Clamp01(first + second);
-        }
-
-        private void ApplyColors(bool active, float beat)
-        {
-            if (_glow == null || _border == null || _surface == null) return;
-
+            if (_frame == null || _surface == null) return;
             Color stateColor = active || _consuming ? HoverBlue : IdleGold;
-            Color glow = stateColor;
-            glow.a = _dimmed ? 0.05f : active || _consuming ? 0.72f : 0.16f + beat * 0.20f;
-            _glow.color = glow;
-
-            Color border = _consuming ? HoverBlueLight : stateColor;
-            border.a = _dimmed ? 0.22f : active || _consuming ? 1f : 0.90f;
-            _border.color = border;
+            _frame.SetHighlighted(active || _consuming);
             _surface.color = active || _consuming
-                ? new Color(0.055f, 0.13f, 0.16f, 1f)
-                : new Color(0.055f, 0.07f, 0.075f, 1f);
+                ? new Color(0.067f, 0.18f, 0.243f, 1f)
+                : new Color(0.082f, 0.075f, 0.059f, 1f);
 
             if (_accentImages == null) return;
             for (int i = 0; i < _accentImages.Length; i++)
@@ -214,11 +212,14 @@ namespace LAC.Cards
         }
         public void OnPointerExit(PointerEventData eventData)
         {
-            _pressed = false;
             SetHighlighted(false);
         }
-        public void OnPointerDown(PointerEventData eventData) { if (_interactable) _pressed = true; }
-        public void OnPointerUp(PointerEventData eventData) => _pressed = false;
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (!_interactable) return;
+            _frame.PlayGlint();
+        }
+        public void OnPointerUp(PointerEventData eventData) { }
         public void OnSelect(BaseEventData eventData) { if (_interactable) _requestHighlight?.Invoke(this); }
         public void OnDeselect(BaseEventData eventData)
         {

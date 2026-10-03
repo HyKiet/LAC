@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b5486a6b4d2a428f4857e310b6a00, type: 3}
+  m_Name: TiengDan
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
+  _id: TiengDan
+  _displayName: "Ti\u1EBFng \u0110\xE0n Th\u1EA7n"
+  _description: "+25% s\xE1t th\u01B0\u01A1ng g\u1ED1c; +15% t\u1ED1c \u0111\u1ED9
+    \u0111\xE1nh g\u1ED1c."
+  _icon: {fileID: 21300000, guid: 112122fc0a58e434fb4eb4172ad9ea9b, type: 3}
+  _ingredients:
+  - _card: {fileID: 11400000, guid: aa34e65481a95fa4d93452dcd127cb60, type: 2}
+    _stacks: 2
+  - _card: {fileID: 11400000, guid: 4a3a230b9acc03a4483c3a0b3b581057, type: 2}
+    _stacks: 3
+  _bonus: {fileID: 11400000, guid: f56aec06c7f644868fcd0c4e3a7926c6, type: 2}

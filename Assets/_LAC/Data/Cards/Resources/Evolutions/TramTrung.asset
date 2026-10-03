@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b5486a6b4d2a428f4857e310b6a00, type: 3}
+  m_Name: TramTrung
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
+  _id: TramTrung
+  _displayName: "Tr\u0103m Tr\u1EE9ng"
+  _description: "B\u1EAFn 4 \u0111\u1EA1n trong g\xF3c 14\xB0. M\u1ED7i \u0111\u1EA1n
+    c\xF2n 52,5% s\xE1t th\u01B0\u01A1ng."
+  _icon: {fileID: 21300000, guid: 751e6cede3a3c884e92c4da6b5005bf8, type: 3}
+  _ingredients:
+  - _card: {fileID: 11400000, guid: ffa29188ff2c3ad458f1c60aa4285d73, type: 2}
+    _stacks: 1
+  - _card: {fileID: 11400000, guid: 2c59bcdcba6e4bf41ba2b8167cc74411, type: 2}
+    _stacks: 3
+  _bonus: {fileID: 11400000, guid: 8743d262cba94aa1b9f8833fd9cff626, type: 2}

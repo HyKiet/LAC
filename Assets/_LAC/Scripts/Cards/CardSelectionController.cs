@@ -20,6 +20,7 @@ namespace LAC.Cards
         [SerializeField] private CardDefinition[] _definitions;
         [SerializeField, Min(0f)] private float _selectionFeedbackSeconds = 0.12f;
         private CardSelectionView _view;
+        private CardSelectionRulesData _rules;
         private RunManager _run;
         private PlayerCharacter _player;
         private PlayerUpgradeState _state;
@@ -30,12 +31,14 @@ namespace LAC.Cards
         private int _token;
         private int _revision;
         private double _deadline;
+        private int _displayedCountdown = -1;
         private bool _selectionOpen;
         private bool _committing;
         private bool _ownsPause;
         private bool _requestPending;
         private CardId[] _pendingOffer;
         private Coroutine _finishSelection;
+        private string[] _acceptedEvolutions;
 
         private void Awake()
         {
@@ -46,6 +49,8 @@ namespace LAC.Cards
             if (_view == null) _view = gameObject.AddComponent<CardSelectionView>();
             // Prefab demo cũ chỉ chứa 7 tham chiếu; luôn nạp cùng danh mục với host.
             _definitions = Resources.LoadAll<CardDefinition>("Cards");
+            _rules = Resources.Load<CardSelectionRulesData>("CardSelectionRules");
+            if (!TryGetComponent<CardBattleFeedback>(out _)) gameObject.AddComponent<CardBattleFeedback>();
         }
 
         private void OnDestroy()
@@ -81,8 +86,14 @@ namespace LAC.Cards
             if (_selectionOpen && !_committing)
             {
                 float remaining = Mathf.Max(0f, (float)(_deadline - NetworkTime.time));
-                _view.SetStatus(remaining > 0f ? $"TỰ CHỌN SAU {Mathf.CeilToInt(remaining)} GIÂY" : "ĐANG TỰ CHỌN…");
-                if (remaining <= 0f) _view.SetButtonsEnabled(false);
+                if (_rules != null) _view.SetCountdown(remaining, _rules.SelectionSeconds);
+                int seconds = Mathf.CeilToInt(remaining);
+                if (seconds != _displayedCountdown)
+                {
+                    _displayedCountdown = seconds;
+                    _view.SetStatus(seconds > 0 ? $"TỰ CHỌN SAU {seconds} GIÂY" : "ĐANG TỰ CHỌN…");
+                    if (seconds == 0) _view.SetButtonsEnabled(false);
+                }
             }
         }
 
@@ -154,6 +165,7 @@ namespace LAC.Cards
             }
             _pendingOffer = null;
             _selectionOpen = true;
+            _displayedCountdown = -1;
             _view.Show(offer, _state, _rerollsRemaining, Pick, Reroll);
             if (offer.Count == 0) { _committing = true; _view.ShowWaiting(); }
         }
@@ -180,11 +192,12 @@ namespace LAC.Cards
             _run.CmdPickCard(_token, _revision, card.Id);
         }
 
-        public void ReceiveAccepted(int token, CardId id)
+        public void ReceiveAccepted(int token, CardId id, string[] evolvedIds = null)
         {
             if (token != _token || _committing) return;
             if (_pendingOffer != null) { FindLocalPlayer(); if (_state != null) ShowPendingOffer(); }
             _committing = true;
+            _acceptedEvolutions = evolvedIds;
             _view.MarkSelected(FindCard(id), _player != null ? _player.transform : null);
             _view.SetStatus("ĐÃ CHỌN NÂNG CẤP");
             _finishSelection = StartCoroutine(FinishSelectionAfterFeedback());
@@ -193,6 +206,16 @@ namespace LAC.Cards
         private IEnumerator FinishSelectionAfterFeedback()
         {
             yield return new WaitForSecondsRealtime(Mathf.Max(_selectionFeedbackSeconds, CardHoverVisual.ConsumeDuration));
+            if (_acceptedEvolutions != null)
+            {
+                foreach (string id in _acceptedEvolutions)
+                {
+                    CardEvolutionData recipe = CardEvolutionCatalog.Find(id);
+                    if (recipe == null) continue;
+                    _view.ShowEvolution(recipe);
+                    yield return new WaitForSecondsRealtime(CardSelectionView.EvolutionSeconds);
+                }
+            }
             _finishSelection = null;
             _view.RefreshOwned(_definitions, _state);
             _view.ShowWaiting();
@@ -216,6 +239,8 @@ namespace LAC.Cards
             if (_finishSelection != null) StopCoroutine(_finishSelection);
             _finishSelection = null;
             _pendingOffer = null;
+            _acceptedEvolutions = null;
+            _displayedCountdown = -1;
             _committing = _selectionOpen = _requestPending = false;
             if (_view != null) _view.Hide();
             if (!_ownsPause) return;

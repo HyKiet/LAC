@@ -90,6 +90,8 @@ namespace LAC.Cards.Editor
                     finally { Set(run, "_cardDefinitions", definitions); }
                 }
 
+                await CheckCountdown(run, health, controller, waveManager);
+
                 foreach (float scale in new[] { .5f, 0f })
                 {
                     await Restart(run, health);
@@ -136,6 +138,60 @@ namespace LAC.Cards.Editor
             }
         }
 
+        private static async Task CheckCountdown(RunManager run, PlayerHealth health,
+            CardSelectionController controller, WaveManager waveManager)
+        {
+            await Restart(run, health);
+            ClearWave(waveManager);
+            await Task.Delay(250);
+            Require(run.State == RunState.CardSelection, "Chưa mở lượt kiểm bộ đếm.");
+            var view = controller.GetComponent<CardSelectionView>();
+            var status = Get<Text>(view, "_statusText");
+            int token = Get<int>(controller, "_token"), revision = Get<int>(controller, "_revision");
+            int rerolls = Get<int>(controller, "_rerollsRemaining");
+            double deadline = Get<double>(controller, "_deadline");
+            var slots = Get<Array>(view, "_slots");
+            var ids = new System.Collections.Generic.List<CardId>();
+            foreach (object slot in slots)
+            {
+                var root = (GameObject)slot.GetType().GetField("Root").GetValue(slot);
+                if (root.activeSelf) ids.Add(((CardDefinition)slot.GetType().GetField("Card").GetValue(slot)).Id);
+            }
+            var update = (Action)Delegate.CreateDelegate(typeof(Action), controller,
+                typeof(CardSelectionController).GetMethod("Update", Private));
+            // Cố định cùng giây chỉ trong kiểm UI; deadline host không bị sửa.
+            try
+            {
+                Set(controller, "_deadline", NetworkTime.time + 5.5);
+                update();
+                string unchanged = status.text;
+                for (int i = 0; i < 10000; i++) update();
+                Require(ReferenceEquals(unchanged, status.text), "Bộ đếm tạo lại chuỗi trong cùng giây.");
+                int seconds = Get<int>(controller, "_displayedCountdown");
+                double localDeadline = Get<double>(controller, "_deadline");
+                view.SetStatus("TEST OFFER RESET");
+                controller.ReceiveOffer(token, revision, ids.ToArray(), rerolls, localDeadline);
+                update();
+                Require(Get<int>(controller, "_displayedCountdown") == seconds
+                    && status.text != "TEST OFFER RESET", "Đề nghị cùng giây không reset cache.");
+                Set(controller, "_deadline", NetworkTime.time - 1);
+                update();
+                Require(Get<int>(controller, "_displayedCountdown") == 0 && status.text == "ĐANG TỰ CHỌN…",
+                    "Đề nghị quá hạn không hiển thị tự chọn.");
+                foreach (var button in view.GetComponentsInChildren<Button>())
+                    Require(!button.interactable, "Quá hạn chưa khoá nút.");
+            }
+            finally
+            {
+                controller.ReceiveOffer(token, revision, ids.ToArray(), rerolls, deadline);
+                update();
+            }
+            FirstCardButton(controller).onClick.Invoke();
+            await Task.Delay(Mathf.CeilToInt(CardHoverVisual.ConsumeDuration * 1000f) + 650);
+            Require(run.State == RunState.WaveActive, "Không phục hồi sau kiểm bộ đếm.");
+            Debug.Log("[CardResume] COUNTDOWN PASS: 10,000 same-second updates retain string; same-second offer reset, expired offer locks buttons, next wave resumes.");
+        }
+
         private static async Task Restart(RunManager run, PlayerHealth health)
         {
             HitStop.Cancel();
@@ -153,16 +209,24 @@ namespace LAC.Cards.Editor
         {
             switch (card.Id)
             {
+                case CardId.CuongCong:
+                    Require(Mathf.Approximately(player.Upgrades.DamageFromBase(player.Data.BaseDamage, false),
+                        player.Data.BaseDamage * 1.3f), "Cường Công cấp đầu chưa tăng 30% sát thương thật.");
+                    break;
+                case CardId.LienKich:
+                    Require(Mathf.Approximately(player.Upgrades.AttackIntervalFromBase(player.Data.AttackInterval),
+                        player.Data.AttackInterval / 1.225f), "Liên Kích cấp đầu chưa tăng 22,5% tốc độ đánh.");
+                    break;
                 case CardId.SinhLuc:
                     Require(health.MaxHealth == player.Data.MaxHealth + Mathf.CeilToInt(player.Data.MaxHealth * .2f), "Sinh Lực sai mức máu.");
                     break;
                 case CardId.KhinhThan:
                     float speed = (float)typeof(PlayerMovement).GetProperty("MoveSpeed", Private).GetValue(player.GetComponent<PlayerMovement>());
-                    Require(Mathf.Approximately(speed, player.Data.MoveSpeed * 1.08f), "Khinh Thân chưa nối vào di chuyển.");
+                    Require(Mathf.Approximately(speed, player.Data.MoveSpeed * 1.12f), "Khinh Thân chưa nối vào di chuyển.");
                     break;
                 case CardId.AmVang:
                     float range = (float)typeof(WeaponAuto).GetProperty("AttackRange", Private).GetValue(player.GetComponent<WeaponAuto>());
-                    Require(Mathf.Approximately(range, player.Data.AttackRange * 1.1f), "Âm Vang chưa nối vào vũ khí.");
+                    Require(Mathf.Approximately(range, player.Data.AttackRange * 1.15f), "Âm Vang chưa nối vào vũ khí.");
                     break;
                 case CardId.HoiXuan:
                     Require(health.Health == health.MaxHealth - 1, "Hồi Xuân chưa hồi đúng 1 máu khi sang đợt.");
@@ -170,13 +234,13 @@ namespace LAC.Cards.Editor
                 case CardId.ThietBich:
                     Set(health, "_invulnerableUntil", 0f);
                     DamageSystem.ApplyToPlayer(player, 1, player.transform.position);
-                    Require(Mathf.Abs(Get<float>(health, "_invulnerableUntil") - Time.time - Get<float>(health, "_hitInvulnerability") * 1.15f) < .001f,
+                    Require(Mathf.Abs(Get<float>(health, "_invulnerableUntil") - Time.time - Get<float>(health, "_hitInvulnerability") * 1.225f) < .001f,
                         "Thiết Bích chưa tăng thời gian bảo vệ.");
                     Set(health, "_invulnerableUntil", Time.time + 1000f);
                     break;
                 case CardId.CuongNo:
-                    Require(Mathf.Approximately(player.Upgrades.DamageMultiplier, 1.25f)
-                        && Mathf.Approximately(player.Upgrades.AttackSpeedMultiplier, .9f), "Cuồng Nộ thiếu đánh đổi.");
+                    Require(Mathf.Approximately(player.Upgrades.DamageMultiplier, 1.375f)
+                        && Mathf.Approximately(player.Upgrades.AttackSpeedMultiplier, .88f), "Cuồng Nộ thiếu đánh đổi.");
                     break;
             }
         }

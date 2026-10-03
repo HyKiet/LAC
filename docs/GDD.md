@@ -1,3 +1,6 @@
+> Cập nhật T-25/T-26 (27/09/2026): công thức tiến hoá dùng bộ 12 thẻ nền tại
+> [CARDS.md](CARDS.md), thay thế các nguyên liệu/công thức lịch sử trong tài liệu này.
+
 # LẠC
 ## *Children of the Dragon*
 

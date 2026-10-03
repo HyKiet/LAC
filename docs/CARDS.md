@@ -12,8 +12,8 @@ liệu này.
 | Loại | Số lượng mục tiêu | Trạng thái |
 |---|---:|---|
 | Thẻ nền | 12 | Đã triển khai đủ 12 thẻ; cân bằng ban đầu ở T-24 |
-| Thẻ tiến hoá | 8 | Chờ T-25 và T-26 |
-| **Tổng** | **20** | 12 thẻ nền đã làm + 8 tiến hoá chưa triển khai |
+| Thẻ tiến hoá | 8 | Đã triển khai T-25/T-26; nghiệm thu co-op 01/10/2026 |
+| **Tổng** | **20** | Đủ 12 thẻ nền + 8 tiến hoá; cân bằng toàn game ở T-50/T-51 |
 
 Con số 48 thẻ trong GDD và mục tiêu 32 thẻ nền trước đây đã lỗi thời. Theo quyết định
 ngày 24/09/2026, phạm vi hiện hành là **12 thẻ nền + 8 thẻ tiến hoá**.
@@ -30,8 +30,8 @@ ngày 24/09/2026, phạm vi hiện hành là **12 thẻ nền + 8 thẻ tiến h
   `CharacterData` hoặc asset `CardDefinition`.
 - Qua mạng chỉ đồng bộ định danh/lựa chọn thẻ; host giữ thẩm quyền với thay đổi gameplay,
   còn mỗi máy tự áp dụng phần biểu diễn.
-- Bộ 7 thẻ demo hiện dùng ảnh AI đồng nhất để kiểm chứng bố cục và tương tác. Đây là
-  **mỹ thuật tạm**. Năm thẻ mới dùng ký hiệu chữ; bộ 20 icon chính thức thuộc T-33.
+- Toàn bộ 12 thẻ nền và 8 tiến hoá dùng bộ ảnh AI đồng nhất đồng cổ–ngọc xanh.
+  Nguồn ảnh, prompt và cách nhập lại được lưu tại [CARD_ART.md](CARD_ART.md).
 
 ## 3. Giao diện và phản hồi tương tác hiện hành
 
@@ -39,17 +39,21 @@ Hướng mỹ thuật của bản demo lấy cảm hứng từ màn chọn nâng
 khung kim loại vàng, hoạ tiết xanh lam-ngọc và icon lớn ở nửa trên thẻ. Chỉ lấy cảm
 hứng về nhịp thị giác, không sao chép asset hoặc bố cục của Liên Minh Huyền Thoại.
 
-### 3.1. Bộ icon demo
+### 3.1. Bộ icon đồng nhất
 
-- Có 7 ảnh vuông 512×512 tương ứng với 7 `CardDefinition`, đặt tại
-  `Assets/_LAC/Art/Sprites/UI/Cards/AI_Demo/`.
-- Các ảnh dùng chung ngôn ngữ mỹ thuật: nền xanh đen, vật thể vàng, dòng năng lượng
-  xanh ngọc và độ tương phản phù hợp pixel-art UI.
+- Có 20 ảnh riêng tại `Assets/_LAC/Art/Sprites/UI/Cards/DongHo_2026/`;
+  12 ảnh gắn vào `CardDefinition`, 8 ảnh gắn vào recipe và bonus tương ứng.
+- Cùng nền than tối, đồng vàng, ngọc xanh, hoạ tiết mặt trời/chim Lạc và ánh sáng
+  góc trên trái. Mỗi biểu tượng diễn giải một công dụng khác nhau.
 - Texture được import dạng `Sprite/Single`, không mipmap, kích thước tối đa 512,
-  `Bilinear` và `CompressedHQ`.
+  `Point`, không nén, Full Rect. Bản PNG sinh gốc được giữ nguyên trong dự án.
+- `LAC/Art/Apply Unified Card Icons` gán lại toàn bộ ảnh;
+  `LAC/Art/Validate Unified Card Icons` kiểm tra đủ 20 ảnh và đúng ánh xạ.
+- Bộ 7 ảnh cũ trong `AI_Demo/` được giữ để tham khảo, không còn được thẻ dùng.
 - `CardDemoAssetGenerator` chỉ tự bổ sung asset/icon còn thiếu sau reload script;
   không tự ghi đè chỉ số hoặc nội dung của `CardDefinition` đang tồn tại. Menu
-  `LAC/Demo/Rebuild Card Demo Assets` mới chủ động dựng lại và chạy validation.
+  `LAC/Demo/Rebuild Card Demo Assets` mới chủ động dựng lại và chạy validation;
+  khi gán ảnh, ưu tiên bộ mới nếu có.
 
 ### 3.2. Màu và trạng thái thẻ
 
@@ -66,10 +70,12 @@ thẻ mới.
 
 ### 3.3. Chuyển động
 
-- Mỗi thẻ có nhịp đập kép với pha lệch nhau, gồm thay đổi nhẹ kích thước, độ cao và
-  độ sáng khung. Animation dùng `Time.unscaledTime`/`Time.unscaledDeltaTime`, vì lúc
-  chọn thẻ gameplay đang có `Time.timeScale = 0`.
-- Thẻ đang hover vẫn tiếp tục nhịp đập, đồng thời nhấc lên và phóng lớn nhẹ.
+- Thẻ giữ nguyên vị trí, kích thước và góc xoay lúc nghỉ/hover; đã bỏ nhịp thở.
+- Khung đồng vát góc được vẽ bằng UI mesh trong `CardFrameGraphic`: hai đường viền,
+  nét sáng/tối, thanh góc và họa tiết hình thoi, cùng bảng màu vàng–ngọc của icon.
+- Vệt sáng mảnh chỉ chạy trên viền trong 0,72 giây, cách nhau khoảng 5,2 giây;
+  các thẻ bắt đầu lệch pha. Hover/nhấn cũng kích hoạt vệt sáng; ảnh và chữ giữ nguyên.
+- Hiệu ứng dùng `Time.unscaledDeltaTime`, tiếp tục khi chọn thẻ tạm dừng gameplay.
 - Khi chọn: thẻ xoay đủ một vòng tại chỗ trong 0,38 giây; chỉ sau đó mới bắt đầu bay
   ở mốc 0,42 giây về toạ độ màn hình của player, đồng thời thu nhỏ và mờ dần.
 - Tổng thời lượng phản hồi là 1,05 giây. Sau animation, client xác nhận với host và
@@ -130,6 +136,7 @@ Mỗi thẻ nền là một `CardDefinition` ScriptableObject tại
 | `MaxStacks` | Số lần tối đa có thể nhận trong một ván |
 | `Weight` | Trọng số xuất hiện trong bể thẻ |
 | `Accent` | Màu nhấn giao diện; không dùng nhóm Son dành riêng cho đòn địch |
+| `StatScaleAtStack` | Curve phần trăm theo cấp trong asset; trống = đều. Không nhân số đạn/hồi máu/bonus tiến hoá |
 
 ## 5. Thẻ nền đã triển khai
 
@@ -137,18 +144,18 @@ Các hàng dưới đây phản ánh asset và logic đang chạy, không phải
 
 | ID | Tên | Hiệu ứng mỗi lần nhận | Cộng dồn tối đa | Trọng số | Trạng thái |
 |---|---|---|---:|---:|---|
-| `CuongCong` | Cường Công | +20% sát thương cơ bản, cộng theo chỉ số gốc | 3 | 1 | Đã triển khai |
-| `LienKich` | Liên Kích | +15% tốc độ đánh cơ bản | 3 | 1 | Đã triển khai |
+| `CuongCong` | Cường Công | Sát thương gốc: +30% / +15% / +15% theo cấp | 3 | 1 | Đã triển khai |
+| `LienKich` | Liên Kích | Tốc đánh gốc: +22,5% / +11,25% / +11,25% theo cấp | 3 | 1 | Đã triển khai |
 | `SinhLuc` | Sinh Lực | +20% máu gốc; tổng làm tròn lên; hồi đúng phần máu vừa tăng | 3 | 1 | Đã triển khai |
 | `BoPhap` | Bộ Pháp | −20% thời gian hồi lướt | 1 | 1 | Đã triển khai |
 | `SongTien` | Song Tiễn | Chỉ vũ khí đạn: 2 đạn trong góc mở 7°, mỗi đạn 70% sát thương | 1 | 0,65 | Đã triển khai |
 | `XuyenTam` | Xuyên Tâm | Chỉ vũ khí đạn: xuyên thêm 2 địch, tối đa 3 mục tiêu | 1 | 0,65 | Đã triển khai |
 | `BocPha` | Bộc Phá | Chỉ vũ khí đạn: chạm đầu nổ bán kính 1,75; 30% sát thương lên địch khác | 1 | 0,65 | Đã triển khai |
-| `KhinhThan` | Khinh Thân | +8% tốc độ di chuyển gốc; không tăng tốc lướt | 3 | 1 | Đã triển khai |
-| `AmVang` | Âm Vang | +10% tầm đánh gốc; không tăng bán kính nổ | 3 | 1 | Đã triển khai |
+| `KhinhThan` | Khinh Thân | Tốc đi bộ gốc: +12% / +6% / +6%; không tăng tốc lướt | 3 | 1 | Đã triển khai |
+| `AmVang` | Âm Vang | Tầm gốc: +15% / +7,5% / +7,5%; không tăng bán kính nổ | 3 | 1 | Đã triển khai |
 | `HoiXuan` | Hồi Xuân | Hồi 1 máu khi bắt đầu đợt 2 trở đi; không hồi sinh | 2 | 0,8 | Đã triển khai |
-| `ThietBich` | Thiết Bích | +15% thời gian bất tử sau khi trúng đòn; không tăng i-frame lướt | 2 | 1 | Đã triển khai |
-| `CuongNo` | Cuồng Nộ | +25% sát thương gốc, đổi lại −10% tốc độ đánh gốc | 2 | 0,75 | Đã triển khai |
+| `ThietBich` | Thiết Bích | Bảo vệ sau trúng đòn: +22,5% / +7,5%; không tăng i-frame lướt | 2 | 1 | Đã triển khai |
+| `CuongNo` | Cuồng Nộ | Cấp 1: +37,5% sát thương / −12% tốc đánh; cấp 2: +12,5% / −4% | 2 | 0,75 | Đã triển khai |
 
 Ghi chú: `SongTien`, `XuyenTam` và `BocPha` đã kết hợp được trên cùng một viên đạn.
 Mọi tham số hiệu ứng, giới hạn và trọng số nằm trong asset `CardDefinition`.
@@ -164,8 +171,8 @@ trước lượt chọn thứ 15 vẫn còn ít nhất 3 thẻ hợp lệ, kể 
 
 | Hướng xây dựng | Trần từ thẻ | Đánh đổi/giới hạn |
 |---|---|---|
-| Sát thương + tốc đánh | Cường Công ×3, Liên Kích ×3, Cuồng Nộ ×2: 2,625× DPS gốc | Tốn 8 lựa chọn; Cuồng Nộ giảm tốc đánh |
-| Thêm Song Tiễn | 3,675× DPS gốc nếu cả hai đạn trúng một mục tiêu | Chỉ vũ khí đạn; tốn tổng 9 lựa chọn; chưa tính trượt/overkill |
+| Sát thương + tốc đánh | Cường Công ×3, Liên Kích ×3, Cuồng Nộ ×2: 2,709× DPS gốc | Tốn 8 lựa chọn; Cuồng Nộ giảm tốc đánh |
+| Thêm Song Tiễn | 3,7926× DPS gốc nếu cả hai đạn trúng một mục tiêu | Chỉ vũ khí đạn; tốn tổng 9 lựa chọn; chưa tính trượt/overkill |
 | Máu | Tấm 4→7, Thạch Sanh 6→10, Gióng 10→16 | Tốn 3 lựa chọn; thay mức +75 máu của demo cũ |
 | Di chuyển / tầm đánh | +24% / +30% | Mỗi hướng tốn 3 lựa chọn; không tăng lướt/bán kính nổ |
 | Hồi phục | 2 máu giữa các đợt | Tốn 2 lựa chọn; không hồi giữa giao tranh hoặc hồi sinh |
@@ -175,6 +182,11 @@ Các phần trăm cộng theo chỉ số gốc, không nhân lũy tiến qua t�
 và máu quái giữ phần lẻ: đạn 0,7 không còn bị nâng thành 1; vụ nổ 30% của nó là 0,21.
 Số sát thương nổi vẫn làm tròn cho giao diện, không dùng để tính máu quái.
 Vụ nổ không đánh lại mục tiêu vừa trúng trực tiếp, không tạo chuỗi nổ và chỉ nổ một lần/đạn.
+
+T-24B dồn tác động vào cấp đầu của sáu thẻ nhưng giữ trần ở bảng trên. Màn chọn
+hiển thị đúng cấp sắp nhận và chỉ số trước → sau (gồm bonus mới đủ công thức),
+không chỉ một mô tả chung cho mọi cấp. Sinh Lực, hồi đầu đợt, lướt và cải biến đạn
+giữ nguyên. Chi tiết và giới hạn cân bằng: [CARD_IMPACT_BALANCE.md](CARD_IMPACT_BALANCE.md).
 
 Đã mô phỏng 1.000 seed × 15 lượt × 3 kiểu vũ khí = **45.000 lựa chọn**, kiểm tra đổi thẻ,
 lọc theo vũ khí, giới hạn cộng dồn, toàn bộ thẻ đều xuất hiện và không sửa asset.
@@ -187,20 +199,52 @@ kể cả animation và truyền mạng. Console cuối phiên: 0 lỗi, 0 cản
 Đây là cân bằng ban đầu của **bể thẻ**, chưa thay thế T-50/T-51: cần chơi thử với đủ
 quái/boss và thu thập tỉ lệ thắng, lựa chọn thẻ để chốt độ khó toàn game.
 
-## 7. Công thức tiến hoá
+Rà soát T-24A ngày 02/10/2026 (trước curve T-24B): giảm bất lợi Cuồng Nộ từ −10% xuống −8% mỗi cấp, giữ +25%
+sát thương, giới hạn 2 và trọng số 0,75. Build Cường Công ×3 + Thiết Bích ×2
+(Thánh Gióng) + Cuồng Nộ ×1 từng có DPS 2,025×; cấp Cuồng Nộ tiếp theo làm giảm
+xuống 2,000×. Dữ liệu mới cho 2,070→2,100×. Kiểm 1.152 tổ hợp cấp liên quan trên
+ba nhân vật và danh mục tiến hoá thật: mọi cấp Cuồng Nộ tiếp theo đều tăng DPS,
+mức tăng nhỏ nhất 0,030× DPS gốc. Đây là phép tính chỉ số, không phải đo tỉ lệ thắng.
+Chi tiết tối ưu/kiểm thử: [CARD_OPTIMIZATION.md](CARD_OPTIMIZATION.md).
 
-Khi đủ toàn bộ nguyên liệu, hệ thống tự hợp nhất thành thẻ tiến hoá. Tên nguyên liệu
-dưới đây là tên thiết kế từ CLAUDE.md; T-24/T-26 phải ánh xạ chúng sang ID chính thức
-trước khi triển khai. Các công thức dưới đây là thiết kế lịch sử, chưa khớp bộ 12 thẻ;
-T-26 phải thiết kế lại nguyên liệu và số cấp theo danh mục mới, không tự bổ sung thẻ
-ngoài phạm vi 12 thẻ nền. Mục tiêu 8 tiến hoá vẫn giữ nguyên.
+Curve T-24B sau đó giữ tổng Cuồng Nộ +50%/−16%, nhưng cấp đầu +37,5%/−12% và
+cấp sau +12,5%/−4%. Build Thánh Gióng + Cuồng Nộ cấp 1→2 là 2,090→2,100×;
+mọi cấp vẫn phải tăng DPS qua bộ kiểm 1.152 tổ hợp. Đây không phải nghiệm thu T-50/T-51.
 
-| # | Nguyên liệu | Kết quả | Trạng thái |
-|---:|---|---|---|
-| 1 | Xuyên thấu ×3 + Nảy tường ×3 | Nỏ Thần | Đã chốt ở mức thiết kế |
-| 2 | Nổ ×3 + Vệt cháy ×3 | Lửa Thiêng | Đã chốt ở mức thiết kế |
-| 3 | +2 đạn ×3 + Tách đạn ×3 | Trăm Trứng | Đã chốt ở mức thiết kế |
-| 4–8 | Chưa chốt | Chưa chốt | Chờ T-26 |
+## 7. Tám công thức tiến hoá — T-25/T-26
+
+Đủ nguyên liệu sẽ tự mở tiến hoá sau khi host chấp nhận thẻ. Mỗi công thức chỉ
+áp dụng một lần mỗi ván; không tốn lượt chọn hay lượt đổi. Nguyên liệu giữ cấp và
+hiệu ứng, phần thưởng dưới đây cộng thêm đúng một lần, không nhân đôi chỉ số nền.
+Một nguyên liệu có thể dùng cho nhiều công thức; các tiến hoá cùng đủ điều kiện
+được áp dụng và thông báo lần lượt. Không có nguyên liệu tiến hoá dây chuyền.
+
+| Tiến hoá | Nguyên liệu | Phần thưởng thêm | Phạm vi |
+|---|---|---|---|
+| Nỏ Thần | Xuyên Tâm ×1 + Âm Vang ×3 | Đạn xuyên thêm 2 địch; +20% tầm đánh gốc. | Vũ khí đạn |
+| Lửa Thiêng | Bộc Phá ×1 + Cuồng Nộ ×2 | Nổ rộng 2,5 đơn vị, gây 60% sát thương đạn lên địch khác. | Vũ khí đạn |
+| Trăm Trứng | Song Tiễn ×1 + Liên Kích ×3 | Bắn 4 đạn trong góc 14°. Mỗi đạn còn 52,5% sát thương. | Vũ khí đạn |
+| Thánh Gióng | Cường Công ×3 + Thiết Bích ×2 | +40% sát thương gốc; +15% thời gian bảo vệ sau trúng đòn. | Cả ba nhân vật |
+| Tiếng Đàn Thần | Cường Công ×2 + Âm Vang ×3 | +25% sát thương gốc; +15% tốc độ đánh gốc. | Cả ba nhân vật |
+| Lạc Phong | Bộ Pháp ×1 + Khinh Thân ×3 | Giảm thêm 15% hồi lướt gốc; +12% tốc độ di chuyển gốc. | Cả ba nhân vật |
+| Bất Tử | Sinh Lực ×3 + Hồi Xuân ×2 | +20% máu gốc; hồi thêm 1 máu đầu đợt. Không hồi sinh. | Cả ba nhân vật |
+| Kim Cang | Sinh Lực ×2 + Thiết Bích ×2 | +20% máu gốc; +30% thời gian bảo vệ sau trúng đòn. | Cả ba nhân vật |
+
+Tất cả chỉ số phần trăm cộng theo chỉ số gốc, trừ hệ số sát thương đạn nhân nhau.
+Trăm Trứng nhân thêm 0,75 vào 0,7 của Song Tiễn nên mỗi viên còn 0,525; tổng 4 viên
+là 2,1 lần sát thương trước hệ số đạn nếu đều trúng. Nỏ Thần đạt 5 mục tiêu/viên.
+Lửa Thiêng nâng bán kính và hệ số nổ bằng giá trị lớn nhất, không cộng bán kính.
+Bất Tử chỉ tăng máu/hồi đầu đợt, không cung cấp hồi sinh hoặc bất tử vĩnh viễn.
+
+Tám công thức dùng 3–5 lượt chọn nguyên liệu, nằm trong 15 lượt của một ván.
+Bonus nằm ngoài `Resources/Cards` nên bể bốc vẫn đúng 12 thẻ. Đây là cân bằng ban
+đầu của tiến hoá; đường cong độ khó toàn game vẫn thuộc T-50/T-51.
+Chi tiết dữ liệu và kiểm thử: [EVOLUTION_TESTS.md](EVOLUTION_TESTS.md).
+
+T-24B không sửa nguyên liệu hoặc bonus. Tiếng Đàn Thần mở ở Cường Công ×2,
+khi curve mới đã cho +45% thay +40%, nên sát thương lúc mở là 1,70× (cũ 1,65×).
+Cường Công ×3 vẫn kết thúc ở 1,85× với Tiếng Đàn; các công thức dùng đủ cấp của
+nguyên liệu vẫn giữ tổng chỉ số như trước. Preview tính bonus một lần ở hệ số 1.
 
 ## 8. Mẫu biên soạn thẻ mới
 
@@ -223,7 +267,10 @@ mục 7. Mô tả phải nêu rõ giá trị, cách cộng dồn và mọi bất
 | Điều phối mạng trên host | `Assets/_LAC/Scripts/Cards/CardSelectionNetwork.cs` |
 | Cấu hình lượt chọn | `Assets/_LAC/Data/Cards/Resources/CardSelectionRules.asset` |
 | Giao diện | `Assets/_LAC/Scripts/Cards/CardSelectionView.cs` |
-| Hover/nhịp đập/animation chọn | `Assets/_LAC/Scripts/Cards/CardHoverVisual.cs` |
+| Hover/animation chọn | `Assets/_LAC/Scripts/Cards/CardHoverVisual.cs` |
+| Khung đồng và lóe sáng viền | `Assets/_LAC/Scripts/Cards/CardFrameGraphic.cs` |
 | Asset | `Assets/_LAC/Data/Cards/Resources/Cards/` |
 | Icon demo AI | `Assets/_LAC/Art/Sprites/UI/Cards/AI_Demo/` |
+| 20 icon đang dùng | `Assets/_LAC/Art/Sprites/UI/Cards/DongHo_2026/` |
+| Prompt và kiểm chứng ảnh | `docs/CARD_ART.md` |
 | Prefab | `Assets/_LAC/Prefabs/UI/Cards/Resources/CardSelection.prefab` |

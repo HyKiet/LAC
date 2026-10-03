@@ -21,6 +21,8 @@ namespace LAC.Cards
         [SerializeField] private float _moveSpeedBonus;
         [SerializeField] private float _attackRangeBonus;
         [SerializeField] private float _hitInvulnerabilityBonus;
+        [Tooltip("Hệ số phần trăm theo cấp; để trống dùng 1. Không nhân số đạn/hồi máu/tiến hoá.")]
+        [SerializeField] private float[] _statScales = System.Array.Empty<float>();
         [SerializeField] private int _waveHeal;
         [Header("Cải biến đạn")]
         [SerializeField] private bool _requiresProjectile;
@@ -55,7 +57,17 @@ namespace LAC.Cards
         public float ExplosionDamageRatio => _explosionDamageRatio;
         public bool Supports(WeaponShape shape) => !_requiresProjectile || shape == WeaponShape.Line;
 
-#if UNITY_EDITOR
+        public float StatScaleAtStack(int stack)
+        {
+            if (_statScales == null || stack < 1 || stack > _statScales.Length) return 1f;
+            float scale = _statScales[stack - 1];
+            return float.IsNaN(scale) || float.IsInfinity(scale) ? 1f : Mathf.Max(0f, scale);
+        }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        public void EditorConfigureStatScales(params float[] scales) =>
+            _statScales = scales == null ? System.Array.Empty<float>() : (float[])scales.Clone();
+
         public void EditorConfigureEffects(float damage = 0f, float attackSpeed = 0f,
             float health = 0f, float dash = 0f, float move = 0f, float range = 0f,
             float protection = 0f, int waveHeal = 0, bool projectileOnly = false,

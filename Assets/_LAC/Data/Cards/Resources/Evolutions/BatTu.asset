@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1b5486a6b4d2a428f4857e310b6a00, type: 3}
+  m_Name: BatTu
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardEvolutionData
+  _id: BatTu
+  _displayName: "B\u1EA5t T\u1EED"
+  _description: "+20% m\xE1u g\u1ED1c; h\u1ED3i th\xEAm 1 m\xE1u \u0111\u1EA7u \u0111\u1EE3t.
+    Kh\xF4ng h\u1ED3i sinh."
+  _icon: {fileID: 21300000, guid: a5187ff75d4271741a5db4cad0fb1ade, type: 3}
+  _ingredients:
+  - _card: {fileID: 11400000, guid: ec4c111116df20d41896e1a6b8619b3d, type: 2}
+    _stacks: 3
+  - _card: {fileID: 11400000, guid: d4cf9bd013cdd094d92fbcca83c76071, type: 2}
+    _stacks: 2
+  _bonus: {fileID: 11400000, guid: 7793109879ff4e5296fa0a624f6881db, type: 2}

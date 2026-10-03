@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Cards.CardDefinition
   _id: 10
   _displayName: "Thi\u1EBFt B\xEDch"
-  _description: "+15% th\u1EDDi gian b\u1EA5t t\u1EED sau khi b\u1ECB \u0111\xE1nh
-    m\u1ED7i c\u1EA5p. Kh\xF4ng t\u0103ng b\u1EA5t t\u1EED khi l\u01B0\u1EDBt."
-  _icon: {fileID: 0}
+  _description: "Cấp đầu +22,5% bất tử sau trúng đòn; cấp 2 +7,5%. Không tăng bất tử lướt."
+  _icon: {fileID: 21300000, guid: 290a31a724b52214b97a99f8be780253, type: 3}
   _maxStacks: 2
   _weight: 1
   _accent: {r: 0.7490196, g: 0.6627451, b: 0.5058824, a: 1}
+  _statScales:
+  - 1.5
+  - 0.5
   _damageBonus: 0
   _attackSpeedBonus: 0
   _healthBonusRatio: 0

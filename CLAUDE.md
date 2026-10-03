@@ -79,12 +79,10 @@ Tham chiếu thiết kế: cơ chế Blank của *Enter the Gungeon*, Teleporter
 
 Khi tích luỹ đủ các thẻ nền theo công thức định sẵn, hệ thống tự động hợp nhất thành một thẻ tiến hoá có sức mạnh vượt trội. Đây là **động lực chơi lại chính** của sản phẩm; số lượng công thức không được giảm xuống dưới 8.
 
-| Nguyên liệu | Kết quả |
-|---|---|
-| Xuyên thấu ×3 + Nảy tường ×3 | Nỏ Thần |
-| Nổ ×3 + Vệt cháy ×3 | Lửa Thiêng |
-| +2 đạn ×3 + Tách đạn ×3 | Trăm Trứng |
-| *5 công thức còn lại* | *Chốt tại tuần 4* |
+Bộ 8 công thức T-26 đã ánh xạ sang 12 thẻ nền hiện tại; không dùng Nảy Tường,
+Vệt Cháy hoặc Tách Đạn từ thiết kế cũ. Nguyên liệu giữ cấp và chỉ số đã có;
+tiến hoá thêm một phần thưởng duy nhất mỗi ván. Không bốc lại nguyên liệu vượt
+giới hạn sau tiến hoá. Xem danh mục và giá trị tại [docs/CARDS.md](docs/CARDS.md#7-tám-công-thức-tiến-hoá--t-25t-26).
 
 ### 2.4 Hồn
 
