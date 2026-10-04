@@ -17,6 +17,7 @@ namespace LAC.Director
         private static string _commandPath;
         private string _lastCommand, _lastState;
         private float _next;
+        private LAC.VFX.ArenaStageVisuals _arenaVisuals;
         private const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -41,6 +42,8 @@ namespace LAC.Director
             new GameObject("TelemetryTestClient", typeof(TelemetryTestClient));
         }
 
+        private void Start() => _arenaVisuals = FindAnyObjectByType<LAC.VFX.ArenaStageVisuals>();
+
         private void Update()
         {
             if (Time.unscaledTime < _next) return;
@@ -53,8 +56,11 @@ namespace LAC.Director
             }
             var run = RunManager.Instance;
             string state = "connected=" + NetworkClient.isConnected + " host=" + NetworkServer.active;
-            if (run != null) state += " wave=" + run.CurrentWave + " state=" + run.State + " telemetry=" + (run.Telemetry != null);
-            foreach (var p in PlayerRegistry.All) state += " | " + p.netId + " hp=" + p.GetComponent<PlayerHealth>().Health;
+            if (run != null) state += " wave=" + run.CurrentWave + " total=" + run.TotalWaves + " state=" + run.State + " telemetry=" + (run.Telemetry != null);
+            if (_arenaVisuals != null) state += " stage=" + _arenaVisuals.CurrentStage;
+            foreach (var p in PlayerRegistry.All)
+                state += " | " + p.netId + " hp=" + p.GetComponent<PlayerHealth>().Health
+                    + " character=" + p.CharacterId + " animation=" + (p.Data != null && p.Data.AnimationSet != null ? p.Data.AnimationSet.name : "none");
             if (state != _lastState) { _lastState = state; Debug.Log("[TelemetryClient] " + state); }
             string command;
             try { command = File.Exists(_commandPath) ? File.ReadAllText(_commandPath).Trim() : ""; }

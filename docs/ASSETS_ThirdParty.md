@@ -1,274 +1,59 @@
-# Asset bên thứ ba — dùng để thử nghiệm
+# Asset bên thứ ba — đánh giá và tích hợp 04/10/2026
 
-**Vị trí:** `Assets/ThirdParty/` · **Trạng thái:** tạm thời, không phát hành
+**Vị trí nguồn:** `Assets/ThirdParty/`. Hai gói đang được dùng làm mỹ thuật thử nghiệm theo yêu cầu tích hợp ngày 04/10; không sửa ảnh hoặc metadata gốc. Bộ mỹ thuật cuối cùng vẫn theo `PALETTE.md` và T-33/T-47.
 
-Hai gói đang có:
+## Kiểm kê và phân tích
 
-| Gói | Dung lượng | Nội dung | Kết luận |
+Đã kiểm kê 444 PNG và xem trực tiếp sheet Warrior, Bushes, Rocks, tileset. Các tham chiếu runtime được kiểm tra trong Unity.
+
+| Gói | Nội dung trên đĩa | Điểm mạnh | Giới hạn |
 |---|---|---|---|
-| [TinyRPG](#tinyrpg) | 730 KB · 34 PNG | 2 nhân vật + mũi tên, ~20px | **Dùng chính cho nhân vật và quái** |
-| [TinySwords](#tinyswords) | 8.6 MB · 410 PNG | quân, nhà, địa hình, giao diện, hiệu ứng, ~90px | **Chỉ dùng phần giao diện** |
+| TinyRPG | 34 PNG; Soldier, Orc, mũi tên; file Aseprite | Thân nhỏ; Idle, Walk, Attack, Hurt, Death; bản có bóng giúp định vị | Chỉ hai hình nhân vật, tư thế nhìn nghiêng; phong cách trung cổ |
+| TinySwords | 410 PNG; 5 loại quân × 5 màu, công trình, terrain, UI, FX | Dáng quân khác nhau; đủ tài nguyên phụ trợ; UI có thanh nền/fill riêng | Không có Hurt/Death cho quân; chi tiết và mật độ pixel khác TinyRPG; nhiều nội dung RTS không hợp arena |
 
-> **CẢNH BÁO — cả hai gói KHÔNG được phát hành cùng sản phẩm.**
-> Đây là mỹ thuật trung cổ châu Âu: hiệp sĩ, orc, lâu đài. LẠC dựng trên thần thoại
-> Việt Nam. Hai gói này chỉ để **kiểm thử cơ chế** khi mỹ thuật thật chưa có — va chạm,
-> hoạt ảnh, tilemap, thứ tự vẽ, ngân sách hiệu năng. Chúng **không thay thế** T-17
-> (chốt bảng màu Đông Hồ) và T-18 (sprite thật). Khi T-18 xong, xoá cả `Assets/ThirdParty/`.
+TinyRPG dùng sheet 100×100 nhưng phần thân chỉ khoảng 17×21 (Soldier) hoặc 22×15 (Orc), PPU 16. TinySwords Warrior dùng khung 192×192, thân khoảng 79×89, PPU 64: cao khoảng 1,39 đơn vị so với Soldier khoảng 1,31. Vì vậy không đo kích thước nhân vật bằng toàn bộ khoảng trong suốt của sheet. Lancer khung 320×320, vũ khí dài và hoạt ảnh nhiều hướng, không phù hợp với đòn cung hiện tại bằng Warrior.
 
-Vì lý do trên, hai gói nằm **ngoài** `Assets/_LAC/` — theo mục 4 của CLAUDE.md,
-`_LAC/` chỉ chứa tài nguyên do nhóm tạo ra. Đặt ở `ThirdParty/` cho phép xoá sạch
-bằng một thao tác mà không có nguy cơ xoá nhầm mỹ thuật của nhóm.
+Sprite nhập Point, không mipmap, không nén. Giữ PPU của từng gói; đây là khác biệt mật độ pixel đã chấp nhận trong bản thử nghiệm, không phải chuẩn mỹ thuật thống nhất cuối cùng.
 
----
+## Phân vai đang dùng
 
-## Nên dùng gói nào
-
-**Dùng TinyRPG làm nhân vật, quái và đạn. Giữ TinySwords chỉ cho giao diện.**
-
-Bốn lý do, xếp theo mức quyết định:
-
-### 1. TinySwords không có hoạt ảnh chết — TinyRPG có
-
-Vòng lặp cốt lõi của LẠC là giết quái liên tục: 16 đợt, mỗi đợt hàng chục con,
-mỗi con chết thì rơi Hồn. Cả 5 loại quân của TinySwords (Warrior, Archer, Lancer,
-Monk, Pawn) **không có một khung hoạt ảnh chết hay trúng đòn nào**. Chúng là asset
-cho game chiến thuật, nơi lính biến mất chứ không ngã xuống.
-
-TinyRPG có đủ cho cả Soldier lẫn Orc:
-
-| Hoạt ảnh | Soldier | Orc |
+| Hạng mục | Chọn | Cách tích hợp |
 |---|---|---|
-| Idle | 6 khung | 6 khung |
-| Walk | 8 | 8 |
-| Attack01 / 02 | 6 / 6 | 6 / 6 |
-| Attack03 (bắn cung, có mũi tên bay) | 9 | — |
-| **Hurt** | **4** | **4** |
-| **Death** | **4** | **4** |
+| Gióng | TinySwords **Yellow Warrior** | Bộ mới `Data/Animations/Giong_TinySwords.asset`: Idle 8 khung/10fps, Run 6/12fps, Attack1 4/12fps. `Data/Characters/Giong.asset` tham chiếu bộ này và sprite đứng đầu |
+| Thạch Sanh | TinyRPG Soldier | Giữ bộ đang dùng; sprite nhỏ, hoạt ảnh đầy đủ |
+| Tấm | TinySwords Blue Archer | Giữ `Data/Animations/Tam.asset`; dáng bắn tầm xa khác Gióng |
+| Cô Hồn | TinyRPG Orc | Giữ bộ có hoạt ảnh chết, phù hợp số lượng lớn |
+| Bốn quái khác, Chằn Tinh | Sprite của nhóm | Gói ngoài không có hình tương ứng đáng tin cậy; không thay quái bằng quân lính cùng dáng |
+| Rìa sân | TinySwords **Bushes 1–4, Rocks 1–4** | Prefab `Prefabs/Environment/ArenaStageDecor.prefab`, 20 sprite hoạt động mỗi chặng, không collider |
+| UI | Các phần TinySwords đã tích hợp trước đây | Đợt này không thay cấu trúc HUD/thẻ |
+| Đạn, sóng âm, Trống Đồng | Tài nguyên hiện tại của nhóm | Giữ tín hiệu đòn địch và hoa văn Đông Sơn |
 
-Đây là khác biệt quyết định. Không có Death thì T-14 (quái chết), T-15 (phản hồi
-khi đánh trúng) và cơ chế Hồn đều không kiểm thử được đúng cảm giác.
+Warrior vàng dễ nhận ra giữa các quái màu chàm và khác Archer xanh. Kích thước trong thế giới tương đương Soldier nên không chỉnh collider, bán kính sát thương hay tầm đánh. Attack1 chỉ là biểu diễn: sát thương vẫn do vũ khí hiện tại quyết định. TinySwords không có Death: Gióng gục giữ một khung đứng tĩnh và dùng vòng cứu/tiến độ của T-41; không gọi đó là hoạt ảnh ngã.
 
-### 2. Kích cỡ sprite — TinySwords quá to cho thể loại
+## Ba chặng trang trí
 
-Đo phần thân thật của nhân vật (bỏ vùng trong suốt):
-
-| | Kích thước thật | Khung chứa |
+| Wave | Nhóm prefab | Bố trí |
 |---|---|---|
-| TinyRPG Soldier | **17 × 21 px** | 100 × 100 |
-| TinyRPG Orc | **22 × 15 px** | 100 × 100 |
-| TinySwords Warrior | **79 × 89 px** | 192 × 192 |
-| TinySwords Lancer | **69 × 150 px** | 320 × 320 |
+| 1–5 | SanDinh | Bụi cây xen đá, sắc trầm ấm |
+| 6–10 | RuongLua | Nhiều bụi cây, xanh trầm |
+| 11–15 | AmPhu | Đá xanh tối; boss ở wave 15 |
 
-Ngân sách của LẠC là **40 quái và 200 đạn cùng lúc** (mục 5). Với sprite cao 90px
-thì camera phải kéo xa tới mức mất chi tiết, hoặc 40 con quái phủ kín màn hình
-không còn chỗ di chuyển. Vampire Survivors và Brotato đều dùng sprite nhỏ, và đó
-không phải ngẫu nhiên — thể loại này cần **nhiều thân thể trên màn hình**, không
-cần thân thể đẹp.
+Bụi dùng khung đầu tiên, không phát chuyển động trên toàn sân. Các cụm đặt thưa ở mép, renderer sorting order -80 (trên sàn -100, dưới nhân vật/đòn đánh). Tint giảm độ sáng; không che vùng trung tâm và không thêm vật cản hay thay vị trí spawn. Sàn gạch và biên va chạm giữ nguyên. Đây là dấu hiệu chặng thử nghiệm, chưa phải ba bản đồ hoàn chỉnh.
 
-Đây cũng là vấn đề của mục 2.1: sóng âm Đông Sơn phủ kín màn hình về cuối ván.
-Bóng đen đơn giản 20px vẫn đọc được dưới nhiều lớp vòng sáng chồng nhau; sprite
-90px nhiều chi tiết sẽ tranh chấp thị giác với chính hiệu ứng của người chơi.
+`VFX/ArenaStageVisuals.cs` chọn nhóm bằng `RunManager.CurrentWave` đã đồng bộ. Cùng một luồng cho host và client, người vào muộn nhận đúng chặng; Restart về nhóm đầu. Prefab được dựng sẵn, không sinh/huỷ trang trí trong vòng lặp và không dùng RNG gameplay.
 
-### 3. TinyRPG trùng mật độ pixel với sprite tạm của nhóm
+## Asset chưa chọn
 
-Sprite tạm trong `Assets/_LAC/Art/Placeholder/` là 16×16 px. TinyRPG nhập ở
-**PPU 16** cho ra pixel đúng bằng cỡ đó — đặt cạnh nhau không thấy lệch. TinySwords
-vẽ ở 64px một ô, nhập ở PPU 64; kích thước trong thế giới thì tương đương, nhưng
-**cỡ pixel nhỏ hơn 4 lần**, đặt chung một màn hình sẽ thấy rõ hai phong cách.
+- **Buildings:** lâu đài, nhà gỗ kiểu châu Âu làm lệch bối cảnh đình làng.
+- **Lancer/Pawn/Monk:** thêm quân mới không giúp phân biệt vai trò hơn ba hình đã chọn.
+- **Cây lớn, mây, cừu, vịt, vàng/thịt:** dễ che sân hoặc khiến người chơi tưởng có tài nguyên/cơ chế thu thập khác.
+- **Tileset cỏ sáng, nước:** cần bố trí chuyển tiếp đầy đủ và cân chỉnh tương phản; không thay toàn bộ nền gạch tối chỉ vì gói có sẵn.
+- **Fire/Explosion:** sáng, diện tích lớn và sắc nóng dễ lẫn với tín hiệu đòn địch; giữ FX chiến đấu của nhóm.
 
-### 4. Đổi lại, TinySwords rộng hơn nhiều
+## Tái tạo và thay thế
 
-TinyRPG chỉ có 2 nhân vật, 1 mũi tên, **không có tileset, không có giao diện,
-không có hiệu ứng**, và chỉ có tư thế nhìn nghiêng.
+Mở Arena ở Edit Mode, chạy `LAC > Content > Apply 15 Waves and ThirdParty Art`. Công cụ trong `VFX/Editor/ArenaContentUpgrade.cs` cập nhật asset và prefab bằng Unity API; chạy lại không xoá thêm wave. Bảng 16 dòng được bỏ dòng thường thứ 15, giữ nguyên 1–14 và boss cuối. Bảng 15 dòng được giữ nguyên.
 
-Nên phân vai:
+Khi thay bằng mỹ thuật cuối, cập nhật `CharacterData._bodySprite/_animationSet` và renderer trong prefab trang trí trước khi gỡ gói. Không xoá toàn bộ ThirdParty khi dữ liệu nhân vật/UI còn tham chiếu. Không tìm thấy tệp giấy phép trong hai thư mục hiện có; nguồn và quyền phát hành cần được ghi nhận trước khi đóng gói thương mại.
 
-| Hạng mục | Lấy từ |
-|---|---|
-| Nhân vật người chơi tạm | **TinyRPG Soldier** (có cả đánh gần lẫn bắn cung) |
-| Tấm tạm (T-29) | **TinySwords Blue Archer** — ngoại lệ, xem ghi chú dưới |
-| Quái Cô Hồn tạm (T-14) | **TinyRPG Orc** |
-| Đạn (T-12) | **TinyRPG** `Arrow01(32x32).png` |
-| Sàn đấu trường (T-10B) | **Placeholder 16px của nhóm** — đúng mật độ pixel |
-| Giao diện: nút, thanh máu, khung thẻ (T-15B, T-22, T-23) | **TinySwords** `UI Elements/` |
-| Hiệu ứng | **Không lấy từ gói nào** — `SoundWave` của T-16 đã tự vẽ |
-
-Giao diện nằm ở không gian màn hình, không chịu ràng buộc mật độ pixel với thế
-giới game, nên trộn được. Đó là phần duy nhất TinySwords hơn hẳn và TinyRPG
-hoàn toàn không có.
-
-> **Ngoại lệ đã ghi nhận — Tấm dùng TinySwords Archer (T-29).**
-> Nhóm chọn Archer cho Tấm vì tư thế bắn tầm xa hợp với sáo trúc, trong khi TinyRPG chỉ
-> có hai nhân vật và Soldier đã dùng cho Thạch Sanh. Chấp nhận ba điểm yếu đã nêu ở trên:
-> **không có khung Hurt và Death** — `SpriteAnimationSet` trả null cho hai trạng thái đó và
-> `SpriteAnimator` tự lùi về trạng thái nền, nên không vỡ nhưng lúc Tấm gục sẽ không có động
-> tác ngã; **cỡ pixel lệch bốn lần** so với Thạch Sanh và Cô Hồn của TinyRPG, đặt cạnh nhau
-> nhìn ra ngay; **thân 70×88 px** nhập ở PPU 64 cho ra khoảng 1.37 đơn vị, xấp xỉ Soldier nên
-> tỉ lệ trong thế giới thì đúng.
-> Đây là mỹ thuật tạm để kiểm thử cơ chế, biến mất khi T-33 xong.
-
-### Hai điểm cần biết trước khi dùng
-
-- **Cả hai gói chỉ có tư thế nhìn nghiêng**, lật ngang theo hướng đi. LẠC là góc
-  nhìn từ trên xuống. Ngoại lệ duy nhất là TinySwords Lancer — loại duy nhất có
-  sprite 4 hướng. Nghĩa là **không gói nào đánh giá được hoạt ảnh xoay hướng thật**;
-  T-18 vẫn phải quyết định LẠC dùng 1 hướng lật ngang hay 4/8 hướng.
-- **`Orc_Hurt` và `Soldier_Hurt` có sẵn một khung nhuộm đỏ toàn thân.** Đây là hiệu
-  ứng chớp trúng đòn nướng sẵn vào sprite, sẽ **chồng lên** `SpriteFlash` trong
-  `HitFeedback` của T-15. Khi thử, dùng một trong hai, không dùng cả hai.
-- Thư mục `... with shadows/` có sẵn bóng đổ hình elip dưới chân — hợp góc nhìn từ
-  trên xuống hơn bản không bóng. Dùng bản có bóng.
-
----
-
-<a id="tinyrpg"></a>
-## TinyRPG — `Assets/ThirdParty/TinyRPG/`
-
-**Tác giả:** Free Game Assets · **Ngày đưa vào:** 03/09/2026 · 730 KB
-
-```
-Arrow(Projectile)/              mũi tên 32x32 và 100x100
-Aseprite file/                  file nguồn .aseprite (sửa được nếu cần)
-Characters(100x100 split)/
-  Orc/Orc/                      7 tệp, không bóng
-  Orc/Orc with shadows/         7 tệp, có bóng  ← dùng bản này
-  Soldier/Soldier/              8 tệp, không bóng
-  Soldier/Soldier with shadows/ 8 tệp, có bóng  ← dùng bản này
-```
-
-`Orc.png` (800×600) và `Soldier.png` (900×700) là atlas gộp toàn bộ hoạt ảnh
-thành lưới — mỗi hàng một hoạt ảnh. Dùng atlas này thay vì 7 tệp rời sẽ giảm
-số draw call khi thử ngân sách 40 quái.
-
-**Cấu hình import đã sửa:** Point · Uncompressed · mipmap off · **PPU 16** ·
-cắt lưới 100×100 pivot giữa. Kết quả: 4 sprite đơn, 30 sheet, **376 khung**.
-
----
-
-<a id="tinyswords"></a>
-## TinySwords — `Assets/ThirdParty/TinySwords/`
-
-**Tác giả:** Pixel Frog · **Ngày đưa vào:** 03/09/2026 · 8.6 MB
-
----
-### Nội dung — 410 PNG, 18 .aseprite
-
-| Nhóm | Số lượng | Kích thước khung |
-|---|---|---|
-| `Units/` | 5 loại × 5 phe màu (Black, Blue, Purple, Red, Yellow) | 192×192 · Lancer 320×320 |
-| `Buildings/` | 8 công trình × 5 phe màu | ảnh đơn |
-| `Terrain/Tileset/` | 5 biến thể màu + Shadow + Water Foam | ô 64×64 |
-| `Terrain/Decorations/` | bụi cây, mây, đá, đá dưới nước, vịt cao su | hỗn hợp |
-| `Terrain/Resources/` | vàng, thịt, cừu, cây, gốc cây, dụng cụ | hỗn hợp |
-| `Particle FX/` | bụi ×2, nổ ×2, lửa ×3, nước bắn | 64×64 và 192×192 |
-| `UI Elements/` | nút, thanh, khung, biểu tượng, con trỏ, 25 chân dung | ảnh đơn |
-
-Năm loại quân, mỗi loại đủ bộ hoạt ảnh — **nhưng không loại nào có Hurt hay Death**:
-
-| Quân | Hoạt ảnh có sẵn |
-|---|---|
-| Warrior | Idle 8 · Run 6 · Attack1 4 · Attack2 4 · Guard 6 |
-| Archer | Idle 6 · Run 4 · Shoot 8 · kèm sprite mũi tên |
-| Lancer | Idle 12 · Run 6 · Attack và Defence theo 4 hướng |
-| Monk | Idle 6 · Run 4 · Heal 11 · Heal_Effect 11 (hiệu ứng tách riêng) |
-| Pawn | Idle · Run · Interact — mỗi trạng thái có 7 biến thể cầm đồ vật |
-
-### Cấu hình import đã sửa
-
-Gói này khi kéo vào mang thiết lập mặc định của Unity, sai toàn bộ với pixel art.
-Đã sửa hàng loạt cho cả 410 tệp:
-
-| Thiết lập | Trước | Sau | Lý do |
-|---|---|---|---|
-| Filter Mode | Bilinear | **Point** | Bilinear làm nhoè viền pixel, hỏng hoàn toàn phong cách |
-| Compression | Normal Quality | **Uncompressed** | Nén DXT tạo nhiễu quanh viền alpha ở ảnh pixel |
-| Pixels Per Unit | 100 | **64** | Một ô tilemap = 64px = 1 đơn vị Unity |
-| Max Texture Size | 2048 | **4096** | `Lancer_Idle.png` rộng 3840px — giới hạn 2048 sẽ thu nhỏ và phá nát lưới pixel |
-| Mipmap | bật | **tắt** | Không có ích cho sprite 2D chính diện, chỉ tốn bộ nhớ |
-| Cắt sprite | tự động, pivot góc dưới trái | **lưới, pivot giữa** | Cắt tự động cho khung lệch nhau từng pixel → nhân vật giật khi chạy hoạt ảnh |
-
-Kết quả: 152 sprite đơn, 258 sheet, tổng **2049 khung**.
-
-Quy tắc cắt lưới: ảnh trải ngang có `width % height == 0` thì cắt ô vuông bằng
-chiều cao; `Terrain/Tileset/` cắt ô 64; `UI Elements/`, `Buildings/` và `Clouds/`
-giữ nguyên ảnh đơn — `BigBar_Base.png` là 320×64 nhưng là **một** thanh máu liền,
-không phải 5 khung.
-
-### Phần nên dùng — chỉ giao diện
-
-| Asset | Dùng cho |
-|---|---|
-| `UI Elements/UI Elements/Bars/` | Thanh máu (T-15B) — có Base + Fill tách riêng, chuẩn cho thanh kiểu fill |
-| `UI Elements/UI Elements/Buttons/` | Nút, đủ 2 trạng thái Regular / Pressed |
-| `UI Elements/UI Elements/Papers/` + `Banners/` | Nền thẻ nâng cấp và khung chọn thẻ (T-22, T-23) |
-| `UI Elements/UI Elements/Icons/` | Biểu tượng thẻ tạm |
-| `UI Elements/UI Elements/Human Avatars/` | Chân dung chọn nhân vật, khung người chơi co-op |
-
-### Phần không dùng, và vì sao
-
-- **`Units/`** — không có Death, sprite 90px quá to cho 40 quái cùng lúc.
-  Thay bằng TinyRPG. Điều đáng tiếc duy nhất là **5 phe màu**: cùng một quân có
-  5 màu, rất tiện để phân biệt loại quái hoặc phân biệt hai người chơi co-op.
-  TinyRPG không có. Nếu sau này cần thử phân biệt bằng màu, nhuộm sprite TinyRPG
-  bằng `SpriteRenderer.color` là đủ cho mục đích thử nghiệm.
-- **`Terrain/Tileset/`** — 64px một ô, lệch mật độ pixel với nhân vật TinyRPG 16px.
-  Dùng `Tile_Floor_*.png` 16px của nhóm cho T-10B.
-- **`Particle FX/`** — khung 192px, to gấp 9 lần nhân vật TinyRPG. Không dùng.
-- **`Buildings/`, `Terrain/Resources/`, `Terrain/Decorations/`** — asset cho game
-  chiến thuật xây dựng, không có cơ chế tương ứng trong LẠC.
-
----
-
-## Ràng buộc chung khi dùng cả hai gói
-
-1. **Không tham chiếu asset ở đây từ prefab hoặc ScriptableObject sẽ phát hành.**
-   Chỉ gắn vào prefab thử nghiệm, hoặc gắn tạm rồi gỡ. Nếu một `CharacterData`
-   trỏ vào sprite ở đây, đến lúc xoá thư mục sẽ vỡ tham chiếu hàng loạt.
-
-   **Có hai ngoại lệ đã được ghi nhận:** T-18B gán
-   `Assets/ThirdParty/TinyRPG/Soldier_TEST.asset` vào trường `_animationSet` của cả ba
-   tài sản trong `Data/Characters/`, và T-18C gán `Orc_TEST.asset` vào
-   `Data/Enemies/CoHon.asset`. Cả hai an toàn vì trường đó chịu được null —
-   gỡ gói ra thì `SpriteAnimator` lặng lẽ nhường lại sprite tĩnh trong `BodySprite`.
-   Xem thêm ở [Thủ tục gỡ gói](#go-goi) bên dưới.
-2. **Không rút kết luận thị giác cho mục 2.1 từ hai gói này.** Bảng màu của chúng
-   không phải bảng Đông Hồ; mọi phép đo tương phản giữa đòn địch và hiệu ứng
-   người chơi làm trên chúng đều **không có giá trị**. T-17 vẫn là hạng mục chặn.
-3. **Không đo cân bằng game bằng chúng.** Kích thước nhân vật khác thì tầm đánh
-   cảm nhận cũng khác.
-4. Vẫn phải đi qua `ObjectPool` như mọi đối tượng khác (mục 5).
-
-## Câu hỏi còn mở cho T-17 / T-18
-
-**LẠC vẽ nhân vật ở mật độ pixel nào?** Sprite tạm của nhóm đang là 16px — rất
-thấp, khó vẽ hoa văn trống đồng Đông Sơn cho ra hình. TinyRPG ở 20px cho thấy
-mức đó vẫn đọc được silhouette nhưng gần như không tả được hoa văn. Đề xuất
-cân nhắc **32px cho nhân vật**, đủ chỗ cho chi tiết mà vẫn giữ được 40 quái
-trên màn hình.
-
-**Nhân vật có mấy hướng?** Cả hai gói gần như chỉ có tư thế nhìn nghiêng (ngoại lệ
-duy nhất là TinySwords Lancer). Với góc nhìn từ trên xuống, T-18 phải chốt: 1 hướng
-lật ngang là rẻ nhất, 4 hướng đắt gấp ba nhưng đọc hướng rõ hơn nhiều khi 40 quái
-vây quanh.
-
----
-
-<a id="go-goi"></a>
-## Thủ tục gỡ gói khi T-18 xong
-
-Làm đúng bốn bước, theo thứ tự:
-
-1. Xoá trường `_animationSet` trên ba tài sản trong `Assets/_LAC/Data/Characters/`
-   (`ThachSanh.asset`, `Giong.asset`, `Tam.asset`) và trên
-   `Assets/_LAC/Data/Enemies/CoHon.asset` — gán về **None**.
-2. Xoá trường `_bodySprite` nếu nó còn trỏ vào `ThirdParty/`, thay bằng sprite thật.
-3. Sắp lại `CharacterRegistry.asset` về thứ tự thật nếu muốn — T-18C đã đưa Gióng
-   lên đầu để hợp với sprite Soldier cận chiến, đây là lựa chọn tạm.
-4. Xoá cả thư mục `Assets/ThirdParty/`.
-
-Làm ngược thứ tự cũng không vỡ — `SpriteAnimator` và `PlayerCharacter` đều chịu được
-tham chiếu null — nhưng Unity sẽ ghi một loạt cảnh báo tham chiếu thiếu cho tới khi
-dọn xong bước 1 và 2.
-
-Tính tới 03/09/2026, đây là toàn bộ chỗ mà mã nguồn và dữ liệu của nhóm chạm vào
-`ThirdParty/`.
+Kiểm chứng của lần tích hợp này: [ARENA_CONTENT_TESTS.md](ARENA_CONTENT_TESTS.md).

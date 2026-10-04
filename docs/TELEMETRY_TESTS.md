@@ -27,7 +27,7 @@ Thư mục được tạo tự động. CSV dùng UTF-8 BOM, dấu phẩy phân 
 
 Các cột thống kê:
 
-- `wave`: 1–16 trong `waves.csv`; 0 trong `runs.csv`.
+- `wave`: 1–15 trong `waves.csv` theo T-44B; 0 trong `runs.csv`. CSV nghiệm thu T-43 bên dưới được thu trước thay đổi nên vẫn có 16 wave; giữ nguyên để bảo toàn bằng chứng lịch sử.
 - `source`: hiện là `fixed_table`. T-45 phải cập nhật nguồn và bổ sung quyết định/ngữ cảnh/phần thưởng khi AI Đạo Diễn được triển khai. T-43 không giả lập dữ liệu AI chưa có.
 - `result`: `cleared` cho wave sạch; `victory`/`defeat` cho ván; `aborted` khi dừng host/thoát; `replaced` khi gọi bắt đầu ván khác lúc ván cũ chưa kết thúc; `interrupted` nếu bắt đầu wave khác trước khi đóng wave hiện tại.
 - `duration_s`: thời gian của wave hoặc ván. Wave không gồm thời gian chọn thẻ; ván có gồm thời gian chọn thẻ. Không bị hit-stop làm ngắn thời gian đo. Khi Editor pause, đồng hồ Unity dừng.

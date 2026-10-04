@@ -1,0 +1,6 @@
+﻿[TelemetryClient] connected=False host=False wave=0 total=15 state=Idle telemetry=False stage=0
+[TelemetryClient] connected=True host=False wave=0 total=15 state=Idle telemetry=False stage=0
+[TelemetryClient] connected=True host=False wave=6 total=15 state=WaveActive telemetry=False stage=1 | 3 hp=10 character=Giong animation=Giong_TinySwords | 4 hp=6 character=ThachSanh animation=ThachSanh
+[TelemetryClient] connected=True host=False wave=15 total=15 state=WaveActive telemetry=False stage=2 | 3 hp=10 character=Giong animation=Giong_TinySwords | 4 hp=6 character=ThachSanh animation=ThachSanh
+[TelemetryClient] connected=True host=False wave=15 total=15 state=Victory telemetry=False stage=2 | 3 hp=10 character=Giong animation=Giong_TinySwords | 4 hp=6 character=ThachSanh animation=ThachSanh
+[TelemetryClient] connected=True host=False wave=1 total=15 state=WaveActive telemetry=False stage=0 | 3 hp=10 character=Giong animation=Giong_TinySwords | 4 hp=6 character=ThachSanh animation=ThachSanh

@@ -3,6 +3,8 @@
 
 **Game Design Document**
 
+> Cập nhật 04/10/2026: một ván có **15 đợt tổng cộng**, gồm 14 đợt thường và Chằn Tinh ở đợt 15; có 14 lượt chọn thẻ. Mỹ thuật ThirdParty đang dùng để thử nghiệm được mô tả tại mục 11.7. Các nội dung khác chưa cập nhật theo triển khai vẫn theo quyết định hiện hành trong `CLAUDE.md`.
+
 | | |
 |---|---|
 | Thể loại | Arena Survival Roguelite |
@@ -10,8 +12,8 @@
 | Nền tảng | PC (Steam) |
 | Người chơi | 1–2 (co-op online) |
 | Thời lượng ván | 15 phút |
-| Engine | Unity 6.3 LTS · URP 2D · C# |
-| Giá | $6.99 |
+| Engine | Unity 6000.5.6f1 · URP 2D · C# |
+| Giá | $2.99 |
 
 ---
 
@@ -19,7 +21,7 @@
 
 ### 1.1 High Concept
 
-Người chơi hóa thân thành hậu duệ của Lạc Long Quân và Âu Cơ, chiến đấu qua 16 đợt quái trong một đấu trường khép kín để giành lại Trống Đồng. Vũ khí tự động khai hỏa; người chơi kiểm soát vị trí và thời điểm lướt. Sau mỗi đợt, người chơi chọn một trong ba thẻ nâng cấp, dần biến vũ khí khởi đầu thành một cỗ máy hoàn toàn khác.
+Người chơi hóa thân thành hậu duệ của Lạc Long Quân và Âu Cơ, chiến đấu qua 15 đợt quái trong một đấu trường khép kín để giành lại Trống Đồng. Vũ khí tự động khai hỏa; người chơi kiểm soát vị trí và thời điểm lướt. Sau mỗi đợt thường, người chơi chọn một trong ba thẻ nâng cấp. Hạ trùm ở đợt 15 kết thúc ván ngay, không mở lượt chọn thẻ thứ 15.
 
 ### 1.2 Pitch
 
@@ -48,7 +50,7 @@ Người chơi 15–30 tuổi quen thuộc với roguelite, tìm phiên chơi ng
 ### 2.1 Vòng trong ván
 
 ```
-ĐỢT CHIẾN ĐẤU (30–50s)  →  CHỌN THẺ (10s)  →  lặp ×15  →  TRÙM (đợt 16)
+ĐỢT CHIẾN ĐẤU (30–50s)  →  CHỌN THẺ (10s)  →  lặp ×14  →  TRÙM (đợt 15)
 ```
 
 **Đợt chiến đấu.** Quái xuất hiện từ mép đấu trường theo nhịp do AI Đạo Diễn quyết định. Vũ khí tự bắn. Đợt kết thúc khi dọn sạch quái. Quái không rơi vật phẩm.
@@ -183,7 +185,7 @@ Hành vi triển khai bằng FSM đơn giản. Độ thử thách đến từ th
 
 ### 6.3 Trùm — Chằn Tinh
 
-Mãng xà khổng lồ. Máu 800. Hai giai đoạn, chuyển tại 50% máu.
+Mãng xà khổng lồ xuất hiện ở đợt 15. Máu 800 khi một người, 1600 khi hai người. Hai giai đoạn, chuyển tại 50% máu.
 
 | Giai đoạn | Đòn tấn công |
 |---|---|
@@ -335,7 +337,7 @@ Nhân vật khóa hiện mờ kèm giá Ngọc, mở khóa tại chỗ.
 
 ```
 ┌────────────────────────────────────────┐
-│ ❤❤❤❤♡              ĐỢT 7/16           │
+│ [██████░░] 6/8      ĐỢT 7/15           │
 │                                        │
 │                  🧍                    │
 │                                        │
@@ -369,8 +371,8 @@ Thời gian từ khởi động tới khung hình chiến đấu đầu tiên �
 
 ```
 Nhân vật      32×32 px
-Tile          16×16 px
-PPU           16
+Tile          32×32 px
+PPU           32 (mỹ thuật của nhóm)
 Bảng màu      24 màu, khóa cứng
 Animation     4 frame/hành động
 Filter Mode   Point (no filter)
@@ -383,9 +385,9 @@ Compression   None
 |---|---|
 | 1–5 | Sân Đình |
 | 6–10 | Ruộng Lúa |
-| 11–16 | Âm Phủ |
+| 11–15 | Âm Phủ — Chằn Tinh ở đợt cuối |
 
-Kích thước đấu trường: 32×18 tile. 3–5 vật cản tĩnh.
+Sân thử nghiệm hiện tại: 36×20 đơn vị thế giới, giữ nguyên biên va chạm. Trang trí ThirdParty không có collider. Ba chặng trước mắt đổi nhóm trang trí rìa sân; tileset Ruộng Lúa và Âm Phủ hoàn chỉnh vẫn thuộc T-47.
 
 ### 11.4 Danh mục tài nguyên
 
@@ -426,6 +428,27 @@ Khai báo trên Steam: *"Ảnh nền và tranh minh họa có sử dụng công 
 
 ---
 
+### 11.7 Asset 2D đang tích hợp — cập nhật 04/10/2026
+
+Đã rà 34 PNG TinyRPG và 410 PNG TinySwords tại `Assets/ThirdParty/`. Đây là bộ mỹ thuật thử nghiệm; bảng màu và mật độ pixel gốc khác chuẩn mỹ thuật cuối cùng của nhóm.
+
+| Vai trò | Asset chọn | Lý do |
+|---|---|---|
+| Gióng | TinySwords Yellow Warrior, Idle/Run/Attack1 | Dáng giáp nặng và màu vàng dễ phân biệt với hai nhân vật còn lại; hoạt ảnh quét phù hợp vũ khí cận chiến |
+| Thạch Sanh | Giữ TinyRPG Soldier | Sprite nhỏ, có đầy đủ hoạt ảnh; giữ làm đối chiếu với bộ thử nghiệm hiện tại |
+| Tấm | Giữ TinySwords Blue Archer | Dáng bắn tầm xa, màu xanh và silhouette riêng |
+| Cô Hồn | Giữ TinyRPG Orc | Có Walk/Hurt/Death và thân nhỏ, đọc được khi nhiều quái |
+| Trang trí sân | TinySwords Bushes và Rocks | Cụm thưa ở rìa sân, làm tối, nằm dưới nhân vật và đạn, không collider |
+| Quái khác, Chằn Tinh, sóng âm, Trống Đồng | Giữ tài nguyên của nhóm | Gói ngoài không có hình tương ứng phù hợp thần thoại và vai trò chiến đấu |
+
+Gióng: 8 khung đứng, 6 khung chạy, 4 khung đánh. Gói không có hoạt ảnh ngã; khi gục giữ một khung tĩnh và dùng vòng hồi sinh hiện có. Không đổi hitbox hoặc tầm đánh theo vùng trong suốt của sheet 192×192.
+
+Prefab `ArenaStageDecor` có ba nhóm: sân đình xen bụi/đá (1–5), ruộng lúa nhiều bụi (6–10), âm phủ đá xanh tối (11–15). Chặng lấy từ số wave đã đồng bộ nên người vào muộn và chơi lại hiển thị đúng. Đây là trang trí thử nghiệm, chưa thay thế ba tileset hoàn chỉnh.
+
+Không nhập nguyên nhà châu Âu, cây lớn, cừu, vịt hoặc hiệu ứng nổ/lửa sáng vào sân. Không sửa ảnh và metadata gốc trong ThirdParty. Chi tiết phân tích, tham chiếu và thay thế asset: [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
+
+---
+
 ## 12. ÂM THANH
 
 **Nhạc nền:** đàn bầu, sáo trúc, trống chầu phối cùng nhạc điện tử. Ba bản theo ba bối cảnh, một bản cho trùm.
@@ -442,7 +465,7 @@ Khai báo trên Steam: *"Ảnh nền và tranh minh họa có sử dụng công 
 
 | | |
 |---|---|
-| Engine | Unity 6.3 LTS, URP 2D |
+| Engine | Unity 6000.5.6f1, URP 2D |
 | Ngôn ngữ | C# |
 | Mạng | Mirror, Steamworks.NET |
 | Lưu trữ | JSON cục bộ, có phiên bản hóa |
@@ -479,7 +502,7 @@ Khai báo trên Steam: *"Ảnh nền và tranh minh họa có sử dụng công 
 
 ### 14.1 Bắt buộc
 
-Chiến đấu cốt lõi · 3 nhân vật · 48 thẻ · 5 loại quái · Trùm Chằn Tinh · 16 đợt · 3 bối cảnh · AI Đạo Diễn · Co-op 2 người · Lưu trữ và mở khóa · 4 cấp độ khó
+Chiến đấu cốt lõi · 3 nhân vật · 48 thẻ · 5 loại quái · Trùm Chằn Tinh · 15 đợt · 3 bối cảnh · AI Đạo Diễn · Co-op 2 người · Lưu trữ và mở khóa · 4 cấp độ khó
 
 ### 14.2 Ngoài phạm vi
 
@@ -501,7 +524,7 @@ Nhân vật thứ 4 trở đi · Trùm thứ 2 · Co-op 4 người · Ghép tr�
 | 1–3 | Di chuyển, lướt, tự động bắn, 1 quái, 1 đấu trường, lớp input | **Cổng 1:** cảm giác chiến đấu đạt yêu cầu |
 | 4–5 | Hệ thống thẻ, 30 thẻ chung, màn chọn thẻ | Build phân nhánh rõ rệt qua 10 đợt |
 | 6–7 | 3 nhân vật, 18 thẻ riêng, màn chọn nhân vật | **Cổng 2:** 3 nhân vật khác biệt về lối chơi |
-| 8–9 | 5 quái, phản hồi chiến đấu, trùm, 16 đợt | Ván chơi hoàn chỉnh |
+| 8–9 | 5 quái, phản hồi chiến đấu, trùm, 15 đợt | Ván chơi hoàn chỉnh |
 | 10–12 | Co-op 2 người | 2 máy hoàn thành ván không mất đồng bộ |
 | 13 | Telemetry, AI Đạo Diễn, phiên bản đối chứng | Dữ liệu so sánh |
 | 14 | Mở khóa, lưu trữ, cân bằng | Thử nghiệm 10 người ngoài nhóm |

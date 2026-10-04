@@ -30,6 +30,6 @@ MonoBehaviour:
   _dashCooldown: 0.4
   _dashDamageMultiplier: 1
   _instrumentWave: {fileID: 11400000, guid: 0ad05b7b5a0180949b9ea29ef0838d6a, type: 2}
-  _bodySprite: {fileID: 21300000, guid: 1750961c6bf599742bbc4f509bec7fae, type: 3}
+  _bodySprite: {fileID: 7384290322352760091, guid: a45a13a908694574da92f5b841e4b4ed, type: 3}
   _portrait: {fileID: 0}
-  _animationSet: {fileID: 11400000, guid: 7a1a8adb2a288aa479b6aec908860cf6, type: 2}
+  _animationSet: {fileID: 11400000, guid: 21929b9405d888e4e8dc41cb53eaf9ed, type: 2}

@@ -50,7 +50,7 @@ namespace LAC.Enemies.Editor
             groups.GetArrayElementAtIndex(0).FindPropertyRelative("_count").intValue = 1;
             so.ApplyModifiedPropertiesWithoutUndo();
             BuildHud(); AssetDatabase.SaveAssets();
-            Debug.Log("[BossContent] Wave 16 and boss HUD ready");
+            Debug.Log($"[BossContent] Wave {table.TotalWaves} and boss HUD ready");
         }
         private static Sprite MakeSprite()
         {

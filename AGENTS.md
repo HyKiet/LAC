@@ -28,7 +28,7 @@ Cổng 1 đã xong: vòng lặp một ván chạy được đầu-cuối — di 
 
 **Cấu hình đang chạy là cấu hình thử nghiệm, đừng nhầm là bản cuối:**
 
-- Người chơi mặc định là **Gióng** dùng sprite Soldier, quái dùng sprite Orc — cả hai lấy từ `Assets/ThirdParty/`, xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md)
+- Người chơi mặc định là **Gióng** dùng TinySwords Yellow Warrior; Thạch Sanh dùng Soldier, Cô Hồn dùng Orc. Ván có 15 đợt, boss ở đợt cuối; trang trí rìa sân đổi ở đợt 6 và 11. Xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md).
 - Mỹ thuật thật của T-18 đã có sẵn tại `Data/Animations/ThachSanh.asset` và `CoHon.asset`, đổi lại chỉ là hai trường dữ liệu
 - T-22/T-23 đã có chọn thẻ 10 giây và đồng bộ co-op; đã gỡ cơ chế tự sang đợt sau 1.5 giây. Kiểm thử: [docs/CARD_TESTS.md](docs/CARD_TESTS.md)
 

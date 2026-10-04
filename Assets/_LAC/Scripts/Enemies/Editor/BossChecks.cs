@@ -32,9 +32,9 @@ namespace LAC.Enemies.Editor
                 await Task.Delay(350);
                 spawner.ResetRun();
                 typeof(PlayerHealth).GetField("_invulnerableUntil",Private).SetValue(health,Time.time+120);
-                typeof(RunManager).GetMethod("StartWave",Private).Invoke(run,new object[]{16});
+                typeof(RunManager).GetMethod("StartWave",Private).Invoke(run,new object[]{run.TotalWaves});
                 await Task.Delay(1800);
-                Check(EnemyRegistry.Count==1,"Wave 16 must spawn only the boss");
+                Check(EnemyRegistry.Count==1,"Final wave must spawn only the boss");
                 var boss=EnemyRegistry.Alive[0];
                 Check(boss.IsBoss && boss.MaxHealth==800,"Solo boss health/data");
                 Check(boss.GetComponent<Mirror.NetworkIdentity>()==null,"Boss has NetworkIdentity");

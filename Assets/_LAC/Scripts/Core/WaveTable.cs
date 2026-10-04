@@ -5,7 +5,7 @@ using UnityEngine;
 namespace LAC.Core
 {
     /// <summary>
-    /// Bảng đợt cố định — nội dung của cả 16 đợt, biên soạn bằng tay.
+    /// Bảng đợt cố định — nội dung của cả 15 đợt, biên soạn bằng tay.
     /// </summary>
     /// <remarks>
     /// Hai vai trò, đều nằm trong docs/TASKS.md T-44. Thứ nhất, đây là <b>nhóm đối chứng</b>
@@ -14,9 +14,9 @@ namespace LAC.Core
     /// liệu biên soạn tay chứ không phải công thức. Thứ hai, đây là <b>phương án dự phòng</b>
     /// nếu đạo diễn ở T-45 không kịp hoàn thành.
     ///
-    /// <b>Cả 16 đợt nằm trong một tài sản duy nhất, không phải 16 tệp.</b> Tài sản Unity lưu
-    /// dạng YAML và không hợp nhất tự động được — CLAUDE.md mục 6.2. Mười sáu tệp nghĩa là
-    /// mười sáu nguồn xung đột, trong khi khâu cân bằng ở T-51 gần như luôn sửa nhiều đợt cùng
+    /// <b>Cả 15 đợt nằm trong một tài sản duy nhất, không phải 15 tệp.</b> Tài sản Unity lưu
+    /// dạng YAML và không hợp nhất tự động được — CLAUDE.md mục 6.2. Mười lăm tệp nghĩa là
+    /// mười lăm nguồn xung đột, trong khi khâu cân bằng ở T-51 gần như luôn sửa nhiều đợt cùng
     /// một lúc. Một tệp thì mỗi lần cân bằng là một xung đột, và nhìn được cả đường cong độ
     /// khó trên một màn hình Inspector.
     /// </remarks>

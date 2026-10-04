@@ -50,7 +50,7 @@ graph TD
 
 | Lớp | Trách nhiệm | Ghi chú |
 |---|---|---|
-| `RunManager` | Vòng đời một ván: khởi tạo, điều phối 16 đợt, xác định điều kiện thắng thua | Chỉ host điều khiển tiến trình |
+| `RunManager` | Vòng đời một ván: khởi tạo, điều phối 15 đợt, xác định điều kiện thắng thua | Chỉ host điều khiển tiến trình |
 | `WaveManager` | Yêu cầu đặc tả đợt, phát lệnh sinh quái, theo dõi số quái còn sống, kết thúc đợt | Chỉ host |
 | `RunRandom` | Bao bọc `System.Random` với seed của ván. **Nguồn ngẫu nhiên duy nhất trong gameplay** | Seed được đồng bộ một lần khi khởi tạo ván |
 | `ObjectPool<T>` | Pool dùng chung cho đạn, quái, hiệu ứng, số sát thương | Bắt buộc thay thế cho `Instantiate` trong gameplay |
@@ -165,7 +165,7 @@ Hoạt động ở **cả chế độ chơi đơn và co-op**. `FixedWaveTable` 
 | `partyArchetype` | Định danh nhân vật | **Nhóm tổ hợp đội hình:** cận chiến kép · tầm xa kép · hỗn hợp |
 | `buildType` | Phân loại build | Phân loại build trội của đội |
 
-> Số chiều của véc-tơ được giữ cố định và ở mức nhỏ. Với cỡ mẫu thực nghiệm 30 người, việc nối hai véc-tơ build riêng biệt sẽ làm số chiều tăng gấp đôi và LinUCB không hội tụ kịp trong 16 đợt. `partyArchetype` chỉ có ba giá trị chính vì lý do này.
+> Số chiều của véc-tơ được giữ cố định và ở mức nhỏ. Với cỡ mẫu thực nghiệm 30 người, việc nối hai véc-tơ build riêng biệt sẽ làm số chiều tăng gấp đôi và LinUCB không hội tụ kịp trong 15 đợt. `partyArchetype` chỉ có ba giá trị chính vì lý do này.
 
 #### Hàm thưởng
 

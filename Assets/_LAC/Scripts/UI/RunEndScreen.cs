@@ -16,7 +16,7 @@ namespace LAC.UI
     /// lại là tắt ứng dụng, và bài thực nghiệm ở T-53 cần ba mươi lượt chơi liên tiếp.
     ///
     /// Tiến trình hiển thị bằng <b>một hàng ô, mỗi ô một đợt</b>, cùng cách với thanh máu ở
-    /// T-15B và vì cùng một lý do: người chơi đếm được "tôi qua được 7 trên 16" nhanh hơn
+    /// T-15B và vì cùng một lý do: người chơi đếm được "tôi qua được 7 trên 15" nhanh hơn
     /// đọc một con số, và thấy luôn còn bao xa nữa.
     ///
     /// Màu ở đây <b>không được dùng nhóm son</b> dù đây là giao diện — nhóm son dành riêng

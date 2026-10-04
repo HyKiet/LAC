@@ -52,7 +52,7 @@ namespace LAC.Core
         }
 
         [Header("Nội dung đợt")]
-        [Tooltip("Bảng 16 đợt. Cũng là nguồn của tổng số đợt trong ván.")]
+        [Tooltip("Bảng 15 đợt. Cũng là nguồn của tổng số đợt trong ván.")]
         [SerializeField] private WaveTable _table;
 
         [Header("Điểm sinh")]
@@ -121,7 +121,7 @@ namespace LAC.Core
         /// Vế đầu là bắt buộc kể từ khi quái vào sân theo nhịp. Trước đó cả đợt hiện ra trong
         /// một khung hình nên đếm số quái sống là đủ; giờ thì giữa hai lượt sinh, sân có thể
         /// sạch trong chốc lát nếu người chơi dọn nhanh hơn nhịp vào. Thiếu vế đầu, host sẽ
-        /// tuyên bố đợt xong ngay giữa đợt và chạy hết 16 đợt trong vài giây.
+        /// tuyên bố đợt xong ngay giữa đợt và chạy hết 15 đợt trong vài giây.
         /// </remarks>
         private bool IsWaveCleared()
         {

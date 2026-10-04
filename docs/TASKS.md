@@ -150,7 +150,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 # Cổng 3 — Tuần 8–12
 
-**Nghiệm thu:** co-op qua Steam chạy được ngoài mạng LAN, hoàn tất 16 đợt không sai lệch trạng thái.
+**Nghiệm thu:** co-op qua Steam chạy được ngoài mạng LAN, hoàn tất 15 đợt không sai lệch trạng thái.
 
 - [x] **T-34** Bốn quái còn lại — Ma Trơi, Bù Nhìn, Ma Da, Quỷ Nhỏ — **@Kiet**
   > Codex · 30/09/2026: `Enemies/EnemyBehaviours.cs`, `EnemyData.cs`, `EnemyProjectile.cs`, bốn asset quái và `WaveTable_CoDinh.asset`. Ma Trơi giữ khoảng cách/bắn chậm; Bù Nhìn đánh 3 máu; Ma Da báo hướng rồi lao nhịp 2 giây; Quỷ Nhỏ tách hai Cô Hồn từ sự kiện host. Đạn dùng pool, nối Trống Đồng; ngân sách wave dự trù cả quái con. Sprite tạm, chờ T-47. Play Mode ALL PASSED, đã xem Game View và thử bắn/lao/xóa đạn trong co-op; [ENEMY_TESTS.md](ENEMY_TESTS.md).
@@ -174,6 +174,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-44** Bảng đợt cố định — quái vào sân theo nhịp, theo hướng, theo thành phần — @Kiet · 10/09
   > Thay công thức tuyến tính hard-code trong `WaveManager` bằng một tài sản dữ liệu. Ba thay đổi về lối chơi: quái **vào sân theo nhịp** thay vì đổ hết trong một khung hình; mỗi đợt có **số hướng vào sân riêng**, trải đều trên chu vi rồi xoay ngẫu nhiên; nhiều loại quái trong một đợt **đan xen theo vòng** chứ không hết loại này tới loại kia. `WaveManager` giờ chỉ biết `WaveSpec` — đúng đầu ra của AI Đạo Diễn ở docs/GDD.md mục 7.3 — nên T-45 lắp vào không phải sửa tệp này. Trần 40 quái được kẹp **lúc dựng đặc tả**, không phải lúc sinh, vì đếm quái sống trên sân cho ra hai con số khác nhau ở hai máy. Tổng số đợt chuyển từ `RunManager` sang bảng. `Core/WaveSpec.cs` · `Core/WaveTable.cs` · `Core/WaveManager.cs` · `Core/RunManager.cs` · `Data/Waves/WaveTable_CoDinh.asset`.
   > T-34 đã bổ sung bốn loại quái vào thành phần đợt, dự trù quái con khi tính trần 40. Luật cấm sinh trong bán kính 3 quanh người chơi (GDD mục 7.6) **chưa cài** — nó cần vị trí người chơi, mà vị trí đó lệch nhau giữa hai máy; luật này thuộc tầng an toàn của đạo diễn ở T-45 nơi host quyết một mình.
+- [x] **T-44B** Ván 15 đợt và tích hợp mỹ thuật thử nghiệm ThirdParty — **@Kiet**
+  > Codex · 04/10/2026: `WaveTable_CoDinh.asset` còn 14 đợt thường + Chằn Tinh ở đợt 15; fallback scene/mã và GDD/CLAUDE đồng bộ. `Giong_TinySwords.asset` dùng Yellow Warrior; `ArenaStageDecor.prefab` + `VFX/ArenaStageVisuals.cs` đổi cây/đá ở wave 6 và 11. Đã xem Game View ba chặng và Victory 15/15; Play đủ 15 wave/14 lượt chọn thẻ, telemetry, animation, Restart đạt. Co-op hai tiến trình 100 ms xác nhận vào muộn, boss 1600 máu ở wave 15, Victory/Restart; Console cuối 0 lỗi/0 cảnh báo. Development build 0 lỗi; 40 quái/200 đạn P95 4,76 ms. [Phân tích asset](ASSETS_ThirdParty.md), [kiểm chứng](ARENA_CONTENT_TESTS.md).
 - [ ] **T-45** AI Đạo Diễn (LinUCB) — lõi thuật toán, `ContextVector`, `WaveSpec` — **@Kiet**
 - [ ] **T-45B** Đạo diễn trong co-op — hợp thành ngữ cảnh N người, số hạng công bằng, tầng an toàn theo người yếu nhất — **@Kiet**
 - [ ] **T-46** Điều tiết bất đối xứng, đòn bẩy chia cắt và dồn ép; hiển thị hoạt động đạo diễn trên HUD — **@Kiet**
@@ -189,7 +191,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-48** Tiền tệ Ngọc, lưu tiến trình, bảng mở khoá — **@Kang**
 - [ ] **T-49** Màn thống kê sau ván — **@Kang**
 - [ ] **T-50** Cân bằng: xác định sát thương gốc cho cả ba vũ khí — **@Kiet**
-- [ ] **T-51** Cân bằng đường cong độ khó qua 16 đợt — **@Kiet**
+- [ ] **T-51** Cân bằng đường cong độ khó qua 15 đợt — **@Kiet**
 - [ ] **T-52** Nhạc nền và hiệu ứng âm thanh — Chưa phân công
 - [ ] **T-53** Thực nghiệm đánh giá: 15 người dùng AI Đạo Diễn, 15 người dùng bảng đợt cố định — **@Kiet**
 - [ ] **T-54** Phân tích số liệu và biên soạn chương đánh giá — **@Kiet**

@@ -25,7 +25,7 @@ LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, �
 | Nền tảng phát hành | PC — Steam |
 | Giá bán | **$2.99** |
 | Số người chơi | 1–2, **co-op trực tuyến** *(yêu cầu bắt buộc từ giảng viên hướng dẫn)* |
-| Thời lượng một ván | 15 phút — 16 đợt quái |
+| Thời lượng một ván | 15 phút — 15 đợt quái |
 | Engine | **Unity 6000.5.6f1**, URP 2D, C# |
 | Kiến trúc mạng | Mirror + Steamworks.NET, mô hình **host-authoritative** |
 
@@ -37,7 +37,7 @@ LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, �
 
 ```
 Đợt quái (30–50 giây) → Chọn 1 trong 3 thẻ nâng cấp (10 giây)
-→ Lặp lại 15 lần → Trùm Chằn Tinh ở đợt 16
+→ Lặp lại 14 lần → Trùm Chằn Tinh ở đợt 15
 ```
 
 Người chơi chỉ có **hai thao tác: di chuyển và lướt (dash)**. Vũ khí khai hoả tự động. Người chơi kiểm soát vị trí và thời điểm, không kiểm soát hành vi bắn.
@@ -271,7 +271,7 @@ Nhóm phát triển chủ yếu bằng phương pháp AI-assisted. Ba quy địn
 | GDD | Quyết định hiện hành | Lý do |
 |---|---|---|
 | Unity 6.3 LTS · $6.99 | **6000.5.6f1** · **$2.99** | Phiên bản engine thực tế; định giá theo mặt bằng thể loại |
-| 48 thẻ · 4 cấp độ khó | **12 thẻ nền + 8 tiến hoá** · **1 cấp** | T-24 thu gọn còn 12 thẻ nền theo quyết định ngày 24/09/2026; cân bằng theo giới hạn cộng dồn và 15 lượt nâng cấp. Cấp độ khó thứ hai để sau bảo vệ |
+| 48 thẻ · 4 cấp độ khó | **12 thẻ nền + 8 tiến hoá** · **1 cấp** | T-24 thu gọn còn 12 thẻ nền theo quyết định ngày 24/09/2026; cân bằng theo giới hạn cộng dồn và 14 lượt nâng cấp. Cấp độ khó thứ hai để sau bảo vệ |
 | Không có vật phẩm rơi ra | **Bổ sung cơ chế Hồn** | Thể loại yêu cầu vòng phản hồi chu kỳ ngắn |
 | Không có Trống Đồng và tiến hoá thẻ | **Bổ sung — xem mục 2** | Yếu tố định vị sản phẩm |
 | AI Đạo Diễn chạy ở mọi chế độ | **Hoạt động ở cả hai chế độ.** Co-op dùng véc-tơ ngữ cảnh hợp thành, tầng an toàn theo người yếu nhất và số hạng công bằng | Yêu cầu bắt buộc từ giảng viên hướng dẫn. Đặc tả đầy đủ tại [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) mục 2.7 |

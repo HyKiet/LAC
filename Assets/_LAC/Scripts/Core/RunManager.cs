@@ -6,7 +6,7 @@ using UnityEngine;
 namespace LAC.Core
 {
     /// <summary>
-    /// Điều phối vòng đời một ván: khởi tạo seed, tiến trình 16 đợt, điều kiện thắng thua.
+    /// Điều phối vòng đời một ván: khởi tạo seed, tiến trình đợt, điều kiện thắng thua.
     /// </summary>
     /// <remarks>
     /// Host là thẩm quyền duy nhất. Client không tự quyết định đợt hiện tại hay kết quả ván;
@@ -51,7 +51,7 @@ namespace LAC.Core
         [SerializeField] private WaveTable _waves;
 
         [Tooltip("Chỉ dùng khi chưa gán bảng đợt.")]
-        [SerializeField, Min(1)] private int _fallbackTotalWaves = 16;
+        [SerializeField, Min(1)] private int _fallbackTotalWaves = 15;
 
         [SyncVar(hook = nameof(OnSeedChanged))]
         private int _seed;

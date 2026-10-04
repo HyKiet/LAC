@@ -1,0 +1,1 @@
+PASS: idle/run/attack advance, down pose holds, unlock returns to idle
