@@ -178,6 +178,7 @@ namespace LAC.Core
 
             var stream = new RandomStream(RunRandom.Seed, "wave" + waveIndex);
             WaveSpec spec = _table.BuildSpec(waveIndex, stream);
+            if (isServer) RunManager.Instance.Telemetry?.RecordWaveSpec(spec, _table.name);
 
             if (spec.TotalCount == 0)
             {

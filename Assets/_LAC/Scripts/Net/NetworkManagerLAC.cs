@@ -73,12 +73,22 @@ namespace LAC.Net
             NetworkServer.AddPlayerForConnection(conn, player);
 
             if (RunManager.Instance != null) RunManager.Instance.RegisterPlayer();
+            RunManager.Instance?.Telemetry?.Join(character);
+        }
+
+        public override void OnStopHost()
+        {
+            RunManager.Instance?.Telemetry?.Finish("aborted");
+            base.OnStopHost();
         }
 
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
         {
             if (conn.identity != null && RunManager.Instance != null)
+            {
+                RunManager.Instance.Telemetry?.Leave(conn.identity.GetComponent<PlayerCharacter>());
                 RunManager.Instance.UnregisterPlayer(conn.identity.GetComponent<PlayerCharacter>().IsAlive);
+            }
 
             base.OnServerDisconnect(conn);
         }

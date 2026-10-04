@@ -1,0 +1,15 @@
+{
+    "cpu": "12th Gen Intel(R) Core(TM) i9-12900H",
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "width": 1309,
+    "height": 616,
+    "samples": 7135,
+    "minEnemies": 40,
+    "minPlayerProjectiles": 200,
+    "renderedFrames": 7134,
+    "meanMs": 4.205691549008726,
+    "p95Ms": 4.7828019596636299,
+    "mainThreadP95Ms": 4.7697,
+    "gcBytesPerFrame": 35806.507358093906,
+    "passed": true
+}

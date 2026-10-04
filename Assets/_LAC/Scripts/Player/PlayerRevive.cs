@@ -40,6 +40,7 @@ namespace LAC.Player
             ResetRevive();
             _health = Mathf.Max(1, Mathf.CeilToInt(_maxHealth * _reviveRules.HealthFraction));
             _invulnerableUntil = Time.time + _reviveRules.Invulnerability;
+            _reviveRun.Telemetry?.Revive(_character);
             _reviveRun.ReportPlayerRevived();
         }
         private void ResetRevive() { _rescuer = 0; _reviveStartedAt = 0; }

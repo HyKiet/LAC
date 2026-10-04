@@ -119,6 +119,7 @@ namespace LAC.Core
 
         private void OnDestroy()
         {
+            Telemetry?.Finish("aborted");
             if (_instance == this) _instance = null;
         }
 
@@ -151,6 +152,7 @@ namespace LAC.Core
         [Server]
         public void StartRun(int seed = 0)
         {
+            Telemetry?.Finish("replaced");
             _seed = seed != 0 ? seed : RunRandom.CreateSeed();
 
             // Đếm lại từ danh sách thật thay vì tin vào bộ đếm cũ. Sau một ván thua bộ đếm
@@ -166,6 +168,7 @@ namespace LAC.Core
 
             ResetCardSelections();
 
+            BeginTelemetry();
             StartWave(1);
         }
 
@@ -185,6 +188,7 @@ namespace LAC.Core
         {
             if (_state != RunState.WaveActive) return;
 
+            Telemetry?.EndWave("cleared");
             if (_currentWave >= TotalWaves)
             {
                 EndRun(true);
@@ -283,12 +287,14 @@ namespace LAC.Core
                     if (player != null && player.IsAlive && player.Upgrades.WaveHeal > 0)
                         LAC.Combat.DamageSystem.HealPlayer(player, player.Upgrades.WaveHeal);
             _currentWave = waveIndex;
+            Telemetry?.StartWave(waveIndex);
             _state = RunState.WaveActive;
         }
 
         [Server]
         private void EndRun(bool victory)
         {
+            Telemetry?.Finish(victory ? "victory" : "defeat");
             _state = victory ? RunState.Victory : RunState.Defeat;
         }
 

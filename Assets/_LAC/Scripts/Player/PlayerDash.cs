@@ -236,6 +236,7 @@ namespace LAC.Player
             _serverInvulnerableUntil = Time.time + Duration + compensation;
             _serverReadyAt = Time.time + Cooldown;
 
+            _run.Telemetry?.Dash(_character);
             RpcDashStarted();
         }
 

@@ -1,0 +1,15 @@
+﻿[TelemetryClient] connected=False host=False wave=0 state=Idle telemetry=False
+[TelemetryClient] connected=True host=False wave=0 state=Idle telemetry=False
+[TelemetryClient] connected=True host=False wave=1 state=WaveActive telemetry=False | 3 hp=10 | 4 hp=6
+[TelemetryClient] connected=True host=False wave=1 state=CardSelection telemetry=False | 3 hp=9 | 4 hp=6
+[TelemetryClient] connected=True host=False wave=2 state=WaveActive telemetry=False | 3 hp=9 | 4 hp=6
+[TelemetryClient] connected=True host=False wave=2 state=WaveActive telemetry=False | 3 hp=9 | 4 hp=0
+[TelemetryClient] connected=True host=False wave=2 state=WaveActive telemetry=False | 3 hp=9 | 4 hp=3
+[TelemetryClient] connected=False host=False wave=2 state=WaveActive telemetry=False
+[TelemetryClient] command=join 1
+[TelemetryClient] connected=True host=False wave=2 state=WaveActive telemetry=False
+[TelemetryClient] connected=True host=False wave=1 state=WaveActive telemetry=False | 3 hp=10 | 4 hp=6
+[TelemetryClient] command=dash 1
+[TelemetryClient] command=leave 1
+[TelemetryClient] connected=False host=False wave=1 state=WaveActive telemetry=False
+[TelemetryClient] command=quit 2
