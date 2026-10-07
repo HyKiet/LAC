@@ -18,7 +18,7 @@ namespace LAC.Net
     {
         [Header("LẠC")]
         [Tooltip("Tự khởi động host khi vào scene. Tắt khi đã có màn hình sảnh chờ.")]
-        [SerializeField] private bool _autoStartHost = true;
+        [SerializeField] private bool _autoStartHost = false;
 
         [Tooltip("Truyền tải thật, dùng khi phát hành.")]
         [SerializeField] private Transport _realTransport;
@@ -26,13 +26,56 @@ namespace LAC.Net
         [Tooltip("Lớp bọc giả lập độ trễ, chỉ dùng trong Editor và bản development.")]
         [SerializeField] private LatencySimulation _latencySimulation;
 
-        [Tooltip("Bảng nhân vật. Người vào ván được phân nhân vật theo thứ tự khai báo.")]
+        [Tooltip("Bảng tra cứu ba lớp chơi được. Host thẩm định lựa chọn trước khi sinh player.")]
         [SerializeField] private CharacterRegistry _characterRegistry;
+
+        public CharacterRegistry Characters => _characterRegistry;
+        public CharacterId SelectedCharacter { get; set; } = CharacterId.Warrior;
+
+        public struct CharacterChoiceMessage : NetworkMessage
+        {
+            public CharacterId Character;
+        }
 
         public override void Awake()
         {
+            autoCreatePlayer = false;
             SelectTransport();
             base.Awake();
+        }
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            NetworkServer.RegisterHandler<CharacterChoiceMessage>(OnCharacterChoice);
+            RunManager.Instance?.ResetForConnection();
+        }
+
+        public override void OnClientConnect()
+        {
+            base.OnClientConnect();
+            SendCharacterChoice();
+        }
+
+        public override void OnClientSceneChanged()
+        {
+            base.OnClientSceneChanged();
+            SendCharacterChoice();
+        }
+
+        private void SendCharacterChoice()
+        {
+            if (NetworkClient.ready && NetworkClient.localPlayer == null)
+                NetworkClient.Send(new CharacterChoiceMessage { Character = SelectedCharacter });
+        }
+
+        private void OnCharacterChoice(NetworkConnectionToClient conn, CharacterChoiceMessage message)
+        {
+            if (!conn.isReady || conn.identity != null || numPlayers >= maxConnections) return;
+            // Từ chối ID ngoài bảng trước khi tạo player; client chỉ được đề nghị một lớp hợp lệ.
+            if (message.Character != CharacterId.Warrior && message.Character != CharacterId.Archer
+                && message.Character != CharacterId.Lancer) return;
+            SpawnPlayer(conn, message.Character);
         }
 
         public override void Start()
@@ -46,19 +89,20 @@ namespace LAC.Net
         }
 
         /// <summary>
-        /// Sinh nhân vật cho một người vừa nối vào và ghi họ vào ván đang chạy.
+        /// AddPlayer mặc định không chứa ID lớp, nên không sinh player từ đường này.
         /// </summary>
         /// <remarks>
-        /// Nhân vật được phân theo thứ tự nối vào cho tới khi có màn hình chọn nhân vật ở
-        /// T-20. Chỉ host quyết định ai cầm nhân vật nào — nếu để client tự chọn rồi báo lên
-        /// thì hai người cùng bấm một lúc sẽ cùng nhận một nhân vật.
-        ///
-        /// Định danh nhân vật được gán trước <see cref="NetworkServer.AddPlayerForConnection"/>
-        /// nên nó nằm sẵn trong gói trạng thái ban đầu. Gán sau sẽ tạo ra một khoảng thời gian
-        /// người chơi đã hiện trên màn hình nhưng chưa có chỉ số.
+        /// Client gửi CharacterChoiceMessage khi Ready. Host chỉ chấp nhận ID hợp lệ và
+        /// một player mỗi kết nối; cho phép hai người chọn cùng lớp.
         /// </remarks>
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
+            // AddPlayer mặc định không chứa lựa chọn. Chỉ message đã thẩm định được sinh player.
+        }
+
+        private void SpawnPlayer(NetworkConnectionToClient conn, CharacterId selected)
+        {
+            // Gán dữ liệu trước AddPlayer để gói spawn đầu tiên có đúng lớp và máu.
             Transform start = GetStartPosition();
             Vector3 position = start != null ? start.position : Vector3.zero;
 
@@ -66,7 +110,7 @@ namespace LAC.Net
 
             if (player.TryGetComponent(out PlayerCharacter character) && _characterRegistry != null)
             {
-                CharacterData assigned = _characterRegistry.GetByIndex(numPlayers);
+                CharacterData assigned = _characterRegistry.Get(selected);
                 if (assigned != null) character.SetCharacter(assigned.Id);
             }
 

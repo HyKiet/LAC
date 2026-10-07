@@ -10,26 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcb4e60e9a7d7d94fb3cd618d4abf69c, type: 3}
-  m_Name: Giong
+  m_Name: Warrior
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Player.CharacterData
   _id: 1
-  _displayName: "Gi\xF3ng"
-  _description: 
+  _displayName: Warrior
+  _description: "Ch\xE9m cung ph\xEDa tr\u01B0\u1EDBc. B\u1EC1n b\u1EC9 khi \xE1p
+    s\xE1t."
   _maxHealth: 10
-  _moveSpeed: 3
-  _weaponName: "Roi s\u1EAFt"
+  _moveSpeed: 4
+  _weaponName: "Ki\u1EBFm"
   _weaponShape: 1
-  _attackRange: 3.2
-  _attackInterval: 0.6
-  _baseDamage: 3
+  _attackRange: 2.2
+  _attackInterval: 0.65
+  _baseDamage: 4
   _arcHalfAngle: 55
-  _projectileSpeed: 12
+  _projectileSpeed: 16
+  _projectilePrefab: {fileID: 0}
+  _thrustHalfWidth: 0.4
+  _directionalAttack: 0
   _spawnSoundWave: 0
-  _dashDistance: 6
+  _dashDistance: 4
   _dashDuration: 0.15
-  _dashCooldown: 0.4
+  _dashCooldown: 1
   _dashDamageMultiplier: 1
-  _instrumentWave: {fileID: 11400000, guid: 0ad05b7b5a0180949b9ea29ef0838d6a, type: 2}
+  _instrumentWave: {fileID: 0}
   _bodySprite: {fileID: 7384290322352760091, guid: a45a13a908694574da92f5b841e4b4ed, type: 3}
-  _portrait: {fileID: 0}
-  _animationSet: {fileID: 11400000, guid: 21929b9405d888e4e8dc41cb53eaf9ed, type: 2}
+  _portrait: {fileID: 7384290322352760091, guid: a45a13a908694574da92f5b841e4b4ed, type: 3}
+  _animationSet: {fileID: 11400000, guid: dc7a7f0b652dac440a101e2d8b03f02f, type: 2}

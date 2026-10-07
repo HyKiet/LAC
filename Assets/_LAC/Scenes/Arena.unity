@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 577b868be729023428fb6a1921e5274b, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Core.SoulSpawner
   _soulPrefab: {fileID: 1398783573361316783, guid: f782561a5542ec54385a5ac08186f360, type: 3}
   _pickupSound: {fileID: 104760189}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad22f9ca97bcaa246a60b9e1e135c7d5, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Audio.PitchLadder
   _clip: {fileID: 8300000, guid: 7fb3aaab3111dbd4184d037bb2be4edb, type: 3}
   _maxSteps: 11
@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fbd522de42b497499cfa508ab616fa5, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.UI.RunEndScreen
   _root: {fileID: 1116579899}
   _dim: {fileID: 1116579901}
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0757e11022f1f9543aea458db2061dad, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Enemies.EnemySpawner
   syncDirection: 0
   syncMode: 0
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
   sceneId: 3156446667
   _assetId: 0
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 874a242a90c1836419e42e3aae1aba46, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.UI.PlayerHud
   _barRoot: {fileID: 213057225}
   _barSize: {x: 300, y: 28}
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
   m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
@@ -517,7 +517,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
@@ -8019,7 +8019,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4012a539f0596bf4280f7d77579ce7de, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Core.RunManager
   syncDirection: 0
   syncMode: 0
@@ -8036,7 +8036,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
   sceneId: 591350624
   _assetId: 0
@@ -8068,7 +8068,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: badf75613ef7459468d795b803112a48, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Core.WaveManager
   syncDirection: 0
   syncMode: 0
@@ -8086,7 +8086,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ad979f3a0e3bb74aa9dd9981d7278cb, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Combat.DamageSystem
 --- !u!114 &712958578
 MonoBehaviour:
@@ -8098,7 +8098,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcdcbb2781bfb8544b75e7abfa278302, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.VFX.HitFeedback
   _damageNumberPrefab: {fileID: 8659397140427315508, guid: f6271c634375a9a40918a5ce7e9e4d35, type: 3}
   _enemyHitColor: {r: 1, g: 0.95, b: 0.8, a: 1}
@@ -8155,7 +8155,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8230,7 +8230,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8456,7 +8456,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8587,7 +8587,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6386b813121016540832d0f0f35b6aed, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Utils.CameraFollow
   _smoothTime: 0.12
   _clampToArena: 1
@@ -8622,7 +8622,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41f84591ce72545258ea98cb7518d8b9, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Mirror::Mirror.NetworkStartPosition
 --- !u!4 &1261019840
 Transform:
@@ -9957,6 +9957,63 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1343581614
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955592871869417094, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9057537142312774858, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
+      propertyPath: m_Name
+      value: CharacterSelection
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 16dd9054bd2e11b41be580c724dda319, type: 3}
 --- !u!1 &1361697724
 GameObject:
   m_ObjectHideFlags: 0
@@ -9984,7 +10041,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41f84591ce72545258ea98cb7518d8b9, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Mirror::Mirror.NetworkStartPosition
 --- !u!4 &1361697726
 Transform:
@@ -10028,10 +10085,10 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775953885}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Mirror::Mirror.NetworkManagerHUD
   offsetX: 0
   offsetY: 0
@@ -10045,24 +10102,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90ddafc4ec7dcca4aa41aa17db7e76a5, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Net.NetworkManagerLAC
   dontDestroyOnLoad: 1
   runInBackground: 1
   headlessStartMode: 0
   editorAutoStart: 0
   sendRate: 30
-  offlineScene: 
-  onlineScene: 
+  offlineScene:
+  onlineScene:
   offlineSceneLoadDelay: 0
   transport: {fileID: 1775953888}
   networkAddress: localhost
-  maxConnections: 100
+  maxConnections: 2
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 2262978805030011470, guid: 4a8809abbc9f7a244a1cfac569baa9c3, type: 3}
-  autoCreatePlayer: 1
+  autoCreatePlayer: 0
   playerSpawnMethod: 1
   spawnPrefabs: []
   exceptionsDisconnect: 1
@@ -10080,7 +10137,7 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  _autoStartHost: 1
+  _autoStartHost: 0
   _realTransport: {fileID: 1775953889}
   _latencySimulation: {fileID: 1775953888}
   _characterRegistry: {fileID: 11400000, guid: b105c8ef1ba5a464fab3cb12a43752a1, type: 2}
@@ -10094,7 +10151,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96b149f511061407fb54895c057b7736, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Mirror.Transports::Mirror.LatencySimulation
   wrap: {fileID: 1775953889}
   latency: 100
@@ -10112,7 +10169,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Mirror.Transports::kcp2k.KcpTransport
   port: 7777
   DualMode: 1
@@ -10464,7 +10521,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75011589d5d9c36479586cf3dcdbf0e9, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LAC.Core.ArenaBounds
   _size: {x: 36, y: 20}
 --- !u!4 &2077578357
@@ -10498,3 +10555,4 @@ SceneRoots:
   - {fileID: 340952368}
   - {fileID: 104760191}
   - {fileID: 2026060340}
+  - {fileID: 1343581614}

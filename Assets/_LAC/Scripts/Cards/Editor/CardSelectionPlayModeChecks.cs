@@ -50,7 +50,7 @@ namespace LAC.Cards.Editor
                 {
                     await Restart(run, health);
                     // Thẻ đạn được thử trên Tấm; các thẻ chung thử trên Gióng.
-                    player.SetCharacter(card.RequiresProjectile ? CharacterId.Tam : CharacterId.Giong);
+                    player.SetCharacter(card.RequiresProjectile ? CharacterId.Archer : CharacterId.Warrior);
                     typeof(PlayerHealth).GetMethod("ServerRestore", Private).Invoke(health, null);
                     if (card.Id == CardId.HoiXuan)
                         DamageSystem.ApplyToPlayer(player, 2, player.transform.position);

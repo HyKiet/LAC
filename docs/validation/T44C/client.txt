@@ -1,0 +1,8 @@
+﻿[TelemetryClient] connected=False host=False wave=0 total=15 state=Idle telemetry=False stage=0
+[TelemetryClient] command=join 1
+[TelemetryClient] connected=True host=False wave=0 total=15 state=Idle telemetry=False stage=0
+[TelemetryClient] connected=True host=False wave=1 total=15 state=WaveActive telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 4 hp=6 character=Archer animation=Archer_TinySwords
+[TelemetryClient] command=duplicate 1
+[TelemetryClient] command=invalid 1
+[TelemetryClient] command=leave 1
+[TelemetryClient] connected=False host=False wave=1 total=15 state=WaveActive telemetry=False stage=0

@@ -37,7 +37,7 @@ namespace LAC.VFX.Editor
             {
                 Check(run.TotalWaves == 15, "Expected 15 waves");
                 Check(decor != null && decor.GetComponentsInChildren<Collider2D>(true).Length == 0, "Decor collision");
-                var giong = AssetDatabase.LoadAssetAtPath<CharacterData>("Assets/_LAC/Data/Characters/Giong.asset");
+                var giong = AssetDatabase.LoadAssetAtPath<CharacterData>("Assets/_LAC/Data/Characters/Warrior.asset");
                 Check(giong.AnimationSet.Get(AnimState.Idle).FrameCount == 8, "Giong idle frames");
                 Check(giong.AnimationSet.Get(AnimState.Walk).FrameCount == 6, "Giong run frames");
                 Check(giong.AnimationSet.Get(AnimState.Attack).FrameCount == 4, "Giong attack frames");

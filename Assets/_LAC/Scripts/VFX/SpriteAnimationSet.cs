@@ -10,7 +10,11 @@ namespace LAC.VFX
         Walk = 1,
         Attack = 2,
         Hurt = 3,
-        Death = 4
+        Death = 4,
+        AttackUp = 5,
+        AttackDown = 6,
+        AttackUpDiagonal = 7,
+        AttackDownDiagonal = 8
     }
 
     /// <summary>Một chuỗi khung hình cùng nhịp phát.</summary>

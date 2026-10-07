@@ -81,6 +81,8 @@ trong `WaveManager` đã được gỡ. Xem `docs/CARD_TESTS.md` để kiểm th
 
 **@Kang → lõi.** Menu vào game bằng Mirror:
 
+T-44C bổ sung màn chọn thử nghiệm ngay trong Arena theo yêu cầu người dùng 07/10/2026. Trước khi gọi StartHost/StartClient, gán `NetworkManagerLAC.SelectedCharacter`; `OnClientConnect` gửi lựa chọn và host sinh player sau thẩm định. `autoCreatePlayer` tắt. Khi ghép menu/sảnh chính thức, tái sử dụng giao thức này; không gửi AddPlayer mặc định hoặc gán nhân vật theo thứ tự vào nữa.
+
 ```csharp
 NetworkManager.singleton.StartHost();     // chơi đơn VÀ tạo phòng — cùng một lệnh
 NetworkManager.singleton.StartClient();   // vào phòng người khác

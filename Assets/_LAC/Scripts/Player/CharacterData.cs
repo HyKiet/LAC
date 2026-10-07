@@ -6,9 +6,9 @@ namespace LAC.Player
     /// <summary>Định danh ba nhân vật. Dùng để gắn hiệu ứng riêng của từng nhân vật.</summary>
     public enum CharacterId
     {
-        ThachSanh = 0,
-        Giong = 1,
-        Tam = 2
+        Lancer = 0,
+        Warrior = 1,
+        Archer = 2
     }
 
     /// <summary>
@@ -25,8 +25,8 @@ namespace LAC.Player
     public sealed class CharacterData : ScriptableObject
     {
         [Header("Định danh")]
-        [SerializeField] private CharacterId _id = CharacterId.ThachSanh;
-        [SerializeField] private string _displayName = "Thạch Sanh";
+        [SerializeField] private CharacterId _id = CharacterId.Warrior;
+        [SerializeField] private string _displayName = "Warrior";
         [SerializeField, TextArea(2, 4)] private string _description = "";
 
         [Header("Chỉ số cơ bản")]
@@ -34,8 +34,8 @@ namespace LAC.Player
         [SerializeField, Min(0.1f)] private float _moveSpeed = 5f;
 
         [Header("Vũ khí")]
-        [SerializeField] private string _weaponName = "Đàn bầu";
-        [SerializeField] private WeaponShape _weaponShape = WeaponShape.Circle;
+        [SerializeField] private string _weaponName = "Kiếm";
+        [SerializeField] private WeaponShape _weaponShape = WeaponShape.Arc;
         [SerializeField, Min(0.1f)] private float _attackRange = 4f;
         [SerializeField, Min(0.02f)] private float _attackInterval = 0.9f;
         [SerializeField, Min(1)] private int _baseDamage = 1;
@@ -45,6 +45,10 @@ namespace LAC.Player
 
         [Tooltip("Tốc độ đạn. Chỉ dùng cho vũ khí hình tia.")]
         [SerializeField, Min(1f)] private float _projectileSpeed = 12f;
+
+        [SerializeField] private Projectile _projectilePrefab;
+        [SerializeField, Min(0.05f)] private float _thrustHalfWidth = 0.35f;
+        [SerializeField] private bool _directionalAttack;
 
         [Tooltip("Phát sóng âm Đông Sơn khi khai hoả. Tắt cho vũ khí mà chính hoạt ảnh " +
                  "đã tả đủ đòn đánh.")]
@@ -80,6 +84,9 @@ namespace LAC.Player
         public float AttackInterval => _attackInterval;
         public int BaseDamage => _baseDamage;
         public float ProjectileSpeed => _projectileSpeed;
+        public Projectile ProjectilePrefab => _projectilePrefab;
+        public float ThrustHalfWidth => _thrustHalfWidth;
+        public bool DirectionalAttack => _directionalAttack;
         /// <summary>
         /// Nửa góc mở của hình cung, tính bằng độ.
         /// </summary>

@@ -4,9 +4,8 @@ namespace LAC.Combat
     /// Hình dạng vùng tác động của một đòn đánh.
     /// </summary>
     /// <remarks>
-    /// Ba nhân vật khác nhau ở hình dạng đòn đánh chứ không chỉ ở chỉ số. Đây là yếu tố
-    /// quyết định lối chơi: Thạch Sanh kiểm soát vòng quanh mình, Gióng phải xoay mặt về
-    /// phía địch, Tấm phải đứng thẳng hàng với mục tiêu.
+    /// Warrior quét cung, Archer bắn đạn thẳng, Lancer đâm xuyên hàng. Circle được giữ
+    /// để hỗ trợ dữ liệu/hiệu ứng cũ, không còn dùng trong registry người chơi hiện hành.
     /// </remarks>
     public enum WeaponShape
     {
@@ -17,6 +16,9 @@ namespace LAC.Combat
         Arc = 1,
 
         /// <summary>Tia thẳng theo một hướng — sáo trúc của Tấm.</summary>
-        Line = 2
+        Line = 2,
+
+        /// <summary>Đâm theo đoạn thẳng, xuyên tất cả mục tiêu trong dải hẹp.</summary>
+        Thrust = 3
     }
 }

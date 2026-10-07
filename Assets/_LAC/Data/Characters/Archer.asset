@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb4e60e9a7d7d94fb3cd618d4abf69c, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Player.CharacterData
+  _id: 2
+  _displayName: Archer
+  _description: "B\u1EAFn t\xEAn t\u1EA7m xa. Sau l\u01B0\u1EDBt, t\xEAn k\u1EBF
+    ti\u1EBFp \xD72 s\xE1t th\u01B0\u01A1ng."
+  _maxHealth: 6
+  _moveSpeed: 5.5
+  _weaponName: Cung
+  _weaponShape: 2
+  _attackRange: 8
+  _attackInterval: 0.7
+  _baseDamage: 4
+  _arcHalfAngle: 55
+  _projectileSpeed: 16
+  _projectilePrefab: {fileID: 2426994683234554820, guid: 8d1efdd1c2a932346b92f1140bfef60b, type: 3}
+  _thrustHalfWidth: 0.4
+  _directionalAttack: 0
+  _spawnSoundWave: 0
+  _dashDistance: 4
+  _dashDuration: 0.15
+  _dashCooldown: 0.8
+  _dashDamageMultiplier: 2
+  _instrumentWave: {fileID: 0}
+  _bodySprite: {fileID: 7257567913506708742, guid: 0a6bd1c879129944d93cb980a8928b74, type: 3}
+  _portrait: {fileID: 7257567913506708742, guid: 0a6bd1c879129944d93cb980a8928b74, type: 3}
+  _animationSet: {fileID: 11400000, guid: 022bc2ec75b2dc447ac8e1ca35c2e6ff, type: 2}

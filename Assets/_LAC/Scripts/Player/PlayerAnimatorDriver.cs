@@ -92,7 +92,16 @@ namespace LAC.Player
             CharacterData data = _character != null ? _character.Data : null;
             if (data != null) budget = data.AttackInterval * _attackClipBudget;
 
-            _animator.PlayOneShot(AnimState.Attack, budget);
+            _animator.PlayOneShot(AttackState(data, direction), budget);
+        }
+
+        public static AnimState AttackState(CharacterData data, Vector2 direction)
+        {
+            if (data == null || !data.DirectionalAttack) return AnimState.Attack;
+            if (Mathf.Abs(direction.y) < 0.383f) return AnimState.Attack;
+            if (Mathf.Abs(direction.x) < 0.383f)
+                return direction.y > 0f ? AnimState.AttackUp : AnimState.AttackDown;
+            return direction.y > 0f ? AnimState.AttackUpDiagonal : AnimState.AttackDownDiagonal;
         }
 
         private void OnHealthChanged(int health, int max)

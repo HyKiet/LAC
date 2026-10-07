@@ -37,7 +37,7 @@ namespace LAC.VFX.Editor
             AssetDatabase.SaveAssets();
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
-            Debug.Log("[ArenaContent] 15 waves, Gióng Warrior and three decorative stages ready.");
+            Debug.Log("[ArenaContent] 15 waves, three playable classes and rock stages ready.");
         }
 
         private static void UpdateWaves()
@@ -61,32 +61,7 @@ namespace LAC.VFX.Editor
             return frames;
         }
 
-        private static void UpdateGiong()
-        {
-            string path = Root + "Data/Animations/Giong_TinySwords.asset";
-            var set = AssetDatabase.LoadAssetAtPath<SpriteAnimationSet>(path);
-            if (set == null)
-            {
-                set = ScriptableObject.CreateInstance<SpriteAnimationSet>();
-                AssetDatabase.CreateAsset(set, path);
-            }
-            const string unit = "Units/Yellow Units/Warrior/Warrior_";
-            var idle = Frames(unit + "Idle.png");
-            var so = new SerializedObject(set);
-            var clips = so.FindProperty("_clips"); clips.arraySize = 4;
-            Clip(clips.GetArrayElementAtIndex(0), AnimState.Idle, idle, 10, true);
-            Clip(clips.GetArrayElementAtIndex(1), AnimState.Walk, Frames(unit + "Run.png"), 12, true);
-            Clip(clips.GetArrayElementAtIndex(2), AnimState.Attack, Frames(unit + "Attack1.png"), 12, false);
-            // Gói không có Death: giữ một khung tĩnh, vòng cứu của T-41 biểu diễn trạng thái gục.
-            Clip(clips.GetArrayElementAtIndex(3), AnimState.Death, new[] { idle[0] }, 1, false, true);
-            so.FindProperty("_playHurtClip").boolValue = false;
-            so.ApplyModifiedPropertiesWithoutUndo();
-            var character = AssetDatabase.LoadAssetAtPath<CharacterData>(Root + "Data/Characters/Giong.asset");
-            so = new SerializedObject(character);
-            so.FindProperty("_bodySprite").objectReferenceValue = idle[0];
-            so.FindProperty("_animationSet").objectReferenceValue = set;
-            so.ApplyModifiedPropertiesWithoutUndo();
-        }
+        private static void UpdateGiong() => LAC.Player.Editor.PlayableClassesContent.BuildCharacters();
 
         private static void Clip(SerializedProperty clip, AnimState state, Sprite[] frames, float fps, bool loop, bool hold = false)
         {
@@ -122,10 +97,8 @@ namespace LAC.VFX.Editor
                     {
                         for (int i = 0; i < 7; i++)
                         {
-                            bool bush = stage != 2 && (stage == 1 || i % 2 == 0);
-                            string sprite = bush ? "Terrain/Decorations/Bushes/Bushe" + (1 + i % 4) + ".png"
-                                : "Terrain/Decorations/Rocks/Rock" + (1 + i % 4) + ".png";
-                            AddDecor(group.transform, sprite, new Vector2(-15 + i * 5, side * (8.2f + (i % 2) * .3f)), tints[stage], bush ? 1.5f : 2f);
+                            string sprite = "Terrain/Decorations/Rocks/Rock" + (1 + i % 4) + ".png";
+                            AddDecor(group.transform, sprite, new Vector2(-15 + i * 5, side * (8.2f + (i % 2) * .3f)), tints[stage], 2f);
                         }
                         for (int i = 0; i < 3; i++)
                             AddDecor(group.transform, "Terrain/Decorations/Rocks/Rock" + (i + 1) + ".png",

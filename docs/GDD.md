@@ -5,6 +5,8 @@
 
 > Cập nhật 04/10/2026: một ván có **15 đợt tổng cộng**, gồm 14 đợt thường và Chằn Tinh ở đợt 15; có 14 lượt chọn thẻ. Mỹ thuật ThirdParty đang dùng để thử nghiệm được mô tả tại mục 11.7. Các nội dung khác chưa cập nhật theo triển khai vẫn theo quyết định hiện hành trong `CLAUDE.md`.
 
+> Quyết định 07/10/2026: bản đồ án dùng **Warrior, Archer, Lancer** từ TinySwords thay cho Thạch Sanh, Gióng, Tấm. Dùng asset sẵn để giảm công mỹ thuật; giữ co-op host-authoritative, 15 wave, thẻ, Trống Đồng, Hồn và telemetry. AI Đạo Diễn và thực nghiệm so sánh vẫn là phần cần hoàn thành để đánh giá đề tài, không bị thay bằng màn chọn nhân vật.
+
 | | |
 |---|---|
 | Thể loại | Arena Survival Roguelite |
@@ -21,7 +23,7 @@
 
 ### 1.1 High Concept
 
-Người chơi hóa thân thành hậu duệ của Lạc Long Quân và Âu Cơ, chiến đấu qua 15 đợt quái trong một đấu trường khép kín để giành lại Trống Đồng. Vũ khí tự động khai hỏa; người chơi kiểm soát vị trí và thời điểm lướt. Sau mỗi đợt thường, người chơi chọn một trong ba thẻ nâng cấp. Hạ trùm ở đợt 15 kết thúc ván ngay, không mở lượt chọn thẻ thứ 15.
+Người chơi chọn Warrior, Archer hoặc Lancer, chiến đấu qua 15 đợt quái trong một đấu trường khép kín để giành lại Trống Đồng. Bối cảnh và quái giữ cảm hứng thần thoại Việt Nam; bộ ba người chơi là các lớp chiến đấu dùng mỹ thuật TinySwords. Vũ khí tự động khai hỏa; người chơi kiểm soát vị trí và thời điểm lướt. Sau mỗi đợt thường, người chơi chọn một trong ba thẻ nâng cấp. Hạ trùm ở đợt 15 kết thúc ván ngay, không mở lượt chọn thẻ thứ 15.
 
 ### 1.2 Pitch
 
@@ -32,7 +34,7 @@ Người chơi hóa thân thành hậu duệ của Lạc Long Quân và Âu Cơ,
 | | |
 |---|---|
 | **Nhân vật định hình lối chơi** | Vũ khí cố định theo nhân vật, không thay thế được. Đổi nhân vật là đổi game |
-| **Bản sắc thị giác** | Bảng màu tranh Đông Hồ, hoa văn trống đồng Đông Sơn, nhạc cụ dân tộc |
+| **Bản sắc thị giác** | Nền tối, hoa văn Đông Sơn và Trống Đồng; người chơi dùng TinySwords, vũ khí kiếm/cung/thương |
 | **AI Đạo Diễn** | Hệ thống sinh đợt thích ứng theo hành vi người chơi theo thời gian thực |
 
 ### 1.4 Đối tượng
@@ -55,7 +57,7 @@ Người chơi 15–30 tuổi quen thuộc với roguelite, tìm phiên chơi ng
 
 **Đợt chiến đấu.** Quái xuất hiện từ mép đấu trường theo nhịp do AI Đạo Diễn quyết định. Vũ khí tự bắn. Đợt kết thúc khi dọn sạch quái. Quái không rơi vật phẩm.
 
-**Chọn thẻ.** Thời gian dừng. Ba thẻ hiện ra, chọn một. Mỗi ván có 2 lượt đổi thẻ.
+**Chọn thẻ.** Tạm khoá di chuyển/lướt/tấn công của player trong 10 giây; đồng hồ mạng vẫn chạy. Ba thẻ hiện ra, chọn một; hết hạn host chọn thay. Mỗi ván có 2 lượt đổi thẻ. Co-op chờ cả hai hoàn tất.
 
 **Kết thúc ván.** Thắng hoặc chết → nhận Ngọc → mở khóa → ván mới.
 
@@ -95,32 +97,33 @@ Toàn bộ tương tác của người chơi gồm **di chuyển** và **lướt
 
 Mỗi nhân vật có một vũ khí đặc trưng cố định, một đặc điểm di chuyển, một năng lực bị động. Vũ khí không thay thế được — nó biến đổi qua thẻ nâng cấp.
 
-### 4.1 Bảng nhân vật
+### 4.1 Bảng nhân vật hiện hành
 
-| | THẠCH SANH | GIÓNG | TẤM |
+| | WARRIOR | ARCHER | LANCER |
 |---|---|---|---|
-| **Nguyên mẫu** | Người hùng dân gian | Cậu bé hóa khổng lồ | Lọ Lem Việt Nam |
-| **Vũ khí** | Đàn bầu | Roi sắt | Sáo trúc |
-| **Kiểu tấn công** | Sóng âm lan vòng tròn quanh người | Quét vòng cung tầm gần | Tia liên tục tầm trung |
-| **Máu** | 6 | 10 | 4 |
-| **Tốc độ** | 5 | 3 | 8 |
-| **Tầm** | 4 (vòng tròn) | 2.5 (cung 120°) | 7 (tia) |
-| **Chu kỳ bắn** | 0.9s | 0.6s | 0.12s |
-| **Bị động** | Sóng âm đẩy lùi quái | Mỗi 10 quái hạ được: +5% kích thước, +5% sát thương (tối đa ×10) | Hồi chiêu lướt 0.4s; sát thương ×2 trong 1s sau lướt |
-| **Lối chơi** | Đứng giữa đám đông | Áp sát, chịu đòn | Cơ động liên tục, không đứng yên |
-| **Độ khó** | Dễ | Trung bình | Khó |
+| **Sprite** | Yellow Warrior | Blue Archer | Purple Lancer |
+| **Vũ khí** | Kiếm | Cung / mũi tên | Thương |
+| **Kiểu tấn công** | Quét cung 110° hướng tới quái gần nhất | Tên bay thẳng, trúng mục tiêu đầu tiên | Đâm xuyên tất cả quái trong dải hẹp phía trước |
+| **Máu** | 10 | 6 | 8 |
+| **Tốc độ** | 4 | 5.5 | 4.5 |
+| **Tầm** | 2.2 | 8 | 3.2; dải rộng 0.8 |
+| **Sát thương gốc** | 4 | 4 | 5 |
+| **Chu kỳ** | 0.65s | 0.7s | 0.85s |
+| **Hồi dash** | 1s | 0.8s | 1s |
+| **Đặc điểm** | Chịu đòn và quét nhiều quái gần | Tên kế tiếp sau dash ×2 sát thương; tốc tên 16 đơn vị/s | Xuyên hàng có sẵn; không bắn đạn |
+| **Lối chơi** | Áp sát có kiểm soát | Giữ khoảng cách, né đòn | Canh hướng để nhiều quái nằm cùng hàng |
 
-### 4.2 Nhân vật mở rộng
+Cả ba dash 4 đơn vị trong 0.15s. Chỉ số cân bằng khởi đầu nằm trong `Data/Characters/*.asset`, không phải kết quả cân bằng cuối. Thẻ sát thương/tốc đánh/tầm đánh áp dụng cả ba; thẻ yêu cầu đạn chỉ xuất hiện cho Archer.
 
-| Nhân vật | Vũ khí | Định hướng |
-|---|---|---|
-| Cuội | Rìu hồi lực | Chỉ số ngẫu nhiên mỗi ván, tỉ lệ thẻ hiếm cao |
-| Mị Châu | Nỏ liên châu | Tầm cực xa, sát thương cực cao, máu 3 |
-| Sơn Tinh | Cột đá | Dựng vật cản, tốc độ 2, máu 14 |
+### 4.2 Thi hành đòn đánh
 
-### 4.3 Ràng buộc nội dung
+Chọn quái gần nhất trong tầm, tự xoay hướng tới mục tiêu rồi khai hoả. Warrior/Lancer gây sát thương tức thời ở vùng thể hiện bằng vệt chém/đâm. Quái ngoài tầm, phía sau hoặc ngoài góc/bề rộng không trúng. Archer gây sát thương khi tên chạm quái; tên hết tầm được thu hồi, dùng object pool và không có NetworkIdentity. Client chỉ dựng biểu diễn, sát thương do host quyết định.
 
-Nhân vật chỉ lấy từ truyền thuyết, thần thoại và truyện cổ tích. Không sử dụng nhân vật lịch sử có thật.
+Lancer có clip đâm ngang, lên, xuống và hai hướng chéo; hướng trái dùng lật sprite. TinySwords không có Hurt/Death: dùng phản hồi trúng đòn và vòng hồi sinh hiện có, khi gục giữ một khung tĩnh.
+
+### 4.3 Phạm vi bản đồ án
+
+Mở sẵn cả ba lớp, không yêu cầu vẽ lại người chơi hoặc thêm nhân vật thứ tư. Tên và vai trò truyền thuyết cũ là thiết kế lịch sử đã thay thế; không quảng bá Warrior/Archer/Lancer là sprite anh hùng dân gian. Trọng tâm kỹ thuật giữ ở gameplay, co-op, AI Đạo Diễn và đánh giá bằng telemetry.
 
 ---
 
@@ -130,10 +133,9 @@ Nhân vật chỉ lấy từ truyền thuyết, thần thoại và truyện cổ
 
 | Nhóm | Số lượng | Nội dung |
 |---|---|---|
-| Chỉ số | 12 | +25% tốc bắn · +20% sát thương · +1 máu · +15% tốc chạy · −10% hồi chiêu lướt |
-| Cải biến vũ khí | 18 | Xuyên thấu · Nảy tường · +2 đạn · Nổ khi trúng · Tách đạn · Bám mục tiêu · Vệt cháy |
-| Riêng nhân vật | 6 × 3 | Khóa theo nhân vật đang chơi |
-| **Tổng** | **48** | |
+| Thẻ nền hiện có | 12 | Chỉ số và cải biến đạn, lấy từ Data/Cards |
+| Tiến hoá mục tiêu | 8 | T-25/T-26 chưa hoàn thành; giữ trong phạm vi đề tài |
+| **Tổng mục tiêu** | **20** | 12 nền + 8 tiến hoá; không biên soạn thêm 48 thẻ |
 
 ### 5.2 Quy tắc
 
@@ -153,7 +155,7 @@ Nhân vật chỉ lấy từ truyền thuyết, thần thoại và truyện cổ
 ### 5.4 Ví dụ phân nhánh build
 
 ```
-TẤM — Sáo trúc (tia đơn, 0.12s)
+ARCHER — Cung (tên đơn, 0.7s)
 ├─ +2 đạn ×3          → 7 tia tỏa quạt, kiểm soát diện rộng
 ├─ Xuyên thấu ×3      → tia xuyên hàng, sát thương dồn
 └─ Nổ khi trúng ×3    → nổ dây chuyền
@@ -243,8 +245,8 @@ Luật cứng, ghi đè chính sách học được:
 |---|---|
 | Build AOE | Ít quái, máu cao, phân tán |
 | Build đơn mục tiêu | Nhiều quái, máu thấp, tập trung |
-| Nhân vật Tấm | Tăng tỉ lệ Ma Trơi (ép né đạn) |
-| Nhân vật Gióng | Tăng số hướng xuất hiện (ép xoay trở) |
+| Archer | Thay đổi tỉ lệ Ma Trơi để tạo tình huống né đạn |
+| Warrior / Lancer | Thay đổi hướng xuất hiện để tạo tình huống xoay trở |
 | Dọn đợt quá nhanh | Tăng số lượng, giảm giãn cách |
 | Máu thấp | Giảm áp lực |
 
@@ -272,8 +274,7 @@ Ghi log mọi quyết định kèm kết quả ra tệp cục bộ. Giao diện 
 
 | Mục | Giá |
 |---|---|
-| Nhân vật Gióng | 30 |
-| Nhân vật Tấm | 60 |
+| Warrior / Archer / Lancer | Mở sẵn cả ba trong bản đồ án |
 | Gói thẻ mới (×5) | 20 / 35 / 50 / 75 / 100 |
 | Lượt đổi thẻ thứ 3 | 40 |
 | Lượt đổi thẻ thứ 4 | 80 |
@@ -298,8 +299,9 @@ Mở tuần tự bằng cách phá đảo cấp trước.
 | Số người | 2 |
 | Mô hình | Host-authoritative |
 | Thư viện | Mirror + Steamworks.NET |
-| Vào phòng | Steam invite hoặc mã 6 ký tự |
-| Không hỗ trợ | Ghép trận tự động, phòng chờ, bảng xếp hạng |
+| Vào phòng thử nghiệm | Chọn lớp, tạo host hoặc nhập IP host qua KCP |
+| Vào phòng mục tiêu | Steam invite, T-40 chưa hoàn thành |
+| Không hỗ trợ | Ghép trận tự động, bảng xếp hạng |
 | Máu | Độc lập từng người |
 | Thẻ | Chọn độc lập; 6 thẻ có hiệu ứng cho cả hai |
 | Lượt đổi thẻ | Độc lập, 2 lượt mỗi người |
@@ -309,7 +311,7 @@ Mở tuần tự bằng cách phá đảo cấp trước.
 
 **Nguyên tắc:** chế độ chơi đơn hoàn chỉnh và tự đủ. Co-op không là điều kiện cho bất kỳ tiến trình nào.
 
-**Phương án dự phòng:** co-op cục bộ 2 tay cầm trên một máy.
+Co-op trực tuyến là yêu cầu kỹ thuật của đề tài. Thử nghiệm LAN/IP hiện có chưa thay thế nghiệm thu Steam ngoài LAN.
 
 ---
 
@@ -327,11 +329,9 @@ MÀN HÌNH CHÍNH
 
 ### 10.2 Màn chọn nhân vật
 
-Hiển thị: chân dung · tên · vũ khí · máu · tốc độ · bị động · một dòng mô tả lối chơi.
+Màn chọn thử nghiệm nằm ngay trong scene Arena trước khi khởi động mạng: ba thẻ ngang, chân dung, tên, vũ khí, máu/tốc độ/sát thương/tầm/chu kỳ và mô tả. Lớp đang chọn được đánh dấu rõ. Wave bằng 0, chưa sinh player hoặc quái.
 
-Nhân vật khóa hiện mờ kèm giá Ngọc, mở khóa tại chỗ.
-
-Ở co-op: hiển thị lựa chọn của người kia theo thời gian thực. Cho phép trùng nhân vật. Cả hai bấm Sẵn sàng để bắt đầu.
+Chọn lớp rồi bấm **Vào trận / Tạo host**; chơi một người cũng dùng Mirror host. Người thứ hai chọn lớp trên máy mình, nhập IP host rồi bấm **Vào host**. Lựa chọn được gửi trước khi sinh player, host thẩm định ID. Cho phép trùng lớp, người vào muộn tham gia wave đang chạy. Có huỷ kết nối và thử lại. Đây là màn chọn trước trận, chưa có sảnh cùng bấm Sẵn sàng hoặc Steam invite. Chơi lại tại chỗ giữ lớp đã chọn.
 
 ### 10.3 HUD trong trận
 
@@ -370,11 +370,11 @@ Thời gian từ khởi động tới khung hình chiến đấu đầu tiên �
 ### 11.2 Thông số kỹ thuật
 
 ```
-Nhân vật      32×32 px
+Nhân vật      TinySwords: frame 192×192 / Lancer 320×320, PPU 64
 Tile          32×32 px
 PPU           32 (mỹ thuật của nhóm)
 Bảng màu      24 màu, khóa cứng
-Animation     4 frame/hành động
+Animation     Dùng số frame gốc của gói; không giới hạn 4 frame
 Filter Mode   Point (no filter)
 Compression   None
 ```
@@ -387,7 +387,7 @@ Compression   None
 | 6–10 | Ruộng Lúa |
 | 11–15 | Âm Phủ — Chằn Tinh ở đợt cuối |
 
-Sân thử nghiệm hiện tại: 36×20 đơn vị thế giới, giữ nguyên biên va chạm. Trang trí ThirdParty không có collider. Ba chặng trước mắt đổi nhóm trang trí rìa sân; tileset Ruộng Lúa và Âm Phủ hoàn chỉnh vẫn thuộc T-47.
+Sân thử nghiệm hiện tại: 36×20 đơn vị thế giới, nền gạch tối và biên va chạm hiện có. Đã bỏ toàn bộ bụi cỏ khỏi ba chặng. Đá rìa sân không có collider, đổi sắc ở đợt 6/11; tileset hoàn chỉnh là công việc sau, không là điều kiện để thử ba lớp.
 
 ### 11.4 Danh mục tài nguyên
 
@@ -399,7 +399,7 @@ Sân thử nghiệm hiện tại: 36×20 đơn vị thế giới, giữ nguyên 
 | Đạn | 5 sprite |
 | Hiệu ứng va chạm / tiêu diệt | 5 bộ |
 | Ảnh nền | 3 |
-| Icon thẻ | 48 |
+| Icon thẻ | 20 mục tiêu (12 nền + 8 tiến hoá) |
 | Chân dung nhân vật | 3 |
 | Icon UI | 15 |
 
@@ -428,22 +428,22 @@ Khai báo trên Steam: *"Ảnh nền và tranh minh họa có sử dụng công 
 
 ---
 
-### 11.7 Asset 2D đang tích hợp — cập nhật 04/10/2026
+### 11.7 Asset 2D đang tích hợp — cập nhật 07/10/2026
 
 Đã rà 34 PNG TinyRPG và 410 PNG TinySwords tại `Assets/ThirdParty/`. Đây là bộ mỹ thuật thử nghiệm; bảng màu và mật độ pixel gốc khác chuẩn mỹ thuật cuối cùng của nhóm.
 
 | Vai trò | Asset chọn | Lý do |
 |---|---|---|
-| Gióng | TinySwords Yellow Warrior, Idle/Run/Attack1 | Dáng giáp nặng và màu vàng dễ phân biệt với hai nhân vật còn lại; hoạt ảnh quét phù hợp vũ khí cận chiến |
-| Thạch Sanh | Giữ TinyRPG Soldier | Sprite nhỏ, có đầy đủ hoạt ảnh; giữ làm đối chiếu với bộ thử nghiệm hiện tại |
-| Tấm | Giữ TinySwords Blue Archer | Dáng bắn tầm xa, màu xanh và silhouette riêng |
+| Warrior | TinySwords Yellow Warrior, Idle/Run/Attack1 | Kiếm quét cung, giáp vàng dễ nhận ra |
+| Archer | TinySwords Blue Archer, Idle/Run/Shoot/Arrow | Cung và tên đúng hình dạng đòn đánh |
+| Lancer | TinySwords Purple Lancer, Idle/Run/5 hướng Attack | Đâm thương theo hướng mục tiêu, áo tím phân biệt hai lớp còn lại |
 | Cô Hồn | Giữ TinyRPG Orc | Có Walk/Hurt/Death và thân nhỏ, đọc được khi nhiều quái |
-| Trang trí sân | TinySwords Bushes và Rocks | Cụm thưa ở rìa sân, làm tối, nằm dưới nhân vật và đạn, không collider |
+| Trang trí sân | TinySwords Rocks | Đá thưa ở rìa sân, làm tối, nằm dưới nhân vật và đạn, không collider; đã gỡ Bushes |
 | Quái khác, Chằn Tinh, sóng âm, Trống Đồng | Giữ tài nguyên của nhóm | Gói ngoài không có hình tương ứng phù hợp thần thoại và vai trò chiến đấu |
 
-Gióng: 8 khung đứng, 6 khung chạy, 4 khung đánh. Gói không có hoạt ảnh ngã; khi gục giữ một khung tĩnh và dùng vòng hồi sinh hiện có. Không đổi hitbox hoặc tầm đánh theo vùng trong suốt của sheet 192×192.
+Warrior: 8 khung đứng, 6 chạy, 4 đánh; Archer: 6 đứng, 6 chạy, 8 bắn; Lancer: 12 đứng, 6 chạy, 3 khung cho mỗi hướng đâm. Animation lấy trực tiếp từ sprite đã slice, giữ import gốc. Không đổi hitbox theo vùng trong suốt của sheet 192×192/320×320.
 
-Prefab `ArenaStageDecor` có ba nhóm: sân đình xen bụi/đá (1–5), ruộng lúa nhiều bụi (6–10), âm phủ đá xanh tối (11–15). Chặng lấy từ số wave đã đồng bộ nên người vào muộn và chơi lại hiển thị đúng. Đây là trang trí thử nghiệm, chưa thay thế ba tileset hoàn chỉnh.
+Prefab `ArenaStageDecor` giữ ba nhóm đá: tông ấm (1–5), xanh trầm (6–10), xanh tối (11–15). Chặng lấy từ số wave đã đồng bộ nên người vào muộn và chơi lại hiển thị đúng. Đây là trang trí thử nghiệm, chưa thay thế ba tileset hoàn chỉnh.
 
 Không nhập nguyên nhà châu Âu, cây lớn, cừu, vịt hoặc hiệu ứng nổ/lửa sáng vào sân. Không sửa ảnh và metadata gốc trong ThirdParty. Chi tiết phân tích, tham chiếu và thay thế asset: [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 

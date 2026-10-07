@@ -147,6 +147,7 @@ namespace LAC.Combat
             {
                 case WeaponShape.Circle: FireCircle(data, damage); break;
                 case WeaponShape.Arc: FireArc(data, damage); break;
+                case WeaponShape.Thrust: FireThrust(data, damage); break;
                 default: FireLine(data, damage); break;
             }
 
@@ -177,7 +178,7 @@ namespace LAC.Combat
             else if (data.SpawnSoundWave) SpawnWave(origin, 0.5f, AttackRange);
         }
 
-        /// <summary>Hình cung hướng về mục tiêu gần nhất — roi sắt của Gióng.</summary>
+        /// <summary>Kiếm Warrior quét cung hướng về mục tiêu gần nhất.</summary>
         /// <remarks>
         /// Cung nhắm theo mục tiêu chứ không theo hướng di chuyển. Bản đầu dùng hướng di
         /// chuyển, và hệ quả là khi đứng yên đánh thì hướng nhìn kẹt ở giá trị cũ: đo được
@@ -226,12 +227,13 @@ namespace LAC.Combat
                 SpawnWave(origin + facing * (AttackRange * 0.5f), 0.3f, AttackRange * 0.7f);
         }
 
-        /// <summary>Tia thẳng về phía mục tiêu gần nhất — sáo trúc của Tấm.</summary>
+        /// <summary>Archer bắn tên về mục tiêu gần nhất, sát thương khi tên chạm quái.</summary>
         private void FireLine(CharacterData data, float damage)
         {
-            if (_projectilePrefab == null) return;
+            Projectile prefab = data.ProjectilePrefab != null ? data.ProjectilePrefab : _projectilePrefab;
+            if (prefab == null) return;
 
-            _projectilePool ??= PoolRegistry.Get(_projectilePrefab, prewarm: 32, softLimit: 256);
+            _projectilePool = PoolRegistry.Get(prefab, prewarm: 32, softLimit: 256);
 
             Vector2 origin = transform.position;
             Vector2 direction = CurrentTarget.Position - origin;
@@ -257,6 +259,35 @@ namespace LAC.Combat
                     hitLimit, explodes, explosionRadius, explosionRatio);
                 if (data.InstrumentWave != null) SpawnInstrument(origin, shotDirection, data);
             }
+        }
+
+        private ObjectPool<VFX.SpearThrust> _thrustPool;
+        [SerializeField] private VFX.SpearThrust _thrustPrefab;
+
+        private void FireThrust(CharacterData data, float damage)
+        {
+            Vector2 origin = transform.position;
+            Vector2 facing = CurrentTarget.Position - origin;
+            facing = facing.sqrMagnitude > 0.0001f ? facing.normalized : Vector2.right;
+            var alive = EnemyRegistry.Alive;
+            for (int i = alive.Count - 1; i >= 0; i--)
+            {
+                Enemy enemy = alive[i];
+                if (enemy == null || !enemy.IsAlive) continue;
+                if (!ThrustContains(enemy.Position - origin, facing, AttackRange, data.ThrustHalfWidth)) continue;
+                DamageSystem.ApplyToEnemy(enemy, damage, origin);
+            }
+            if (_thrustPrefab == null) return;
+            _thrustPool ??= PoolRegistry.Get(_thrustPrefab, prewarm: 4, softLimit: 32);
+            _thrustPool.Get(origin, Quaternion.identity).Play(_thrustPool, facing, AttackRange, data.ThrustHalfWidth, _tint);
+        }
+
+        // Biên vùng gây sát thương cũng là biên của vệt đâm; không cộng thêm hitbox ngoài tầm.
+        public static bool ThrustContains(Vector2 offset, Vector2 facing, float range, float halfWidth)
+        {
+            float along = Vector2.Dot(offset, facing);
+            float across = offset.x * facing.y - offset.y * facing.x;
+            return along >= 0f && along <= range && Mathf.Abs(across) <= halfWidth;
         }
 
         /// <summary>Vệt roi quét qua trước mặt. Không có prefab thì bỏ qua, không báo lỗi.</summary>

@@ -46,11 +46,13 @@ Người chơi chỉ có **hai thao tác: di chuyển và lướt (dash)**. Vũ 
 
 | Nhân vật | Vũ khí | Máu | Tốc độ | Tầm đánh | Chu kỳ |
 |---|---|---|---|---|---|
-| Thạch Sanh | Đàn bầu | 6 | 5 | 4 — vòng tròn | 0.9 s |
-| Gióng | Roi sắt | 10 | 3 | **3.2** — hình cung | 0.6 s |
-| Tấm | Sáo trúc | 4 | 8 | 7 — tia thẳng | 0.12 s |
+| Warrior | Kiếm | 10 | 4 | 2.2 — cung 110° | 0.65 s |
+| Archer | Cung | 6 | 5.5 | 8 — tên bay thẳng | 0.7 s |
+| Lancer | Thương | 8 | 4.5 | 3.2 — dải đâm rộng 0.8 | 0.85 s |
 
 Vũ khí gắn cố định với nhân vật và không thể thay thế trong ván. Việc đổi nhân vật tương đương đổi lối chơi.
+
+Quyết định 07/10/2026: dùng ba lớp TinySwords thay nhân vật truyền thuyết để giảm công mỹ thuật. Ba lớp mở sẵn; chọn trước khi khởi động host/client trong `UI/CharacterSelection.cs`. ID được host thẩm định trước khi sinh player. Solo vẫn Mirror host, co-op cho phép chọn trùng lớp. Archer nhân đôi tên kế tiếp sau dash; Warrior/Lancer khác nhau ở hình dạng sát thương. Chi tiết hiện hành: GDD mục 4 và 10.2.
 
 ---
 
@@ -60,7 +62,7 @@ Thể loại survivors hiện đã bão hoà trên Steam. Bốn cơ chế dướ
 
 ### 2.1 Sóng âm Đông Sơn
 
-Toàn bộ vũ khí trong game đều là nhạc cụ. Đòn đánh được biểu diễn dưới dạng **các vòng tròn đồng tâm lan toả** mang hoa văn trống đồng Đông Sơn. Càng về cuối ván, màn hình càng phủ kín sóng âm do chính người chơi tạo ra. Đây là hình ảnh chủ đạo dùng cho trailer và nội dung quảng bá.
+Theo thay đổi phạm vi 07/10/2026, vũ khí người chơi là kiếm/cung/thương, biểu diễn đúng cung chém, mũi tên hoặc dải đâm. Sóng Đông Sơn vẫn dùng cho Trống Đồng và hiệu ứng hiện có; không bắt buộc vẽ thêm vòng sóng nhạc cụ trên ba đòn vật lý. Ưu tiên đọc đúng vùng sát thương và giữ tín hiệu đòn địch rõ.
 
 > **Ràng buộc bắt buộc về khả năng đọc hiểu thị giác**
 > Dành riêng **một màu trong bảng 24 màu Đông Hồ cho đòn tấn công của kẻ địch**. Hiệu ứng của người chơi tuyệt đối không sử dụng màu này, được vẽ ở alpha thấp với chế độ additive và nằm ở sorting layer thấp hơn. Đòn địch vẽ đặc, luôn ở sorting layer trên cùng.
@@ -278,8 +280,8 @@ Nhóm phát triển chủ yếu bằng phương pháp AI-assisted. Ba quy địn
 | — | **Thực nghiệm khoá luận vẫn chạy ở chế độ chơi đơn** (15/15). Co-op thu thập mẫu quan sát bổ sung | Hai người chơi khác build và khác lượng máu tạo ra biến số không kiểm soát được với cỡ mẫu 30. Chế độ hoạt động và thiết kế thí nghiệm là hai vấn đề tách rời |
 | Đạo diễn giữ tổn thất máu trong 15–25% ở mọi thời điểm | **Điều tiết bất đối xứng:** được phép giảm áp lực khi người chơi gặp khó; khi người chơi mạnh thì thay đổi **thành phần và hướng sinh quái**, không tăng số lượng hoặc lượng máu | Siết tổn thất máu ở cả hai chiều là trừng phạt người chơi vì xây dựng build hiệu quả, làm triệt tiêu cảm giác tưởng thưởng |
 | Triển khai co-op ở tuần 10–12 | **Kiến trúc mạng từ tuần 1** | Xem mục 3.1 |
-| Tấm: nhân đôi sát thương trong 1 giây sau dash | **Áp dụng cho phát bắn kế tiếp** | Thời gian hồi dash 0.4 s ngắn hơn cửa sổ 1 giây, khiến hiệu ứng duy trì vĩnh viễn |
-| Gióng tầm đánh 2.5 | **3.2** | Quái cơ bản ban đầu chạy tốc độ 3, đúng bằng Gióng — nhân vật chậm nhất không thoát được vòng vây nên tầm ngắn thành vô dụng. Đã hạ tốc độ quái xuống 2.2; tầm 3.2 là phần bù còn lại, vẫn giữ Gióng là nhân vật cận chiến |
+| Bộ ba truyền thuyết và vũ khí nhạc cụ | **Warrior / Archer / Lancer**, kiếm/cung/thương, chọn trước trận | Quyết định người dùng 07/10/2026, tận dụng TinySwords để giảm thời gian làm mỹ thuật |
+| Tấm nhân đôi sát thương trong 1 giây sau dash | **Archer: tên kế tiếp ×2**, hồi dash 0.8s | Thưởng đúng một phát, không duy trì vô hạn |
 
 ---
 

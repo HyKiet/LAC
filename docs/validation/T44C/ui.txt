@@ -1,0 +1,1 @@
+PASS: raycast, pointer clicks, input bindings, Archer selected and spawned with 6 HP; menu hidden.

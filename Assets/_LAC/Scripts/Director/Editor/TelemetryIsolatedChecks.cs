@@ -48,7 +48,7 @@ class Program
         int index=0; foreach(var e in events) Check(e["seq"]==(++index).ToString(),"Sequence");
         a.Health.Health=6; run.SoulsCollected=0; run.DrumActivations=0;
         var coop=TelemetrySession.Begin(run); Check(coop.DirectoryPath!=s.DirectoryPath,"Same seed overwrote session"); coop.StartWave(1);
-        Time.unscaledTimeAsDouble=12; var b=new PlayerCharacter {CharacterId=CharacterId.Tam}; coop.Join(b);
+        Time.unscaledTimeAsDouble=12; var b=new PlayerCharacter {CharacterId=CharacterId.Archer}; coop.Join(b);
         b.Health.Health=0; coop.Damage(b,6); Time.unscaledTimeAsDouble=15; b.Health.Health=3; coop.Revive(b);
         b.Health.Health=0; coop.Damage(b,3); Time.unscaledTimeAsDouble=16; coop.Leave(b); coop.Leave(b);
         b.Health.Health=999; Time.unscaledTimeAsDouble=18; coop.EndWave("cleared"); coop.StartWave(2); Time.unscaledTimeAsDouble=19; coop.Finish("aborted");
@@ -83,7 +83,7 @@ namespace UnityEngine {
 }
 namespace Mirror { public static class NetworkServer { public static bool active=true; } }
 namespace LAC.Player {
- public enum CharacterId { ThachSanh, Giong, Tam }
+ public enum CharacterId { Lancer, Warrior, Archer }
  public class PlayerHealth { public int Health=6, MaxHealth=6; }
  public class PlayerCharacter { public CharacterId CharacterId; public PlayerHealth Health=new PlayerHealth(); public T GetComponent<T>() where T:class => Health as T; }
  public static class PlayerRegistry { public static List<PlayerCharacter> All=new List<PlayerCharacter>(); }

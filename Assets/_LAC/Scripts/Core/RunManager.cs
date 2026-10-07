@@ -125,6 +125,15 @@ namespace LAC.Core
 
         // ── Thẩm quyền host ────────────────────────────────────────────────────────────
 
+        [Server]
+        public void ResetForConnection()
+        {
+            Telemetry?.Finish("aborted");
+            _alivePlayers = 0;
+            _currentWave = 0;
+            _state = RunState.Idle;
+        }
+
         /// <summary>Ghi nhận một người chơi vừa vào ván. Chỉ host được gọi.</summary>
         /// <remarks>
         /// Ván tự khởi động khi người đầu tiên vào. Người thứ hai vào sau chỉ làm tăng số

@@ -114,6 +114,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-63** Tạm dừng trong ván: tiếp tục · cài đặt · thoát về menu — **@Kang**
   > Trong co-op, tạm dừng **không** được dừng thời gian của cả hai máy; chỉ mở giao diện tại máy đó.
 - [ ] **T-30** Màn chọn nhân vật, đồng bộ lựa chọn qua mạng — **@Kang**
+  > T-44C đã có màn chọn thử nghiệm ngay trong Arena và giao thức lựa chọn trước khi sinh player. T-30 còn sảnh chính thức/hiển thị lựa chọn đồng đội/cùng Sẵn sàng; tái sử dụng `NetworkManagerLAC.SelectedCharacter` thay vì làm giao thức thứ hai.
   > Chỉ đồng bộ định danh nhân vật, không đồng bộ chỉ số — mục 3.2.
 
 ### Hệ thống thẻ — @Hung
@@ -144,7 +145,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Codex · 03/10/2026: `VFX/InstrumentWave.cs`, `InstrumentWaveData.cs`, `Data/VFX` và `Combat/WeaponAuto.cs`: đàn bầu có ba vòng nan hoa, roi sắt ba cung theo tầm/góc thật, sáo trúc gợn nhỏ theo hướng từng viên. Dùng pool, additive, màu chàm/gỉ đồng và lớp dưới đòn địch. Đã xem Game View, thử khai hỏa ba vũ khí và đo Windows 1080p với 40 quái/200 đạn + hiệu ứng mới: p95 4.296 ms. [INSTRUMENT_REVIVE_TESTS.md](INSTRUMENT_REVIVE_TESTS.md).
 - [x] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**
   > Codex · 02/10/2026: `Core/PerformanceScenario.cs` duy trì 40 quái, 200 đạn và 10 sóng âm/giây; Windows Development 1080p đạt p95 4.187 ms trên i9-12900H/RTX 3060 Laptop. Sửa dung lượng pool dùng chung trong `ObjectPool.cs`/`PoolRegistry.cs`, đổi đạn người chơi sang gỉ đồng trong suốt. Đã xem Game View; Console không lỗi đỏ. Kịch bản, JSON và giới hạn phép đo: [PERFORMANCE_TESTS.md](PERFORMANCE_TESTS.md).
-- [ ] **T-33** Sprite Gióng, Tấm, 20 icon thẻ (12 nền + 8 tiến hoá) — **@artist**
+- [ ] **T-33** 20 icon thẻ (12 nền + 8 tiến hoá) — **@artist**
+  > Quyết định 07/10/2026: bộ ba người chơi dùng Warrior/Archer/Lancer TinySwords ở T-44C; gỡ yêu cầu vẽ Gióng/Tấm để giảm công mỹ thuật.
 
 ---
 
@@ -176,6 +178,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > T-34 đã bổ sung bốn loại quái vào thành phần đợt, dự trù quái con khi tính trần 40. Luật cấm sinh trong bán kính 3 quanh người chơi (GDD mục 7.6) **chưa cài** — nó cần vị trí người chơi, mà vị trí đó lệch nhau giữa hai máy; luật này thuộc tầng an toàn của đạo diễn ở T-45 nơi host quyết một mình.
 - [x] **T-44B** Ván 15 đợt và tích hợp mỹ thuật thử nghiệm ThirdParty — **@Kiet**
   > Codex · 04/10/2026: `WaveTable_CoDinh.asset` còn 14 đợt thường + Chằn Tinh ở đợt 15; fallback scene/mã và GDD/CLAUDE đồng bộ. `Giong_TinySwords.asset` dùng Yellow Warrior; `ArenaStageDecor.prefab` + `VFX/ArenaStageVisuals.cs` đổi cây/đá ở wave 6 và 11. Đã xem Game View ba chặng và Victory 15/15; Play đủ 15 wave/14 lượt chọn thẻ, telemetry, animation, Restart đạt. Co-op hai tiến trình 100 ms xác nhận vào muộn, boss 1600 máu ở wave 15, Victory/Restart; Console cuối 0 lỗi/0 cảnh báo. Development build 0 lỗi; 40 quái/200 đạn P95 4,76 ms. [Phân tích asset](ASSETS_ThirdParty.md), [kiểm chứng](ARENA_CONTENT_TESTS.md).
+- [x] **T-44C** Warrior/Archer/Lancer, đòn đánh riêng và chọn lớp trước trận; gỡ bụi cỏ — **@Kiet**
+  > Codex · 07/10/2026: `Player/Editor/PlayableClassesContent.cs`, dữ liệu/bộ animation ba lớp TinySwords, `Combat/WeaponAuto.cs` + `VFX/SpearThrust.cs`, prefab Arrow/Thrust/CharacterSelection. `UI/CharacterSelection.cs` chọn trước StartHost/StartClient; `Net/NetworkManagerLAC.cs` thẩm định ID trước sinh, giữ solo host và co-op. Gỡ Bushes cả ba nhóm map, cập nhật GDD/CLAUDE/phạm vi mỹ thuật. Play Mode ba lớp/đòn/HP/dash/animation ALL PASSED; 15 wave/14 pha thẻ/boss/telemetry/Restart đạt. Hai Editor 100 ms xác nhận Lancer8/Archer6 và chống đổi lớp sau spawn, Console gameplay 0 lỗi; 40 quái/200 đạn P95 4,90 ms. Build executable bị Windows Application Control chặn Unity.Linker.Api.dll, chưa nghiệm thu build mới. [Kiểm chứng và giới hạn](PLAYABLE_CLASSES_TESTS.md).
 - [ ] **T-45** AI Đạo Diễn (LinUCB) — lõi thuật toán, `ContextVector`, `WaveSpec` — **@Kiet**
 - [ ] **T-45B** Đạo diễn trong co-op — hợp thành ngữ cảnh N người, số hạng công bằng, tầng an toàn theo người yếu nhất — **@Kiet**
 - [ ] **T-46** Điều tiết bất đối xứng, đòn bẩy chia cắt và dồn ép; hiển thị hoạt động đạo diễn trên HUD — **@Kiet**

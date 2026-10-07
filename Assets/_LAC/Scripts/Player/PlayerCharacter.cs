@@ -24,7 +24,7 @@ namespace LAC.Player
         [SerializeField] private SpriteRenderer _renderer;
 
         [SyncVar(hook = nameof(OnCharacterIdChanged))]
-        private CharacterId _characterId = CharacterId.ThachSanh;
+        private CharacterId _characterId = CharacterId.Warrior;
 
         private CharacterData _data;
         private PlayerHealth _health;

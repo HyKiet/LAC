@@ -599,6 +599,7 @@ MonoBehaviour:
   _arcSlashPrefab: {fileID: 8512629550604686015, guid: 1dfbcc2a5faf80d40bae013d39e76c37, type: 3}
   _pointBlankRadius: 0.35
   _tint: {r: 0.612, g: 0.812, b: 0.753, a: 1}
+  _thrustPrefab: {fileID: 3681920988710129382, guid: 1aaa2bf6ed0a18749b1fc5047807dbb0, type: 3}
 --- !u!114 &3616368380378630053
 MonoBehaviour:
   m_ObjectHideFlags: 0
