@@ -63,6 +63,8 @@ Triển khai hiện có tại `Director/AIDirector.cs`, `ContextAggregator.cs`, 
 
 ### Dữ liệu đầu vào nhỏ
 
+Theo yêu cầu người dùng cùng ngày: đạo diễn chính là Chằn Tinh, chủ dungeon. Hắn điều binh wave 1–9 rồi ra trận ở wave 10; ý đồ/lời thoại trình bày kết quả host, không thêm boss hoặc đổi luật chỉ để tăng tính đối kháng. Hướng dẫn dễ hiểu tại [AI_CHAN_TINH.md](AI_CHAN_TINH.md).
+
 | Giá trị | Định nghĩa |
 |---|---|
 | `healthMin` | Tỉ lệ HP thấp nhất trong người còn kết nối; người gục có tỉ lệ 0 |

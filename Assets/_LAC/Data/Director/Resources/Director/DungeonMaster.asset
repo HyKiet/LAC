@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde139a9601413145b04c2f35f792312, type: 3}
+  m_Name: DungeonMaster
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Director.DungeonMasterData
+  _speaker: "Ch\u1EB1n Tinh"
+  _openingIntent: "Th\u0103m d\xF2"
+  _openingLine: "B\u01B0\u1EDBc v\xE0o l\xE3nh \u0111\u1ECBa c\u1EE7a ta r\u1ED3i
+    sao? H\xE3y th\u1EED s\u1ED1ng s\xF3t!"
+  _balancedIntent: "\u0110i\u1EC1u binh"
+  _balancedLine: "Gi\u1EEF \u0111\u1ED9i h\xECnh! \u0110\u1EC3 xem c\xE1c ng\u01B0\u01A1i
+    tr\u1EE5 \u0111\u01B0\u1EE3c bao l\xE2u."
+  _reliefIntent: "Gi\xE3n binh"
+  _reliefLine: "Ch\u1EADm b\u01B0\u1EDBc! Ta mu\u1ED1n cu\u1ED9c s\u0103n n\xE0y
+    k\xE9o d\xE0i."
+  _varietyIntent: "\u0110\u1ED5i th\u1EBF v\xE2y"
+  _varietyLine: "\u0110\u1ED5i h\u01B0\u1EDBng bao v\xE2y! \u0110\u1EEBng \u0111\u1EC3
+    ch\xFAng quen \u0111\u01B0\u1EDDng ti\u1EBFn qu\xE2n."
+  _bossIntent: "\u0110\u1ED1i \u0111\u1EA7u"
+  _bossLine: "\u0110\u1EE7 r\u1ED3i. L\u1EA7n n\xE0y ta s\u1EBD t\u1EF1 tay k\u1EBFt
+    li\u1EC5u c\xE1c ng\u01B0\u01A1i!"
+  _fixedIntent: "K\u1EBF ho\u1EA1ch c\u1ED1 \u0111\u1ECBnh"
+  _fixedLine: "C\u1EE9 theo k\u1EBF ho\u1EA1ch. Kh\xF4ng \u0111\u1ED5i nh\u1ECBp
+    \u0111i\u1EC1u binh."
+  _fallbackIntent: "Gi\u1EEF k\u1EBF ho\u1EA1ch"
+  _fallbackLine: "Gi\u1EEF \u0111\u1ED9i h\xECnh c\u0169. Ch\u1EDD l\u1EC7nh ti\u1EBFp
+    theo."
+  _haltedIntent: "D\u1EEBng \u0111i\u1EC1u binh"
+  _haltedLine: "L\u1EC7nh \u0111i\u1EC1u binh t\u1EA1m d\u1EEBng."
+  _adaptiveDescription: "Ch\u1EB1n Tinh quan s\xE1t c\u1EA3 \u0111\u1ED9i v\xE0 \u0111\u1ED5i
+    c\xE1ch \u0111i\u1EC1u binh. V\xE0o host d\xF9ng ch\u1EBF \u0111\u1ED9 c\u1EE7a
+    host."
+  _fixedDescription: "Ch\u1EB1n Tinh d\xF9ng k\u1EBF ho\u1EA1ch c\u1ED1 \u0111\u1ECBnh
+    theo b\u1EA3ng \u0111\u1EE3t. V\xE0o host d\xF9ng ch\u1EBF \u0111\u1ED9 c\u1EE7a
+    host."

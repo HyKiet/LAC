@@ -82,6 +82,8 @@ Trống nằm ở tâm, không chặn người chơi. Đủ 20 Hồn và hết h
 
 ### 7.1 Vai trò và thuật toán
 
+**AI đạo diễn chính là Chằn Tinh, chủ dungeon.** Hắn điều binh trong wave 1–9 rồi trực tiếp xuất hiện ở wave 10; HUD thể hiện ý đồ/lời thoại từ kết quả host. “Giãn binh” tương ứng Hỗ trợ, “Điều binh” tương ứng Bình thường, “Đổi thế vây” tương ứng Đổi chiến thuật. Đây là cùng boss hiện có với hai tầng hành vi: điều binh giữa wave và FSM chiến đấu trong wave cuối. Ngưỡng/giới hạn gameplay giữ nguyên; lời thoại nằm trong `DungeonMaster.asset`. Giải thích từng bước, ví dụ co-op và cách báo cáo tại [AI_CHAN_TINH.md](AI_CHAN_TINH.md).
+
 **AI dựa trên luật kết hợp FSM**, ba trạng thái: Hỗ trợ, Bình thường, Đổi chiến thuật. Chạy trên host trong cả một/hai người, quyết một lần trước wave 2–9. Wave 1/boss wave 10 giữ nguyên. Không LinUCB, không huấn luyện hoặc hàm thưởng ép tổn thất máu về 15–25%.
 
 Mã hiện có: `Director/AIDirector.cs`, `ContextAggregator.cs`, `SafetyConstraints.cs` và partial `RunDirector.cs`. Ngưỡng/hệ số nằm trong `Data/Director/Resources/Director/DirectorRules.asset`. Bằng chứng và giới hạn kiểm thử cập nhật tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md); cân bằng tự nhiên và nghiệm thu Internet vẫn là phần riêng.
@@ -114,7 +116,7 @@ Giữ trần 40 gồm quái con; điểm sinh tránh mọi người sống ≥3;
 
 ### 7.6 Quan sát và đánh giá
 
-Màn chọn lớp có **Cố định / Thích ứng** trước khi kết nối; vào host dùng chế độ host đã chọn, không đổi giữa ván hoặc khi Restart trong phòng. HUD góc dưới trái thông báo hành động/lý do; **F3** mở ngữ cảnh, nguồn và fallback, cờ thiếu dữ liệu tách biệt với HP bằng 0.
+Màn chọn lớp có **Cố định / Thích ứng** trước khi kết nối; vào host dùng chế độ host đã chọn, không đổi giữa ván hoặc khi Restart trong phòng. HUD góc dưới trái thể hiện ý đồ/lời thoại của Chằn Tinh, có chuyển động xuất hiện mỗi wave; **F3** mở lý do thật, ngữ cảnh, nguồn và fallback, cờ thiếu dữ liệu tách biệt với HP bằng 0. Lời thoại theo kết quả chung của host, không là thuật toán khác hoặc cơ chế tăng chỉ số boss.
 
 CSV **schema 2** thêm `directors.csv`, một quyết định trước mỗi wave; `waves.csv` kèm quyết định của wave, `runs.csv` tổng hợp nguồn/số quyết định thực tế. `source` phân biệt `fixed_table`, `adaptive_rules`, `fixed_fallback` và cấu hình baseline lỗi; giữ tổn thất thô và bản kẹp [0,1]. CSV cũ vẫn là bằng chứng phiên cũ. Chi tiết tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md). Đánh giá bằng kiểm thử luật, chơi thật và so sánh nhỏ theo THESIS_SCOPE; không mặc định bắt buộc 15/15 người.
 
@@ -166,4 +168,4 @@ Thứ tự: ổn định môi trường → đạo diễn và online/menu song s
 
 ## 15. Bối cảnh
 
-Trống Đồng giữ cân bằng giữa các cõi. Ma quỷ tràn lên dương gian; người chơi cùng bảo vệ trống và hạ Chằn Tinh. Chỉ cần lời dẫn ngắn trong menu hoặc báo cáo; không thêm cutscene/lồng tiếng. Warrior/Archer/Lancer là lớp chiến đấu dùng asset ngoài, không nhận là sprite anh hùng Việt Nam tự vẽ.
+Trống Đồng giữ cân bằng giữa các cõi. Chằn Tinh làm chủ dungeon, điều khiển các đợt ma quỷ thử sức người xâm nhập; khi quân không cản được đội, hắn tự ra trận ở wave 10. Người chơi cùng bảo vệ trống và hạ hắn. Ý đồ/lời thoại ngắn trên HUD nối các wave với cùng một đối thủ; không cần cutscene/lồng tiếng. Warrior/Archer/Lancer là lớp chiến đấu dùng asset ngoài, không nhận là sprite anh hùng Việt Nam tự vẽ.

@@ -17,7 +17,7 @@ graph TD
     RM --> CM[CardSelectionController<br/>chọn thẻ giữa các đợt]
     RM --> RNG[RunRandom<br/>bộ sinh có seed]
 
-    RM --> DIR[AIDirector<br/>luật và FSM ba trạng thái]
+    RM --> DIR[AIDirector / Chằn Tinh<br/>luật và FSM ba trạng thái]
     RM --> AGG[ContextAggregator<br/>snapshot đội cuối wave]
     AGG -->|ngữ cảnh đóng băng| DIR
     WM --> FIX[WaveTable<br/>baseline và đối chứng]
@@ -144,6 +144,8 @@ T-36–38 dùng NetworkIdentity sẵn có của RunManager thay vì tạo thêm 
 
 ### 2.7 Director — AI đạo diễn luật và FSM
 
+Đạo diễn được thể hiện là **Chằn Tinh, chủ dungeon**: điều binh wave đầu và xuất hiện chiến đấu ở wave 10. `DungeonMasterData`/`DungeonMaster.asset` cung cấp tên, ý đồ và lời thoại cho `DirectorHud` từ kết quả đã đồng bộ; không gọi thuật toán hoặc RNG gameplay tại client. FSM boss hai pha vẫn tại `EnemyBoss.cs`. Hướng dẫn và ví dụ tại [AI_CHAN_TINH.md](AI_CHAN_TINH.md).
+
 Mã T-45/T-45B/T-46: AI **dựa trên luật + FSM ba trạng thái**, một thuật toán trên host cho đội một/hai người. Không LinUCB, learning, reward hay fairness optimization. Giữ bảng cố định làm baseline/đối chứng/fallback. Luật/ngưỡng tại [THESIS_SCOPE.md mục 4](THESIS_SCOPE.md#4-đạo-diễn-ai-dễ-giải-thích), dữ liệu hiện hành trong `DirectorRules.asset`; kiểm chứng tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md).
 
 | Thành phần hiện có | Trách nhiệm |
@@ -200,7 +202,9 @@ Data/
 ├── Cards/        12 thẻ nền; tiến hoá dự phòng chưa triển khai
 ├── Enemies/      CoHon · MaTroi · BuNhin · MaDa · QuyNho · ChanTinh
 ├── Waves/        WaveTable_CoDinh.asset — baseline, co-op và đối chứng
-└── Director/Resources/Director/DirectorRules.asset — luật và hệ số FSM
+└── Director/Resources/Director/
+    ├── DirectorRules.asset — luật và hệ số FSM
+    └── DungeonMaster.asset — Chằn Tinh, ý đồ và lời thoại
 ```
 
 Cách tổ chức này cho phép điều chỉnh cân bằng qua Inspector mà không chạm vào mã nguồn, đồng thời tránh xung đột với thành viên đang sửa code.

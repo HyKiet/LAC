@@ -33,6 +33,8 @@ LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, �
 
 > AI gameplay dùng **đạo diễn dựa trên luật + FSM ba trạng thái**, hoạt động với một/hai người trên host. T-45/T-45B/T-46 đã có mã: luật trong ScriptableObject, snapshot đội trước thẻ/hồi máu, nguồn WaveSpec trên host, HUD/F3 và CSV schema 2. Giữ bảng cố định để đối chứng/fallback; bằng chứng nghiệm thu tại [docs/DIRECTOR_TESTS.md](docs/DIRECTOR_TESTS.md). Điểm riêng chính: Trống Đồng dùng chung được Hồn nạp và dash kích hoạt; không bắt buộc tám tiến hoá hoặc nhiều map.
 
+> **Vai trò theo quyết định 11/10/2026: AI đạo diễn chính là Chằn Tinh, chủ dungeon.** Hắn điều binh trong các wave đầu, ra trận ở wave 10; HUD thể hiện ý đồ/lời thoại từ kết quả host, F3 vẫn giải thích luật thật. Không đổi ngưỡng/an toàn hoặc FSM chiến đấu boss chỉ để diễn lời thoại. Giải thích cho nhóm tại [docs/AI_CHAN_TINH.md](docs/AI_CHAN_TINH.md).
+
 ### 1.1 Vòng lặp cốt lõi
 
 ```

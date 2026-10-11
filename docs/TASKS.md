@@ -199,6 +199,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-46** HUD/debug giải thích trạng thái/lý do đạo diễn; CSV mode/ngữ cảnh/quyết định/fallback và kiểm thử tích hợp — **@Kiet** · 11/10/2026
   > Codex: `UI/DirectorHud.cs`, `CharacterSelection.cs`, `Director/TelemetrySession.cs` + `Editor/DirectorContent.cs`; HUD trên thanh máu, F3 mở đầu vào/lý do/fallback, host quyết mode trước kết nối. CSV schema 2 và `directors.csv` ghi baseline/applied/nguồn thực, 129 assertions harness và CSV phiên Play đạt; Fixed/đổi phiên 15 assertions đạt. Đã xem ảnh Game View và kiểm tra client dùng font/shader trong `_LAC` khi không có TMP Essentials mặc định. Console Editor chính 0 lỗi/0 cảnh báo; 40 quái/200 đạn P95 4.75ms. Executable/WAN/cân bằng còn nghiệm thu. [Chi tiết](DIRECTOR_TESTS.md).
 - [ ] **T-46B** **NGOÀI PHẠM VI:** Steam Direct/tax/tài khoản phát hành — không thực hiện
+- [x] **T-46C** Chằn Tinh là chủ dungeon/AI đạo diễn: ý đồ, lời thoại từ quyết định host và hướng dẫn giải thích AI — **@Kiet** · 11/10/2026
+  > Codex: `Director/DungeonMasterData.cs` + `DungeonMaster.asset`, `UI/DirectorHud.cs` và `CharacterSelection.cs`; Chằn Tinh điều binh wave đầu rồi ra trận ở wave 10, HUD có ý đồ/lời thoại và chuyển động, F3 giữ lý do thật. Luật/an toàn/boss FSM không đổi; 863 assertions luật và 76 assertions co-op hai Editor/100ms đạt; client khớp bốn ý đồ/nguồn, Fixed vẫn baseline. Đã xem bảy ảnh Game View, text không overflow, Console Editor chính 0 lỗi/0 cảnh báo. [Giải thích và giới hạn kiểm chứng](AI_CHAN_TINH.md).
 - [ ] **T-47** Tinh chỉnh sprite quái/boss/trống cần thiết để đọc rõ; dùng asset sẵn, không bắt buộc hai tileset mới — **@artist**
 
 ---

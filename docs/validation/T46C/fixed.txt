@@ -1,0 +1,7 @@
+mode=Fixed source=fixed_table HP=0.2 damage=0.8 interval=1.4
+title=CHẰN TINH · KẾ HOẠCH CỐ ĐỊNH
+line=“Cứ theo kế hoạch. Không đổi nhịp điều binh.”
+Title overflow=False
+Explanation overflow=False
+DebugHint overflow=False
+DecisionData overflow=False

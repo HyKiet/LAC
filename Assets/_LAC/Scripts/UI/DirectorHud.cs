@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace LAC.UI
 {
-    /// <summary>Giải thích nhịp trận từ quyết định của host; F3 mở dữ liệu dùng khi báo cáo.</summary>
+    /// <summary>Chằn Tinh ra lệnh từ quyết định của host; F3 mở lý do thật dùng khi báo cáo.</summary>
     public sealed class DirectorHud : MonoBehaviour
     {
         private RunManager _run;
@@ -19,6 +19,10 @@ namespace LAC.UI
         private TextMeshProUGUI _details;
         private UnityEngine.UI.Image _accent;
         private TMP_FontAsset _font;
+        private DungeonMasterData _persona;
+        private CanvasGroup _panelGroup;
+        private RectTransform _panelRect;
+        private float _entryProgress = 1f;
         private bool _expanded;
         private bool _hasSnapshot;
         private DirectorMode _mode;
@@ -41,9 +45,17 @@ namespace LAC.UI
         public string Headline => _title != null ? _title.text : "";
         public string Explanation => _summary != null ? _summary.text : "";
         public string DebugText => _details != null ? _details.text : "";
+        public string Intent { get; private set; } = "";
 
         private void Start()
         {
+            _persona = Resources.Load<DungeonMasterData>("Director/DungeonMaster");
+            if (_persona == null)
+            {
+                Debug.LogError("[DirectorHud] Thiếu Director/DungeonMaster.", this);
+                enabled = false;
+                return;
+            }
             _run = RunManager.Instance;
             if (_run == null)
             {
@@ -79,6 +91,11 @@ namespace LAC.UI
             if (_panel.activeSelf != visible) _panel.SetActive(visible);
             if (!visible) return;
 
+            _entryProgress = Mathf.Min(1f, _entryProgress + Time.unscaledDeltaTime / .3f);
+            float reveal = 1f - Mathf.Pow(1f - _entryProgress, 3f);
+            _panelGroup.alpha = reveal;
+            _panelRect.anchoredPosition = new Vector2(Mathf.Lerp(8f, 24f, reveal), 100f);
+
             if (Keyboard.current != null && Keyboard.current.f3Key.wasPressedThisFrame)
                 SetDebugExpanded(!_expanded);
 
@@ -99,6 +116,7 @@ namespace LAC.UI
 
         private void Refresh()
         {
+            if (!_hasSnapshot || _wave != _run.CurrentWave) _entryProgress = 0f;
             _hasSnapshot = true;
             _mode = _run.DirectorMode;
             _directorState = _run.DirectorState;
@@ -111,56 +129,19 @@ namespace LAC.UI
             _downs = _run.DirectorDowns;
             _contextValid = _run.DirectorContextValid;
 
-            _accent.color = Palette("9CCFC0");
-            if (_source == "invalid_baseline")
-            {
-                _title.text = "NHỊP TRẬN · TẠM DỪNG";
-                _summary.text = "Nhịp sinh quái tạm dừng cho đợt này.";
-            }
-            else if (_mode == DirectorMode.Fixed)
-            {
-                _title.text = "NHỊP TRẬN · CỐ ĐỊNH";
-                _summary.text = "Giữ nhịp sinh theo bảng đợt.";
-            }
-            else if (!string.IsNullOrEmpty(_fallback))
-            {
-                _title.text = "ĐẠO DIỄN · NHỊP CHUẨN";
-                _summary.text = "Dùng nhịp tiêu chuẩn cho đợt này.";
-            }
-            else if (_wave == 1 || _run.IsFinalWave)
-            {
-                _title.text = _wave == 1 ? "ĐẠO DIỄN · KHỞI ĐỘNG" : "ĐẠO DIỄN · TRÙM";
-                _summary.text = _wave == 1 ? "Đợt mở đầu giữ nhịp quen thuộc." : "Trùm giữ sức mạnh và nhịp trận cố định.";
-            }
-            else
-            {
-                switch (_directorState)
-                {
-                    case DirectorState.Relief:
-                        _title.text = "ĐẠO DIỄN · HỖ TRỢ";
-                        _summary.text = "Giãn nhịp sinh để hỗ trợ đội đang yếu.";
-                        _accent.color = Palette("FBDD82");
-                        break;
-                    case DirectorState.Variety:
-                        _title.text = "ĐẠO DIỄN · ĐỔI CHIẾN THUẬT";
-                        _summary.text = "Đổi hướng và thành phần quái; giữ ngân sách.";
-                        break;
-                    default:
-                        _title.text = "ĐẠO DIỄN · BÌNH THƯỜNG";
-                        _summary.text = "Giữ nhịp sinh tiêu chuẩn của đợt.";
-                        break;
-                }
-            }
+            DungeonMasterCue cue = _persona.Describe(_mode, _directorState, _wave,
+                _run.IsFinalWave, _source, _fallback);
+            Intent = cue.Intent;
+            _title.text = cue.Title;
+            _summary.text = "“" + cue.Line + "”";
+            _accent.color = Palette(_directorState == DirectorState.Relief || _run.IsFinalWave ? "FBDD82" : "9CCFC0");
             _title.color = _accent.color;
-            if (_mode == DirectorMode.Adaptive && _source != "invalid_baseline" && string.IsNullOrEmpty(_fallback) &&
-                _wave > 1 && !_run.IsFinalWave && !string.IsNullOrEmpty(_reason))
-                _summary.text = _reason;
 
             string context = !_contextValid
                 ? "Ngữ cảnh: chưa có dữ liệu cuối đợt."
                 : $"Cuối đợt {_wave - 1}: HP thấp nhất {_healthMin:P0}\nMất máu cao nhất {_damageRatio:P0} · Gục {_downs}";
             _details.text = $"{(_mode == DirectorMode.Adaptive ? "THÍCH ỨNG" : "CỐ ĐỊNH")} · ĐỢT {_wave:00}\n" +
-                context + $"\nNguồn: {_source}\nLý do: {_reason}\n" +
+                $"Chằn Tinh: {Intent}\n" + context + $"\nNguồn: {_source}\nLý do: {_reason}\n" +
                 $"Dự phòng: {(string.IsNullOrEmpty(_fallback) ? "không" : _fallback)}";
             float height = Mathf.Clamp(_details.GetPreferredValues(_details.text, 408, 0).y + 20, 220, 410);
             _detailsRect.sizeDelta = new Vector2(440, height);
@@ -184,15 +165,20 @@ namespace LAC.UI
 
             var panel = Image("DirectorPanel", canvas.transform, Palette("15130F", .96f));
             _panel = panel.gameObject;
-            Corner(panel.rectTransform, new Vector2(24, 100), new Vector2(440, 80));
-            var group = _panel.AddComponent<CanvasGroup>();
-            group.interactable = false;
-            group.blocksRaycasts = false;
+            _panelRect = panel.rectTransform;
+            Corner(_panelRect, new Vector2(24, 100), new Vector2(440, 104));
+            _panelGroup = _panel.AddComponent<CanvasGroup>();
+            _panelGroup.interactable = false;
+            _panelGroup.blocksRaycasts = false;
 
             _accent = Image("Accent", panel.transform, Palette("9CCFC0"));
-            TopLeft(_accent.rectTransform, Vector2.zero, new Vector2(4, 80));
+            TopLeft(_accent.rectTransform, Vector2.zero, new Vector2(4, 104));
             _title = Text("Title", panel.transform, 21, new Vector2(16, -5), new Vector2(365, 27));
-            _summary = Text("Explanation", panel.transform, 19, new Vector2(16, -31), new Vector2(408, 46));
+            _title.enableAutoSizing = true;
+            _title.fontSizeMin = 16;
+            _title.fontSizeMax = 21;
+            _title.textWrappingMode = TextWrappingModes.NoWrap;
+            _summary = Text("Explanation", panel.transform, 19, new Vector2(16, -35), new Vector2(408, 62));
             var hint = Text("DebugHint", panel.transform, 16, new Vector2(386, -8), new Vector2(42, 29));
             hint.text = "F3";
             hint.alignment = TextAlignmentOptions.Right;

@@ -71,9 +71,8 @@ namespace LAC.UI
                 _directorLabels[i].color = Hex(selected ? "FBDD82" : "F4EADA");
                 _directorLabels[i].text = (i == 0 ? "CỐ ĐỊNH" : "THÍCH ỨNG") + (selected ? " · ĐÃ CHỌN" : "");
             }
-            _directorDescription.text = _displayedDirectorMode == DirectorMode.Adaptive
-                ? "Thích ứng: hỗ trợ đội yếu, đổi cách sinh khi đội khỏe. Vào host dùng chế độ của host."
-                : "Cố định: giữ nhịp sinh theo bảng đợt. Vào host dùng chế độ của host.";
+            var persona = Resources.Load<DungeonMasterData>("Director/DungeonMaster");
+            _directorDescription.text = persona != null ? persona.ModeDescription(_displayedDirectorMode) : "";
         }
 
         public void Select(int index)

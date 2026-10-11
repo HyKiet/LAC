@@ -36,6 +36,7 @@ Cổng 1 đã xong: vòng lặp một ván chạy được đầu-cuối — di 
 - Mỹ thuật T-18 vẫn có tại `Data/Animations/ThachSanh.asset` và `CoHon.asset` để tham khảo; người chơi hiện dùng bộ ba TinySwords theo quyết định 07/10/2026.
 - T-22/T-23 đã có chọn thẻ 10 giây và đồng bộ co-op; đã gỡ cơ chế tự sang đợt sau 1.5 giây. Kiểm thử: [docs/CARD_TESTS.md](docs/CARD_TESTS.md)
 - Chọn **Cố định / Thích ứng** trước kết nối; host chốt chế độ, Restart giữ chế độ phòng. `Director/AIDirector.cs` dùng luật từ `DirectorRules.asset` trước wave 2–9; `ContextAggregator` đóng băng HP cuối wave trước thẻ/hồi máu. Host dùng đặc tả đó trong `WaveManager`, client chỉ nhận sự kiện sinh và HUD. **F3** mở lý do/ngữ cảnh/fallback; CSV schema 2 thêm `directors.csv`. Không dùng CSV cũ làm bằng chứng AI mới.
+- AI đạo diễn **chính là Chằn Tinh**, chủ dungeon điều binh rồi ra trận ở wave 10. `DungeonMaster.asset` chứa ý đồ/lời thoại; `DirectorHud` diễn kết quả host, không tự quyết luật. Giãn binh/Điều binh/Đổi thế vây tương ứng Relief/Balanced/Variety. Hướng dẫn: [docs/AI_CHAN_TINH.md](docs/AI_CHAN_TINH.md).
 
 ## Nhận việc thế nào
 

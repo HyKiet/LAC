@@ -2,6 +2,8 @@
 
 Phạm vi 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), một thuật toán chạy trên host cho một/hai người. Chọn Fixed hoặc Adaptive trước ván; wave 1 và boss 10 giữ bảng gốc. Không học máy hoặc phần thưởng LinUCB. Kiểm tra có fixture không thay thế chơi thật hoặc nghiệm thu Internet.
 
+HUD/lời thoại được cập nhật tiếp ở T-46C: AI đạo diễn chính là Chằn Tinh, chủ dungeon; luật và schema CSV giữ nguyên. [AI_CHAN_TINH.md](AI_CHAN_TINH.md) giải thích vai trò, thuật toán và bằng chứng giao diện mới. Ảnh/log T-45 bên dưới giữ nguyên mốc nghiệm thu trước thay đổi lời thoại.
+
 ## CSV phiên bản 2
 
 `TelemetrySession.SchemaVersion = 2`. Host vẫn tạo thư mục GUID riêng tại `Application.persistentDataPath/Telemetry/<run_id>/`; client không tạo phiên. Giữ UTF-8 BOM, số thập phân theo invariant culture, escape dấu nháy/phẩy/newline, flush định kỳ 5 giây và khi ghi quyết định/mở/đóng wave. Lỗi I/O ngừng ghi và cảnh báo một lần, gameplay tiếp tục. Cách đổi đường dẫn/tắt ghi giữ như [T-43](TELEMETRY_TESTS.md#sử-dụng).
