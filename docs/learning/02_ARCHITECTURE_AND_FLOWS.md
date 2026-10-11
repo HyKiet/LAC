@@ -1,5 +1,7 @@
 # 02 — Toàn dự án LẠC hoạt động như thế nào?
 
+> Ghi chú học code ở mốc đầu dự án, không là nguồn tiến độ hiện tại. Ngày 11/10/2026: đã có 10 wave, ba lớp TinySwords, thẻ/Hồn/Trống Đồng/hồi sinh/CSV; đạo diễn luật/FSM và online Internet còn cần làm. Xem [TASKS](../TASKS.md) và [phạm vi đồ án](../THESIS_SCOPE.md). Các ví dụ/tên nhân vật/cấu hình cũ bên dưới chỉ để học.
+
 > Bài 01 dạy cách đọc từng câu code. Bài này dạy cách nối nhiều script thành một trò chơi.
 >
 > Chưa cần nhớ tên mọi class. Hãy nhớ “ai chịu trách nhiệm việc gì” và “một hành động đi qua những đâu”.

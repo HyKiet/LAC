@@ -1,5 +1,7 @@
 # Ghi chú học code dự án LẠC
 
+> Ghi chú học code ở mốc đầu dự án, không là nguồn tiến độ hiện tại. Ngày 11/10/2026: đã có 10 wave, ba lớp TinySwords, thẻ/Hồn/Trống Đồng/hồi sinh/CSV; đạo diễn luật/FSM và online Internet còn cần làm. Xem [TASKS](../TASKS.md) và [phạm vi đồ án](../THESIS_SCOPE.md). Các ví dụ/tên nhân vật/cấu hình cũ bên dưới chỉ để học.
+
 Thư mục này là “phụ đề” cho mã nguồn của LẠC, dành cho người đang học lại từ đầu. Tài liệu không thay thế code và cũng không cố bắt bạn học thuộc mọi dòng. Mục tiêu là giúp bạn trả lời được bốn câu hỏi khi mở một file:
 
 1. File này chịu trách nhiệm gì?

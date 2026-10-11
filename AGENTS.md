@@ -2,7 +2,7 @@
 
 Hướng dẫn cho mọi công cụ AI làm việc trên dự án này. Đọc hết file này trước khi sửa bất cứ thứ gì — nó ngắn.
 
-**LẠC** là game arena survival roguelite 2D, đồ hoạ pixel art, thần thoại Việt Nam. Unity 6000.5.6f1 · URP 2D · Mirror. Co-op 2 người, mô hình host-authoritative. Vừa là khoá luận vừa là sản phẩm thương mại trên Steam.
+**LẠC** là game arena survival roguelite 2D, đồ hoạ pixel art, thần thoại Việt Nam. Unity 6000.5.6f1 · URP 2D · Mirror. Co-op 2 người, mô hình host-authoritative. Chỉ phục vụ đồ án tốt nghiệp, không phát hành thương mại hoặc yêu cầu Steam.
 
 ## Thứ tự đọc
 
@@ -12,7 +12,7 @@ Hướng dẫn cho mọi công cụ AI làm việc trên dự án này. Đọc h
 | [docs/TASKS.md](docs/TASKS.md) | Việc gì đã xong, việc gì còn lại, ai phụ trách |
 | [docs/WORKFLOW.md](docs/WORKFLOW.md) | Quy trình nhóm, chỗ nối giữa các mảng |
 | [docs/PALETTE.md](docs/PALETTE.md) | Bảng 24 màu đã chốt và ràng buộc màu cho đòn địch |
-| [docs/GDD.md](docs/GDD.md) | Đặc tả gốc — **một số nội dung đã lỗi thời**, xem mục 7 của CLAUDE.md |
+| [docs/GDD.md](docs/GDD.md) | Thiết kế bản đồ án đã thu gọn ngày 11/10/2026 |
 
 ## Ba ràng buộc không được vi phạm
 
@@ -21,6 +21,10 @@ Diễn giải đầy đủ ở mục 3 của CLAUDE.md.
 1. **Không có nhánh mã riêng cho chơi đơn.** Chơi đơn là Mirror host mode với một client. Cấm `if (isSinglePlayer)`.
 2. **Đồng bộ sự kiện, không đồng bộ trạng thái.** Không gắn `NetworkIdentity` lên đạn hay hiệu ứng. Host mô phỏng trạng thái thật, client mô phỏng biểu diễn.
 3. **Cấm `UnityEngine.Random` trong luồng gameplay.** Dùng `LAC.Core.RunRandom`. Ngoại lệ duy nhất là hiệu ứng hình ảnh và âm thanh thuần trang trí.
+
+## Phạm vi đồ án — quyết định 11/10/2026
+
+Giảng viên yêu cầu online multiplayer, có AI và yếu tố riêng; người dùng xác nhận không bắt buộc học máy/LinUCB hoặc mẫu 30 người. Đọc [docs/THESIS_SCOPE.md](docs/THESIS_SCOPE.md) trước khi thêm tính năng. AI mục tiêu là đạo diễn dựa trên luật + FSM ba trạng thái, chưa triển khai. Giữ 12 thẻ, Trống Đồng/Hồn và một arena. Không tự mở lại Steam, Ngọc/mở khoá, tám tiến hoá hoặc ba tileset. Multiplayer vẫn phải nghiệm thu hai máy qua Internet, không thay bằng localhost/LAN.
 
 ## Đang ở đâu
 
@@ -58,4 +62,4 @@ Dự án có **Unity-MCP** đã cấu hình. Dùng nó để vào Play mode, ch�
 
 Một hạng mục chỉ được báo hoàn thành khi: Console không có lỗi đỏ, đã chạy thử trong Play mode, và với thay đổi về hình ảnh thì **đã nhìn ảnh chụp**.
 
-Ngân sách hiệu năng là **60 FPS với 40 quái và 200 đạn cùng lúc**. Mốc hiện tại: 3.72 ms mỗi khung với 40 quái, ngưỡng 16.67 ms.
+Ngân sách hiệu năng là **60 FPS với 40 quái và 200 đạn cùng lúc**. Fixture T-44D trên máy phát triển đạt P95 4.98 ms, ngưỡng 16.67 ms; không thay thế đo build bàn giao hoặc tải đạo diễn sau tích hợp. Xem `docs/TEN_WAVE_TESTS.md`.

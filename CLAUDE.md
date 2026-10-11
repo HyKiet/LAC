@@ -16,22 +16,22 @@ Công cụ AI khác Claude Code đọc [AGENTS.md](AGENTS.md) làm điểm vào 
 
 ---
 
-## 1. Tổng quan sản phẩm
+## 1. Tổng quan đồ án
 
-LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, đồ hoạ pixel art, xây dựng trên nền thần thoại Việt Nam. Sản phẩm thuộc dòng Vampire Survivors / Brotato.
+LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, đồ hoạ pixel art, xây dựng trên nền thần thoại Việt Nam. Gameplay tham chiếu dòng Vampire Survivors / Brotato; chỉ bàn giao đồ án, không phát hành thương mại.
 
 | Hạng mục | Đặc tả |
 |---|---|
-| Nền tảng phát hành | PC — Steam |
-| Giá bán | **$2.99** |
+| Nền tảng bàn giao | PC Windows — bản chạy độc lập cho đồ án |
+| Phát hành / giá bán | **Không phát hành thương mại, không định giá** |
 | Số người chơi | 1–2, **co-op trực tuyến** *(yêu cầu bắt buộc từ giảng viên hướng dẫn)* |
 | Thời lượng một ván | Mục tiêu 8–10 phút — 10 đợt quái |
 | Engine | **Unity 6000.5.6f1**, URP 2D, C# |
-| Kiến trúc mạng | Mirror + Steamworks.NET, mô hình **host-authoritative** |
+| Kiến trúc mạng | Mirror + KCP, mô hình **host-authoritative** |
 
-> **Nền tảng đã chốt: PC — Steam. Không phát triển bản mobile.**
-> Cơ sở: (a) co-op trực tuyến trên Steam sử dụng hạ tầng lobby và NAT traversal miễn phí của Steamworks — trên mobile phải thuê dịch vụ relay và xây dựng hệ thống tài khoản riêng; (b) mobile không có hạ tầng tương đương — hệ thống tài khoản, danh sách bạn bè và lời mời chơi cùng đều phải tự xây dựng, ước tính 10–15 ngày công cộng chi phí vận hành định kỳ; (c) ngân sách hiệu năng 40 quái và 200 đạn ở 60 FPS không đạt được trên thiết bị di động tầm trung; (d) sóng âm Đông Sơn phủ kín màn hình mất khả năng đọc hiểu trên màn hình 6 inch có ngón tay che khuất; (e) thị trường game trả phí một lần trên mobile gần như không còn khả năng tiếp cận người dùng mới.
-> Nếu sản phẩm đạt doanh số trên Steam, bản mobile có thể xem xét ở giai đoạn sau — mã nguồn 2D URP không cản trở việc này.
+> **Quyết định 11/10/2026: chỉ làm đồ án tốt nghiệp, không phát hành game.** Yêu cầu giảng viên đã biết: online multiplayer, có AI, có yếu tố mới lạ. Người dùng xác nhận không bắt buộc học máy/LinUCB hoặc 30 người thực nghiệm. Không yêu cầu Steamworks, Steam Direct, giá bán hoặc mục tiêu thị trường. Chi tiết đánh giá, phạm vi và tiêu chí bàn giao tại [docs/THESIS_SCOPE.md](docs/THESIS_SCOPE.md).
+
+> AI gameplay chọn **đạo diễn dựa trên luật + FSM ba trạng thái**, hoạt động với một/hai người trên host. T-45/T-45B/T-46 chưa triển khai. Giữ bảng cố định để đối chứng/fallback. Điểm riêng chính: Trống Đồng dùng chung được Hồn nạp và dash kích hoạt; không bắt buộc tám tiến hoá hoặc nhiều map.
 
 ### 1.1 Vòng lặp cốt lõi
 
@@ -54,13 +54,13 @@ Người chơi chỉ có **hai thao tác: di chuyển và lướt (dash)**. Vũ 
 
 Vũ khí gắn cố định với nhân vật và không thể thay thế trong ván. Việc đổi nhân vật tương đương đổi lối chơi.
 
-Quyết định 07/10/2026: dùng ba lớp TinySwords thay nhân vật truyền thuyết để giảm công mỹ thuật. Ba lớp mở sẵn; chọn trước khi khởi động host/client trong `UI/CharacterSelection.cs`. ID được host thẩm định trước khi sinh player. Solo vẫn Mirror host, co-op cho phép chọn trùng lớp. Archer nhân đôi tên kế tiếp sau dash; Warrior/Lancer khác nhau ở hình dạng sát thương. Chi tiết hiện hành: GDD mục 4 và 10.2.
+Quyết định 07/10/2026: dùng ba lớp TinySwords thay nhân vật truyền thuyết để giảm công mỹ thuật. Ba lớp mở sẵn; chọn trước khi khởi động host/client trong `UI/CharacterSelection.cs`. ID được host thẩm định trước khi sinh player. Solo vẫn Mirror host, co-op cho phép chọn trùng lớp. Archer nhân đôi tên kế tiếp sau dash; Warrior/Lancer khác nhau ở hình dạng sát thương. Chi tiết hiện hành: GDD mục 4 và 10.
 
 ---
 
-## 2. Bốn cơ chế định vị
+## 2. Cơ chế giữ trong đồ án
 
-Thể loại survivors hiện đã bão hoà trên Steam. Bốn cơ chế dưới đây là yếu tố phân biệt sản phẩm và **không được cắt giảm trong bất kỳ trường hợp nào**.
+Giữ các cơ chế đã chạy để chứng minh gameplay/co-op; phần tương lai được thu gọn theo [THESIS_SCOPE.md](docs/THESIS_SCOPE.md). Không dùng mục tiêu cạnh tranh Steam để bắt nhóm làm thêm nội dung. Trống Đồng/Hồn là điểm riêng, đạo diễn thích ứng là phần AI bổ sung; tám tiến hoá không còn bắt buộc.
 
 ### 2.1 Sóng âm Đông Sơn
 
@@ -79,16 +79,9 @@ Một trống đồng đặt cố định tại tâm đấu trường. Người 
 
 Tham chiếu thiết kế: cơ chế Blank của *Enter the Gungeon*, Teleporter của *Risk of Rain 2*, thùng tiếp tế của *Deep Rock Galactic*.
 
-### 2.3 Tiến hoá thẻ — 8 công thức
+### 2.3 Thẻ nâng cấp — giữ 12 nền
 
-Khi tích luỹ đủ các thẻ nền theo công thức định sẵn, hệ thống tự động hợp nhất thành một thẻ tiến hoá có sức mạnh vượt trội. Đây là **động lực chơi lại chính** của sản phẩm; số lượng công thức không được giảm xuống dưới 8.
-
-| Nguyên liệu | Kết quả |
-|---|---|
-| Xuyên thấu ×3 + Nảy tường ×3 | Nỏ Thần |
-| Nổ ×3 + Vệt cháy ×3 | Lửa Thiêng |
-| +2 đạn ×3 + Tách đạn ×3 | Trăm Trứng |
-| *5 công thức còn lại* | *Chốt tại tuần 4* |
+Mười hai thẻ nền đã có, dùng lại giao diện/đồng bộ hiện hành. T-25/T-26 chuyển dự phòng: tối đa 1–2 tiến hoá dùng hiệu ứng sẵn nếu còn thời gian sau nghiệm thu AI và online. Không có yêu cầu tối thiểu tám công thức. Không thêm shop, nhiều ô vũ khí, tiền tệ hay bể thẻ mở khoá trong đồ án.
 
 ### 2.4 Hồn
 
@@ -170,7 +163,7 @@ Assets/_LAC/
 │   ├── Combat/    Sát thương, đạn, chọn mục tiêu
 │   ├── Cards/     Bể thẻ, hiệu ứng, tiến hoá, giao diện chọn thẻ
 │   ├── Director/  AI Đạo Diễn, thu thập telemetry
-│   ├── Net/       Mirror, Steamworks, lobby
+│   ├── Net/       Mirror + KCP, luồng tạo/vào phòng
 │   ├── Drum/      Trống Đồng
 │   ├── UI/  VFX/  Audio/  Utils/
 ├── Data/          ScriptableObject — Cards, Characters, Enemies, Waves
@@ -268,24 +261,21 @@ Nhóm phát triển chủ yếu bằng phương pháp AI-assisted. Ba quy địn
 
 ---
 
-## 7. Sai lệch so với GDD
+## 7. Quyết định phạm vi hiện hành
 
-[docs/GDD.md](docs/GDD.md) là bản đặc tả gốc và chứa một số nội dung đã lỗi thời. **Khi có mâu thuẫn, tài liệu này là căn cứ.**
+GDD đã viết lại theo phạm vi đồ án ngày 11/10/2026. Báo cáo kiểm thử cũ giữ nguyên cấu hình/ngày đã nghiệm thu; không dùng chúng để chứng minh tính năng mới.
 
-| GDD | Quyết định hiện hành | Lý do |
-|---|---|---|
-| Unity 6.3 LTS · $6.99 | **6000.5.6f1** · **$2.99** | Phiên bản engine thực tế; định giá theo mặt bằng thể loại |
-| 48 thẻ · 4 cấp độ khó | **12 thẻ nền + 8 tiến hoá** · **1 cấp** | T-24 thu gọn còn 12 thẻ nền theo quyết định ngày 24/09/2026; cân bằng theo giới hạn cộng dồn và 9 lượt nâng cấp. Cấp độ khó thứ hai để sau bảo vệ |
-| Không có vật phẩm rơi ra | **Bổ sung cơ chế Hồn** | Thể loại yêu cầu vòng phản hồi chu kỳ ngắn |
-| Không có Trống Đồng và tiến hoá thẻ | **Bổ sung — xem mục 2** | Yếu tố định vị sản phẩm |
-| AI Đạo Diễn chạy ở mọi chế độ | **Hoạt động ở cả hai chế độ.** Co-op dùng véc-tơ ngữ cảnh hợp thành, tầng an toàn theo người yếu nhất và số hạng công bằng | Yêu cầu bắt buộc từ giảng viên hướng dẫn. Đặc tả đầy đủ tại [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) mục 2.7 |
-| — | **Thực nghiệm khoá luận vẫn chạy ở chế độ chơi đơn** (15/15). Co-op thu thập mẫu quan sát bổ sung | Hai người chơi khác build và khác lượng máu tạo ra biến số không kiểm soát được với cỡ mẫu 30. Chế độ hoạt động và thiết kế thí nghiệm là hai vấn đề tách rời |
-| Đạo diễn giữ tổn thất máu trong 15–25% ở mọi thời điểm | **Điều tiết bất đối xứng:** được phép giảm áp lực khi người chơi gặp khó; khi người chơi mạnh thì thay đổi **thành phần và hướng sinh quái**, không tăng số lượng hoặc lượng máu | Siết tổn thất máu ở cả hai chiều là trừng phạt người chơi vì xây dựng build hiệu quả, làm triệt tiêu cảm giác tưởng thưởng |
-| Triển khai co-op ở tuần 10–12 | **Kiến trúc mạng từ tuần 1** | Xem mục 3.1 |
-| Bộ ba truyền thuyết và vũ khí nhạc cụ | **Warrior / Archer / Lancer**, kiếm/cung/thương, chọn trước trận | Quyết định người dùng 07/10/2026, tận dụng TinySwords để giảm thời gian làm mỹ thuật |
-| Tấm nhân đôi sát thương trong 1 giây sau dash | **Archer: tên kế tiếp ×2**, hồi dash 0.8s | Thưởng đúng một phát, không duy trì vô hạn |
+| Thiết kế cũ | Quyết định hiện hành |
+|---|---|
+| PC Steam, $2.99, sản phẩm thương mại | Windows executable cho đồ án, không phát hành/định giá/Steam |
+| LinUCB, fairness reward, bắt buộc 15/15 người | AI dựa trên luật + FSM ba trạng thái, ngữ cảnh đội theo người yếu nhất; khảo sát nhỏ và kiểm thử có kiểm soát |
+| 12 thẻ + tối thiểu 8 tiến hoá | Giữ 12 nền, tiến hoá dự phòng tối đa 1–2 |
+| Ba tileset/bốn bản nhạc/Ngọc/mở khoá | Một arena hiện có, âm thanh thiết yếu, mở sẵn ba lớp, không tiến trình vĩnh viễn |
+| Co-op phải qua Steam; fallback local | Hai máy qua Internet bằng Mirror/KCP; không hạ online thành co-op cục bộ |
+| `clearTime`, ép tổn thất 15–25% | Wave tính giờ; dùng HP thấp nhất, tổn thất thực, lần gục; không trừng phạt build mạnh |
+| Bộ ba truyền thuyết | Warrior/Archer/Lancer TinySwords; ghi rõ nguồn asset |
 
----
+Ba ràng buộc kiến trúc ở mục 3, ngân sách hiệu năng, gameplay 10 wave, thẻ/Hồn/Trống Đồng/hồi sinh và telemetry giữ nguyên. Thay đổi phạm vi tài liệu không triển khai đạo diễn, Internet hay executable mới.
 
 ## 8. Môi trường phát triển
 

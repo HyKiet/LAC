@@ -1,5 +1,7 @@
 # Kiểm thử T-22, T-23 và T-24
 
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
 Unity 6000.5.6f1. Không sửa mã khi đang ở Play Mode.
 
 ## Hợp nhất vào main — 27/09/2026

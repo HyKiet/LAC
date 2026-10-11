@@ -1,5 +1,7 @@
 # Trống Đồng — T-36 / T-37 / T-38
 
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
 ## Cấu hình và luồng chơi
 
 - Trống cố định tại tâm `ArenaBounds`, không có collider cản người chơi.

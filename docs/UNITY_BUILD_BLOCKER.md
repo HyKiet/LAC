@@ -1,5 +1,7 @@
 # Unity Safe Mode — chẩn đoán ngày 04/10/2026
 
+> Mốc mới hơn: build ngày 07/10 lại bị Application Control chặn `Unity.Linker.Api.dll`; T-44D chưa nghiệm thu executable 10 wave. Xem [PLAYABLE_CLASSES_TESTS.md](PLAYABLE_CLASSES_TESTS.md) và [TEN_WAVE_TESTS.md](TEN_WAVE_TESTS.md). Việc khôi phục ngày 04/10 bên dưới không xác nhận môi trường hiện tại hết chặn.
+
 **Cập nhật cùng ngày: môi trường đã hoạt động trở lại sau khi người dùng mở lại Unity.** MCP trả `pong`, `scriptCompilationFailed=false`, Play Mode chạy được và Windows Development build thành công (0 lỗi, 2 cảnh báo). Không có thao tác thay đổi chính sách Windows từ tác vụ này; chưa xác định thay đổi bên ngoài nào đã gỡ chặn. Nội dung dưới đây giữ lại lịch sử chẩn đoán lúc Safe Mode.
 
 ## Bằng chứng tại máy
@@ -17,7 +19,7 @@
 1. Gửi đường dẫn DLL, hash và thông tin sự kiện ở trên cho Unity Support hoặc người quản trị máy để kiểm tra bản phân phối Unity **6000.5.6f1**. Cần thư viện được Windows tin cậy; chưa có bằng chứng cài lại cùng bộ cài sẽ hết lỗi. Không đổi phiên bản engine của dự án trong bước này.
 2. Microsoft giải thích Smart App Control có thể chặn mã chưa được xác nhận tin cậy và không có chữ ký hợp lệ; hiện không có nút cho phép riêng từng ứng dụng. Hướng ưu tiên là nhà phát hành ký mã hợp lệ. Xem [Microsoft Smart App Control FAQ](https://support.microsoft.com/en-us/windows/security/threat-malware-protection/smart-app-control-frequently-asked-questions) và [hướng dẫn ký mã](https://learn.microsoft.com/en-us/windows/apps/develop/smart-app-control/code-signing-for-smart-app-control). Việc thay đổi bảo vệ toàn máy cần chủ máy/quản trị viên quyết định; tác vụ này không sửa chính sách Windows.
 3. Khi nguyên nhân chặn đã được xử lý, mở lại dự án bằng Unity Hub với quyền người dùng thông thường và chờ biên dịch/import hoàn tất. Cảnh báo chạy Administrator trong ảnh là cảnh báo riêng; chạy Administrator hiện không vượt được lỗi Code Integrity.
-4. Kiểm tra lại MCP bằng hai lệnh dưới. Chỉ khi trả thành công và Editor không biên dịch/cập nhật mới tiếp tục [nghiệm thu T-43](TELEMETRY_TESTS.md#nghiệm-thu-còn-lại-sau-khi-unity-biên-dịch-được).
+4. Kiểm tra lại MCP bằng hai lệnh dưới. Chỉ khi trả thành công và Editor không biên dịch/cập nhật mới tiếp tục [nghiệm thu T-43](TELEMETRY_TESTS.md#chạy-lại-nghiệm-thu).
 
 ```powershell
 unity-mcp-cli.cmd run-system-tool ping --input '{}' --raw

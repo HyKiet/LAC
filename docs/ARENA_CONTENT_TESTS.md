@@ -1,5 +1,7 @@
 # T-44B — 15 wave và mỹ thuật ThirdParty
 
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
 Ngày kiểm thử: 04/10/2026, Unity 6000.5.6f1. Phạm vi: phần lõi của Kiệt và tích hợp asset theo yêu cầu; không triển khai T-45/T-45B hoặc thay nội dung thẻ.
 
 ## Thay đổi

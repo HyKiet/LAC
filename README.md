@@ -1,8 +1,10 @@
 # LẠC — Children of the Dragon
 
-Arena survival roguelite 2D trên nền thần thoại Việt Nam. Ba nhân vật với ba lối chơi phân biệt, mỗi ván 15 phút, hỗ trợ co-op hai người qua Steam.
+Arena survival roguelite 2D trên nền thần thoại Việt Nam. Ba lớp Warrior/Archer/Lancer, 10 wave, mục tiêu 8–10 phút, co-op hai người. Chỉ làm đồ án tốt nghiệp, không phát hành thương mại.
 
-> Đồ án tốt nghiệp · Unity 6000.5.6f1 · URP 2D · Mirror + Steamworks.NET
+> Đồ án tốt nghiệp · Unity 6000.5.6f1 · URP 2D · Mirror + KCP
+
+Yêu cầu: **multiplayer online, có AI, có điểm riêng**. Đạo diễn dựa trên luật/FSM là phần cần làm; Trống Đồng/Hồn dùng chung đã có. Kiểm thử hai tiến trình hiện có chưa chứng nhận chơi qua Internet. Xem [phạm vi và đánh giá](docs/THESIS_SCOPE.md); bản Windows 10 wave mới còn cần nghiệm thu sau khi xử lý điểm chặn build.
 
 ---
 
@@ -55,7 +57,8 @@ Script cài công cụ merge cho file scene của Unity và bật Git LFS. Khôn
 |---|---|
 | [CLAUDE.md](CLAUDE.md) | Tài liệu chủ đạo — tổng quan sản phẩm, ràng buộc kiến trúc, quy trình |
 | [docs/TASKS.md](docs/TASKS.md) | Kế hoạch công việc, phân công, nhật ký hoàn thành |
-| [docs/GDD.md](docs/GDD.md) | Đặc tả thiết kế gốc — một số nội dung đã lỗi thời, xem mục 7 của CLAUDE.md |
+| [docs/GDD.md](docs/GDD.md) | Thiết kế bản đồ án 10 wave, không thương mại |
+| [docs/THESIS_SCOPE.md](docs/THESIS_SCOPE.md) | Đánh giá hiện trạng, phạm vi thu gọn và tiêu chí bảo vệ |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Sơ đồ hệ thống và quan hệ giữa các module |
 | [docs/WORKFLOW.md](docs/WORKFLOW.md) | **Quy trình làm việc nhóm — đọc trước khi commit lần đầu** |
 | [docs/PALETTE.md](docs/PALETTE.md) | Bảng 24 màu Đông Hồ đã chốt, và ràng buộc màu cho đòn địch |
@@ -78,7 +81,7 @@ Diễn giải đầy đủ tại [CLAUDE.md](CLAUDE.md) mục 3.
 
 | Thành viên | Vai trò |
 |---|---|
-| `@Kiet` | Lập trình · quản lý sản phẩm · quảng bá |
+| `@Kiet` | Gameplay · đồng bộ trong ván · AI · telemetry và đánh giá |
 | `@Hung` | Lập trình |
 | `@Kang` | Lập trình |
 | `@artist` | Pixel art · hiệu ứng · âm thanh |

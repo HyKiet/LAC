@@ -7,16 +7,16 @@ liệu này.
 
 ---
 
-## 1. Phạm vi hiện hành
+## 1. Phạm vi hiện hành — 11/10/2026
 
-| Loại | Số lượng mục tiêu | Trạng thái |
-|---|---:|---|
-| Thẻ nền | 12 | Đã triển khai đủ 12 thẻ; cân bằng ban đầu ở T-24 |
-| Thẻ tiến hoá | 8 | Chờ T-25 và T-26 |
-| **Tổng** | **20** | 12 thẻ nền đã làm + 8 tiến hoá chưa triển khai |
+| Loại | Phạm vi | Trạng thái |
+|---|---|---|
+| Thẻ nền | 12 | Đã triển khai; giữ trong đồ án |
+| Tiến hoá | Dự phòng tối đa 1–2 | Chưa triển khai, không là điều kiện bảo vệ |
 
-Con số 48 thẻ trong GDD và mục tiêu 32 thẻ nền trước đây đã lỗi thời. Theo quyết định
-ngày 24/09/2026, phạm vi hiện hành là **12 thẻ nền + 8 thẻ tiến hoá**.
+Theo [THESIS_SCOPE.md](THESIS_SCOPE.md), không phát hành thương mại và không bắt buộc tám tiến hoá. T-25/T-26 chỉ làm nếu còn thời gian sau AI/online/build. Quyết định 24/09 về 12 nền + 8 tiến hoá là lịch sử đã thay. Không bổ sung 48 hoặc 32 thẻ.
+
+Một ván có 9 lượt chọn sau wave 1–9; boss wave 10 kết thúc ván. Báo cáo 15 lượt/45.000 lựa chọn bên dưới là phép thử bể thẻ lịch sử, không là số lượt của ván hiện hành.
 
 ## 2. Quy tắc chung
 
@@ -31,7 +31,7 @@ ngày 24/09/2026, phạm vi hiện hành là **12 thẻ nền + 8 thẻ tiến h
 - Qua mạng chỉ đồng bộ định danh/lựa chọn thẻ; host giữ thẩm quyền với thay đổi gameplay,
   còn mỗi máy tự áp dụng phần biểu diễn.
 - Bộ 7 thẻ demo hiện dùng ảnh AI đồng nhất để kiểm chứng bố cục và tương tác. Đây là
-  **mỹ thuật tạm**. Năm thẻ mới dùng ký hiệu chữ; bộ 20 icon chính thức thuộc T-33.
+  **mỹ thuật tạm**. Năm thẻ mới dùng ký hiệu chữ; icon cho 12 nền thuộc T-33, có thể tái sử dụng/ký hiệu rõ nghĩa.
 
 ## 3. Giao diện và phản hồi tương tác hiện hành
 
@@ -166,7 +166,7 @@ trước lượt chọn thứ 15 vẫn còn ít nhất 3 thẻ hợp lệ, kể 
 |---|---|---|
 | Sát thương + tốc đánh | Cường Công ×3, Liên Kích ×3, Cuồng Nộ ×2: 2,625× DPS gốc | Tốn 8 lựa chọn; Cuồng Nộ giảm tốc đánh |
 | Thêm Song Tiễn | 3,675× DPS gốc nếu cả hai đạn trúng một mục tiêu | Chỉ vũ khí đạn; tốn tổng 9 lựa chọn; chưa tính trượt/overkill |
-| Máu | Tấm 4→7, Thạch Sanh 6→10, Gióng 10→16 | Tốn 3 lựa chọn; thay mức +75 máu của demo cũ |
+| Máu | Archer 6→10, Warrior 10→16, Lancer 8→13 (ba lần +20% máu gốc, làm tròn lên) | Tốn 3 lựa chọn; thay mức +75 máu của demo cũ |
 | Di chuyển / tầm đánh | +24% / +30% | Mỗi hướng tốn 3 lựa chọn; không tăng lướt/bán kính nổ |
 | Hồi phục | 2 máu giữa các đợt | Tốn 2 lựa chọn; không hồi giữa giao tranh hoặc hồi sinh |
 | Phòng thủ | +30% bất tử sau trúng đòn (0,6→0,78 giây với cấu hình hiện tại) | Tốn 2 lựa chọn; không giảm sát thương và không tăng i-frame lướt |
@@ -187,20 +187,9 @@ kể cả animation và truyền mạng. Console cuối phiên: 0 lỗi, 0 cản
 Đây là cân bằng ban đầu của **bể thẻ**, chưa thay thế T-50/T-51: cần chơi thử với đủ
 quái/boss và thu thập tỉ lệ thắng, lựa chọn thẻ để chốt độ khó toàn game.
 
-## 7. Công thức tiến hoá
+## 7. Tiến hoá — dự phòng
 
-Khi đủ toàn bộ nguyên liệu, hệ thống tự hợp nhất thành thẻ tiến hoá. Tên nguyên liệu
-dưới đây là tên thiết kế từ CLAUDE.md; T-24/T-26 phải ánh xạ chúng sang ID chính thức
-trước khi triển khai. Các công thức dưới đây là thiết kế lịch sử, chưa khớp bộ 12 thẻ;
-T-26 phải thiết kế lại nguyên liệu và số cấp theo danh mục mới, không tự bổ sung thẻ
-ngoài phạm vi 12 thẻ nền. Mục tiêu 8 tiến hoá vẫn giữ nguyên.
-
-| # | Nguyên liệu | Kết quả | Trạng thái |
-|---:|---|---|---|
-| 1 | Xuyên thấu ×3 + Nảy tường ×3 | Nỏ Thần | Đã chốt ở mức thiết kế |
-| 2 | Nổ ×3 + Vệt cháy ×3 | Lửa Thiêng | Đã chốt ở mức thiết kế |
-| 3 | +2 đạn ×3 + Tách đạn ×3 | Trăm Trứng | Đã chốt ở mức thiết kế |
-| 4–8 | Chưa chốt | Chưa chốt | Chờ T-26 |
+Chưa có hệ thống tiến hoá. Không giữ yêu cầu tám công thức hoặc công thức Nảy tường/Vệt cháy/Tách đạn không có trong bộ 12 nền. Nếu nhận T-25/T-26 sau nghiệm thu chính, chọn tối đa 1–2 tổ hợp dựa trên ID/giới hạn hiện có và hiệu ứng đã làm; nhóm Hung thiết kế trước khi triển khai. Không coi combo Song Tiễn + Xuyên Tâm + Bộc Phá đang hoạt động là hệ thống tiến hoá đã có.
 
 ## 8. Mẫu biên soạn thẻ mới
 

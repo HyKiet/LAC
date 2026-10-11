@@ -1,5 +1,7 @@
 # T-32 — Hiệu năng và khả năng đọc hình ảnh
 
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
 `PerformanceScenario` chỉ chạy trong Editor/Development, khi gọi `Begin()` hoặc
 truyền cờ `--lac-perf`. Không tự kích hoạt khi người chơi chạy game bình thường.
 Prefab kiểm thử lấy từ `Data/Tests/Resources/Tests/Performance.asset`.

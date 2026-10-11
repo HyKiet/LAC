@@ -1,5 +1,7 @@
 # T-43 — Telemetry CSV
 
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
 Triển khai trong phạm vi @Kiet, kiểm thử Unity ngày 04/10/2026. MCP đã kết nối lại, Unity biên dịch được và Play Mode một/hai người đã đạt. Lỗi Safe Mode trước đó được giữ trong [nhật ký môi trường](UNITY_BUILD_BLOCKER.md).
 
 ## Sử dụng
@@ -27,9 +29,9 @@ Thư mục được tạo tự động. CSV dùng UTF-8 BOM, dấu phẩy phân 
 
 Các cột thống kê:
 
-- `wave`: 1–15 trong `waves.csv` theo T-44B; 0 trong `runs.csv`. CSV nghiệm thu T-43 bên dưới được thu trước thay đổi nên vẫn có 16 wave; giữ nguyên để bảo toàn bằng chứng lịch sử.
+- `wave`: hiện 1–10 trong `waves.csv` theo T-44D; 0 trong `runs.csv`. CSV nghiệm thu T-43 bên dưới được thu trước thay đổi nên vẫn có 16 wave; giữ nguyên để bảo toàn bằng chứng lịch sử.
 - `source`: hiện là `fixed_table`. T-45 phải cập nhật nguồn và bổ sung quyết định/ngữ cảnh/phần thưởng khi AI Đạo Diễn được triển khai. T-43 không giả lập dữ liệu AI chưa có.
-- `result`: `cleared` cho wave sạch; `victory`/`defeat` cho ván; `aborted` khi dừng host/thoát; `replaced` khi gọi bắt đầu ván khác lúc ván cũ chưa kết thúc; `interrupted` nếu bắt đầu wave khác trước khi đóng wave hiện tại.
+- `result`: `survived` cho wave tính giờ, `cleared` cho wave sạch/boss; `victory`/`defeat` cho ván; `aborted` khi dừng host/thoát; `replaced` khi gọi bắt đầu ván khác lúc ván cũ chưa kết thúc; `interrupted` nếu bắt đầu wave khác trước khi đóng wave hiện tại.
 - `duration_s`: thời gian của wave hoặc ván. Wave không gồm thời gian chọn thẻ; ván có gồm thời gian chọn thẻ. Không bị hit-stop làm ngắn thời gian đo. Khi Editor pause, đồng hồ Unity dừng.
 - `exposure_s`: thời gian người đó có mặt trong wave/ván, gồm thời gian đang gục; người vào muộn/rời sớm có thời gian riêng.
 - `run_players_start`, `run_players_peak`: số người đầu ván và lớn nhất tính đến dòng đó; `players_end`: số người còn kết nối tại thời điểm tổng kết.
@@ -37,7 +39,7 @@ Các cột thống kê:
 - `hits_taken`, `health_lost`: số đòn được chấp nhận và **máu thực sự mất**, không tính overkill hoặc đòn bị i-frame từ chối. Hồi máu không trừ ngược bộ đếm; sau hồi sinh tổng máu mất có thể lớn hơn máu tối đa. Ghi trước khi đòn chí mạng kết thúc ván.
 - `downs`, `revives`, `dashes`: hạ gục, được hồi sinh, dash được host chấp nhận. Khôi phục máu khi chơi lại không tính là hồi sinh.
 - `team_kills`, `team_souls`, `team_drum_uses`: số của **cả đội**, lặp trên mỗi dòng người chơi để dễ nối dữ liệu. Lấy một giá trị cho mỗi wave/ván, **không cộng các dòng người chơi**. Các cột này là số trong wave ở `waves.csv`, số cả ván ở `runs.csv`.
-- `waves_cleared`: tổng số wave đã sạch tính đến dòng đó, gồm wave cuối khi thắng.
+- `waves_cleared`: tổng số wave đã vượt qua (`survived` hoặc `cleared`) tính đến dòng đó, gồm wave cuối khi thắng.
 
 Các sự kiện sát thương/dash/quái chết chỉ tính trong wave đang mở. `events.csv.value` là seed với `run_started`, máu mất với `player_damaged`, máu được hồi với `player_revived`, ID quái với `enemy_killed`, tổng quái theo đặc tả với `wave_spec`. `run_started.detail` giữ UTC, build và nguồn ngay đầu ván để vẫn có metadata nếu ván không đóng bình thường. `wave_spec.detail` lưu tên bảng, thành phần quái, hướng theo chu vi, nhịp sinh và burst thực tế từ `WaveManager`.
 

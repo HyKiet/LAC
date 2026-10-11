@@ -3,8 +3,8 @@
 **Tài sản:** `Assets/_LAC/Art/Palettes/DongHo24.asset` (đọc được từ mã) ·
 `DongHo24.gpl` (Aseprite, Krita) · `DongHo24.png` (bảng tra) · `DongHo24.json` (nguồn)
 
-**Mật độ pixel đã chốt: 32 px, PPU 32.** Một ô lát = 32 px = 1 đơn vị Unity.
-Nhân vật cao khoảng 26 px ≈ 0.81 đơn vị.
+**Mật độ nền mỹ thuật của nhóm: 32 px, PPU 32.** Một ô lát = 32 px = 1 đơn vị Unity.
+Nhân vật gốc của nhóm cao khoảng 26 px ≈ 0.81 đơn vị. TinySwords đang dùng giữ import/PPU nguồn; sprite TinyRPG 16×16 có thể thử riêng sau kiểm tra tỷ lệ/pivot, không đổi PPU toàn game theo kích thước một ảnh. Palette này chuẩn cho nền/VFX nhóm; không bắt buộc tô lại toàn bộ asset ngoài.
 
 ---
 
@@ -130,15 +130,11 @@ Nâu chỉ được dùng làm điểm lốm đốm thưa. Đây là điều ki�
 
 ---
 
-## 5. Việc còn lại cho hoạ sĩ
+## 5. Phạm vi mỹ thuật đồ án — 11/10/2026
 
-Bảng màu đã chốt, không đổi nữa. Ba việc tiếp theo dùng nguyên bảng này:
+T-33 ưu tiên 12 icon thẻ nền rõ nghĩa. T-47 tinh chỉnh silhouette quái/boss/trống bằng asset sẵn nếu cần; không bắt buộc vẽ lại người chơi hoặc hai tileset mới. Giữ nền tối, màu/lớp đòn địch và khả năng đọc.
 
-- **T-33** — sprite Gióng, sprite Tấm, 20 icon thẻ (12 nền + 8 tiến hoá)
-- **T-47** — sprite bốn quái còn lại, Chằn Tinh, trống đồng, hai tileset còn lại
-- Đòn tấn công của địch: chưa có quái nào đánh tầm xa, nên `SonSang` **chưa từng xuất
-  hiện trên màn hình**. Con số 5.76 : 1 là tính toán, chưa phải quan sát. Phải kiểm lại
-  bằng ảnh chụp khi có quái bắn đầu tiên.
+Ma Trơi/Ma Da/boss đã có đạn/vùng báo màu son; các ảnh trong ENEMY_TESTS/BOSS_TESTS và TEN_WAVE_TESTS là bằng chứng đã quan sát. Khi thay sprite hoặc hiệu ứng, vẫn phải kiểm tra ảnh Game View; phép tính tương phản không thay nghiệm thu thị giác.
 
 Nạp `DongHo24.gpl` vào Aseprite: *Palette → Load Palette*. Đừng lấy màu bằng cách hút
 từ ảnh chụp màn hình — sóng âm additive làm sai màu gốc.

@@ -1,5 +1,7 @@
 # 01 — C# và Unity căn bản, giải thích từ gốc
 
+> Ghi chú học code ở mốc đầu dự án, không là nguồn tiến độ hiện tại. Ngày 11/10/2026: đã có 10 wave, ba lớp TinySwords, thẻ/Hồn/Trống Đồng/hồi sinh/CSV; đạo diễn luật/FSM và online Internet còn cần làm. Xem [TASKS](../TASKS.md) và [phạm vi đồ án](../THESIS_SCOPE.md). Các ví dụ/tên nhân vật/cấu hình cũ bên dưới chỉ để học.
+
 > Học bài này sau `00_START_FROM_ZERO.md`.
 >
 > Đừng học thuộc. Mục tiêu là nhìn code và kể được: “nó giữ dữ liệu gì, kiểm tra điều gì, rồi làm việc gì”.

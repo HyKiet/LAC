@@ -1,5 +1,7 @@
 # T-31 và T-41
 
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
 ## Sóng âm riêng cho từng vũ khí
 
 `CharacterData.InstrumentWave` trỏ tới ba asset trong `Data/VFX`. `InstrumentWave`

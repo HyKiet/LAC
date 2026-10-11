@@ -1,6 +1,6 @@
 # Quy trình làm việc nhóm — LẠC
 
-Ba người cùng sửa một dự án Unity thì làm sao không dẫm chân nhau. Đọc trước khi commit lần đầu.
+Ba người cùng sửa một dự án Unity thì làm sao không dẫm chân nhau. Đọc trước khi commit lần đầu. Phạm vi hiện hành là đồ án không thương mại: [THESIS_SCOPE.md](THESIS_SCOPE.md). Giữ phân công, ưu tiên AI/online/build/báo cáo, không triển khai Steam.
 
 Việc cần làm: [TASKS.md](TASKS.md) · Ràng buộc kiến trúc: [CLAUDE.md](../CLAUDE.md)
 
@@ -81,12 +81,14 @@ trong `WaveManager` đã được gỡ. Xem `docs/CARD_TESTS.md` để kiểm th
 
 **@Kang → lõi.** Menu vào game bằng Mirror:
 
-T-44C bổ sung màn chọn thử nghiệm ngay trong Arena theo yêu cầu người dùng 07/10/2026. Trước khi gọi StartHost/StartClient, gán `NetworkManagerLAC.SelectedCharacter`; `OnClientConnect` gửi lựa chọn và host sinh player sau thẩm định. `autoCreatePlayer` tắt. Khi ghép menu/sảnh chính thức, tái sử dụng giao thức này; không gửi AddPlayer mặc định hoặc gán nhân vật theo thứ tự vào nữa.
+T-44C bổ sung màn chọn thử nghiệm ngay trong Arena theo yêu cầu người dùng 07/10/2026. Trước khi gọi StartHost/StartClient, gán `NetworkManagerLAC.SelectedCharacter`; `OnClientConnect` gửi lựa chọn và host sinh player sau thẩm định. `autoCreatePlayer` tắt. Khi ghép menu/sảnh gọn cho đồ án, tái sử dụng giao thức này; không gửi AddPlayer mặc định hoặc gán nhân vật theo thứ tự vào nữa.
 
 ```csharp
 NetworkManager.singleton.StartHost();     // chơi đơn VÀ tạo phòng — cùng một lệnh
 NetworkManager.singleton.StartClient();   // vào phòng người khác
 ```
+
+T-40 giữ KCP, kiểm chứng hai máy/hai mạng Internet và ghi rõ cách kết nối; không chuyển sang Steamworks. T-42 xử lý client rớt/host thoát; không host migration. T-45/T-45B/T-46 là đạo diễn luật/FSM, không học máy.
 
 Chuyển scene để Mirror lo (`ServerChangeScene`), không gọi `SceneManager.LoadScene` khi mạng đang chạy.
 

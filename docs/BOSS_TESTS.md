@@ -1,6 +1,8 @@
 # T-39 — Chằn Tinh
 
-Chằn Tinh nằm ở wave cuối của `WaveTable_CoDinh.asset`: **wave 15 từ T-44B ngày 04/10/2026**. Các wave 1–14 giữ nguyên. Kết quả nghiệm thu T-39 bên dưới được thu khi bảng còn 16 wave.
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
+Chằn Tinh hiện ở wave cuối **10 theo T-44D**. T-44B từng chuyển từ 16 xuống 15; kết quả T-39 bên dưới thu khi còn 16 wave. Nghiệm thu cấu hình 10 wave xem TEN_WAVE_TESTS.
 `EnemyData` chứa 800 máu gốc; `ChanTinhRules.asset` chứa hệ số cộng thêm 100% cho mỗi
 người chơi bổ sung. Host chốt 800/1600 máu khi trùm xuất hiện; vào/rời mạng sau đó
 không làm thay đổi máu tối đa trong trận trùm đang diễn ra.
@@ -28,7 +30,7 @@ T-35. Sự kiện triệu hồi có seed/wave; snapshot toàn roster sửa trư�
 
 1. Mở Arena, Play (Mirror host).
 2. Chọn `LAC > Tests > Check T39 Boss (Play Mode)`.
-3. Chờ `[BossChecks] ALL PASSED`. Bộ kiểm thử chuyển thẳng tới `run.TotalWaves` (hiện là 15), đặt bất tử
+3. Chờ `[BossChecks] ALL PASSED`. Bộ kiểm thử chuyển thẳng tới `run.TotalWaves` (hiện là 10), đặt bất tử
    tạm thời, tắt vũ khí và tự kiểm tra cả sát thương trong/ngoài vòng quét.
 4. Thoát Play sau kiểm thử để xóa toàn bộ cấu hình kiểm thử.
 

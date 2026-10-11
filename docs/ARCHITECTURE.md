@@ -2,7 +2,9 @@
 
 Tài liệu tham chiếu kỹ thuật. Xác định các module tồn tại trong hệ thống, trách nhiệm của từng module và quan hệ gọi giữa chúng.
 
-Đọc [CLAUDE.md](../CLAUDE.md) trước tài liệu này.
+Đọc [CLAUDE.md](../CLAUDE.md) và [THESIS_SCOPE.md](THESIS_SCOPE.md) trước tài liệu này. Cập nhật 11/10/2026: chỉ đồ án, không Steam/thương mại; AI luật/FSM thay LinUCB, không bắt buộc tiến hoá thẻ.
+
+**Phân biệt thiết kế và triển khai:** các tên `AIDirector`, `ContextAggregator`, `SafetyConstraints` ở sơ đồ/mục 2.7 là thành phần dự kiến T-45/T-45B, chưa có mã. Bảng cố định/telemetry đã có. Một số tên lớp trong mô tả là tên vai trò khái niệm; các lớp thẻ thật là `CardDeck`, `CardSelectionController`, `PlayerUpgradeState`. Tiến độ lấy TASKS, không lấy sự xuất hiện trong sơ đồ.
 
 ---
 
@@ -10,21 +12,21 @@ Tài liệu tham chiếu kỹ thuật. Xác định các module tồn tại tron
 
 ```mermaid
 graph TD
-    NM[NetworkManagerLAC<br/>Mirror + Steamworks] --> RM[RunManager<br/>vòng đời một ván]
+    NM[NetworkManagerLAC<br/>Mirror + KCP] --> RM[RunManager<br/>vòng đời một ván]
     RM --> WM[WaveManager<br/>quản lý đợt]
-    RM --> CM[CardManager<br/>chọn thẻ giữa các đợt]
+    RM --> CM[CardSelectionController<br/>chọn thẻ giữa các đợt]
     RM --> RNG[RunRandom<br/>bộ sinh có seed]
 
-    WM --> DIR[AIDirector<br/>chơi đơn và co-op]
-    WM --> FIX[FixedWaveTable<br/>nhóm đối chứng]
+    WM -.-> DIR[AIDirector dự kiến<br/>luật và FSM ba trạng thái]
+    WM --> FIX[WaveTable<br/>baseline và đối chứng]
     DIR --> AGG[ContextAggregator<br/>hợp thành ngữ cảnh N người chơi]
-    DIR --> SAFE[SafetyConstraints<br/>chốt theo người yếu nhất]
+    DIR --> SAFE[SafetyConstraints<br/>theo người yếu nhất]
     WM --> SPW[EnemySpawner]
 
     SPW --> POOL[ObjectPool]
     SPW --> ENE[Enemy FSM]
 
-    PC[PlayerController] --> MOV[PlayerMovement + PlayerDash]
+    PC[PlayerCharacter] --> MOV[PlayerMovement + PlayerDash]
     PC --> WEAP[WeaponAuto<br/>khai hoả tự động]
     WEAP --> PROJ[Projectile<br/>cục bộ, không đồng bộ]
     WEAP --> SFX[SoundWaveVFX<br/>sóng âm Đông Sơn]
@@ -34,8 +36,8 @@ graph TD
     PC -->|dash vào| DRUM
     DRUM -->|RPC| SHOCK[Shockwave<br/>xoá đạn, đẩy lùi, choáng]
 
-    CM --> EVO[CardEvolution<br/>8 công thức]
-    CM --> STATS[PlayerStats]
+    CM -.-> EVO[CardEvolution<br/>dự phòng 1–2 công thức]
+    CM --> STATS[PlayerUpgradeState]
     STATS --> WEAP
 
     DIR --> TEL[Telemetry<br/>CSV cho khoá luận]
@@ -52,19 +54,20 @@ graph TD
 |---|---|---|
 | `RunManager` | Vòng đời một ván: khởi tạo, điều phối 10 đợt, xác định điều kiện thắng thua | Chỉ host điều khiển tiến trình |
 | `WaveManager` | Dựng lịch, lặp sinh trong wave tính giờ, kết thúc theo deadline; boss kết thúc khi sạch | Host quyết timed spawn; client biểu diễn, boss dựng lịch từ seed |
-| `RunRandom` | Bao bọc `System.Random` với seed của ván. **Nguồn ngẫu nhiên duy nhất trong gameplay** | Seed được đồng bộ một lần khi khởi tạo ván |
+| `RunRandom` | Các kênh `RandomStream` Xorshift128 theo seed ván. **Nguồn ngẫu nhiên duy nhất trong gameplay** | Seed được đồng bộ một lần khi khởi tạo ván |
 | `ObjectPool<T>` | Pool dùng chung cho đạn, quái, hiệu ứng, số sát thương | Bắt buộc thay thế cho `Instantiate` trong gameplay |
-| `GameEvents` | Event bus tĩnh: `OnEnemyDied`, `OnWaveCleared`, `OnCardPicked`, `OnPlayerHit` | Giảm phụ thuộc chéo giữa các module |
+| `GameEvents` | Sự kiện `EnemyDied`, `EnemyTouchedPlayer`, `PlayerDamaged`, `EnemyDamaged` | Wave/card còn dùng sự kiện ở RunManager và hệ thống thẻ |
 
-**Trình tự một đợt:**
+**Trình tự khái niệm một đợt (Adaptive là phần dự kiến):**
 
 ```
-WaveManager.StartWave(n)
-  → Lấy WaveSpec (AIDirector, hoặc FixedWaveTable với nhóm đối chứng)
-  → EnemySpawner.Spawn(spec, RunRandom)
-  → Wave 1–9: chờ hết deadline NetworkTime; boss wave 10: chờ sạch quái
-  → GameEvents.OnWaveCleared
-  → CardManager.OfferCards(3)
+RunManager bắt đầu wave n
+  → WaveManager lấy WaveSpec (hiện WaveTable; tương lai có AIDirector)
+  → Host thi hành lượt sinh → EnemySpawner phát sự kiện
+  → Wave 1–9: hết deadline NetworkTime → chọn thẻ
+  → Boss wave 10: hạ boss, dọn quái con → Victory (không chọn thẻ)
+  → RunManager báo WaveCleared cho wave thường
+  → CardSelectionController mở ba lựa chọn
   → Chờ toàn bộ người chơi hoàn tất lựa chọn
   → StartWave(n + 1)
 ```
@@ -73,11 +76,11 @@ WaveManager.StartWave(n)
 
 | Lớp | Trách nhiệm |
 |---|---|
-| `PlayerController` | Điều phối các thành phần, giữ tham chiếu `CharacterData` |
+| `PlayerCharacter` | Giữ lớp đã chọn và tham chiếu `CharacterData` |
 | `PlayerMovement` | Di chuyển 8 hướng; client dự đoán cục bộ nhân vật của mình |
 | `PlayerDash` | Dash, i-frame, thời gian hồi. Đồng thời là tín hiệu kích hoạt Trống Đồng |
 | `PlayerHealth` | Quản lý máu. **Chỉ host được phép thay đổi.** Client nhận qua `SyncVar` và RPC biểu diễn |
-| `PlayerStats` | Chỉ số hợp thành sau khi áp toàn bộ thẻ. Vũ khí đọc dữ liệu từ đây |
+| `PlayerUpgradeState` | Chỉ số nâng cấp của ván, không sửa `CharacterData` |
 
 `CharacterData` (ScriptableObject) chứa: máu gốc, tốc độ, prefab vũ khí, sprite, đặc tính riêng.
 
@@ -85,18 +88,17 @@ WaveManager.StartWave(n)
 
 | Lớp | Trách nhiệm |
 |---|---|
-| `WeaponAuto` | Đếm chu kỳ bắn, chọn mục tiêu, phát đạn. Đọc chỉ số từ `PlayerStats` |
+| `WeaponAuto` | Đếm chu kỳ, chọn mục tiêu, khai hoả; đọc dữ liệu lớp và `PlayerUpgradeState` |
 | `Projectile` | Quỹ đạo, va chạm, xuyên thấu và nảy. **Không mang `NetworkIdentity`** |
 | `DamageSystem` | Điểm vào duy nhất cho mọi sát thương. Chỉ thực thi trên host |
-| `ITargetable` | Interface cho mọi đối tượng có thể nhận sát thương |
 
-> Toàn bộ sát thương đi qua `DamageSystem.Apply()`. Không lớp nào được tự thay đổi máu. Đây là cơ chế bảo đảm tính nhất quán trạng thái trong co-op.
+> Sát thương đi qua `DamageSystem.ApplyToPlayer`/`ApplyToEnemy`, sau đó chuyển cho PlayerHealth/EnemySpawner do host quản lý. Client không tự quyết HP. Không dùng tên API `Apply()` của thiết kế cũ khi tìm mã.
 
 ### 2.4 Enemies
 
 Máy trạng thái ba trạng thái: `Spawning` → `Chasing` → `Attacking`. `EnemyData` (ScriptableObject) chứa máu, tốc độ, sát thương, hành vi và sprite.
 
-Hai máy cùng sinh quái từ một seed nên mô phỏng song song. Host gửi snapshot vị trí 2 lần/giây để hiệu chỉnh sai lệch tích luỹ. Sự kiện chết do host phát qua RPC.
+Wave tính giờ: host quyết lượt sinh rồi phát sự kiện; client mô phỏng biểu diễn. Boss giữ lịch từ seed. Host gửi snapshot roster/vị trí 2 lần/giây để hiệu chỉnh và vào muộn; sự kiện chết qua RPC. Không gắn NetworkIdentity lên mỗi quái/đạn.
 
 T-34: `EnemyBehaviours` bổ sung giữ khoảng cách/bắn chậm cho Ma Trơi và báo trước/lao thẳng cho Ma Da. Bù Nhìn dùng truy đuổi với chỉ số riêng. Quỷ Nhỏ tách thành hai Cô Hồn từ sự kiện chết của host. `EnemyCatalogData` ánh xạ định danh loại quái trong gói mạng; `EnemyProjectile` dùng pool và chỉ host kiểm tra sát thương, có `EnemyProjectileClearable` để Trống Đồng thu hồi.
 
@@ -106,10 +108,10 @@ T-35: ID theo đợt (`wave × 1000 + thứ tự`); quái con dùng ID âm từ 
 
 | Lớp | Trách nhiệm |
 |---|---|
-| `CardPool` | 12 thẻ nền, lọc theo kiểu vũ khí, bốc 3 thẻ bằng `RunRandom` |
-| `CardEffect` | Áp hiệu ứng lên `PlayerStats` |
-| `CardEvolution` | Kiểm tra 8 công thức sau mỗi lần nhận thẻ |
-| `CardPickUI` | Giao diện chọn thẻ, giới hạn 10 giây, 2 lượt đổi |
+| `CardDeck` | 12 thẻ nền, lọc theo kiểu vũ khí, bốc 3 thẻ bằng `RunRandom` |
+| `PlayerUpgradeState` | Áp hiệu ứng lên chỉ số của ván |
+| `CardEvolution` (dự phòng, chưa có) | Tối đa 1–2 công thức nếu còn thời gian; không là điều kiện bàn giao |
+| `CardSelectionView` / controller / network | Giao diện, giới hạn 10 giây, 2 lượt đổi và thẩm định host |
 
 Trong co-op, mỗi người chơi chọn thẻ độc lập nhưng đợt kế tiếp chỉ khởi động khi toàn bộ người chơi hoàn tất. Hệ thống đồng bộ định danh thẻ; mỗi máy tự áp dụng hiệu ứng.
 
@@ -137,78 +139,40 @@ Client không tự xác định trạng thái sẵn sàng của trống; client 
 
 T-36–38 dùng NetworkIdentity sẵn có của RunManager thay vì tạo thêm đối tượng mạng cho trống. Quy tắc 20 Hồn / 20 giây / choáng 1 giây đặt trong `DrumRules.asset`; chi tiết và cách kiểm tra tại [DRUM_TESTS.md](DRUM_TESTS.md).
 
-### 2.7 Director — AI Đạo Diễn
+### 2.7 Director — AI đạo diễn dự kiến
 
-Hoạt động ở **cả chế độ chơi đơn và co-op**. `FixedWaveTable` được giữ lại làm bảng đợt của nhóm đối chứng trong thực nghiệm khoá luận và làm phương án dự phòng khi đạo diễn gặp lỗi.
+Thiết kế T-45/T-45B/T-46: AI **dựa trên luật + FSM ba trạng thái**, một thuật toán trên host cho đội một/hai người. Không LinUCB, learning, reward hay fairness optimization. Giữ bảng cố định làm baseline/đối chứng/fallback. Toàn bộ luật/ngưỡng tại [THESIS_SCOPE.md mục 4](THESIS_SCOPE.md#4-đạo-diễn-ai-dễ-giải-thích).
 
-| Lớp | Trách nhiệm |
+| Thành phần dự kiến | Trách nhiệm |
 |---|---|
-| `AIDirector` | Thuật toán LinUCB — contextual bandit. Chọn `WaveSpec` cho đợt kế tiếp |
-| `ContextVector` | Véc-tơ đặc trưng đầu vào của LinUCB |
-| `ContextAggregator` | Hợp thành véc-tơ ngữ cảnh từ 1 hoặc 2 người chơi về cùng một dạng |
-| `WaveSpec` | Đầu ra: số lượng quái, chủng loại, **hướng sinh**, nhịp độ |
-| `SafetyConstraints` | Chặn các cấu hình đợt vượt ngưỡng an toàn |
-| `Telemetry` | Ghi dữ liệu CSV phục vụ phần đánh giá của khoá luận |
+| `AIDirector` | Chọn Relief/Balanced/Variety và dựng WaveSpec từ baseline |
+| `ContextAggregator` | HP ratio thấp nhất, tổn thất thực/max HP cao nhất, số lần gục; xử lý vào/rời |
+| `DirectorRulesData` | Ngưỡng và hệ số trong ScriptableObject, không hard-code |
+| `SafetyConstraints` | Giữ Duration/trần 40/khoảng cách an toàn, quái đã giới thiệu; fallback |
+| HUD/CSV | Mode, trạng thái, lý do, đầu vào và kết quả áp dụng; client chỉ nhận biểu diễn |
 
-#### Véc-tơ ngữ cảnh
+**Đã có:** `WaveSpec`, `WaveTable`, spawn an toàn T-44D, `TelemetrySession`/`TelemetryCsv`/`RunTelemetry`. **Chưa có:** đạo diễn, ngữ cảnh AI, luật/HUD/CSV quyết định. T-45 phải nối nguồn đặc tả trong WaveManager và metadata nguồn trong telemetry; không mặc định chỉ thêm lớp mới là đã hoạt động.
 
-Đạo diễn không nhận trực tiếp trạng thái của từng người chơi. `ContextAggregator` chuyển trạng thái của **N người chơi** về một véc-tơ có số chiều cố định, nhờ đó một mô hình LinUCB duy nhất phục vụ được cả hai chế độ và không tồn tại hai nhánh mã.
+Luồng dự kiến:
 
-| Thành phần | Chơi đơn | Co-op |
-|---|---|---|
-| `healthMean` | Máu còn lại của người chơi | Trung bình máu còn lại |
-| `healthMin` | Trùng với `healthMean` | **Máu còn lại của người yếu nhất** |
-| `healthSpread` | 0 | Chênh lệch tổn thất máu giữa hai người |
-| `clearTime` | Thời gian dọn đợt | Thời gian dọn đợt — vốn đã dùng chung |
-| `hitsTaken` | Số lần trúng đòn | Tổng số lần trúng đòn, chuẩn hoá theo số người chơi |
-| `dashRate` | Tần suất dash | Trung bình tần suất dash |
-| `partyArchetype` | Định danh nhân vật | **Nhóm tổ hợp đội hình:** cận chiến kép · tầm xa kép · hỗn hợp |
-| `buildType` | Phân loại build | Phân loại build trội của đội |
-
-> Số chiều của véc-tơ được giữ cố định và ở mức nhỏ. Với cỡ mẫu thực nghiệm 30 người, việc nối hai véc-tơ build riêng biệt sẽ làm số chiều tăng gấp đôi và LinUCB có ít dữ liệu trong 9 đợt thường; cần chính sách khởi tạo và đánh giá hội tụ ở T-45. `partyArchetype` chỉ có ba giá trị chính vì lý do này.
-
-#### Hàm thưởng
-
-Chơi đơn giữ nguyên đặc tả gốc: tổn thất máu mỗi đợt hướng về khoảng mục tiêu.
-
-Co-op bổ sung **số hạng công bằng**. Một đợt quái đẩy toàn bộ áp lực về một người chơi trong khi người còn lại không chịu rủi ro là một đợt kém chất lượng, kể cả khi tổn thất máu trung bình nằm đúng khoảng mục tiêu:
-
-```
-reward = w1 · f(healthLostMean)  −  w2 · healthSpread
+```text
+Host kết thúc wave thường → chốt snapshot trước hồi/nâng cấp → lưu ngữ cảnh
+→ chọn thẻ → trước wave 2–9: lấy baseline → chọn trạng thái → kẹp an toàn
+→ WaveSpec → host sinh quái → RPC spawn + trạng thái HUD → client biểu diễn
+→ ghi quyết định/đặc tả/kết quả CSV
 ```
 
-Trong đó `f` là hàm khoảng mục tiêu của đặc tả gốc, `healthSpread` là chênh lệch tổn thất giữa hai người chơi. Số hạng thứ hai buộc đạo diễn tạo ra các đợt gây áp lực lên cả hai người.
+Wave 1/boss wave 10 giữ gốc. Fixed/Adaptive chọn trước ván, không đổi giữa ván. Ngẫu nhiên nếu cần dùng `RunRandom.Director`; client không rút số/chạy chính sách lần nữa. Thiếu dữ liệu/đặc tả lỗi dùng baseline hợp lệ. Reset ván xoá trạng thái AI, không sửa asset hoặc giữ lợi thế.
 
-#### Tầng an toàn
+Relief ưu tiên người yếu nhất/lần gục, giãn nhịp và giảm burst. Balanced dùng baseline. Variety chỉ đổi hướng/thành phần trong ngân sách khi cả đội ổn; không tăng HP/sát thương/quy mô để ép mất máu. Có ngưỡng thoát Relief khác ngưỡng vào để tránh nhấp trạng thái.
 
-`SafetyConstraints` trong co-op **đánh giá theo `healthMin`, không theo `healthMean`**. Khi người chơi yếu nhất xuống dưới ngưỡng an toàn, đạo diễn giảm áp lực bất kể trung bình của cả đội đang tốt. Đây là điểm khác biệt then chốt: trung bình che giấu trường hợp một người sắp bị hạ gục.
+Không dùng `clearTime`: wave có Duration cố định. Tổn thất dùng sự kiện damage thật, không HP đầu trừ HP cuối; hồi máu/hồi sinh không xoá tổn thất đã ghi. Tổng hợp đội dùng cùng kiểu ngữ cảnh với một/hai người, không nhánh solo riêng.
 
-#### Đòn bẩy điều tiết trong co-op
-
-Ở chế độ hai người chơi, **hướng sinh quái là công cụ điều tiết mạnh hơn số lượng quái**. Đạo diễn có hai hành vi không tồn tại trong chơi đơn:
-
-- *Chia cắt* — sinh quái ở hai hướng đối nhau, buộc hai người chơi tách khỏi nhau
-- *Dồn ép* — sinh quái theo một hướng duy nhất, buộc hai người chơi phối hợp cùng một trục phòng thủ
-
-Hai hành vi này thay đổi độ khó mà không tăng lượng máu hay số lượng quái, phù hợp với nguyên tắc điều tiết bất đối xứng.
-
-**Hai điều chỉnh so với GDD:**
-
-*Điều tiết bất đối xứng.* Khi người chơi gặp khó, đạo diễn được phép giảm áp lực. Khi người chơi đang mạnh, đạo diễn thay đổi thành phần và hướng sinh quái thay vì tăng số lượng hoặc lượng máu. Cơ sở: siết tổn thất máu về khoảng 15–25% ở cả hai chiều đồng nghĩa với việc trừng phạt người chơi vì xây dựng build hiệu quả, làm triệt tiêu cảm giác tưởng thưởng — yếu tố quyết định giá trị thương mại của thể loại.
-
-*Hiển thị hoạt động của đạo diễn.* HUD thông báo hành vi hiện tại của hệ thống, ví dụ *"Đạo Diễn: tăng áp lực từ hướng Bắc"*. Một hệ thống AI không quan sát được thì không tồn tại đối với người chơi lẫn hội đồng đánh giá.
-
-#### Thiết kế thực nghiệm
-
-Đạo diễn hoạt động ở cả hai chế độ, nhưng **thực nghiệm định lượng của khoá luận chạy ở chế độ chơi đơn**: 15 người dùng đạo diễn, 15 người dùng `FixedWaveTable`. Chế độ co-op thu thập mẫu quan sát bổ sung mang tính định tính.
-
-Cơ sở của việc tách rời này: với cỡ mẫu 30, hai người chơi khác nhân vật, khác build và khác trình độ tạo ra biến số không kiểm soát được, làm kết luận thống kê mất giá trị. Yêu cầu của giảng viên hướng dẫn là hệ thống phải **hoạt động** trong co-op — đây là yêu cầu về phạm vi chức năng, không phải về thiết kế thí nghiệm.
-
-Trong chế độ co-op, đạo diễn ghi telemetry đầy đủ. Nếu dữ liệu quan sát đủ chất lượng, phần này trở thành một mục thảo luận bổ sung của khoá luận.
+Đánh giá: kiểm thử luật có kiểm soát, chơi thật ba lớp/10 wave, so sánh nhỏ Fixed/Adaptive và online hai mạng. Không yêu cầu mặc định 15/15; không tuyên bố hội tụ thuật toán hoặc cải thiện trải nghiệm trước khi đo.
 
 ### 2.8 Net
 
-Xem [CLAUDE.md](../CLAUDE.md) mục 3.2 để biết bảng đồng bộ đầy đủ. Các lớp chính: `NetworkManagerLAC`, `SteamLobby`, `NetPlayerSpawner`, `RunSync`.
+Xem [CLAUDE.md](../CLAUDE.md) mục 3.2 để biết bảng đồng bộ đầy đủ. Lớp mạng hiện có: `NetworkManagerLAC`; lobby/menu gọn T-30/T-60/T-62 còn cần làm. T-40 nghiệm thu Internet qua KCP, không `SteamLobby`/Steamworks. T-42 xử lý mất kết nối, không host migration.
 
 ### 2.9 VFX
 
@@ -228,10 +192,10 @@ Toàn bộ thông số nằm tại `Assets/_LAC/Data/` dưới dạng Scriptable
 
 ```
 Data/
-├── Characters/   ThachSanh.asset · Giong.asset · Tam.asset
-├── Cards/        12 thẻ nền + 8 thẻ tiến hoá
+├── Characters/   Warrior.asset · Archer.asset · Lancer.asset
+├── Cards/        12 thẻ nền; tiến hoá dự phòng chưa triển khai
 ├── Enemies/      CoHon · MaTroi · BuNhin · MaDa · QuyNho · ChanTinh
-└── Waves/        FixedWaveTable.asset — co-op và nhóm đối chứng
+└── Waves/        WaveTable_CoDinh.asset — baseline, co-op và đối chứng
 ```
 
 Cách tổ chức này cho phép điều chỉnh cân bằng qua Inspector mà không chạm vào mã nguồn, đồng thời tránh xung đột với thành viên đang sửa code.
@@ -242,28 +206,27 @@ Cách tổ chức này cho phép điều chỉnh cân bằng qua Inspector mà k
 
 | Scene | Nội dung |
 |---|---|
-| `Boot` | Khởi tạo hệ thống, chuyển sang Menu |
-| `Menu` | Menu chính, chọn nhân vật, lobby Steam |
+| `Boot` (dự kiến) | Khởi tạo hệ thống và hiển thị prefab menu |
+| Menu/prefab trong `Boot` (dự kiến) | Menu, chọn lớp, tạo/vào phòng bằng địa chỉ; không cần scene Menu riêng |
 | `Arena` | Đấu trường thi đấu |
 
-Cả ba bối cảnh (Sân Đình, Ruộng Lúa, Âm Phủ) dùng chung một scene `Arena`; sự khác biệt được tạo bằng cách thay tilemap và bảng màu, không tạo scene riêng.
+Giữ một `Arena` hiện có, đá rìa đổi sắc ở wave 4/7. Không bắt buộc thay ba tileset hoặc tạo scene bối cảnh mới. Boot/menu còn là kế hoạch; màn chọn lớp thử nghiệm đã nằm trong Arena.
 
 > Tệp `.unity` là nguồn xung đột nghiêm trọng nhất trong quản lý phiên bản. Quy định: tại một thời điểm chỉ một thành viên được chỉnh sửa scene; mọi thay đổi khác thực hiện trong prefab. Chi tiết tại [CLAUDE.md](../CLAUDE.md) mục 6.2.
 
 ---
 
-## 5. Trình tự khởi tạo
+## 5. Trình tự hiện có và chỗ cần nối
 
-```
-1. NetworkManagerLAC      Host khởi động, client kết nối
-2. RunSync                Đồng bộ seed và nhân vật đã chọn
-3. RunManager.StartRun()   Host phát lệnh
-4. NetPlayerSpawner       Sinh 1–2 nhân vật
-5. DongSonDrum            Đặt tại tâm đấu trường, trạng thái sẵn sàng
-6. WaveManager.StartWave(1)
+```text
+Màn chọn lớp Arena → SelectedCharacter → StartHost/StartClient
+→ client gửi lựa chọn → host thẩm định → sinh player đúng CharacterData
+→ RunManager bắt đầu/đồng bộ seed, state và wave
+→ WaveManager dựng lịch → EnemySpawner phát lượt sinh host → client nhận snapshot
 ```
 
-Sai lệch trình tự này là nguyên nhân của lỗi client vào được ván nhưng không có nhân vật.
+T-30/T-62 đưa luồng này vào menu/sảnh gọn và thêm host bắt đầu sau khi người chơi đã vào; tái sử dụng giao thức T-44C, không tạo giao thức thứ hai. Không gọi SceneManager.LoadScene trực tiếp khi mạng đang chạy; dùng Mirror ServerChangeScene. T-45 thêm nguồn đặc tả tại điểm host dựng lịch.
+
 
 
 Cập nhật T-44D (11/10/2026): wave 1–9 dùng thời hạn NetworkTime do host đồng bộ; host chọn các lượt sinh hợp lệ theo trần dân số và khoảng cách an toàn rồi phát sự kiện spawn (ID, loại, vị trí, seed/wave). Client dùng snapshot roster để vào muộn. Boss wave 10 vẫn dùng lịch xác định từ seed và kết thúc khi hạ boss. Không gắn NetworkIdentity lên quái/đạn.

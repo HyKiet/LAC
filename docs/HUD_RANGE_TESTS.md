@@ -1,5 +1,7 @@
 # Kiểm tra HUD và tầm đánh — 29/09/2026
 
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
 Kiểm tra trực tiếp bằng Unity-MCP trong Arena, Unity 6000.5.6f1, Mirror host với LatencySimulation mặc định. Các tình huống biên được dựng tạm trong Play mode bằng reflection; không ghi vào CharacterData hay scene. Sau kiểm tra đã thoát và chạy lại để loại bỏ trạng thái thử nghiệm.
 
 ## Thay đổi

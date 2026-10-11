@@ -7,13 +7,22 @@ Ràng buộc kiến trúc: [CLAUDE.md](../CLAUDE.md).
 
 ---
 
+## Phạm vi đồ án — 11/10/2026
+
+**Không phát hành thương mại.** Yêu cầu đã biết: online multiplayer, có AI, có yếu tố riêng; không bắt buộc LinUCB/học máy hoặc 30 người thực nghiệm. Xem [THESIS_SCOPE.md](THESIS_SCOPE.md). Giữ 10 wave, một arena, ba lớp, năm quái/boss, 12 thẻ, Hồn/Trống Đồng và hồi sinh. Đạo diễn dùng luật + FSM ba trạng thái. Nghiệm thu online phải trên hai máy/hai mạng Internet, không chỉ localhost/LAN.
+
+Các mục ghi **DỰ PHÒNG** không là điều kiện hoàn tất; mục **NGOÀI PHẠM VI** bị loại khỏi kế hoạch, không đánh dấu như đã triển khai. Dòng nghiệm thu lịch sử giữ nguyên ngày/cấu hình 15/16 wave.
+
+- [x] **T-64** Đánh giá tài liệu và thu gọn phạm vi đồ án theo yêu cầu giảng viên — **@Kiet** · 11/10/2026
+  > Codex: `THESIS_SCOPE.md`, GDD/CLAUDE/AGENTS/ARCHITECTURE/TASKS/CARDS/README và tài liệu liên quan; bỏ mục tiêu thương mại/Steam, đạo diễn luật ba trạng thái, ưu tiên Internet/AI/build/báo cáo. Kiểm tra 30 Markdown/188 liên kết và anchor cục bộ, encoding/code fence/trạng thái task đạt; đã xem ảnh T-44D để đánh giá mỹ thuật. Đây là thay đổi thiết kế, không nghiệm thu gameplay hoặc đánh dấu T-45/T-40 hoàn thành.
+
 ## Phân công
 
 | Thành viên | Mảng phụ trách | Thư mục sở hữu |
 |---|---|---|
 | **@Kiet** | Vòng lặp lõi: chiến đấu, quái, đồng bộ trong ván, đạo diễn | `Scripts/Core` `Combat` `Enemies` `Player` `VFX` · `Scripts/Net` *(trừ `Net/Lobby`)* · `Scenes/Arena.unity` |
 | **@Hung** | Hệ thống thẻ nâng cấp và giao diện thẻ | `Scripts/Cards` · `Data/Cards` · `Prefabs/UI/Cards` |
-| **@Kang** | Màn hình vào game và kết nối: menu, cài đặt, tạo và vào phòng, tạm dừng, Steam, mất kết nối | `Scripts/Menu` · `Scripts/Net/Lobby` · `Scenes/Boot.unity` · `Prefabs/UI/Menu` |
+| **@Kang** | Màn hình vào game và kết nối: menu, cài đặt, tạo và vào phòng, tạm dừng, online qua Internet, mất kết nối | `Scripts/Menu` · `Scripts/Net/Lobby` · `Scenes/Boot.unity` · `Prefabs/UI/Menu` |
 | **@artist** | Sprite, tileset, icon | `Art/Sprites` `Art/Palettes` |
 
 > Tên là phân công hiện tại, đổi được. Nguyên tắc không đổi: **mỗi thư mục có đúng một người chịu trách nhiệm.** Cần sửa file ngoài thư mục của mình thì hỏi người sở hữu trước.
@@ -36,7 +45,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 - [ ] **T-01** Cả ba máy clone repository và mở bằng Unity 6000.5.6f1 không lỗi — **@Hung @Kang**
 - [x] **T-02** Mirror 96.0.1 kèm `KcpTransport` — @Kiet · 29/08
-  > Commit thẳng vào repo tại `Assets/Mirror/` để ba máy chắc chắn dùng cùng một phiên bản. Steamworks dời sang T-40.
+  > Commit thẳng vào repo tại `Assets/Mirror/` để ba máy chắc chắn dùng cùng một phiên bản. T-40 nay nghiệm thu Internet qua KCP, không cần Steamworks.
 - [x] **T-03** `RunRandom` — nguồn ngẫu nhiên duy nhất của gameplay — @Kiet · 28/08
   > Xorshift128 tự cài, bốn kênh độc lập (Enemies · Cards · Loot · Director) để hệ thống này rút thêm không làm lệch hệ thống kia. `Core/RunRandom.cs` · `Core/RandomStream.cs`.
 - [x] **T-04** `ObjectPool` dùng chung cho đạn, quái, hiệu ứng — @Kiet · 28/08
@@ -53,7 +62,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-07** `NetworkManagerLAC` luôn chạy host mode, kể cả chơi đơn — @Kiet · 29/08
   > Không có nhánh mã riêng cho chơi đơn. Gán nhân vật trước khi sinh để chỉ số có mặt trong gói trạng thái đầu tiên. `Net/NetworkManagerLAC.cs`.
 - [x] **T-08** Giả lập độ trễ 100 ms làm mặc định khi phát triển — @Kiet · 29/08
-  > `LatencySimulation` tự chọn trong Editor và development build, transport thật khi phát hành.
+  > `LatencySimulation` tự chọn trong Editor và development build, transport thật khi chạy bản đồ án bình thường.
 - [x] **T-09** Sinh 1–2 nhân vật, hai máy cùng vào một ván — @Kiet · 30/08
 
 ### Chiến đấu
@@ -97,7 +106,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-18C** Hoạt ảnh cho quái — @Kiet · 03/09
   > Dùng lại nguyên hệ thống T-18B, chỉ nối dây. `EnemyData._animationSet` · `Enemy._animator`.
 
-> **Cấu hình đang chạy là cấu hình thử nghiệm:** người chơi là Gióng với sprite Soldier, quái dùng sprite Orc, cả hai lấy từ `Assets/ThirdParty/` — xem [docs/ASSETS_ThirdParty.md](ASSETS_ThirdParty.md). Mỹ thuật thật của T-18 nằm sẵn ở `Data/Animations/`, đổi lại chỉ là hai trường dữ liệu.
+> **Cấu hình hiện hành:** Warrior/Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18 giữ làm tài nguyên tham khảo, không là yêu cầu vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 
 ---
 
@@ -108,13 +117,13 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 ### Màn hình, luồng vào game và kết nối — @Kang
 
 - [ ] **T-60** Scene `Boot.unity` và menu chính: Chơi · Chơi cùng bạn · Cài đặt · Thoát — **@Kang**
-- [ ] **T-61** Màn hình cài đặt: âm lượng, độ phân giải, gán lại phím; lưu bằng `PlayerPrefs` — **@Kang**
+- [ ] **T-61** Cài đặt tối thiểu: âm lượng, độ phân giải/cửa sổ; lưu bằng `PlayerPrefs`; gán lại phím là dự phòng — **@Kang**
 - [ ] **T-62** Luồng vào ván: tạo phòng, tham gia bằng địa chỉ, chuyển sang `Arena.unity` — **@Kang**
   > Bắt buộc đi qua `NetworkManagerLAC`. **Chơi đơn cũng phải `StartHost`**, không được có nhánh riêng — CLAUDE.md mục 3.1.
 - [ ] **T-63** Tạm dừng trong ván: tiếp tục · cài đặt · thoát về menu — **@Kang**
   > Trong co-op, tạm dừng **không** được dừng thời gian của cả hai máy; chỉ mở giao diện tại máy đó.
 - [ ] **T-30** Màn chọn nhân vật, đồng bộ lựa chọn qua mạng — **@Kang**
-  > T-44C đã có màn chọn thử nghiệm ngay trong Arena và giao thức lựa chọn trước khi sinh player. T-30 còn sảnh chính thức/hiển thị lựa chọn đồng đội/cùng Sẵn sàng; tái sử dụng `NetworkManagerLAC.SelectedCharacter` thay vì làm giao thức thứ hai.
+  > T-44C đã có màn chọn thử nghiệm ngay trong Arena và giao thức lựa chọn trước khi sinh player. T-30 còn sảnh gọn/hiển thị đồng đội/xác nhận vào phòng và host bắt đầu; tái sử dụng `NetworkManagerLAC.SelectedCharacter` thay vì làm giao thức thứ hai.
   > Chỉ đồng bộ định danh nhân vật, không đồng bộ chỉ số — mục 3.2.
 
 ### Hệ thống thẻ — @Hung
@@ -130,8 +139,9 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-24** Biên soạn và cân bằng 12 thẻ nền — **@Kang** · 24/09
   > Phạm vi thu gọn theo yêu cầu: 7 thẻ cũ + Khinh Thân, Âm Vang, Hồi Xuân, Thiết Bích, Cuồng Nộ. Tham số lưu trong `Data/Cards/Resources/Cards`; lọc thẻ đạn theo vũ khí, Sinh Lực theo máu gốc, giữ sát thương phần lẻ. `Cards/PlayerUpgradeState.cs` · `CardDefinition.cs` · `Editor/CardBalanceChecks.cs`. Đạt 45.000 lượt chọn mô phỏng và Play Mode 12/12 thẻ; cân bằng độ khó toàn game vẫn thuộc T-50/T-51.
   > Hợp nhất vào `main` ngày 27/09: giữ gameplay T-27/T-28/T-29/T-44, ghép nâng cấp với thưởng dash, kiểm tra 45.000 lượt chọn và 12/12 thẻ trên host. Chi tiết và giới hạn kiểm chứng: `docs/CARD_TESTS.md`.
-- [ ] **T-25** Hệ thống tiến hoá thẻ — kiểm tra công thức và thông báo — **@Hung**
-- [ ] **T-26** Chốt và triển khai 8 công thức tiến hoá — **@Hung**
+- [ ] **T-25** **DỰ PHÒNG:** tiến hoá thẻ — kiểm tra công thức/thông báo — **@Hung**
+- [ ] **T-26** **DỰ PHÒNG:** tối đa 1–2 công thức bằng hiệu ứng có sẵn, sau nghiệm thu AI/online — **@Hung**
+  > Không còn yêu cầu tám tiến hoá. Ưu tiên hồi quy 12 thẻ/đồng bộ/reset; không đánh dấu hai mục này hoàn thành khi chưa triển khai.
 
 ### Vòng lặp lõi — @Kiet
 
@@ -145,14 +155,14 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Codex · 03/10/2026: `VFX/InstrumentWave.cs`, `InstrumentWaveData.cs`, `Data/VFX` và `Combat/WeaponAuto.cs`: đàn bầu có ba vòng nan hoa, roi sắt ba cung theo tầm/góc thật, sáo trúc gợn nhỏ theo hướng từng viên. Dùng pool, additive, màu chàm/gỉ đồng và lớp dưới đòn địch. Đã xem Game View, thử khai hỏa ba vũ khí và đo Windows 1080p với 40 quái/200 đạn + hiệu ứng mới: p95 4.296 ms. [INSTRUMENT_REVIVE_TESTS.md](INSTRUMENT_REVIVE_TESTS.md).
 - [x] **T-32** Kiểm thử hiệu năng và đọc hiểu: 60 FPS với 40 quái và 200 đạn — **@Kiet**
   > Codex · 02/10/2026: `Core/PerformanceScenario.cs` duy trì 40 quái, 200 đạn và 10 sóng âm/giây; Windows Development 1080p đạt p95 4.187 ms trên i9-12900H/RTX 3060 Laptop. Sửa dung lượng pool dùng chung trong `ObjectPool.cs`/`PoolRegistry.cs`, đổi đạn người chơi sang gỉ đồng trong suốt. Đã xem Game View; Console không lỗi đỏ. Kịch bản, JSON và giới hạn phép đo: [PERFORMANCE_TESTS.md](PERFORMANCE_TESTS.md).
-- [ ] **T-33** 20 icon thẻ (12 nền + 8 tiến hoá) — **@artist**
+- [ ] **T-33** Icon cho 12 thẻ nền, tái sử dụng/ký hiệu rõ nghĩa; không bắt buộc icon tiến hoá — **@artist**
   > Quyết định 07/10/2026: bộ ba người chơi dùng Warrior/Archer/Lancer TinySwords ở T-44C; gỡ yêu cầu vẽ Gióng/Tấm để giảm công mỹ thuật.
 
 ---
 
 # Cổng 3 — Tuần 8–12
 
-**Nghiệm thu:** co-op qua Steam chạy được ngoài mạng LAN, hoàn tất 15 đợt không sai lệch trạng thái.
+**Nghiệm thu:** hai máy ở hai mạng Internet chơi được đủ 10 wave qua Mirror/KCP; AI luật/FSM chạy trên host, quyết định quan sát được; không yêu cầu Steam.
 
 - [x] **T-34** Bốn quái còn lại — Ma Trơi, Bù Nhìn, Ma Da, Quỷ Nhỏ — **@Kiet**
   > Codex · 30/09/2026: `Enemies/EnemyBehaviours.cs`, `EnemyData.cs`, `EnemyProjectile.cs`, bốn asset quái và `WaveTable_CoDinh.asset`. Ma Trơi giữ khoảng cách/bắn chậm; Bù Nhìn đánh 3 máu; Ma Da báo hướng rồi lao nhịp 2 giây; Quỷ Nhỏ tách hai Cô Hồn từ sự kiện host. Đạn dùng pool, nối Trống Đồng; ngân sách wave dự trù cả quái con. Sprite tạm, chờ T-47. Play Mode ALL PASSED, đã xem Game View và thử bắn/lao/xóa đạn trong co-op; [ENEMY_TESTS.md](ENEMY_TESTS.md).
@@ -166,11 +176,11 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Codex · 30/09/2026: `DrumData.cs`, `DrumRules.asset`, `UI/DrumHud.cs` và prefab HUD: 20 Hồn/lần, vòng năng lượng + vòng hồi, nhắc lướt khi sẵn sàng. `SoulSpawner` thu hồi Hồn cũ khi chơi lại. Đã thử nạp trong hồi, giới hạn nạp, reset và HUD; Console không lỗi đỏ.
 - [x] **T-39** Trùm Chằn Tinh — hai pha, máu tỉ lệ theo số người chơi — **@Kiet**
   > Codex · 02/10/2026: `Enemies/EnemyBoss.cs`, `BossNetwork.cs`, `BossData.cs`, dữ liệu Chằn Tinh và `UI/BossHud.cs`; wave 16 có boss 800/1600 máu, lao/phun đạn rồi quét đuôi/triệu hồi Ma Da ở 50% máu, Trống Đồng ngắt đòn. Play Mode ALL PASSED; hai tiến trình với giả lập 100 ms xác nhận chuyển pha, vào giữa trận, từ chối sát thương client, Victory và Restart. Đã xem HUD/vùng báo đòn, Console cuối 0 lỗi/0 cảnh báo. Sprite tạm chờ T-47; [BOSS_TESTS.md](BOSS_TESTS.md).
-- [ ] **T-40** Mời bạn qua Steam overlay, chuyển sang FizzySteamworks — **@Kang**
-  > Đổi transport phải sửa `Net/NetworkManagerLAC.cs` — file của @Kiet. Báo trước khi động vào.
+- [ ] **T-40** Nghiệm thu co-op qua Internet bằng Mirror/KCP trên hai máy/hai mạng; hướng dẫn kết nối và log/video — **@Kang**
+  > Giữ transport hiện có, chọn đường mạng phù hợp và ghi rõ hạ tầng. Không Steamworks/invite. Sửa `Net/NetworkManagerLAC.cs` cần phối hợp Kiệt; localhost/LAN chưa hoàn thành mục này.
 - [x] **T-41** Hạ gục và hồi sinh — đồng đội đứng cạnh 3 giây — **@Kiet**
   > Codex · 03/10/2026: `Player/PlayerRevive.cs`, `ReviveData.cs`, `VFX/ReviveMarker.cs` và prefab Player. Host kiểm tra liên tục trong bán kính 1.5, đủ 3 giây hồi 50% máu tối đa + bất tử 1 giây; rời vùng hủy tiến độ. Vòng cứu, lời nhắc và thanh tiến độ trên đầu đồng đội; khóa di chuyển/lướt/bắn khi gục. Hai tiến trình với độ trễ giả lập 100 ms ALL PASSED: hủy/cứu lại, máu và input, Defeat, Restart; Console không lỗi đỏ, đã xem Game View. [INSTRUMENT_REVIVE_TESTS.md](INSTRUMENT_REVIVE_TESTS.md).
-- [ ] **T-42** Xử lý mất kết nối: client rớt mạng, host thoát ván — **@Kang**
+- [ ] **T-42** Client rớt: host tiếp tục; host thoát: client thông báo/về menu; thử cả chọn thẻ/chiến đấu, không host migration — **@Kang**
 - [x] **T-43** Thu thập telemetry ra CSV cho phần đánh giá khoá luận — **@Kiet**
   > Codex · 04/10/2026: `Director/TelemetrySession.cs`, `TelemetryCsv.cs`, `RunTelemetry.cs`; host ghi CSV sự kiện, từng người/từng wave và tổng kết ván, có seed, sát thương thực, hạ gục/hồi sinh, dash, vào/rời mạng và reset. 99 kiểm tra độc lập; Play Mode một người và co-op hai tiến trình 100 ms ALL PASSED; kiểm tra vào/rời giữa wave, chống đếm dash kép và 16 wave thật qua chọn thẻ/boss. Development build 0 lỗi, Console nghiệm thu co-op 0 lỗi/0 cảnh báo. Game View 40 quái/200 đạn, telemetry bật: P95 4,78 ms. [Hướng dẫn và CSV kiểm chứng](TELEMETRY_TESTS.md).
 - [x] **T-44** Bảng đợt cố định — quái vào sân theo nhịp, theo hướng, theo thành phần — @Kiet · 10/09
@@ -182,11 +192,13 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Codex · 07/10/2026: `Player/Editor/PlayableClassesContent.cs`, dữ liệu/bộ animation ba lớp TinySwords, `Combat/WeaponAuto.cs` + `VFX/SpearThrust.cs`, prefab Arrow/Thrust/CharacterSelection. `UI/CharacterSelection.cs` chọn trước StartHost/StartClient; `Net/NetworkManagerLAC.cs` thẩm định ID trước sinh, giữ solo host và co-op. Gỡ Bushes cả ba nhóm map, cập nhật GDD/CLAUDE/phạm vi mỹ thuật. Play Mode ba lớp/đòn/HP/dash/animation ALL PASSED; 15 wave/14 pha thẻ/boss/telemetry/Restart đạt. Hai Editor 100 ms xác nhận Lancer8/Archer6 và chống đổi lớp sau spawn, Console gameplay 0 lỗi; 40 quái/200 đạn P95 4,90 ms. Build executable bị Windows Application Control chặn Unity.Linker.Api.dll, chưa nghiệm thu build mới. [Kiểm chứng và giới hạn](PLAYABLE_CLASSES_TESTS.md).
 - [x] **T-44D** Nhịp sinh tồn theo thời gian, nén ván còn 10 wave theo hướng Brotato — **@Kiet** · 11/10/2026
   > Codex: `Core/WaveSpec.cs`, `WaveTable.cs`, `WaveManager.cs`, `RunManager.cs`, `Core/Editor/TenWaveContent.cs`, `Enemies/EnemySpawner.cs`, `UI/WaveHud.cs`; 9 wave 20–60s/9 lượt thẻ, boss wave 10, spawn do host quyết với trần 40 và khoảng cách an toàn, cleanup giữ Hồn, telemetry đếm `survived`. Play wave đầu đủ 20s và kiểm tra 10 wave/boss/CSV/Restart ALL PASSED; co-op hai Editor 100ms xác nhận timer/cleanup/chọn thẻ, vào lại giữa wave và Restart. Game View 40 quái/200 đạn P95 4.98ms; Console cuối 0 lỗi/0 cảnh báo. Cửa hàng/nhiều vũ khí và cân bằng cuối chưa có; chưa chứng nhận executable mới do lỗi Application Control trước đó. [Thiết kế và kiểm chứng](TEN_WAVE_TESTS.md).
-- [ ] **T-45** AI Đạo Diễn (LinUCB) — lõi thuật toán, `ContextVector`, `WaveSpec` — **@Kiet**
-- [ ] **T-45B** Đạo diễn trong co-op — hợp thành ngữ cảnh N người, số hạng công bằng, tầng an toàn theo người yếu nhất — **@Kiet**
-- [ ] **T-46** Điều tiết bất đối xứng, đòn bẩy chia cắt và dồn ép; hiển thị hoạt động đạo diễn trên HUD — **@Kiet**
-- [ ] **T-46B** Đăng ký Steam Direct, tax interview, xác minh tài khoản — **tuần 10** — Chưa phân công
-- [ ] **T-47** Sprite bốn quái, Chằn Tinh, trống đồng, hai tileset còn lại — **@artist**
+- [ ] **T-45** Đạo diễn AI dựa trên luật + FSM ba trạng thái; đầu vào HP/tổn thất/lần gục, đầu ra WaveSpec; chọn Fixed/Adaptive và fallback — **@Kiet**
+  > Chỉ quyết trước wave 2–9, giữ Duration/boss, không học máy/LinUCB. Định nghĩa luật/ngưỡng tại `THESIS_SCOPE.md` mục 4. Cần nối nguồn đặc tả và CSV, hiện chưa có AI thích ứng.
+- [ ] **T-45B** Tổng hợp đội một/hai người theo người yếu nhất; xử lý gục/vào-rời mạng, tầng an toàn và reset — **@Kiet**
+  > Dùng cùng thuật toán, không fairness reward hoặc mô hình riêng; trần 40/khoảng cách an toàn giữ từ T-44D, kiểm tra lại với đặc tả AI.
+- [ ] **T-46** HUD/debug giải thích trạng thái/lý do đạo diễn; CSV mode/ngữ cảnh/quyết định/fallback và kiểm thử tích hợp — **@Kiet**
+- [ ] **T-46B** **NGOÀI PHẠM VI:** Steam Direct/tax/tài khoản phát hành — không thực hiện
+- [ ] **T-47** Tinh chỉnh sprite quái/boss/trống cần thiết để đọc rõ; dùng asset sẵn, không bắt buộc hai tileset mới — **@artist**
 
 ---
 
@@ -194,25 +206,25 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 **Nghiệm thu:** demo chạy ổn định; hoàn tất bảo vệ khoá luận.
 
-- [ ] **T-48** Tiền tệ Ngọc, lưu tiến trình, bảng mở khoá — **@Kang**
-- [ ] **T-49** Màn thống kê sau ván — **@Kang**
+- [ ] **T-48** **NGOÀI PHẠM VI:** Ngọc, lưu tiến trình, mở khoá — không thực hiện
+- [ ] **T-49** Thống kê sau ván từ counters/telemetry: kết quả, wave, thời gian, kill, tổn thất, dùng trống — **@Kang**
 - [ ] **T-50** Cân bằng: xác định sát thương gốc cho cả ba vũ khí — **@Kiet**
 - [ ] **T-51** Cân bằng đường cong độ khó qua 10 đợt, với 9 lượt nâng cấp — **@Kiet**
-- [ ] **T-52** Nhạc nền và hiệu ứng âm thanh — Chưa phân công
-- [ ] **T-53** Thực nghiệm đánh giá: 15 người dùng AI Đạo Diễn, 15 người dùng bảng đợt cố định — **@Kiet**
+- [ ] **T-52** **DỰ PHÒNG:** một nhạc nền và SFX thiết yếu, giữ âm đã có; không bộ nhạc riêng từng bối cảnh — Chưa phân công
+- [ ] **T-53** Kiểm thử AI/online và so sánh Fixed–Adaptive quy mô nhỏ, đề xuất 8–12 người thử cả hai; ghi phương pháp/hạn chế — **@Kiet**
 - [ ] **T-54** Phân tích số liệu và biên soạn chương đánh giá — **@Kiet**
-- [ ] **T-55** Đóng gói demo — 8 đợt đầu, một nhân vật — Chưa phân công
-- [ ] **T-58** Thiết lập giá: $2.99, khu vực Việt Nam 29.000–39.000₫ — Chưa phân công
+- [ ] **T-55** Đóng gói bản Windows đầy đủ 10 wave/ba lớp, nghiệm thu hai máy/Internet; tài liệu chạy và video dự phòng — Chưa phân công
+- [ ] **T-58** **NGOÀI PHẠM VI:** giá bán/phát hành — không thực hiện
 - [ ] **T-59** Slide và bản demo phục vụ buổi bảo vệ — Chưa phân công
 
 ---
 
-## Dự phòng — làm nếu còn quỹ thời gian
+## Dự phòng — sau khi đạt tiêu chí bảo vệ
 
-Thử thách hằng ngày kèm bảng xếp hạng · nhân vật thứ tư · trùm thứ hai · cấp độ khó thứ hai · thực nghiệm định lượng cho co-op
+T-25/T-26 tối đa 1–2 tiến hoá bằng hiệu ứng sẵn · gán lại phím · tinh chỉnh mỹ thuật/nhạc. Không ưu tiên nhân vật/map/boss/cấp khó mới.
 
 ## Ngoài phạm vi — đã chốt không làm
 
-Co-op 4 người · matchmaking · cửa hàng vật phẩm trang trí · bản mobile · cắt cảnh · nhánh rẽ Núi/Biển · **toàn bộ hạng mục quảng bá** (trang cửa hàng, trailer, TikTok, Next Fest)
+Phát hành thương mại/Steam/Steamworks/invite/Steam Direct/giá bán · Ngọc/mở khoá · shop/nhiều ô vũ khí · ba tileset hoàn chỉnh · tám tiến hoá bắt buộc · co-op 4 người · matchmaking · host migration · mobile · cutscene · quảng bá.
 
-> **Quảng bá đã đưa ra khỏi kế hoạch** theo quyết định của nhóm, để dồn quỹ thời gian cho sản phẩm và khoá luận. Nếu sau bảo vệ muốn phát hành thương mại thì dựng lại thành một kế hoạch riêng.
+> Đồ án chỉ bàn giao cho đánh giá tốt nghiệp. Nếu mục tiêu thay đổi về sau, phải lập phạm vi mới; không tự khôi phục yêu cầu thương mại.

@@ -1,5 +1,7 @@
 # Warrior, Archer, Lancer — kiểm chứng 07/10/2026
 
+> Phạm vi hiện hành 11/10/2026: [THESIS_SCOPE.md](THESIS_SCOPE.md), 10 wave, đồ án không thương mại, AI luật/FSM và Internet qua KCP. Kết quả bên dưới giữ nguyên ngày/cấu hình lịch sử; không chứng nhận AI thích ứng, Internet hoặc build mới.
+
 ## Dùng thử
 
 Mở `Assets/_LAC/Scenes/Arena.unity`, vào Play. Chọn một trong ba lớp rồi bấm **Vào trận / Tạo host**. Chơi đơn cũng dùng host Mirror. Máy thứ hai chọn lớp, nhập IP máy host và bấm **Vào host**; dùng `localhost` khi hai tiến trình chạy cùng máy. Có thể chọn trùng lớp. Restart giữ lớp; màn sảnh cùng Sẵn sàng/Steam invite chưa thuộc màn chọn thử nghiệm này.
@@ -42,3 +44,5 @@ Tám warning còn lại từ package/fixture API cũ (MCP asmdef trống, profil
 ## Phạm vi đồ án
 
 Ba lớp và màn chọn giảm công nội dung. Co-op trực tuyến, LinUCB/đạo diễn thích ứng, telemetry và thực nghiệm vẫn là trọng tâm kỹ thuật. T-45/T-45B/T-46, Steam ngoài LAN và đánh giá người dùng chưa được báo hoàn thành bởi thay đổi này. Sprite bên thứ ba được ghi đúng nguồn trong báo cáo, không nhận là mỹ thuật tự vẽ.
+
+Quyết định sau nghiệm thu, 11/10/2026: thay mục tiêu LinUCB/Steam bằng đạo diễn luật/FSM và online Internet qua KCP; không bắt buộc mẫu 30 người. Đoạn phạm vi ngày 07/10 phía trên là lịch sử, không là yêu cầu hiện hành.

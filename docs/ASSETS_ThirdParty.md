@@ -31,6 +31,8 @@ Mở Arena ở Edit Mode, chạy `LAC > Content > Apply Warrior Archer Lancer`. 
 
 Công cụ nội dung (10 wave hiện hành) đã cập nhật để không khôi phục bụi hoặc bộ ba cũ. Dữ liệu animation truyền thuyết còn trên đĩa để tham khảo, registry hiện hành chỉ trỏ ba lớp mới.
 
-Nguồn và quyền phát hành của asset cần được lưu cùng hồ sơ thương mại: không tìm thấy tệp giấy phép trong bản thư mục đã nhận. Việc dùng tài nguyên bên ngoài phải được ghi đúng trong báo cáo đồ án; không ghi sprite này là tự vẽ.
+Nguồn và điều kiện sử dụng asset cần được lưu cùng báo cáo đồ án, dù không phát hành: không tìm thấy tệp giấy phép trong bản thư mục đã nhận. Việc dùng tài nguyên bên ngoài phải được ghi đúng trong báo cáo đồ án; không ghi sprite này là tự vẽ.
 
 Nhịp 10 wave tính giờ: [TEN_WAVE_TESTS.md](TEN_WAVE_TESTS.md). Kiểm chứng ba lớp trước đó: [PLAYABLE_CLASSES_TESTS.md](PLAYABLE_CLASSES_TESTS.md). Kiểm chứng lần tích hợp 15 wave trước: [ARENA_CONTENT_TESTS.md](ARENA_CONTENT_TESTS.md).
+
+Phạm vi 11/10/2026: một arena, không bắt buộc ba tileset/mỹ thuật tự vẽ. Hướng sprite Ma Da TinyRPG 16×16 mới là đề xuất thiết kế, chưa tích hợp; giữ TinySwords đang chạy, kiểm tra tỷ lệ và pivot khi bổ sung. Xem [THESIS_SCOPE.md](THESIS_SCOPE.md).
