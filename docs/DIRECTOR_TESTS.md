@@ -28,6 +28,7 @@ Ba mươi cột đầu của tổng kết giữ thứ tự và ý nghĩa cũ. C�
 | `fixed_table` | Fixed hoặc wave mở đầu/boss được bảo vệ |
 | `adaptive_rules` | Luật thực sự chọn đặc tả, kể cả Balanced giữ chỉ số baseline |
 | `fixed_fallback` | Không đủ dữ liệu/cấu hình hợp lệ cho luật, dùng baseline và ghi lý do |
+| `invalid_baseline` | Bảng gốc không hợp lệ, không có đặc tả Applied; dừng sinh và kết thúc ván, không tính là fallback có thể chơi |
 | `unrecorded` | Không có quyết định được ghi; không dùng làm bằng chứng AI |
 
 Nguồn trong `runs.csv` là tập nguồn thật đã xuất hiện, sắp xếp và nối bằng `|`, ví dụ `adaptive_rules|fixed_table`. Ván chỉ baseline/fallback không bị gắn nhãn có thích ứng chỉ vì chọn Adaptive. Các cột context/trạng thái/đặc tả trong tổng kết ván để trống; lấy chúng từ dòng wave/quyết định tương ứng. Bộ đếm đội lặp trên từng dòng người như schema 1: không cộng các dòng co-op để tính tổng đội.

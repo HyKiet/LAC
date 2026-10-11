@@ -1,5 +1,7 @@
 [DirectorClientProbe] mode=Adaptive state=Balanced source=adaptive_rules reason=Giữ nhịp sinh gốc vì đội đang ổn định. hpMin=0.667 damage=0.333 downs=0 context=True fallback= hud=False title=ĐẠO DIỄN · BÌNH THƯỜNG rejectedModeChange=True
 [DirectorClientProbe] mode=Adaptive state=Relief source=adaptive_rules reason=Giãn nhịp sinh để hỗ trợ người chơi yếu nhất. hpMin=0.167 damage=0.833 downs=0 context=True fallback= hud=True title=ĐẠO DIỄN · HỖ TRỢ rejectedModeChange=True
+[TelemetryClient] connected=True host=False wave=4 total=10 state=CardSelection telemetry=False mode=Adaptive director=Variety source=adaptive_rules hpMin=1.000 damage=0.000 downs=0 context=True fallback= stage=1 | 3 hp=10 character=Warrior animation=Warrior_TinySwords | 4 hp=6 character=Archer animation=Archer_TinySwords
+[TelemetryClient] connected=True host=False wave=5 total=10 state=WaveActive telemetry=False mode=Adaptive director=Variety source=adaptive_rules hpMin=1.000 damage=0.000 downs=0 context=True fallback= stage=1 | 3 hp=10 character=Warrior animation=Warrior_TinySwords | 4 hp=6 character=Archer animation=Archer_TinySwords
 [TelemetryClient] command=leave 3
 [TelemetryClient] command=join 4
 [DirectorClientProbe] mode=Adaptive state=Relief source=adaptive_rules reason=Giãn nhịp sinh để hỗ trợ người chơi yếu nhất. hpMin=0.167 damage=0.833 downs=0 context=True fallback= hud=True title=ĐẠO DIỄN · HỖ TRỢ rejectedModeChange=True
