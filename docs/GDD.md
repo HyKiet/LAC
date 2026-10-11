@@ -44,6 +44,8 @@ Vũ khí chọn mục tiêu gần nhất trong tầm rồi tự khai hoả. Cả
 
 ## 4. Ba lớp hiện có
 
+Hướng tinh chỉnh combat T-50B: tham khảo nhịp tự đánh/ra đòn của Brotato, ưu tiên mốc contact, hoạt ảnh theo tốc độ thật, giữ hướng và feedback/co-op. Phương án tại [BROTATO_COMBAT_FEEL.md](BROTATO_COMBAT_FEEL.md); chưa đổi chỉ số/cách gây sát thương đang chạy. Timing/feel được chốt trước cân bằng damage T-50 và wave T-51.
+
 | Chỉ số | Warrior | Archer | Lancer |
 |---|---|---|---|
 | Sprite | TinySwords Yellow | TinySwords Blue | TinySwords Purple |

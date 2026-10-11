@@ -10,6 +10,7 @@ Phạm vi từ 11/10/2026: **đồ án tốt nghiệp, không phát hành thươ
 | [GDD.md](GDD.md) | Thiết kế hiện hành: 10 wave, một arena, ba lớp, 12 thẻ, Hồn/Trống Đồng |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Hệ thống hiện có, đạo diễn luật/FSM, ngữ cảnh đội và nguồn WaveSpec trên host |
 | [AI_CHAN_TINH.md](AI_CHAN_TINH.md) | Chằn Tinh là chủ dungeon: ý đồ, luật, ví dụ co-op, FSM boss và cách giải thích khi báo cáo |
+| [BROTATO_COMBAT_FEEL.md](BROTATO_COMBAT_FEEL.md) | Nghiên cứu tấn công/feel và phương án T-50B cho Kiệt; chưa là gameplay đã triển khai |
 | [WORKFLOW.md](WORKFLOW.md) | Phân công thư mục, Git và phối hợp nhóm |
 | [CARDS.md](CARDS.md) | Chỉ số 12 thẻ; tiến hoá chỉ là dự phòng |
 | [PALETTE.md](PALETTE.md), [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md) | Chuẩn đọc hình ảnh và nguồn tài nguyên |

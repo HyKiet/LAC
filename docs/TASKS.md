@@ -15,6 +15,8 @@ Các mục ghi **DỰ PHÒNG** không là điều kiện hoàn tất; mục **NG
 
 - [x] **T-64** Đánh giá tài liệu và thu gọn phạm vi đồ án theo yêu cầu giảng viên — **@Kiet** · 11/10/2026
   > Codex: `THESIS_SCOPE.md`, GDD/CLAUDE/AGENTS/ARCHITECTURE/TASKS/CARDS/README và tài liệu liên quan; bỏ mục tiêu thương mại/Steam, đạo diễn luật ba trạng thái, ưu tiên Internet/AI/build/báo cáo. Kiểm tra 30 Markdown/188 liên kết và anchor cục bộ, encoding/code fence/trạng thái task đạt; đã xem ảnh T-44D để đánh giá mỹ thuật. Đây là thay đổi thiết kế, không nghiệm thu gameplay hoặc đánh dấu T-45/T-40 hoàn thành.
+- [x] **T-65** Nghiên cứu tấn công/feel Brotato và phương án áp dụng cho bộ ba LẠC — **@Kiet** · 11/10/2026
+  > Codex: [BROTATO_COMBAT_FEEL.md](BROTATO_COMBAT_FEEL.md); nguồn Steam và phân tích gốc cooldown, đối chiếu WeaponAuto/Animator/VFX/asset, đề xuất timing/hướng/feedback/đồng bộ và nghiệm thu T-50B. Đây là nghiên cứu/phương án, chưa đổi mã/chỉ số hoặc nghiệm thu feel; T-50/T-50B/T-51 còn mở.
 
 ## Phân công
 
@@ -212,6 +214,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-48** **NGOÀI PHẠM VI:** Ngọc, lưu tiến trình, mở khoá — không thực hiện
 - [ ] **T-49** Thống kê sau ván từ counters/telemetry: kết quả, wave, thời gian, kill, tổn thất, dùng trống — **@Kang**
 - [ ] **T-50** Cân bằng: xác định sát thương gốc cho cả ba vũ khí — **@Kiet**
+- [ ] **T-50B** Cảm giác chiến đấu tham khảo Brotato: mốc ra đòn, hoạt ảnh theo tốc độ thật, giữ hướng và feedback/co-op — **@Kiet**
+  > Phương án/tiêu chí tại [BROTATO_COMBAT_FEEL.md](BROTATO_COMBAT_FEEL.md). Làm timing/feel trước chốt damage T-50; dùng ba vũ khí hiện có, host quyết damage, không mở thêm shop/ô vũ khí hoặc sửa Cards của Hung.
 - [ ] **T-51** Cân bằng đường cong độ khó qua 10 đợt, với 9 lượt nâng cấp — **@Kiet**
 - [ ] **T-52** **DỰ PHÒNG:** một nhạc nền và SFX thiết yếu, giữ âm đã có; không bộ nhạc riêng từng bối cảnh — Chưa phân công
 - [ ] **T-53** Kiểm thử AI/online và so sánh Fixed–Adaptive quy mô nhỏ, đề xuất 8–12 người thử cả hai; ghi phương pháp/hạn chế — **@Kiet**
