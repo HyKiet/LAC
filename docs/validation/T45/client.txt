@@ -1,0 +1,13 @@
+[DirectorClientProbe] mode=Adaptive state=Balanced source=adaptive_rules reason=Giữ nhịp sinh gốc vì đội đang ổn định. hpMin=0.667 damage=0.333 downs=0 context=True fallback= hud=False title=ĐẠO DIỄN · BÌNH THƯỜNG rejectedModeChange=True
+[DirectorClientProbe] mode=Adaptive state=Relief source=adaptive_rules reason=Giãn nhịp sinh để hỗ trợ người chơi yếu nhất. hpMin=0.167 damage=0.833 downs=0 context=True fallback= hud=True title=ĐẠO DIỄN · HỖ TRỢ rejectedModeChange=True
+[TelemetryClient] command=leave 3
+[TelemetryClient] command=join 4
+[DirectorClientProbe] mode=Adaptive state=Relief source=adaptive_rules reason=Giãn nhịp sinh để hỗ trợ người chơi yếu nhất. hpMin=0.167 damage=0.833 downs=0 context=True fallback= hud=True title=ĐẠO DIỄN · HỖ TRỢ rejectedModeChange=True
+[TelemetryClient] command=leave controlled-cards
+[TelemetryClient] command=join controlled-midwave
+[DirectorClientProbe] mode=Adaptive state=Balanced source=fixed_fallback reason=Thiếu dữ liệu an toàn: dùng bảng cố định. hpMin=1.000 damage=0.000 downs=0 context=False fallback=incomplete_late_join hud=True title=ĐẠO DIỄN · NHỊP CHUẨN rejectedModeChange=True
+[TelemetryClient] command=leave controlled-cards2
+[TelemetryClient] command=join controlled-cards2
+[DirectorClientProbe] mode=Adaptive state=Balanced source=fixed_fallback reason=Thiếu dữ liệu an toàn: dùng bảng cố định. hpMin=1.000 damage=0.000 downs=0 context=False fallback=incomplete_late_join hud=True title=ĐẠO DIỄN · NHỊP CHUẨN rejectedModeChange=True
+[TelemetryClient] command=join clean1
+[DirectorClientProbe] mode=Adaptive state=Relief source=adaptive_rules reason=Giãn nhịp sinh để hỗ trợ người chơi yếu nhất. hpMin=0.167 damage=0.833 downs=0 context=True fallback= hud=True title=ĐẠO DIỄN · HỖ TRỢ rejectedModeChange=True

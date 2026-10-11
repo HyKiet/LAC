@@ -1,4 +1,4 @@
-# Asset bên thứ ba — cập nhật 07/10/2026
+# Asset bên thứ ba — cập nhật 11/10/2026
 
 Nguồn: `Assets/ThirdParty/`, đã kiểm kê 34 PNG TinyRPG và 410 PNG TinySwords. Giữ ảnh, sprite slice, Point filtering, PPU và metadata nguồn. Dữ liệu, animation và prefab tích hợp nằm trong `_LAC/`.
 
@@ -31,7 +31,13 @@ Mở Arena ở Edit Mode, chạy `LAC > Content > Apply Warrior Archer Lancer`. 
 
 Công cụ nội dung (10 wave hiện hành) đã cập nhật để không khôi phục bụi hoặc bộ ba cũ. Dữ liệu animation truyền thuyết còn trên đĩa để tham khảo, registry hiện hành chỉ trỏ ba lớp mới.
 
-Nguồn và điều kiện sử dụng asset cần được lưu cùng báo cáo đồ án, dù không phát hành: không tìm thấy tệp giấy phép trong bản thư mục đã nhận. Việc dùng tài nguyên bên ngoài phải được ghi đúng trong báo cáo đồ án; không ghi sprite này là tự vẽ.
+Nguồn và điều kiện sử dụng TinyRPG/TinySwords cần được lưu cùng báo cáo đồ án, dù không phát hành: không tìm thấy tệp giấy phép trong bản thư mục hai gói đã nhận. Việc dùng tài nguyên bên ngoài phải được ghi đúng trong báo cáo đồ án; không ghi sprite này là tự vẽ.
+
+## TextMesh Pro cho giao diện đạo diễn
+
+Giao diện mới dùng TMP/uGUI chính thức từ package `com.unity.ugui`: bản sao MobileSDF tại `Assets/_LAC/Art/Shaders/Resources/UI/DirectorSDF.shader`, include `TMPro_Properties.cginc` và giấy phép `Art/Shaders/TMP-LICENSE.txt` (Unity Companion License). Quy tắc ngắt dòng `Leading.txt`/`Following.txt` và cấu hình riêng nằm ở `Data/UI/Resources/DirectorUI/`; shader trong Resources được bàn giao cùng tài nguyên UI, không phụ thuộc thao tác nhập TMP Essentials trên máy nhóm.
+
+Phần bổ sung phục vụ text của HUD đạo diễn và chọn chế độ; font **Liberation Sans** được sao chép nguyên vào `Art/Fonts/Resources/UI/DirectorFont.ttf`, kèm `Art/Fonts/LiberationSans-OFL.txt`. Font TMP tiếng Việt tạo từ dữ liệu TTF nhúng này. Cấu hình TMP được sao chép riêng cho phiên Play, không ghi sửa asset cấu hình khi chạy. Giữ nguyên thư mục TMP/tài nguyên người dùng đã có. HUD đạo diễn nằm phía trên thanh máu góc dưới trái, F3 mở dữ liệu; xem [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md). Tài nguyên shader/font đã có trong dự án không thay thế nghiệm thu executable mới.
 
 Nhịp 10 wave tính giờ: [TEN_WAVE_TESTS.md](TEN_WAVE_TESTS.md). Kiểm chứng ba lớp trước đó: [PLAYABLE_CLASSES_TESTS.md](PLAYABLE_CLASSES_TESTS.md). Kiểm chứng lần tích hợp 15 wave trước: [ARENA_CONTENT_TESTS.md](ARENA_CONTENT_TESTS.md).
 

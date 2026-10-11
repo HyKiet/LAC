@@ -18,15 +18,15 @@ Trống Đồng và đạo diễn là điểm riêng trong cách kết hợp c�
 
 ## 2. Đánh giá hiện trạng
 
-Đánh giá dựa trên tài liệu thiết kế, báo cáo kiểm thử trong `docs/`, dữ liệu kiểm chứng và kiểm tra các điểm nối mã nguồn; **không phải nghiệm thu chạy game mới trong phiên chỉnh tài liệu này**.
+**Mốc đánh giá ban đầu ngày 11/10/2026, trước triển khai đạo diễn:** dựa trên tài liệu thiết kế, báo cáo kiểm thử trong `docs/`, dữ liệu kiểm chứng và kiểm tra các điểm nối mã nguồn; không phải nghiệm thu chạy game mới trong phiên thu gọn tài liệu. Bảng dưới giữ bối cảnh của mốc đó; cập nhật triển khai sau đánh giá được ghi ngay bên dưới.
 
 **Nền gameplay khá đầy đủ cho một đồ án.** T-44D đã có 10 wave, ba lớp, đòn đánh khác nhau, thẻ, năm loại quái, boss, thắng/thua/chơi lại. Kiến trúc host-authoritative, pool, seed và CSV tạo cơ sở tốt để giải thích kỹ thuật. Lợi ích lớn nhất của thu gọn là tránh thêm hệ thống trước khi hoàn tất ba yêu cầu chính.
 
-| Mảng | Bằng chứng hiện có | Khoảng trống |
+| Mảng | Bằng chứng tại mốc đánh giá | Khoảng trống tại mốc đánh giá |
 |---|---|---|
 | Gameplay | [TEN_WAVE_TESTS.md](TEN_WAVE_TESTS.md), [PLAYABLE_CLASSES_TESTS.md](PLAYABLE_CLASSES_TESTS.md) | Chưa playtest cân bằng trọn ván tự nhiên của cả ba lớp |
 | Co-op | Hai tiến trình/Editor, latency simulation, đồng hồ, thẻ, hồi sinh, snapshot | Chưa chứng nhận hai máy qua Internet; T-42 chưa hoàn thành |
-| AI quái/boss | [ENEMY_TESTS.md](ENEMY_TESTS.md), [BOSS_TESTS.md](BOSS_TESTS.md) | Đạo diễn thích ứng T-45/T-45B/T-46 chưa có; `Director` hiện chủ yếu là telemetry |
+| AI quái/boss | [ENEMY_TESTS.md](ENEMY_TESTS.md), [BOSS_TESTS.md](BOSS_TESTS.md) | `Director` mới có telemetry ở mốc đánh giá; phần triển khai T-45/T-45B/T-46 được bổ sung sau đó |
 | Điểm riêng | [DRUM_TESTS.md](DRUM_TESTS.md), [INSTRUMENT_REVIVE_TESTS.md](INSTRUMENT_REVIVE_TESTS.md) | Cần một kịch bản demo dễ quan sát, không mở thêm cơ chế mới |
 | Thẻ | 12 thẻ đã có, bốc/lọc/đồng bộ và giới hạn cộng dồn | Tám tiến hoá chưa có, công thức cũ không khớp ID/giới hạn thẻ hiện tại |
 | Giao diện | HUD máu/wave/trống/boss, màn chọn lớp thử nghiệm, màn kết quả cơ bản | Luồng menu/phòng, thông báo mất kết nối và thống kê sau ván cần khép lại |
@@ -34,7 +34,9 @@ Trống Đồng và đạo diễn là điểm riêng trong cách kết hợp c�
 | Hiệu năng | T-44D P95 4.98 ms với fixture 40 quái/200 đạn trên máy phát triển | Không suy rộng sang mọi máy; đo lại sau khi tích hợp đạo diễn |
 | Bàn giao | Build cũ từng thành công | Build mới bị Application Control chặn Unity DLL; bản 10 wave chưa có executable nghiệm thu |
 
-Tài liệu cũ lẫn thiết kế tương lai với chức năng đã có: README còn 15 phút/Steam; GDD dùng `clearTime` cho wave tính giờ, mục tiêu tổn thất hai chiều và tiến trình Ngọc; ARCHITECTURE mô tả LinUCB chưa triển khai; learning ghi trạng thái đầu dự án. Các báo cáo lịch sử 15/16 wave phải giữ nguyên kết quả, không sửa thành bằng chứng 10 wave.
+**Bổ sung cùng ngày, sau triển khai T-45/T-45B/T-46:** đã có đạo diễn luật/FSM, luật ScriptableObject, snapshot đội đóng băng trước thẻ/hồi máu, nguồn WaveSpec trên host, chọn Cố định/Thích ứng, HUD/F3 và CSV schema 2. Kiểm tra đã chạy gồm 863 xác nhận luật, 75 kiểm tra tích hợp host, 76 kiểm tra hai Editor và 29 kiểm tra co-op có kiểm soát; phần co-op gồm hai lượt hồi sinh thật, tổn thất thô vượt 100%, rời khi chọn thẻ, vào muộn giữa wave/lúc chọn thẻ và phục hồi ngữ cảnh. Bằng chứng và giới hạn tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md). Các fixture này không thay thế chơi tự nhiên để cân bằng, hai máy qua Internet hoặc bản Windows mới.
+
+Tại mốc đánh giá, tài liệu cũ lẫn thiết kế tương lai với chức năng đã có: README còn 15 phút/Steam; GDD dùng `clearTime` cho wave tính giờ, mục tiêu tổn thất hai chiều và tiến trình Ngọc; ARCHITECTURE mô tả LinUCB chưa triển khai; learning ghi trạng thái đầu dự án. Phạm vi và mô tả hiện hành đã được cập nhật; các báo cáo lịch sử 15/16 wave giữ nguyên kết quả, không sửa thành bằng chứng 10 wave.
 
 ## 3. Bản tối thiểu để bảo vệ
 
@@ -57,6 +59,8 @@ Không thay sprite TinySwords toàn bộ bằng 16×16 trong giai đoạn này. 
 
 Chỉ quyết định **một lần trước mỗi wave 2–9**, từ snapshot cuối wave trước, trước hồi máu/nâng cấp đầu wave mới. Wave 1 và boss wave 10 giữ cấu hình gốc. Chọn chế độ Fixed/Adaptive trước ván và ghi vào CSV; không đổi giữa ván đối chứng.
 
+Triển khai hiện có tại `Director/AIDirector.cs`, `ContextAggregator.cs`, `SafetyConstraints.cs` và partial `RunDirector.cs`. Ngưỡng/hệ số nằm trong `Data/Director/Resources/Director/DirectorRules.asset`. Màn chọn lớp chốt chế độ trước kết nối, host quyết chế độ cho cả đội; Restart trong phòng giữ chế độ đã chọn. `WaveManager` trên host lấy đầu ra qua `RunManager.GetHostWaveSpec`, client chỉ biểu diễn sự kiện sinh và quyết định đã đồng bộ.
+
 ### Dữ liệu đầu vào nhỏ
 
 | Giá trị | Định nghĩa |
@@ -65,7 +69,7 @@ Chỉ quyết định **một lần trước mỗi wave 2–9**, từ snapshot c
 | `damageRatioMax` | Lớn nhất của máu thực mất trong wave / máu tối đa đầu wave, xét từng người |
 | `downs` | Tổng lần bị hạ gục trong wave trước |
 
-Máu mất cộng từ sát thương đã được host chấp nhận, không tính `HP đầu − HP cuối` vì hồi máu/hồi sinh có thể che tổn thất. `damageRatioMax` kẹp [0,1] cho quyết định; CSV giữ giá trị thô, kể cả tổn thất vượt máu tối đa. Người rời không còn quyết định `healthMin`; người vào muộn không bị giả tạo lịch sử cả wave. Thiếu dữ liệu hợp lệ thì dùng bảng cố định.
+Máu mất cộng từ sát thương đã được host chấp nhận, không tính `HP đầu − HP cuối` vì hồi máu/hồi sinh có thể che tổn thất. `damageRatioMax` kẹp [0,1] cho quyết định; CSV giữ giá trị thô, kể cả tổn thất vượt máu tối đa. HP/MaxHP được đóng băng cuối wave trước thẻ/hồi máu; trước wave kế chỉ cập nhật người vào/rời. Người rời không còn quyết định `healthMin`, nhưng tổn thất/lần gục đã ghi được giữ. Người vào muộn thiếu lịch sử đầy đủ thì ngữ cảnh không hợp lệ, không giả tạo lịch sử cả wave; dùng bảng cố định cho quyết định đó và thu mẫu mới từ wave kế.
 
 ### Ba trạng thái — tham số khởi đầu, chưa cân bằng
 
@@ -79,9 +83,9 @@ Nếu wave trước ở Relief, chỉ thoát khi `healthMin ≥ 0.50`, `damageRa
 
 Chế độ hai người dùng **cùng thuật toán**, chỉ tổng hợp dữ liệu đội; không thêm mô hình học hoặc số hạng công bằng. Không tăng áp lực chỉ vì một người mạnh khi đồng đội sắp gục.
 
-Tầng an toàn luôn áp dụng cho Fixed và Adaptive: tối đa 40 suất quái kể cả con tách; điểm sinh cách mọi người sống ít nhất 3 đơn vị; giữ Duration; thiếu điểm sinh thì bỏ lượt/chờ lượt sau; không sửa ScriptableObject trong ván. Lỗi/cấu hình không hợp lệ thì dùng WaveSpec baseline hợp lệ và ghi lý do fallback.
+Tầng an toàn luôn áp dụng cho Fixed và Adaptive: tối đa 40 suất quái kể cả con tách; điểm sinh cách mọi người sống ít nhất 3 đơn vị; giữ Duration; thiếu điểm sinh thì bỏ lượt/chờ lượt sau; không sửa ScriptableObject trong ván. Thiếu dữ liệu/luật hoặc đầu ra thích ứng không hợp lệ thì dùng WaveSpec baseline hợp lệ và ghi lý do fallback. Nếu chính baseline không hợp lệ thì host dừng ván an toàn, không tự dựng một wave từ cấu hình lỗi.
 
-HUD nên giải thích hành động cụ thể, ví dụ “Đạo diễn: giãn nhịp sinh để hỗ trợ đồng đội”. CSV dự kiến thêm nguồn, trạng thái, ba đầu vào, lý do, baseline/chỉ số áp dụng và fallback. **Hiện chưa triển khai các trường AI này**, không dùng CSV cũ để chứng minh đạo diễn đã hoạt động.
+HUD đã giải thích hành động/lý do ở phía trên thanh máu góc dưới trái; **F3** mở ngữ cảnh, nguồn, lý do và fallback. Thiếu ngữ cảnh được ghi rõ, không hiển thị như người chơi có 0% HP. CSV **schema 2** thêm `directors.csv` với một quyết định mỗi wave, gồm mode, trạng thái, ba đầu vào, lý do, baseline/chỉ số áp dụng và fallback; `waves.csv` gắn quyết định wave, `runs.csv` tổng hợp nguồn và số quyết định thực. Nguồn phân biệt bảng cố định, luật thích ứng và fallback, không giả gắn mọi ván chọn Adaptive là đã thích ứng. Không dùng CSV cũ để chứng minh AI mới; hướng dẫn đọc và kiểm chứng tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md).
 
 `clearTime` bị bỏ khỏi đầu vào: wave tính giờ luôn hết sau Duration nên thời gian hoàn thành không đo hiệu quả tiêu diệt. Không đặt mục tiêu ép người chơi mất 15–25% HP.
 
@@ -114,6 +118,8 @@ Tổng kết bằng tỉ lệ hoàn thành, số lần hạ gục, tổn thất 
 | 3 | T-49: thống kê cuối ván; T-50/T-51: cân bằng ván cho người mới | Kang / Kiệt |
 | 4 | T-55: build Windows đầy đủ; kiểm thử hai máy/Internet và ghi video | Chưa phân công |
 | 5 | T-53/T-54/T-59: thu dữ liệu, báo cáo, slide và diễn tập | Kiệt / nhóm |
+
+Chặng đạo diễn đã có mã và các kiểm thử tích hợp nêu ở mục 2; trạng thái hoàn tất hạng mục lấy [TASKS.md](TASKS.md) cùng bằng chứng tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md). Công việc còn lại vẫn ưu tiên nghiệm thu Internet, menu/mất kết nối, cân bằng và build bàn giao; không mở lại phạm vi thương mại.
 
 Hung ưu tiên kiểm tra/hồi quy hệ thống thẻ sẵn có và cùng hiểu luồng mạng; không bắt buộc phát triển tám tiến hoá. Việc nhận thêm mã ngoài thư mục sở hữu vẫn cần nhóm thống nhất. T-33/T-47 chỉ hoàn thiện icon/silhouette thiết yếu nếu còn thời gian; không làm lại hệ thống mỹ thuật.
 

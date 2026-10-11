@@ -78,6 +78,8 @@ namespace LAC.Player
                 (_character != null && _character.Upgrades != null ? _character.Upgrades.HitInvulnerabilityMultiplier : 1f);
 
             RunManager.Instance?.Telemetry?.Damage(_character, healthLost);
+            // Đòn chí tử cũng phải được ghi trước ReportPlayerDown kết thúc ván.
+            RunManager.Instance?.RecordDirectorDamage(_character, healthLost);
             if (_health == 0 && RunManager.Instance != null)
                 RunManager.Instance.ReportPlayerDown();
 

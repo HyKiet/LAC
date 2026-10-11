@@ -136,6 +136,7 @@ namespace LAC.Core
         public void ResetForConnection()
         {
             Telemetry?.Finish("aborted");
+            ResetDirectorForConnection();
             _alivePlayers = 0;
             _currentWave = 0;
             _state = RunState.Idle;
@@ -155,6 +156,8 @@ namespace LAC.Core
         {
             _alivePlayers++;
             if (_state == RunState.Idle) StartRun();
+            else if (_state == RunState.WaveActive || _state == RunState.CardSelection)
+                _directorContext.RefreshParticipants();
         }
 
         /// <summary>Ghi nhận một người chơi rời ván. Chỉ host được gọi.</summary>
@@ -186,6 +189,7 @@ namespace LAC.Core
 
             ResetCardSelections();
 
+            BeginDirectorRun();
             BeginTelemetry();
             StartWave(1);
         }
@@ -207,6 +211,8 @@ namespace LAC.Core
             if (_state != RunState.WaveActive) return;
             if (IsTimedWave && WaveSecondsRemaining > 0f) return;
 
+            // Snapshot trước thẻ hồi máu/tăng MaxHP và trước hồi máu đầu wave kế tiếp.
+            CaptureDirectorContext();
             if (IsTimedWave)
             {
                 PoolRegistry.ReleaseAllExcept<SoulPickup>();
@@ -307,6 +313,19 @@ namespace LAC.Core
         [Server]
         private void StartWave(int waveIndex)
         {
+            PrepareDirectorWave(waveIndex);
+            if (!CurrentDirectorDecision.IsApplicable)
+            {
+                // Không có baseline hợp lệ để fallback: kết thúc thay vì sinh dữ liệu lỗi.
+                _currentWave = waveIndex;
+                _waveDuration = 0f;
+                _waveEndsAt = 0d;
+                Telemetry?.StartWave(waveIndex);
+                Telemetry?.RecordDirectorDecision(CurrentDirectorDecision, waveIndex, _waves != null ? _waves.name : "");
+                EndRun(false);
+                Debug.LogWarning("[Director] Không thể bắt đầu wave: " + CurrentDirectorDecision.FallbackReason, this);
+                return;
+            }
             if (waveIndex > 1)
                 foreach (PlayerCharacter player in PlayerRegistry.All)
                     if (player != null && player.IsAlive && player.Upgrades.WaveHeal > 0)
@@ -315,12 +334,15 @@ namespace LAC.Core
             _waveDuration = _waves != null ? _waves.DurationFor(waveIndex) : 0f;
             _waveEndsAt = NetworkTime.time + _waveDuration;
             Telemetry?.StartWave(waveIndex);
+            Telemetry?.RecordDirectorDecision(CurrentDirectorDecision, waveIndex, _waves != null ? _waves.name : "");
+            _directorContext.BeginWave();
             _state = RunState.WaveActive;
         }
 
         [Server]
         private void EndRun(bool victory)
         {
+            CaptureDirectorContext();
             Telemetry?.Finish(victory ? "victory" : "defeat");
             _state = victory ? RunState.Victory : RunState.Defeat;
         }

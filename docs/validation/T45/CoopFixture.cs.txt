@@ -1,0 +1,137 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using LAC.Core;
+using LAC.Player;
+using LAC.Combat;
+using LAC.Enemies;
+using LAC.Director;
+using UnityEngine;
+
+public static class ControlledDirectorTeamFixture
+{
+    private const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+    private static string _result = "RUNNING";
+    private static int _checks;
+    private static RunManager _run;
+    private static PlayerCharacter Archer => PlayerRegistry.All.First(p => p.CharacterId == CharacterId.Archer);
+    public static string Main() { Run(); return _result; }
+
+    private static async void Run()
+    {
+        var waves = UnityEngine.Object.FindAnyObjectByType<WaveManager>();
+        bool enabled = waves.enabled;
+        try
+        {
+            _run = RunManager.Instance;
+            await Players(2);
+            waves.enabled = false;
+            EnemySpawner.Instance.ResetRun();
+            foreach (var p in PlayerRegistry.All) Restore(p);
+            _run.StartRun(450246);
+            var archer = Archer;
+            Hit(archer, 5);
+            Clear();
+            DamageSystem.HealPlayer(archer, 100);
+            await Next();
+            Check(_run.DirectorState == DirectorState.Relief && Close(_run.DirectorHealthMin, 1f/6f), "Weakest teammate snapshot before heal");
+            Check(Close(_run.DirectorDamageRatioMax, 5f/6f), "Actual damage not HP delta");
+            Command("probe controlled-relief");
+            await Task.Delay(500);
+
+            foreach (var p in PlayerRegistry.All)
+                p.GetComponent<PlayerMovement>().ServerRespawn(new Vector2(4, p == archer ? .6f : 0f));
+            await Task.Delay(400);
+            Hit(archer, 999);
+            Check(!archer.IsAlive && _run.State == RunState.WaveActive, "Only teammate down; host keeps running");
+            await Revived(archer);
+            int reviveHp = archer.GetComponent<PlayerHealth>().Health;
+            Hit(archer, 999);
+            await Revived(archer);
+            Clear();
+            var previous = (DirectorContext)typeof(RunManager).GetField("_previousDirectorContext", Private).GetValue(_run);
+            Check(previous.Downs == 2 && Close(previous.DamageRatioMaxRaw, (6f+reviveHp)/6f), "Two real revives/down events, raw damage > 100%");
+            var row = LAC.Director.Editor.TelemetryChecks.Read(Path.Combine(_run.Telemetry.DirectoryPath,"waves.csv"))
+                .First(x => x["wave"] == "2" && x["character"] == "Archer");
+            Check(row["downs"] == "2" && row["revives"] == "2", "Telemetry agrees real revival counters");
+
+            HoldCards();
+            Command("leave controlled-cards");
+            await Players(1);
+            await Next();
+            Check(_run.DirectorHealthMin == 1f && _run.DirectorDowns == 2 && _run.DirectorDamageRatioMax > 1f, "Leave during cards excludes weakest HP, keeps actual wave history");
+            Command("join controlled-midwave");
+            await Players(2);
+            Protect(Archer);
+            Clear();
+            await Next();
+            Check(_run.DirectorSource == "fixed_fallback" && _run.DirectorFallbackReason == "incomplete_late_join" && !_run.DirectorContextValid, "Midwave late join uses fixed fallback");
+            Command("probe controlled-fallback");
+            await Task.Delay(500);
+            Clear();
+            await Next();
+            Check(_run.DirectorState == DirectorState.Variety && _run.DirectorContextValid, "Full next wave restores valid team context");
+
+            Clear();
+            HoldCards();
+            Command("leave controlled-cards2");
+            await Players(1);
+            Command("join controlled-cards2");
+            await Players(2);
+            Protect(Archer);
+            await Next();
+            Check(_run.CurrentWave == 6 && _run.DirectorSource == "fixed_fallback" && _run.DirectorFallbackReason == "incomplete_late_join", "Join during cards cannot invent previous-wave history");
+            Command("probe controlled-cards-fallback");
+            await Task.Delay(500);
+            string path = _run.Telemetry.DirectoryPath;
+            Mirror.NetworkManager.singleton.StopHost();
+            string csv = LAC.Director.Editor.TelemetryChecks.ValidateDirectorCsv(path,DirectorMode.Adaptive,6);
+            _result = "ALL PASSED: " + _checks + " controlled team assertions; 2 editors/100ms; weak HP, actual damage, 2 real revives, raw>1, leave/cards/midwave join, fallback/recovery. Context fixture disables WaveManager and extends card deadline; NOT balance/WAN.\nCSV=" + path + "\n" + csv;
+            File.WriteAllText("Logs/T45-team-controlled.txt",_result);
+            Debug.Log("[ControlledDirectorTeam] "+_result);
+        }
+        catch(Exception e) { _result=e.ToString(); File.WriteAllText("Logs/T45-team-controlled.txt",_result); Debug.LogException(e); }
+        finally { if(waves!=null) waves.enabled=enabled; }
+    }
+
+    private static async Task Players(int count)
+    {
+        double limit=UnityEditor.EditorApplication.timeSinceStartup+12;
+        while(PlayerRegistry.Count!=count && UnityEditor.EditorApplication.timeSinceStartup<limit) await Task.Delay(100);
+        Check(PlayerRegistry.Count==count,"Network roster="+count);
+    }
+    private static async Task Revived(PlayerCharacter p)
+    {
+        double limit=UnityEditor.EditorApplication.timeSinceStartup+10;
+        while(!p.IsAlive && UnityEditor.EditorApplication.timeSinceStartup<limit) await Task.Delay(100);
+        Check(p.IsAlive,"Real 3 second revival");
+        Protect(p);
+    }
+    private static void Restore(PlayerCharacter p)
+    {
+        typeof(PlayerHealth).GetMethod("ServerRestore",Private).Invoke(p.GetComponent<PlayerHealth>(),null);
+        p.GetComponent<WeaponAuto>().enabled=false;
+        p.GetComponent<PlayerMovement>().enabled=false;
+        Protect(p);
+    }
+    private static void Protect(PlayerCharacter p) => typeof(PlayerHealth).GetField("_invulnerableUntil",Private).SetValue(p.GetComponent<PlayerHealth>(),Time.time+1000f);
+    private static void Hit(PlayerCharacter p,int amount)
+    {
+        typeof(PlayerHealth).GetField("_invulnerableUntil",Private).SetValue(p.GetComponent<PlayerHealth>(),0f);
+        Check(DamageSystem.ApplyToPlayer(p,amount,Vector2.zero),"Accepted actual damage");
+        Protect(p);
+    }
+    private static void Clear()
+    {
+        typeof(RunManager).GetField("_waveEndsAt",Private).SetValue(_run,Mirror.NetworkTime.time-1);
+        _run.ReportWaveCleared();
+        Check(_run.State==RunState.CardSelection,"Timed clear enters cards");
+    }
+    private static void HoldCards() => typeof(RunManager).GetField("_cardDeadline",Private).SetValue(_run,Mirror.NetworkTime.time+300);
+    private static async Task Next() { _run.ReportCardSelectionComplete(); await Task.Delay(300); Check(_run.State==RunState.WaveActive,"Next wave"); }
+    private static void Command(string command) => File.WriteAllText("Logs/T45-command.txt",command);
+    private static bool Close(float a,float b)=>Mathf.Abs(a-b)<.001f;
+    private static void Check(bool pass,string message) { _checks++; if(!pass) throw new Exception("ControlledTeam: "+message); }
+}

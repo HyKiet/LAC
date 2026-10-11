@@ -34,8 +34,9 @@ namespace LAC.Director
 
         private static void Connect(Scene scene, LoadSceneMode mode)
         {
-            SceneManager.sceneLoaded -= Connect;
             var manager = FindAnyObjectByType<NetworkManagerLAC>();
+            if (manager == null) return;
+            SceneManager.sceneLoaded -= Connect;
             typeof(NetworkManagerLAC).GetField("_autoStartHost", Private).SetValue(manager, false);
             manager.networkAddress = "localhost";
             var args = Environment.GetCommandLineArgs();
@@ -61,6 +62,10 @@ namespace LAC.Director
             var run = RunManager.Instance;
             string state = "connected=" + NetworkClient.isConnected + " host=" + NetworkServer.active;
             if (run != null) state += " wave=" + run.CurrentWave + " total=" + run.TotalWaves + " state=" + run.State + " telemetry=" + (run.Telemetry != null);
+            if (run != null) state += " mode=" + run.DirectorMode + " director=" + run.DirectorState +
+                " source=" + run.DirectorSource + " hpMin=" + run.DirectorHealthMin.ToString("F3") +
+                " damage=" + run.DirectorDamageRatioMax.ToString("F3") + " downs=" + run.DirectorDowns +
+                " context=" + run.DirectorContextValid + " fallback=" + run.DirectorFallbackReason;
             if (_arenaVisuals != null) state += " stage=" + _arenaVisuals.CurrentStage;
             foreach (var p in PlayerRegistry.All)
                 state += " | " + p.netId + " hp=" + p.GetComponent<PlayerHealth>().Health
@@ -89,6 +94,13 @@ namespace LAC.Director
                 Debug.Log("[TimedProbe] seed=" + run.Seed + " wave=" + run.CurrentWave + " state=" + run.State
                     + " duration=" + run.WaveDuration + " remaining=" + run.WaveSecondsRemaining.ToString("F2")
                     + " enemies=" + LAC.Enemies.EnemyRegistry.Count + " snapshots=" + LAC.Enemies.EnemySpawner.Instance.ReceivedSnapshots);
+                var hud = FindAnyObjectByType<LAC.UI.DirectorHud>();
+                Debug.Log("[DirectorClientProbe] mode=" + run.DirectorMode + " state=" + run.DirectorState +
+                    " source=" + run.DirectorSource + " reason=" + run.DirectorReason +
+                    " hpMin=" + run.DirectorHealthMin.ToString("F3") + " damage=" + run.DirectorDamageRatioMax.ToString("F3") +
+                    " downs=" + run.DirectorDowns + " context=" + run.DirectorContextValid +
+                    " fallback=" + run.DirectorFallbackReason + " hud=" + (hud != null && hud.IsVisible) +
+                    " title=" + (hud != null ? hud.Headline : "") + " rejectedModeChange=" + !run.TrySetDirectorMode(DirectorMode.Fixed));
             }
             Debug.Log("[TelemetryClient] command=" + command);
         }

@@ -1,0 +1,77 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using LAC.Core;
+using LAC.Player;
+using LAC.Combat;
+using LAC.Director;
+using UnityEngine;
+
+public static class DirectorFixedSessionFixture
+{
+    private const BindingFlags Private=BindingFlags.Instance|BindingFlags.NonPublic;
+    private static int _checks;
+    public static string Main() { Run(); return "RUNNING Fixed/Adaptive separate sessions"; }
+    private static async void Run()
+    {
+        try
+        {
+            Mirror.NetworkManager.singleton.StopHost();
+            var ui=UnityEngine.Object.FindAnyObjectByType<LAC.UI.CharacterSelection>();
+            ui.SelectDirectorMode(DirectorMode.Fixed);
+            Check(ui.SelectedDirectorMode==DirectorMode.Fixed,"Before-run mode choice");
+            ui.BeginHost();
+            await Ready();
+            var run=RunManager.Instance;
+            var p=PlayerRegistry.All.First();
+            p.GetComponent<WeaponAuto>().enabled=false;
+            LAC.Enemies.EnemySpawner.Instance.ResetRun();
+            typeof(PlayerHealth).GetMethod("ServerRestore",Private).Invoke(p.GetComponent<PlayerHealth>(),null);
+            Protect(p);
+            run.StartRun(450247);
+            await Task.Delay(200);
+            Check(run.DirectorMode==DirectorMode.Fixed,"Actual mode Fixed");
+            typeof(PlayerHealth).GetField("_invulnerableUntil",Private).SetValue(p.GetComponent<PlayerHealth>(),0f);
+            Check(DamageSystem.ApplyToPlayer(p,8,Vector2.zero),"Actual damage 8/10");
+            Protect(p);
+            typeof(RunManager).GetField("_waveEndsAt",Private).SetValue(run,Mirror.NetworkTime.time-1);
+            run.ReportWaveCleared();
+            run.ReportCardSelectionComplete();
+            await Task.Delay(500);
+            Check(run.DirectorSource=="fixed_table" && run.DirectorState==DirectorState.Balanced,"Fixed never adapts to weak HP");
+            Check(Mathf.Abs(run.DirectorHealthMin-.2f)<.001f && Mathf.Abs(run.DirectorDamageRatioMax-.8f)<.001f,"Fixed still records actual context");
+            Check(Mathf.Abs(run.CurrentDirectorDecision.Applied.SpawnInterval-1.4f)<.001f,"Fixed wave2 interval unchanged");
+            Check(!run.TrySetDirectorMode(DirectorMode.Adaptive),"Mode cannot change while connected");
+            var hud=UnityEngine.Object.FindAnyObjectByType<LAC.UI.DirectorHud>();
+            Check(hud.IsVisible && hud.Headline.Contains("CỐ ĐỊNH"),"Fixed HUD matches host");
+            string directory=run.Telemetry.DirectoryPath;
+            typeof(PlayerHealth).GetField("_invulnerableUntil",Private).SetValue(p.GetComponent<PlayerHealth>(),0f);
+            DamageSystem.ApplyToPlayer(p,999,Vector2.zero);
+            Check(run.State==RunState.Defeat,"Defeat finishes fixed session");
+            Check(LAC.Director.Editor.TelemetryChecks.ValidateDirectorCsv(directory,DirectorMode.Fixed,2).StartsWith("ALL PASSED"),"Fixed CSV/source");
+            run.RestartRun();
+            Check(run.DirectorMode==DirectorMode.Fixed && run.DirectorState==DirectorState.Balanced && !run.DirectorContextValid,"Restart retains Fixed and resets context");
+            Mirror.NetworkManager.singleton.StopHost();
+            ui.SelectDirectorMode(DirectorMode.Adaptive);
+            Check(ui.SelectedDirectorMode==DirectorMode.Adaptive,"Change between disconnected sessions");
+            ui.BeginHost();
+            await Ready();
+            foreach(var hero in PlayerRegistry.All) Protect(hero);
+            Check(RunManager.Instance.DirectorMode==DirectorMode.Adaptive,"Next session actually Adaptive");
+            string result="ALL PASSED: "+_checks+" Fixed/session assertions; real host baseline spawn, actual context, HUD, CSV, defeat/restart, reject in-run mode changes, then new Adaptive session.\nCSV="+directory;
+            File.WriteAllText("Logs/T45-fixed.txt",result);
+            Debug.Log("[DirectorFixed] "+result);
+        }
+        catch(Exception e) { File.WriteAllText("Logs/T45-fixed.txt",e.ToString()); Debug.LogException(e); }
+    }
+    private static async Task Ready()
+    {
+        double limit=UnityEditor.EditorApplication.timeSinceStartup+12;
+        while((PlayerRegistry.Count!=1 || RunManager.Instance.State!=RunState.WaveActive) && UnityEditor.EditorApplication.timeSinceStartup<limit) await Task.Delay(100);
+        Check(PlayerRegistry.Count==1 && RunManager.Instance.State==RunState.WaveActive,"Host player ready");
+    }
+    private static void Protect(PlayerCharacter p)=>typeof(PlayerHealth).GetField("_invulnerableUntil",Private).SetValue(p.GetComponent<PlayerHealth>(),Time.time+1000f);
+    private static void Check(bool ok,string message) { _checks++; if(!ok) throw new Exception("FixedFixture: "+message); }
+}

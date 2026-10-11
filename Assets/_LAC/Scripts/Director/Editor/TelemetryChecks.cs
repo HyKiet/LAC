@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -114,6 +115,56 @@ namespace LAC.Director.Editor
         private static void Check(bool condition, string message)
         {
             if (!condition) throw new Exception("T43: " + message);
+        }
+
+        /// <summary>Kiểm tra CSV đã flush/đóng của fixture gameplay; không tạo log AI giả.</summary>
+        public static string ValidateDirectorCsv(string directory, DirectorMode mode, int expectedDecisions = -1)
+        {
+            var decisions = Read(Path.Combine(directory, "directors.csv"));
+            var waves = Read(Path.Combine(directory, "waves.csv"));
+            var runs = Read(Path.Combine(directory, "runs.csv"));
+            var events = Read(Path.Combine(directory, "events.csv"));
+            void Require(bool condition, string message)
+            {
+                if (!condition) throw new Exception("T46: " + message);
+            }
+            Require(decisions.Count > 0, "No real director decisions recorded");
+            if (expectedDecisions >= 0) Require(decisions.Count == expectedDecisions, "Missing or extra decisions");
+            Require(decisions.Select(d => d["wave"]).Distinct().Count() == decisions.Count, "Decision repeated in a wave");
+            Require(events.Count(e => e["event"] == "director_decision") == decisions.Count, "Decision events and rows disagree");
+            Require(decisions.All(d => d["schema"] == "2" && d["mode"] == mode.ToString()), "Mode changed or wrong schema");
+            foreach (var d in decisions)
+            {
+                Require(d["baseline_duration"] == d["applied_duration"], "Director changed wave duration");
+                Require(d["source"] == "adaptive_rules" || d["source"] == "fixed_table" || d["source"] == "fixed_fallback", "Unknown source");
+                if (mode == DirectorMode.Fixed) Require(d["source"] != "adaptive_rules", "Fixed labeled as AI");
+                int wave = int.Parse(d["wave"], CultureInfo.InvariantCulture);
+                if (wave == 1 || wave == 10) Require(d["source"] == "fixed_table", "Opening/boss wave modified");
+                if (d["source"] == "adaptive_rules") Require(d["context_valid"] == "1" && d["fallback_reason"] == "", "AI used invalid context");
+                if (d["source"] == "fixed_fallback") Require(d["fallback_reason"].Length > 0, "Fallback reason omitted");
+                if (d["context_valid"] == "1")
+                {
+                    double raw = double.Parse(d["damage_ratio_max_raw"], CultureInfo.InvariantCulture);
+                    double clamped = double.Parse(d["damage_ratio_max"], CultureInfo.InvariantCulture);
+                    Require(Math.Abs(Math.Max(0d, Math.Min(1d, raw)) - clamped) < .00001d, "Raw damage ratio/clamp mismatch");
+                }
+                foreach (var w in waves.Where(w => w["wave"] == d["wave"]))
+                    Require(w["mode"] == d["mode"] && w["source"] == d["source"]
+                        && w["director_state"] == d["director_state"] && w["applied_interval"] == d["applied_interval"], "Wave summary disagrees with decision");
+                foreach (var e in events.Where(e => e["event"] == "wave_spec" && e["wave"] == d["wave"]))
+                    Require(e["detail"].Contains("source=" + d["source"] + ";"), "Actual spawn spec source disagrees");
+            }
+            string sources = string.Join("|", decisions.Select(d => d["source"]).Distinct().OrderBy(s => s, StringComparer.Ordinal));
+            int adaptive = decisions.Count(d => d["source"] == "adaptive_rules");
+            int fallback = decisions.Count(d => d["fallback_reason"].Length > 0);
+            foreach (var r in runs)
+            {
+                Require(r["mode"] == mode.ToString() && r["source"] == sources, "Run source ignores decision history");
+                Require(r["director_decisions"] == decisions.Count.ToString() && r["adaptive_decisions"] == adaptive.ToString()
+                    && r["fallback_decisions"] == fallback.ToString(), "Run decision counters disagree");
+                Require(r["health_min"] == "" && r["director_state"] == "", "Run labeled with one wave context");
+            }
+            return "ALL PASSED (T46 CSV: " + decisions.Count + " decisions, " + adaptive + " adaptive, " + fallback + " fallback)";
         }
 
         // Đọc CSV có dấu phẩy, dấu nháy và newline trong ô; dùng cả cho kiểm tra bằng MCP.

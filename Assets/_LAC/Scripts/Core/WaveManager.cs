@@ -167,6 +167,7 @@ namespace LAC.Core
 
             var stream = new RandomStream(RunRandom.Seed, "wave" + waveIndex);
             WaveSpec spec = _table.BuildSpec(waveIndex, stream);
+            if (isServer) spec = RunManager.Instance.GetHostWaveSpec(waveIndex, spec);
             _timed = spec.Duration > 0f;
             if (isServer) RunManager.Instance.Telemetry?.RecordWaveSpec(spec, _table.name);
             if (_timed && !isServer) return;
@@ -254,7 +255,7 @@ namespace LAC.Core
             int reserved = next.PopulationCost;
             foreach (var enemy in EnemyRegistry.Alive)
                 if (enemy != null && enemy.IsAlive) reserved += enemy.Data.PopulationCost;
-            return reserved <= _table.MaxConcurrent;
+            return reserved <= Mathf.Min(LAC.Director.SafetyConstraints.MaxConcurrent, _table.MaxConcurrent);
         }
 
         private bool TrySafePosition(Vector2 candidate, out Vector2 safe)
@@ -266,7 +267,8 @@ namespace LAC.Core
                 bool clear = true;
                 foreach (var player in PlayerRegistry.All)
                     if (player != null && player.IsAlive && ((Vector2)player.transform.position - safe).sqrMagnitude <
-                        _table.SafeSpawnDistance * _table.SafeSpawnDistance)
+                        Mathf.Max(LAC.Director.SafetyConstraints.MinimumSpawnDistance, _table.SafeSpawnDistance) *
+                        Mathf.Max(LAC.Director.SafetyConstraints.MinimumSpawnDistance, _table.SafeSpawnDistance))
                     { clear = false; break; }
                 if (clear) return true;
             }

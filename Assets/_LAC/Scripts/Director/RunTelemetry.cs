@@ -17,6 +17,7 @@ namespace LAC.Core
         public override void OnStopServer()
         {
             Telemetry?.Finish("aborted");
+            ResetDirectorForConnection();
             base.OnStopServer();
         }
 

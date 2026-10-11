@@ -14,6 +14,8 @@ namespace LAC.Director
     /// <summary>Một bộ CSV cho mỗi ván, chỉ được tạo bởi host.</summary>
     public sealed class TelemetrySession
     {
+        public const int SchemaVersion = 2;
+
         private sealed class Counters
         {
             internal int Hits, Damage, Downs, Revives, Dashes;
@@ -33,11 +35,15 @@ namespace LAC.Director
 
         private readonly RunManager _run;
         private readonly List<Participant> _players = new List<Participant>(2);
-        private TelemetryCsv _events, _waves, _runs;
+        private TelemetryCsv _events, _waves, _runs, _directors;
         private readonly string _id = Guid.NewGuid().ToString("N");
         private readonly string _startedUtc = DateTime.UtcNow.ToString("O");
         private readonly double _startedAt = Time.unscaledTimeAsDouble;
         private readonly int _seed;
+        private readonly DirectorMode _mode;
+        private readonly SortedSet<string> _sources = new SortedSet<string>(StringComparer.Ordinal);
+        private DirectorDecision _waveDecision;
+        private int _decisionWave, _decisions, _adaptiveDecisions, _fallbackDecisions;
         private int _wave, _sequence, _kills, _waveKills, _waveSouls;
         private uint _waveDrums;
         private double _waveStartedAt, _nextFlush;
@@ -62,6 +68,7 @@ namespace LAC.Director
         {
             _run = run;
             _seed = run.Seed;
+            _mode = run.DirectorMode;
             Safe(() =>
             {
                 DirectoryPath = Path.Combine(root, _id);
@@ -72,10 +79,21 @@ namespace LAC.Director
                     "duration_s", "run_players_start", "run_players_peak", "players_end", "waves_cleared", "team_kills", "team_souls", "team_drum_uses",
                     "player_id", "character", "connected", "exposure_s", "health_start", "max_health_start", "health_end", "max_health_end",
                     "hits_taken", "health_lost", "downs", "revives", "dashes" };
-                _waves = new TelemetryCsv(Path.Combine(DirectoryPath, "waves.csv"), summaryHeader);
-                _runs = new TelemetryCsv(Path.Combine(DirectoryPath, "runs.csv"), summaryHeader);
+                object[] decisionHeader = { "mode", "director_state", "director_decisions", "adaptive_decisions", "fallback_decisions",
+                    "decision_reason", "fallback_reason", "context_valid", "health_min", "damage_ratio_max_raw", "damage_ratio_max",
+                    "context_downs", "connected_players", "participants", "late_joiners", "missing_context",
+                    "baseline_interval", "baseline_burst", "baseline_duration", "baseline_cycle_count", "baseline_mix", "baseline_directions",
+                    "applied_interval", "applied_burst", "applied_duration", "applied_cycle_count", "applied_mix", "applied_directions" };
+                var summaryColumns = new List<object>(summaryHeader);
+                summaryColumns.AddRange(decisionHeader);
+                _waves = new TelemetryCsv(Path.Combine(DirectoryPath, "waves.csv"), summaryColumns.ToArray());
+                _runs = new TelemetryCsv(Path.Combine(DirectoryPath, "runs.csv"), summaryColumns.ToArray());
+                var directorColumns = new List<object> { "schema", "run_id", "elapsed_s", "wave", "source", "table" };
+                directorColumns.AddRange(decisionHeader);
+                _directors = new TelemetryCsv(Path.Combine(DirectoryPath, "directors.csv"), directorColumns.ToArray());
             });
-            Event("run_started", value: _seed, detail: _startedUtc + ";build=" + Application.version + ";source=fixed_table");
+            Event("run_started", value: _seed, detail: _startedUtc + ";build=" + Application.version
+                + ";mode=" + _mode + ";source=pending_wave_decision");
             foreach (var player in PlayerRegistry.All) Join(player);
             _playersAtStart = ConnectedCount();
             if (!_failed) GameEvents.EnemyDied += OnEnemyDied;
@@ -112,6 +130,7 @@ namespace LAC.Director
             if (!IsRecording || wave <= 0 || _wave == wave) return;
             if (_wave > 0) EndWave("interrupted");
             _wave = wave; _waveStartedAt = Elapsed; _waveKills = 0;
+            _waveDecision = null;
             _waveSouls = _run.SoulsCollected; _waveDrums = _run.DrumActivations;
             foreach (var p in _players) if (p.Connected) BeginParticipantWave(p);
             Event("wave_started");
@@ -122,6 +141,8 @@ namespace LAC.Director
         {
             if (!IsRecording || _wave == 0 || spec == null) return;
             var detail = new StringBuilder(tableName);
+            detail.Append(";source=").Append(_waveDecision?.Source ?? "unrecorded");
+            detail.Append(";mode=").Append(_mode);
             detail.Append(";mix=");
             foreach (var group in spec.Mix)
                 if (group.Enemy != null) detail.Append(group.Enemy.name).Append(':').Append(group.Count).Append('|');
@@ -133,6 +154,25 @@ namespace LAC.Director
             detail.Append(";duration=").Append(spec.Duration.ToString("R", CultureInfo.InvariantCulture));
             detail.Append(";repeat=").Append(spec.Duration > 0f ? "1" : "0");
             Event("wave_spec", value: spec.TotalCount, detail: detail.ToString());
+        }
+
+        /// <summary>Ghi quyết định thật ở host, đúng một lần sau khi mở wave tương ứng.</summary>
+        public void RecordDirectorDecision(DirectorDecision decision, int wave, string tableName)
+        {
+            if (!NetworkServer.active || !IsRecording || decision == null || wave != _wave
+                || decision.WaveIndex != wave || _decisionWave == wave) return;
+            _decisionWave = wave;
+            _waveDecision = decision;
+            _decisions++;
+            if (decision.Source == "adaptive_rules" && !decision.IsFallback) _adaptiveDecisions++;
+            if (decision.IsFallback) _fallbackDecisions++;
+            _sources.Add(decision.Source ?? "unrecorded");
+            var cells = new List<object> { SchemaVersion, _id, Elapsed, wave, decision.Source, tableName };
+            AddDecisionCells(cells, decision);
+            Safe(() => _directors.Row(cells.ToArray()));
+            Event("director_decision", value: wave, detail: "mode=" + _mode + ";state=" + decision.State
+                + ";source=" + decision.Source + ";reason=" + decision.Reason + ";fallback=" + decision.FallbackReason);
+            Flush();
         }
 
         private void BeginParticipantWave(Participant p)
@@ -157,6 +197,7 @@ namespace LAC.Director
                 p.InWave = false;
             }
             _wave = 0;
+            _waveDecision = null;
             Flush();
         }
 
@@ -221,12 +262,12 @@ namespace LAC.Director
         private void Flush()
         {
             _nextFlush = Elapsed + 5;
-            Safe(() => { _events?.Flush(); _waves?.Flush(); _runs?.Flush(); });
+            Safe(() => { _events?.Flush(); _waves?.Flush(); _runs?.Flush(); _directors?.Flush(); });
         }
 
         private void Event(string kind, Participant p = null, int value = 0, string detail = "")
         {
-            Safe(() => _events.Row(1, _id, ++_sequence, Elapsed, _wave, kind,
+            Safe(() => _events.Row(SchemaVersion, _id, ++_sequence, Elapsed, _wave, kind,
                 p?.Id ?? 0, p?.Character ?? "", p?.Hp ?? 0, p?.MaxHp ?? 0, value, detail));
         }
 
@@ -234,11 +275,58 @@ namespace LAC.Director
             int wave, int kills, int souls, uint drums, double exposure, int startHp, int startMaxHp)
         {
             Snapshot(p);
-            Safe(() => writer.Row(1, _id, _startedUtc, Application.version,
-                Application.isEditor ? "editor" : Debug.isDebugBuild ? "development" : "release", "fixed_table", _seed,
+            string source = wave > 0 ? _waveDecision?.Source ?? "unrecorded"
+                : _sources.Count > 0 ? string.Join("|", _sources) : "unrecorded";
+            var cells = new List<object> { SchemaVersion, _id, _startedUtc, Application.version,
+                Application.isEditor ? "editor" : Debug.isDebugBuild ? "development" : "release", source, _seed,
                 wave, result, duration, _playersAtStart, _peakPlayers, ConnectedCount(), _clearedWaves, kills, souls, drums,
                 p.Id, p.Character, p.Connected ? 1 : 0, exposure, startHp, startMaxHp, p.Hp, p.MaxHp,
-                c.Hits, c.Damage, c.Downs, c.Revives, c.Dashes));
+                c.Hits, c.Damage, c.Downs, c.Revives, c.Dashes };
+            // Một ván không có một context chung; chỉ dòng wave chứa snapshot quyết định.
+            AddDecisionCells(cells, wave > 0 ? _waveDecision : null);
+            Safe(() => writer.Row(cells.ToArray()));
+        }
+
+        private void AddDecisionCells(List<object> cells, DirectorDecision decision)
+        {
+            DirectorContext context = decision != null ? decision.Context : default;
+            bool present = decision != null;
+            bool valid = present && context.IsValid;
+            cells.Add(_mode);
+            cells.Add(decision != null ? decision.State.ToString() : "");
+            cells.Add(_decisions); cells.Add(_adaptiveDecisions); cells.Add(_fallbackDecisions);
+            cells.Add(decision?.Reason ?? ""); cells.Add(decision?.FallbackReason ?? "");
+            cells.Add(decision != null ? (valid ? "1" : "0") : "");
+            cells.Add(present ? FiniteCell(context.HealthMin) : "");
+            cells.Add(present ? FiniteCell(context.DamageRatioMaxRaw) : "");
+            cells.Add(present ? FiniteCell(context.DamageRatioMax) : "");
+            cells.Add(present ? (object)context.Downs : "");
+            cells.Add(present ? (object)context.ConnectedPlayers : "");
+            cells.Add(present ? (object)context.Participants : "");
+            cells.Add(present ? (object)context.LateJoiners : "");
+            cells.Add(present ? context.MissingReason ?? "" : "");
+            AddSpecCells(cells, decision?.Baseline);
+            AddSpecCells(cells, decision?.Applied);
+        }
+
+        private static object FiniteCell(float value) => float.IsNaN(value) || float.IsInfinity(value) ? "" : (object)value;
+
+        private static void AddSpecCells(List<object> cells, WaveSpec spec)
+        {
+            cells.Add(spec != null ? (object)spec.SpawnInterval : "");
+            cells.Add(spec != null ? (object)spec.Burst : "");
+            cells.Add(spec != null ? (object)spec.Duration : "");
+            cells.Add(spec != null ? (object)spec.TotalCount : "");
+            var mix = new StringBuilder();
+            var directions = new StringBuilder();
+            if (spec != null)
+            {
+                foreach (var group in spec.Mix)
+                    if (group.Enemy != null) mix.Append(group.Enemy.name).Append(':').Append(group.Count).Append('|');
+                foreach (float direction in spec.Directions)
+                    directions.Append(direction.ToString("R", CultureInfo.InvariantCulture)).Append('|');
+            }
+            cells.Add(mix.ToString()); cells.Add(directions.ToString());
         }
 
         private static void Snapshot(Participant p)
@@ -275,7 +363,7 @@ namespace LAC.Director
 
         private void Close()
         {
-            foreach (var writer in new[] { _events, _waves, _runs })
+            foreach (var writer in new[] { _events, _waves, _runs, _directors })
             {
                 try { writer?.Dispose(); }
                 catch (Exception e) when (e is IOException || e is UnauthorizedAccessException || e is System.Security.SecurityException)
@@ -284,7 +372,7 @@ namespace LAC.Director
                     _failed = true;
                 }
             }
-            _events = _waves = _runs = null;
+            _events = _waves = _runs = _directors = null;
         }
     }
 }

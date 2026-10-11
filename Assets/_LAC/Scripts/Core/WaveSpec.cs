@@ -8,12 +8,9 @@ namespace LAC.Core
     /// những hướng nào.
     /// </summary>
     /// <remarks>
-    /// <b>Đây là ranh giới giữa nội dung đợt và việc thi hành đợt.</b> `WaveManager` chỉ biết
-    /// kiểu này, không biết ai đã sinh ra nó. Hiện chỉ có một nguồn là bảng đợt cố định
-    /// <see cref="WaveTable"/>; ở T-45 AI Đạo Diễn trở thành nguồn thứ hai, sinh cùng kiểu này
-    /// từ véc-tơ ngữ cảnh — xem docs/GDD.md mục 7.3, nơi đầu ra của đạo diễn được đặc tả đúng
-    /// bằng bốn trường dưới đây. Nhờ vậy T-45 không phải sửa một dòng nào trong `WaveManager`,
-    /// và T-53 đổi qua lại giữa hai nguồn chỉ bằng cách đổi nguồn cấp đặc tả.
+    /// <b>Ranh giới giữa nội dung và thi hành.</b> WaveTable cấp baseline; RunDirector chọn
+    /// bảng cố định hoặc đặc tả từ luật/FSM trên host. WaveManager lấy Applied qua
+    /// RunManager.GetHostWaveSpec, giữ cùng một scheduler cho cả hai chế độ.
     ///
     /// Đặc tả là dữ liệu thuần. Boss dựng từ seed trên hai máy. Đợt tính giờ chỉ host
     /// thi hành các lượt sinh hợp lệ, client nhận sự kiện spawn và snapshot roster.

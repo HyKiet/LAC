@@ -34,7 +34,7 @@ namespace LAC.Core
         /// <summary>Kênh vật phẩm rơi ra: Hồn và các vật phẩm khác.</summary>
         public static RandomStream Loot { get; private set; }
 
-        /// <summary>Kênh AI Đạo Diễn: thăm dò trong thuật toán LinUCB.</summary>
+        /// <summary>Kênh AI Đạo Diễn; các quyết định theo wave dùng RandomStream riêng cùng seed.</summary>
         public static RandomStream Director { get; private set; }
 
         /// <summary>Seed của ván hiện tại. Host sinh ra, client nhận qua đồng bộ.</summary>

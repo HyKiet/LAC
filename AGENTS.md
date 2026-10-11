@@ -24,7 +24,7 @@ Diễn giải đầy đủ ở mục 3 của CLAUDE.md.
 
 ## Phạm vi đồ án — quyết định 11/10/2026
 
-Giảng viên yêu cầu online multiplayer, có AI và yếu tố riêng; người dùng xác nhận không bắt buộc học máy/LinUCB hoặc mẫu 30 người. Đọc [docs/THESIS_SCOPE.md](docs/THESIS_SCOPE.md) trước khi thêm tính năng. AI mục tiêu là đạo diễn dựa trên luật + FSM ba trạng thái, chưa triển khai. Giữ 12 thẻ, Trống Đồng/Hồn và một arena. Không tự mở lại Steam, Ngọc/mở khoá, tám tiến hoá hoặc ba tileset. Multiplayer vẫn phải nghiệm thu hai máy qua Internet, không thay bằng localhost/LAN.
+Giảng viên yêu cầu online multiplayer, có AI và yếu tố riêng; người dùng xác nhận không bắt buộc học máy/LinUCB hoặc mẫu 30 người. Đọc [docs/THESIS_SCOPE.md](docs/THESIS_SCOPE.md) trước khi thêm tính năng. Đạo diễn dựa trên luật + FSM ba trạng thái đã có mã T-45/T-45B/T-46; bằng chứng và giới hạn nghiệm thu tại [docs/DIRECTOR_TESTS.md](docs/DIRECTOR_TESTS.md). Giữ 12 thẻ, Trống Đồng/Hồn và một arena. Không tự mở lại Steam, Ngọc/mở khoá, tám tiến hoá hoặc ba tileset. Multiplayer vẫn phải nghiệm thu hai máy qua Internet, không thay bằng localhost/LAN.
 
 ## Đang ở đâu
 
@@ -35,6 +35,7 @@ Cổng 1 đã xong: vòng lặp một ván chạy được đầu-cuối — di 
 - Người chơi chọn **Warrior / Archer / Lancer** trước trận, dùng TinySwords vàng/xanh/tím. Cô Hồn dùng Orc. Ván có 10 đợt: 9 đợt sinh tồn tính giờ 20–60s, boss ở đợt 10; rìa sân chỉ còn đá, đổi sắc ở đợt 4 và 7. Xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md).
 - Mỹ thuật T-18 vẫn có tại `Data/Animations/ThachSanh.asset` và `CoHon.asset` để tham khảo; người chơi hiện dùng bộ ba TinySwords theo quyết định 07/10/2026.
 - T-22/T-23 đã có chọn thẻ 10 giây và đồng bộ co-op; đã gỡ cơ chế tự sang đợt sau 1.5 giây. Kiểm thử: [docs/CARD_TESTS.md](docs/CARD_TESTS.md)
+- Chọn **Cố định / Thích ứng** trước kết nối; host chốt chế độ, Restart giữ chế độ phòng. `Director/AIDirector.cs` dùng luật từ `DirectorRules.asset` trước wave 2–9; `ContextAggregator` đóng băng HP cuối wave trước thẻ/hồi máu. Host dùng đặc tả đó trong `WaveManager`, client chỉ nhận sự kiện sinh và HUD. **F3** mở lý do/ngữ cảnh/fallback; CSV schema 2 thêm `directors.csv`. Không dùng CSV cũ làm bằng chứng AI mới.
 
 ## Nhận việc thế nào
 

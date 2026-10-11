@@ -1,0 +1,2 @@
+ALL PASSED: 15 Fixed/session assertions; real host baseline spawn, actual context, HUD, CSV, defeat/restart, reject in-run mode changes, then new Adaptive session.
+CSV=C:/Users/LEGION/AppData/LocalLow/DefaultCompany/My project\Telemetry\098e77f4f8be4ea3878cce5fca7ca5e7

@@ -31,7 +31,7 @@ LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, �
 
 > **Quyết định 11/10/2026: chỉ làm đồ án tốt nghiệp, không phát hành game.** Yêu cầu giảng viên đã biết: online multiplayer, có AI, có yếu tố mới lạ. Người dùng xác nhận không bắt buộc học máy/LinUCB hoặc 30 người thực nghiệm. Không yêu cầu Steamworks, Steam Direct, giá bán hoặc mục tiêu thị trường. Chi tiết đánh giá, phạm vi và tiêu chí bàn giao tại [docs/THESIS_SCOPE.md](docs/THESIS_SCOPE.md).
 
-> AI gameplay chọn **đạo diễn dựa trên luật + FSM ba trạng thái**, hoạt động với một/hai người trên host. T-45/T-45B/T-46 chưa triển khai. Giữ bảng cố định để đối chứng/fallback. Điểm riêng chính: Trống Đồng dùng chung được Hồn nạp và dash kích hoạt; không bắt buộc tám tiến hoá hoặc nhiều map.
+> AI gameplay dùng **đạo diễn dựa trên luật + FSM ba trạng thái**, hoạt động với một/hai người trên host. T-45/T-45B/T-46 đã có mã: luật trong ScriptableObject, snapshot đội trước thẻ/hồi máu, nguồn WaveSpec trên host, HUD/F3 và CSV schema 2. Giữ bảng cố định để đối chứng/fallback; bằng chứng nghiệm thu tại [docs/DIRECTOR_TESTS.md](docs/DIRECTOR_TESTS.md). Điểm riêng chính: Trống Đồng dùng chung được Hồn nạp và dash kích hoạt; không bắt buộc tám tiến hoá hoặc nhiều map.
 
 ### 1.1 Vòng lặp cốt lõi
 
@@ -275,7 +275,7 @@ GDD đã viết lại theo phạm vi đồ án ngày 11/10/2026. Báo cáo kiể
 | `clearTime`, ép tổn thất 15–25% | Wave tính giờ; dùng HP thấp nhất, tổn thất thực, lần gục; không trừng phạt build mạnh |
 | Bộ ba truyền thuyết | Warrior/Archer/Lancer TinySwords; ghi rõ nguồn asset |
 
-Ba ràng buộc kiến trúc ở mục 3, ngân sách hiệu năng, gameplay 10 wave, thẻ/Hồn/Trống Đồng/hồi sinh và telemetry giữ nguyên. Thay đổi phạm vi tài liệu không triển khai đạo diễn, Internet hay executable mới.
+Ba ràng buộc kiến trúc ở mục 3, ngân sách hiệu năng, gameplay 10 wave, thẻ/Hồn/Trống Đồng/hồi sinh và telemetry giữ nguyên. Mã đạo diễn theo phạm vi mới được mô tả tại GDD mục 7 và [DIRECTOR_TESTS.md](docs/DIRECTOR_TESTS.md); việc thu gọn không thay thế nghiệm thu Internet hoặc executable mới.
 
 ## 8. Môi trường phát triển
 

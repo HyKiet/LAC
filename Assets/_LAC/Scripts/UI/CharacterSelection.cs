@@ -1,6 +1,9 @@
+using LAC.Core;
+using LAC.Director;
 using LAC.Net;
 using LAC.Player;
 using Mirror;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
@@ -12,12 +15,18 @@ namespace LAC.UI
     {
         [SerializeField] private CharacterRegistry _characters;
         private NetworkManagerLAC _manager;
+        private RunManager _run;
         private GameObject _overlay;
         private UnityEngine.UI.Text _status;
         private UnityEngine.UI.InputField _address;
         private UnityEngine.UI.Button _host, _join, _cancel;
         private readonly UnityEngine.UI.Button[] _choices = new UnityEngine.UI.Button[3];
         private readonly UnityEngine.UI.Text[] _choiceLabels = new UnityEngine.UI.Text[3];
+        private readonly UnityEngine.UI.Button[] _directorChoices = new UnityEngine.UI.Button[2];
+        private readonly TextMeshProUGUI[] _directorLabels = new TextMeshProUGUI[2];
+        private TextMeshProUGUI _directorDescription;
+        private TMP_FontAsset _directorFont;
+        private DirectorMode _displayedDirectorMode;
         private Font _font;
         private int _selected;
         private bool _wasActive;
@@ -25,19 +34,46 @@ namespace LAC.UI
 
         public CharacterId Selected => _characters.GetByIndex(_selected).Id;
         public bool IsVisible => _overlay != null && _overlay.activeSelf;
+        public DirectorMode SelectedDirectorMode => _run != null ? _run.ConfiguredDirectorMode : DirectorMode.Fixed;
 
         private void Start()
         {
             _manager = NetworkManager.singleton as NetworkManagerLAC;
             if (_manager == null) _manager = FindAnyObjectByType<NetworkManagerLAC>();
-            if (_characters == null || _characters.Count != 3 || _manager == null)
+            _run = RunManager.Instance;
+            if (_characters == null || _characters.Count != 3 || _manager == null || _run == null)
             {
-                Debug.LogError("[CharacterSelection] Thiếu manager hoặc bộ ba nhân vật.");
+                Debug.LogError("[CharacterSelection] Thiếu manager, RunManager hoặc bộ ba nhân vật.");
                 enabled = false;
                 return;
             }
             Build();
+            if (_directorFont == null) return;
             Select(0);
+            RefreshDirectorSelection();
+        }
+
+        private void OnDestroy() => DirectorHud.ReleaseFontAsset(_directorFont);
+
+        public void SelectDirectorMode(DirectorMode mode)
+        {
+            if (_run == null || !_run.TrySetDirectorMode(mode)) return;
+            RefreshDirectorSelection();
+        }
+
+        private void RefreshDirectorSelection()
+        {
+            _displayedDirectorMode = _run.ConfiguredDirectorMode;
+            for (int i = 0; i < _directorChoices.Length; i++)
+            {
+                bool selected = (DirectorMode)i == _displayedDirectorMode;
+                _directorChoices[i].targetGraphic.color = Hex(selected ? "1C4B5C" : "2B2724");
+                _directorLabels[i].color = Hex(selected ? "FBDD82" : "F4EADA");
+                _directorLabels[i].text = (i == 0 ? "CỐ ĐỊNH" : "THÍCH ỨNG") + (selected ? " · ĐÃ CHỌN" : "");
+            }
+            _directorDescription.text = _displayedDirectorMode == DirectorMode.Adaptive
+                ? "Thích ứng: hỗ trợ đội yếu, đổi cách sinh khi đội khỏe. Vào host dùng chế độ của host."
+                : "Cố định: giữ nhịp sinh theo bảng đợt. Vào host dùng chế độ của host.";
         }
 
         public void Select(int index)
@@ -80,9 +116,11 @@ namespace LAC.UI
             if (!inGame)
             {
                 foreach (var choice in _choices) choice.interactable = !active;
+                foreach (var choice in _directorChoices) choice.interactable = !active;
                 _host.interactable = _join.interactable = _address.interactable = !active;
                 _cancel.gameObject.SetActive(active);
                 if (_wasActive && !active) _status.text = "Kết nối đã đóng. Kiểm tra địa chỉ host rồi thử lại.";
+                if (_run != null && _displayedDirectorMode != _run.ConfiguredDirectorMode) RefreshDirectorSelection();
             }
             _wasActive = active;
         }
@@ -96,6 +134,8 @@ namespace LAC.UI
         private void Build()
         {
             _font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            _directorFont = DirectorHud.CreateFontAsset(_font);
+            if (_directorFont == null) { enabled = false; return; }
             if (EventSystem.current == null && FindAnyObjectByType<EventSystem>() == null)
                 new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
             var canvas = new GameObject("CharacterCanvas", typeof(RectTransform), typeof(Canvas),
@@ -115,21 +155,67 @@ namespace LAC.UI
             Text("Title", _overlay.transform, "CHỌN NHÂN VẬT", 38, new Vector2(0, 330), new Vector2(1200, 65), Hex("FBDD82"));
             Text("Subtitle", _overlay.transform, "10 ĐỢT  •  SINH TỒN TÍNH GIỜ  •  CO-OP 2 NGƯỜI", 20, new Vector2(0, 272), new Vector2(1200, 40), Hex("9CCFC0"));
             for (int i = 0; i < 3; i++) BuildCard(i);
-            _status = Text("Status", _overlay.transform, DefaultStatus, 19, new Vector2(0, -230), new Vector2(1270, 45), Hex("E0CFAF"));
-            _host = Button("StartHost", _overlay.transform, "VÀO TRẬN / TẠO HOST", new Vector2(-345, -295), new Vector2(360, 58), BeginHost);
+            BuildDirectorChoice();
+            _status = Text("Status", _overlay.transform, DefaultStatus, 19, new Vector2(0, -308), new Vector2(1270, 34), Hex("E0CFAF"));
+            _host = Button("StartHost", _overlay.transform, "VÀO TRẬN / TẠO HOST", new Vector2(-345, -364), new Vector2(360, 52), BeginHost);
             var input = Image("HostAddress", _overlay.transform, Hex("2B2724"));
-            Rect(input.rectTransform, new Vector2(35, -295), new Vector2(310, 58));
+            Rect(input.rectTransform, new Vector2(35, -364), new Vector2(310, 52));
             _address = input.gameObject.AddComponent<UnityEngine.UI.InputField>();
             var value = Text("Address", input.transform, "", 22, Vector2.zero, new Vector2(280, 50), Hex("F4EADA"));
             value.alignment = TextAnchor.MiddleLeft;
             _address.textComponent = value;
             _address.text = "localhost";
             _address.characterLimit = 128;
-            _join = Button("JoinHost", _overlay.transform, "VÀO HOST", new Vector2(365, -295), new Vector2(270, 58), BeginJoin);
-            _cancel = Button("Cancel", _overlay.transform, "HUỶ KẾT NỐI", new Vector2(0, -367), new Vector2(270, 40), Cancel);
+            _join = Button("JoinHost", _overlay.transform, "VÀO HOST", new Vector2(365, -364), new Vector2(270, 52), BeginJoin);
+            _cancel = Button("Cancel", _overlay.transform, "HUỶ KẾT NỐI", new Vector2(0, -408), new Vector2(270, 28), Cancel);
             _cancel.gameObject.SetActive(false);
             Text("Controls", _overlay.transform, "WASD: di chuyển   •   Space: lướt   •   Co-op: nhập IP của máy host", 18,
-                new Vector2(0, -418), new Vector2(1240, 35), Hex("BFA981"));
+                new Vector2(0, -430), new Vector2(1240, 30), Hex("BFA981"));
+        }
+
+        private void BuildDirectorChoice()
+        {
+            DirectorText("ModeTitle", "NHỊP TRẬN", 20, new Vector2(-420, -221), new Vector2(250, 38), Hex("9CCFC0"));
+            DirectorText("ModeHelp", "Host chọn trước trận", 18, new Vector2(425, -221), new Vector2(270, 38), Hex("BFA981"));
+            for (int i = 0; i < _directorChoices.Length; i++)
+            {
+                int index = i;
+                var image = Image(i == 0 ? "FixedMode" : "AdaptiveMode", _overlay.transform, Hex("2B2724"));
+                Rect(image.rectTransform, new Vector2(i == 0 ? -136 : 142, -221), new Vector2(258, 38));
+                var button = image.gameObject.AddComponent<UnityEngine.UI.Button>();
+                button.targetGraphic = image;
+                button.onClick.AddListener(() => SelectDirectorMode((DirectorMode)index));
+                var colors = button.colors;
+                colors.highlightedColor = Hex("9CCFC0");
+                colors.selectedColor = Color.white;
+                colors.disabledColor = new Color(.35f, .35f, .35f, .7f);
+                button.colors = colors;
+                _directorChoices[i] = button;
+                _directorLabels[i] = DirectorText(i == 0 ? "FixedLabel" : "AdaptiveLabel", "", 18,
+                    Vector2.zero, new Vector2(250, 36), Hex("F4EADA"), image.transform);
+            }
+            _directorDescription = DirectorText("ModeDescription", "", 19, new Vector2(0, -267),
+                new Vector2(1260, 36), Hex("E0CFAF"));
+        }
+
+        private TextMeshProUGUI DirectorText(string name, string value, int fontSize, Vector2 position,
+            Vector2 bounds, Color color, Transform parent = null)
+        {
+            var go = new GameObject(name, typeof(RectTransform));
+            go.SetActive(false);
+            go.transform.SetParent(parent != null ? parent : _overlay.transform, false);
+            var text = go.AddComponent<TextMeshProUGUI>();
+            text.font = _directorFont;
+            text.fontSharedMaterial = _directorFont.material;
+            text.fontSize = fontSize;
+            text.text = value;
+            text.color = color;
+            text.alignment = TextAlignmentOptions.Center;
+            text.raycastTarget = false;
+            text.textWrappingMode = TextWrappingModes.Normal;
+            Rect(text.rectTransform, position, bounds);
+            go.SetActive(true);
+            return text;
         }
 
         private void BuildCard(int index)

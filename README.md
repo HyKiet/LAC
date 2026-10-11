@@ -4,7 +4,7 @@ Arena survival roguelite 2D trên nền thần thoại Việt Nam. Ba lớp Warr
 
 > Đồ án tốt nghiệp · Unity 6000.5.6f1 · URP 2D · Mirror + KCP
 
-Yêu cầu: **multiplayer online, có AI, có điểm riêng**. Đạo diễn dựa trên luật/FSM là phần cần làm; Trống Đồng/Hồn dùng chung đã có. Kiểm thử hai tiến trình hiện có chưa chứng nhận chơi qua Internet. Xem [phạm vi và đánh giá](docs/THESIS_SCOPE.md); bản Windows 10 wave mới còn cần nghiệm thu sau khi xử lý điểm chặn build.
+Yêu cầu: **multiplayer online, có AI, có điểm riêng**. Đạo diễn dựa trên luật/FSM, chọn Fixed/Adaptive trước trận, HUD/F3 và CSV đã có; xem [kiểm chứng AI](docs/DIRECTOR_TESTS.md). Trống Đồng/Hồn dùng chung đã có. Kiểm thử hai tiến trình hiện có chưa chứng nhận chơi qua Internet. Xem [phạm vi và đánh giá](docs/THESIS_SCOPE.md); bản Windows 10 wave mới còn cần nghiệm thu sau khi xử lý điểm chặn build.
 
 ---
 

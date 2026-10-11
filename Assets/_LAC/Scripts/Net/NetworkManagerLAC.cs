@@ -131,6 +131,7 @@ namespace LAC.Net
             if (conn.identity != null && RunManager.Instance != null)
             {
                 RunManager.Instance.Telemetry?.Leave(conn.identity.GetComponent<PlayerCharacter>());
+                RunManager.Instance.RecordDirectorLeave(conn.identity.GetComponent<PlayerCharacter>());
                 RunManager.Instance.UnregisterPlayer(conn.identity.GetComponent<PlayerCharacter>().IsAlive);
             }
 

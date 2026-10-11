@@ -1,0 +1,2 @@
+ALL PASSED: 75 assertions; real host FSM/HP/heal/hysteresis/applied spawn/CSV/boss/Restart (1 players). Deadline accelerated; not balance playtest.
+CSV=C:/Users/LEGION/AppData/LocalLow/DefaultCompany/My project\Telemetry\01bccc3402124d379800318f206ec682

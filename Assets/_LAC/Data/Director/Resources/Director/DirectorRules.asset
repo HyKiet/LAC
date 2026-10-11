@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a05f697d889e43af84976c6e44c1b16e, type: 3}
+  m_Name: DirectorRules
+  m_EditorClassIdentifier: Assembly-CSharp::LAC.Director.DirectorRulesData
+  _firstAdaptiveWave: 2
+  _lastAdaptiveWave: 9
+  _reliefHealthThreshold: 0.3
+  _reliefDamageThreshold: 0.35
+  _reliefIntervalMultiplier: 1.25
+  _reliefBurstMultiplier: 0.75
+  _reliefExitHealth: 0.5
+  _reliefExitDamage: 0.2
+  _varietyHealthThreshold: 0.7
+  _varietyDamageThreshold: 0.1
+  _varietyMinRotation: 0.1
+  _varietyMaxRotation: 0.3

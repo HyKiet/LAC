@@ -4,7 +4,7 @@ Tài liệu tham chiếu kỹ thuật. Xác định các module tồn tại tron
 
 Đọc [CLAUDE.md](../CLAUDE.md) và [THESIS_SCOPE.md](THESIS_SCOPE.md) trước tài liệu này. Cập nhật 11/10/2026: chỉ đồ án, không Steam/thương mại; AI luật/FSM thay LinUCB, không bắt buộc tiến hoá thẻ.
 
-**Phân biệt thiết kế và triển khai:** các tên `AIDirector`, `ContextAggregator`, `SafetyConstraints` ở sơ đồ/mục 2.7 là thành phần dự kiến T-45/T-45B, chưa có mã. Bảng cố định/telemetry đã có. Một số tên lớp trong mô tả là tên vai trò khái niệm; các lớp thẻ thật là `CardDeck`, `CardSelectionController`, `PlayerUpgradeState`. Tiến độ lấy TASKS, không lấy sự xuất hiện trong sơ đồ.
+**Phân biệt thiết kế và triển khai:** `AIDirector`, `ContextAggregator`, `SafetyConstraints`, luật ScriptableObject, nguồn WaveSpec trên host và HUD/CSV đã có mã T-45/T-45B/T-46. Bằng chứng nghiệm thu tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md); sự xuất hiện trong sơ đồ không tự chứng minh Internet/build hoặc cân bằng. Một số tên lớp là tên vai trò khái niệm; các lớp thẻ thật là `CardDeck`, `CardSelectionController`, `PlayerUpgradeState`. Tiến độ lấy TASKS.
 
 ---
 
@@ -17,10 +17,14 @@ graph TD
     RM --> CM[CardSelectionController<br/>chọn thẻ giữa các đợt]
     RM --> RNG[RunRandom<br/>bộ sinh có seed]
 
-    WM -.-> DIR[AIDirector dự kiến<br/>luật và FSM ba trạng thái]
+    RM --> DIR[AIDirector<br/>luật và FSM ba trạng thái]
+    RM --> AGG[ContextAggregator<br/>snapshot đội cuối wave]
+    AGG -->|ngữ cảnh đóng băng| DIR
     WM --> FIX[WaveTable<br/>baseline và đối chứng]
-    DIR --> AGG[ContextAggregator<br/>hợp thành ngữ cảnh N người chơi]
-    DIR --> SAFE[SafetyConstraints<br/>theo người yếu nhất]
+    FIX -->|baseline| DIR
+    DIR --> SAFE[SafetyConstraints<br/>ngữ cảnh và ngân sách]
+    DIR -->|WaveSpec trên host| WM
+    RM --> HUD[DirectorHud<br/>SyncVar và F3]
     WM --> SPW[EnemySpawner]
 
     SPW --> POOL[ObjectPool]
@@ -58,18 +62,17 @@ graph TD
 | `ObjectPool<T>` | Pool dùng chung cho đạn, quái, hiệu ứng, số sát thương | Bắt buộc thay thế cho `Instantiate` trong gameplay |
 | `GameEvents` | Sự kiện `EnemyDied`, `EnemyTouchedPlayer`, `PlayerDamaged`, `EnemyDamaged` | Wave/card còn dùng sự kiện ở RunManager và hệ thống thẻ |
 
-**Trình tự khái niệm một đợt (Adaptive là phần dự kiến):**
+**Trình tự một đợt:**
 
 ```
 RunManager bắt đầu wave n
-  → WaveManager lấy WaveSpec (hiện WaveTable; tương lai có AIDirector)
+  → Lấy baseline WaveTable → AIDirector quyết định từ snapshot wave trước
+  → Ghi quyết định → WaveManager trên host lấy WaveSpec đã áp dụng
   → Host thi hành lượt sinh → EnemySpawner phát sự kiện
-  → Wave 1–9: hết deadline NetworkTime → chọn thẻ
-  → Boss wave 10: hạ boss, dọn quái con → Victory (không chọn thẻ)
-  → RunManager báo WaveCleared cho wave thường
-  → CardSelectionController mở ba lựa chọn
-  → Chờ toàn bộ người chơi hoàn tất lựa chọn
-  → StartWave(n + 1)
+  → Wave 1–9: hết deadline → chốt HP/MaxHP và tổn thất trước thẻ/hồi máu
+  → Dọn combat → WaveCleared → mở ba lựa chọn
+  → Chờ toàn bộ người chơi hoàn tất → StartWave(n + 1)
+  → Riêng boss wave 10: hạ boss, dọn quái con → Victory (không chọn thẻ)
 ```
 
 ### 2.2 Player
@@ -139,21 +142,22 @@ Client không tự xác định trạng thái sẵn sàng của trống; client 
 
 T-36–38 dùng NetworkIdentity sẵn có của RunManager thay vì tạo thêm đối tượng mạng cho trống. Quy tắc 20 Hồn / 20 giây / choáng 1 giây đặt trong `DrumRules.asset`; chi tiết và cách kiểm tra tại [DRUM_TESTS.md](DRUM_TESTS.md).
 
-### 2.7 Director — AI đạo diễn dự kiến
+### 2.7 Director — AI đạo diễn luật và FSM
 
-Thiết kế T-45/T-45B/T-46: AI **dựa trên luật + FSM ba trạng thái**, một thuật toán trên host cho đội một/hai người. Không LinUCB, learning, reward hay fairness optimization. Giữ bảng cố định làm baseline/đối chứng/fallback. Toàn bộ luật/ngưỡng tại [THESIS_SCOPE.md mục 4](THESIS_SCOPE.md#4-đạo-diễn-ai-dễ-giải-thích).
+Mã T-45/T-45B/T-46: AI **dựa trên luật + FSM ba trạng thái**, một thuật toán trên host cho đội một/hai người. Không LinUCB, learning, reward hay fairness optimization. Giữ bảng cố định làm baseline/đối chứng/fallback. Luật/ngưỡng tại [THESIS_SCOPE.md mục 4](THESIS_SCOPE.md#4-đạo-diễn-ai-dễ-giải-thích), dữ liệu hiện hành trong `DirectorRules.asset`; kiểm chứng tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md).
 
-| Thành phần dự kiến | Trách nhiệm |
+| Thành phần hiện có | Trách nhiệm |
 |---|---|
 | `AIDirector` | Chọn Relief/Balanced/Variety và dựng WaveSpec từ baseline |
-| `ContextAggregator` | HP ratio thấp nhất, tổn thất thực/max HP cao nhất, số lần gục; xử lý vào/rời |
+| `ContextAggregator` | Đóng băng HP/MaxHP cuối wave, tổn thất thực/max HP đầu wave, số lần gục; xử lý vào/rời và lịch sử thiếu |
 | `DirectorRulesData` | Ngưỡng và hệ số trong ScriptableObject, không hard-code |
-| `SafetyConstraints` | Giữ Duration/trần 40/khoảng cách an toàn, quái đã giới thiệu; fallback |
-| HUD/CSV | Mode, trạng thái, lý do, đầu vào và kết quả áp dụng; client chỉ nhận biểu diễn |
+| `SafetyConstraints` | Kiểm tra baseline/ngữ cảnh/đầu ra, Duration/ngân sách và loại đã giới thiệu; spawn cap/khoảng cách tiếp tục áp tại host |
+| `RunDirector` (partial `RunManager`) | Chốt mode, thu ngữ cảnh, chuẩn bị quyết định, cung cấp đặc tả cho `WaveManager`; SyncVar cho client |
+| `DirectorHud` / `TelemetrySession` | HUD/F3 và CSV schema 2: mode, trạng thái, lý do, đầu vào, baseline/applied/fallback |
 
-**Đã có:** `WaveSpec`, `WaveTable`, spawn an toàn T-44D, `TelemetrySession`/`TelemetryCsv`/`RunTelemetry`. **Chưa có:** đạo diễn, ngữ cảnh AI, luật/HUD/CSV quyết định. T-45 phải nối nguồn đặc tả trong WaveManager và metadata nguồn trong telemetry; không mặc định chỉ thêm lớp mới là đã hoạt động.
+`WaveManager` trên host lấy đặc tả thật qua `RunManager.GetHostWaveSpec`, thay vì chỉ đọc bảng. `TelemetrySession.RecordDirectorDecision` ghi trước lịch sinh; `RecordWaveSpec` ghi nguồn và lịch thực thi. `directors.csv` có một dòng mỗi wave, `waves.csv` kèm quyết định, `runs.csv` giữ nguồn/số quyết định tích luỹ; không giả ghi mọi ván chọn Adaptive là có thích ứng.
 
-Luồng dự kiến:
+Luồng hiện có:
 
 ```text
 Host kết thúc wave thường → chốt snapshot trước hồi/nâng cấp → lưu ngữ cảnh
@@ -162,11 +166,11 @@ Host kết thúc wave thường → chốt snapshot trước hồi/nâng cấp �
 → ghi quyết định/đặc tả/kết quả CSV
 ```
 
-Wave 1/boss wave 10 giữ gốc. Fixed/Adaptive chọn trước ván, không đổi giữa ván. Ngẫu nhiên nếu cần dùng `RunRandom.Director`; client không rút số/chạy chính sách lần nữa. Thiếu dữ liệu/đặc tả lỗi dùng baseline hợp lệ. Reset ván xoá trạng thái AI, không sửa asset hoặc giữ lợi thế.
+Wave 1/boss wave 10 giữ gốc. Fixed/Adaptive chọn ở màn chọn lớp trước kết nối; host chốt mode, Restart trong phòng giữ mode đó. Ngẫu nhiên dùng `RandomStream(seed, "director-wave" + waveIndex)` tách biệt lịch sinh; client không rút số/chạy chính sách lần nữa. Thiếu ngữ cảnh/luật/đầu ra hợp lệ thì fallback sang baseline hợp lệ; baseline lỗi thì dừng ván an toàn. Reset ván xoá trạng thái AI, không sửa asset hoặc giữ lợi thế.
 
 Relief ưu tiên người yếu nhất/lần gục, giãn nhịp và giảm burst. Balanced dùng baseline. Variety chỉ đổi hướng/thành phần trong ngân sách khi cả đội ổn; không tăng HP/sát thương/quy mô để ép mất máu. Có ngưỡng thoát Relief khác ngưỡng vào để tránh nhấp trạng thái.
 
-Không dùng `clearTime`: wave có Duration cố định. Tổn thất dùng sự kiện damage thật, không HP đầu trừ HP cuối; hồi máu/hồi sinh không xoá tổn thất đã ghi. Tổng hợp đội dùng cùng kiểu ngữ cảnh với một/hai người, không nhánh solo riêng.
+Không dùng `clearTime`: wave có Duration cố định. Tổn thất dùng damage thực đã được host chấp nhận, không HP đầu trừ HP cuối; hồi máu/hồi sinh không xoá tổn thất đã ghi. HP/MaxHP cuối wave được đóng băng trước thẻ/hồi máu. Trước wave kế cập nhật người vào/rời: người rời không quyết HP thấp nhất, phần tổn thất/lần gục đã ghi vẫn giữ; vào muộn thiếu lịch sử làm ngữ cảnh không hợp lệ và dùng baseline. Tổng hợp đội dùng cùng kiểu ngữ cảnh với một/hai người, không nhánh solo riêng.
 
 Đánh giá: kiểm thử luật có kiểm soát, chơi thật ba lớp/10 wave, so sánh nhỏ Fixed/Adaptive và online hai mạng. Không yêu cầu mặc định 15/15; không tuyên bố hội tụ thuật toán hoặc cải thiện trải nghiệm trước khi đo.
 
@@ -195,7 +199,8 @@ Data/
 ├── Characters/   Warrior.asset · Archer.asset · Lancer.asset
 ├── Cards/        12 thẻ nền; tiến hoá dự phòng chưa triển khai
 ├── Enemies/      CoHon · MaTroi · BuNhin · MaDa · QuyNho · ChanTinh
-└── Waves/        WaveTable_CoDinh.asset — baseline, co-op và đối chứng
+├── Waves/        WaveTable_CoDinh.asset — baseline, co-op và đối chứng
+└── Director/Resources/Director/DirectorRules.asset — luật và hệ số FSM
 ```
 
 Cách tổ chức này cho phép điều chỉnh cân bằng qua Inspector mà không chạm vào mã nguồn, đồng thời tránh xung đột với thành viên đang sửa code.
@@ -219,13 +224,14 @@ Giữ một `Arena` hiện có, đá rìa đổi sắc ở wave 4/7. Không bắ
 ## 5. Trình tự hiện có và chỗ cần nối
 
 ```text
-Màn chọn lớp Arena → SelectedCharacter → StartHost/StartClient
+Màn chọn lớp Arena → chọn lớp + Fixed/Adaptive → StartHost/StartClient
 → client gửi lựa chọn → host thẩm định → sinh player đúng CharacterData
-→ RunManager bắt đầu/đồng bộ seed, state và wave
-→ WaveManager dựng lịch → EnemySpawner phát lượt sinh host → client nhận snapshot
+→ RunManager chốt mode, bắt đầu/đồng bộ seed, state và wave
+→ Host chuẩn bị quyết định → WaveManager dùng WaveSpec đó
+→ EnemySpawner phát lượt sinh host → client nhận sự kiện/snapshot và HUD
 ```
 
-T-30/T-62 đưa luồng này vào menu/sảnh gọn và thêm host bắt đầu sau khi người chơi đã vào; tái sử dụng giao thức T-44C, không tạo giao thức thứ hai. Không gọi SceneManager.LoadScene trực tiếp khi mạng đang chạy; dùng Mirror ServerChangeScene. T-45 thêm nguồn đặc tả tại điểm host dựng lịch.
+T-30/T-62 đưa luồng này vào menu/sảnh gọn và thêm host bắt đầu sau khi người chơi đã vào; tái sử dụng giao thức T-44C, không tạo giao thức thứ hai. Không gọi SceneManager.LoadScene trực tiếp khi mạng đang chạy; dùng Mirror ServerChangeScene. Nguồn đặc tả đạo diễn đã nối tại điểm host dựng lịch.
 
 
 

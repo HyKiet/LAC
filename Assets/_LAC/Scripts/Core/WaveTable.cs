@@ -8,11 +8,8 @@ namespace LAC.Core
     /// Bảng đợt cố định — nội dung của cả 10 đợt, biên soạn bằng tay.
     /// </summary>
     /// <remarks>
-    /// Hai vai trò, đều nằm trong docs/TASKS.md T-44. Thứ nhất, đây là <b>nhóm đối chứng</b>
-    /// của thực nghiệm khoá luận ở T-53: 15 người chơi bảng cố định này, 15 người chơi bản do
-    /// AI Đạo Diễn sinh, rồi so sánh. Đối chứng phải bất biến giữa các lượt chơi nên nó là dữ
-    /// liệu biên soạn tay chứ không phải công thức. Thứ hai, đây là <b>phương án dự phòng</b>
-    /// nếu đạo diễn ở T-45 không kịp hoàn thành.
+    /// Bảng biên soạn tay là đối chứng Fixed ở T-53 và baseline/fallback cho đạo diễn luật.
+    /// Chế độ Adaptive sao chép đặc tả; không sửa tài sản này khi ván đang chạy.
     ///
     /// <b>Cả 10 đợt nằm trong một tài sản duy nhất, không phải 10 tệp.</b> Tài sản Unity lưu
     /// dạng YAML và không hợp nhất tự động được — CLAUDE.md mục 6.2. Mười tệp nghĩa là

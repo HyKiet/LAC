@@ -1,0 +1,3 @@
+ALL PASSED: 29 controlled team assertions; 2 editors/100ms; weak HP, actual damage, 2 real revives, raw>1, leave/cards/midwave join, fallback/recovery. Context fixture disables WaveManager and extends card deadline; NOT balance/WAN.
+CSV=C:/Users/LEGION/AppData/LocalLow/DefaultCompany/My project\Telemetry\c5f766a4a20e48edbb0705bed6eee8d4
+ALL PASSED (T46 CSV: 6 decisions, 3 adaptive, 2 fallback)

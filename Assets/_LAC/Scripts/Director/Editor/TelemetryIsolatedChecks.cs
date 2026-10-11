@@ -70,6 +70,36 @@ class Program
         // Five-second flush leaves the file readable before graceful shutdown.
         var periodic=TelemetrySession.Begin(run); periodic.StartWave(1); Time.unscaledTimeAsDouble+=6; periodic.Dash(a); periodic.Tick();
         Check(Rows(periodic,"events").Any(x=>x["event"]=="player_dashed"),"Periodic flush missing"); periodic.Finish("aborted");
+        run.DirectorMode=DirectorMode.Adaptive;
+        var adaptive=TelemetrySession.Begin(run);
+        var baseline=new WaveSpec(); var relief=new WaveSpec {SpawnInterval=.625f,Burst=1};
+        adaptive.StartWave(1);
+        var opening=new DirectorDecision(DirectorMode.Adaptive,DirectorState.Balanced,1,default,"fixed_table","opening_wave",null,baseline,baseline);
+        adaptive.RecordDirectorDecision(opening,1,"Bảng, \"đợt\"");
+        adaptive.RecordDirectorDecision(opening,1,"duplicated");
+        adaptive.EndWave("survived"); adaptive.StartWave(2);
+        var context=new DirectorContext(true,.25f,1.5f,2,1,1);
+        var action=new DirectorDecision(DirectorMode.Adaptive,DirectorState.Relief,2,context,"adaptive_rules","low_health","",baseline,relief);
+        adaptive.RecordDirectorDecision(action,3,"wrong_wave");
+        adaptive.RecordDirectorDecision(action,2,"Bảng, \"đợt\"");
+        adaptive.RecordWaveSpec(relief,"Bảng, \"đợt\"");
+        adaptive.EndWave("survived"); adaptive.StartWave(3);
+        var missing=new DirectorContext(false,.8f,0f,0,2,1,1,"incomplete_late_join");
+        var fallback=new DirectorDecision(DirectorMode.Adaptive,DirectorState.Balanced,3,missing,"fixed_fallback","invalid_context","incomplete_late_join",baseline,baseline);
+        adaptive.RecordDirectorDecision(fallback,3,"same table"); adaptive.Finish("aborted");
+        var decisions=Rows(adaptive,"directors");
+        Check(decisions.Count==3,"Director decision duplicate/wrong wave logged");
+        Check(decisions.All(d=>d["schema"]=="2" && d["mode"]=="Adaptive"),"Director schema or mode");
+        Check(decisions[1]["damage_ratio_max_raw"]=="1.5" && decisions[1]["damage_ratio_max"]=="1","Raw damage ratio discarded");
+        Check(decisions[1]["baseline_interval"]=="0.5" && decisions[1]["applied_interval"]=="0.625" && decisions[1]["applied_burst"]=="1","Applied spec not actual decision");
+        Check(decisions[2]["context_valid"]=="0" && decisions[2]["missing_context"]=="incomplete_late_join" && decisions[2]["fallback_reason"]=="incomplete_late_join","Missing context fallback lost");
+        var adaptiveWaves=Rows(adaptive,"waves");
+        Check(adaptiveWaves[1]["source"]=="adaptive_rules" && adaptiveWaves[1]["director_state"]=="Relief","Wave source remains fixed");
+        var adaptiveRun=Rows(adaptive,"runs")[0];
+        Check(adaptiveRun["source"]=="adaptive_rules|fixed_fallback|fixed_table","Run source ignores decision history");
+        Check(adaptiveRun["director_decisions"]=="3" && adaptiveRun["adaptive_decisions"]=="1" && adaptiveRun["fallback_decisions"]=="1","Decision counters");
+        Check(adaptiveRun["health_min"]=="" && adaptiveRun["director_state"]=="","Run misrepresents single wave context");
+        Check(Rows(adaptive,"events").Single(e=>e["event"]=="wave_spec")["detail"].Contains("source=adaptive_rules"),"wave_spec source is fake");
         Console.WriteLine($"PASS: {checks} assertions (CSV + session test doubles; NOT Unity Play Mode).");
         Console.WriteLine("Artifacts: "+Application.persistentDataPath);
     }
@@ -90,9 +120,23 @@ namespace LAC.Player {
 }
 namespace LAC.Enemies { public class EnemyData { public string name="CoHon"; } public class Enemy { public int Id; public EnemyData Data=new EnemyData(); } }
 namespace LAC.Core {
- public class RunManager { public int Seed=431, SoulsCollected; public uint DrumActivations; }
+ public class RunManager { public int Seed=431, SoulsCollected; public uint DrumActivations; public LAC.Director.DirectorMode DirectorMode; }
  public static class GameEvents { public static event Action<LAC.Enemies.Enemy> EnemyDied; public static void Kill(int id) => EnemyDied?.Invoke(new LAC.Enemies.Enemy { Id=id }); }
  public class WaveSpec { public class Group { public LAC.Enemies.EnemyData Enemy; public int Count; } public Group[] Mix=Array.Empty<Group>(); public float[] Directions=new[]{.25f}; public float SpawnInterval=.5f; public int Burst=2; public float Duration=0; public int TotalCount=4; }
+}
+namespace LAC.Director {
+ public enum DirectorMode { Fixed, Adaptive }
+ public enum DirectorState { Balanced, Relief, Variety }
+ public readonly struct DirectorContext {
+  public bool IsValid {get;} public float HealthMin {get;} public float DamageRatioMaxRaw {get;} public float DamageRatioMax=>Math.Max(0f,Math.Min(1f,DamageRatioMaxRaw));
+  public int Downs {get;} public int ConnectedPlayers {get;} public int Participants {get;} public int LateJoiners {get;} public string MissingReason {get;}
+  public DirectorContext(bool valid,float hp,float damage,int downs,int connected,int participants,int late=0,string reason=null) {IsValid=valid;HealthMin=hp;DamageRatioMaxRaw=damage;Downs=downs;ConnectedPlayers=connected;Participants=participants;LateJoiners=late;MissingReason=reason;}
+ }
+ public sealed class DirectorDecision {
+  public DirectorMode Mode {get;} public DirectorState State {get;} public int WaveIndex {get;} public DirectorContext Context {get;} public string Source {get;} public string Reason {get;} public string FallbackReason {get;}
+  public WaveSpec Baseline {get;} public WaveSpec Applied {get;} public bool IsFallback=>!string.IsNullOrEmpty(FallbackReason);
+  public DirectorDecision(DirectorMode mode,DirectorState state,int wave,DirectorContext context,string source,string reason,string fallback,WaveSpec baseline,WaveSpec applied) {Mode=mode;State=state;WaveIndex=wave;Context=context;Source=source;Reason=reason;FallbackReason=fallback;Baseline=baseline;Applied=applied;}
+ }
 }
 
 #endif

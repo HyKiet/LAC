@@ -78,15 +78,17 @@ FSM điều khiển hành vi cá thể, không cần ML-Agents. Chằn Tinh ở 
 
 Trống nằm ở tâm, không chặn người chơi. Đủ 20 Hồn và hết hồi 20s, dash chạm trống sẽ xoá đạn địch, đẩy lùi 2.5 đơn vị, choáng 1s. Không gây sát thương. Năng lượng/hồi dùng chung do host quyết, HUD thể hiện trạng thái. Hồn vẫn nạp trong lúc hồi; Restart dọn Hồn cũ. Cơ chế đã có, giữ làm điểm riêng chính của đồ án.
 
-## 7. AI đạo diễn — thiết kế thu gọn, chưa triển khai
+## 7. AI đạo diễn — luật và FSM
 
 ### 7.1 Vai trò và thuật toán
 
 **AI dựa trên luật kết hợp FSM**, ba trạng thái: Hỗ trợ, Bình thường, Đổi chiến thuật. Chạy trên host trong cả một/hai người, quyết một lần trước wave 2–9. Wave 1/boss wave 10 giữ nguyên. Không LinUCB, không huấn luyện hoặc hàm thưởng ép tổn thất máu về 15–25%.
 
+Mã hiện có: `Director/AIDirector.cs`, `ContextAggregator.cs`, `SafetyConstraints.cs` và partial `RunDirector.cs`. Ngưỡng/hệ số nằm trong `Data/Director/Resources/Director/DirectorRules.asset`. Bằng chứng và giới hạn kiểm thử cập nhật tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md); cân bằng tự nhiên và nghiệm thu Internet vẫn là phần riêng.
+
 ### 7.2 Đầu vào
 
-`healthMin`: HP ratio thấp nhất của người còn kết nối, người gục = 0. `damageRatioMax`: tổn thất thực trong wave/max HP đầu wave lớn nhất giữa các người. `downs`: lần gục của đội. Dữ liệu chốt cuối wave trước, trước hồi máu/nâng cấp; người vào muộn có thời gian tham gia thật. Không dùng `clearTime` với wave tính giờ. Xem định nghĩa và tình huống thiếu dữ liệu tại [THESIS_SCOPE.md](THESIS_SCOPE.md#4-đạo-diễn-ai-dễ-giải-thích).
+`healthMin`: HP ratio thấp nhất của người còn kết nối, người gục = 0. `damageRatioMax`: tổn thất thực trong wave/max HP đầu wave lớn nhất giữa các người. `downs`: lần gục của đội. `ContextAggregator` đóng băng HP/MaxHP khi kết thúc wave, trước hồi máu/nâng cấp; trước đợt kế chỉ cập nhật người vào/rời. Người rời không còn quyết định HP thấp nhất, nhưng tổn thất/lần gục đã ghi không bị xoá. Vào muộn không có lịch sử đủ wave thì đánh dấu thiếu ngữ cảnh và dùng baseline. Không dùng `clearTime` với wave tính giờ. Xem định nghĩa tại [THESIS_SCOPE.md](THESIS_SCOPE.md#4-đạo-diễn-ai-dễ-giải-thích).
 
 ### 7.3 Đầu ra — WaveSpec
 
@@ -94,7 +96,7 @@ Trống nằm ở tâm, không chặn người chơi. Đủ 20 Hồn và hết h
 { Mix[], Directions[], SpawnInterval, Burst, Duration }
 ```
 
-Mix là thành phần **một chu kỳ lặp**, không phải tổng số quái sinh trong wave. Đạo diễn dựng đặc tả từ baseline; giữ Duration. WaveManager hiện vẫn đọc bảng cố định; T-45 cần tích hợp nguồn Adaptive và telemetry, không coi lớp trong sơ đồ là đã tồn tại.
+Mix là thành phần **một chu kỳ lặp**, không phải tổng số quái sinh trong wave. Đạo diễn dựng đặc tả từ baseline; giữ Duration. `RunManager` chuẩn bị quyết định trước hồi máu đầu wave, rồi `WaveManager` trên host lấy đặc tả qua `GetHostWaveSpec`. Client không chạy chính sách thích ứng lần nữa; nó biểu diễn sự kiện sinh do host phát. Telemetry ghi cả baseline và đặc tả thực thi.
 
 ### 7.4 Quy tắc quyết định ban đầu
 
@@ -108,11 +110,13 @@ Sau Hỗ trợ, chỉ thoát khi HP thấp nhất ≥50%, tổn thất cao nhấ
 
 ### 7.5 An toàn, đồng bộ, fallback
 
-Giữ trần 40 gồm quái con; điểm sinh tránh mọi người sống ≥3; chỉ dùng quái đã giới thiệu; không sửa asset trong ván; thiếu dữ liệu/lỗi thì baseline và ghi lý do. Client nhận kết quả/sự kiện spawn/HUD, không tự quyết AI. WaveManager/EnemySpawner tiếp tục là nơi host thi hành spawn.
+Giữ trần 40 gồm quái con; điểm sinh tránh mọi người sống ≥3; chỉ dùng quái đã giới thiệu; không sửa asset trong ván. Thiếu ngữ cảnh/luật hoặc đầu ra thích ứng không hợp lệ thì dùng baseline hợp lệ và ghi lý do. Nếu chính baseline không hợp lệ, host dừng ván an toàn thay vì sinh quái từ cấu hình lỗi. Client nhận kết quả/sự kiện spawn/HUD, không tự quyết AI. WaveManager/EnemySpawner là nơi host thi hành spawn; reset ván xoá ngữ cảnh và trạng thái FSM.
 
 ### 7.6 Quan sát và đánh giá
 
-Chọn Fixed/Adaptive trước ván. HUD thông báo hành động và lý do. CSV dự kiến ghi mode, đầu vào, trạng thái, đặc tả và fallback; các CSV hiện có vẫn `fixed_table`, chưa có quyết định AI. Đánh giá bằng kiểm thử luật, chơi thật và so sánh nhỏ được mô tả trong THESIS_SCOPE; không mặc định bắt buộc 15/15 người.
+Màn chọn lớp có **Cố định / Thích ứng** trước khi kết nối; vào host dùng chế độ host đã chọn, không đổi giữa ván hoặc khi Restart trong phòng. HUD góc dưới trái thông báo hành động/lý do; **F3** mở ngữ cảnh, nguồn và fallback, cờ thiếu dữ liệu tách biệt với HP bằng 0.
+
+CSV **schema 2** thêm `directors.csv`, một quyết định trước mỗi wave; `waves.csv` kèm quyết định của wave, `runs.csv` tổng hợp nguồn/số quyết định thực tế. `source` phân biệt `fixed_table`, `adaptive_rules`, `fixed_fallback` và cấu hình baseline lỗi; giữ tổn thất thô và bản kẹp [0,1]. CSV cũ vẫn là bằng chứng phiên cũ. Chi tiết tại [DIRECTOR_TESTS.md](DIRECTOR_TESTS.md). Đánh giá bằng kiểm thử luật, chơi thật và so sánh nhỏ theo THESIS_SCOPE; không mặc định bắt buộc 15/15 người.
 
 ## 8. Tiến trình ngoài ván
 
@@ -128,7 +132,7 @@ Máu/thẻ/lượt đổi độc lập. Đồng đội đứng cạnh 3s để h
 
 ## 10. Giao diện
 
-Luồng tối thiểu: menu → chọn lớp → tạo/vào phòng → arena → kết quả/chơi lại/về menu. Tái sử dụng giao thức chọn lớp T-44C. HUD hiện có máu, wave/timer, trống, boss và hồi sinh; bổ sung đạo diễn ở T-46. Màn thống kê T-49 dùng CSV/counters hiện có, không xây kho tiến trình.
+Luồng tối thiểu: menu → chọn lớp → tạo/vào phòng → arena → kết quả/chơi lại/về menu. Tái sử dụng giao thức chọn lớp T-44C. HUD hiện có máu, wave/timer, trống, boss, hồi sinh và đạo diễn; F3 chỉ mở dữ liệu quan sát, không thay đổi gameplay. Màn thống kê T-49 dùng CSV/counters hiện có, không xây kho tiến trình.
 
 Cài đặt tối thiểu: âm lượng, cửa sổ/toàn màn hình và thông số hiển thị sẵn của Unity; gán lại phím là dự phòng. Mở menu tạm dừng trong co-op không dừng thời gian cả đội. Thông báo thiếu host/rớt mạng phải rõ và có nút thử lại/về menu.
 
