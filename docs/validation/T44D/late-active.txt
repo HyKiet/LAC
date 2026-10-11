@@ -1,0 +1,2 @@
+seed=1050 players=2 wave=9 state=WaveActive remaining=54.74 enemies=23
+Active join restored roster; see client-late.txt for seed 1050, and cap.txt for population/cleanup.

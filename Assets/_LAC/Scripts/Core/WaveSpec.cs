@@ -15,8 +15,8 @@ namespace LAC.Core
     /// bằng bốn trường dưới đây. Nhờ vậy T-45 không phải sửa một dòng nào trong `WaveManager`,
     /// và T-53 đổi qua lại giữa hai nguồn chỉ bằng cách đổi nguồn cấp đặc tả.
     ///
-    /// Đặc tả là dữ liệu thuần, không mang trạng thái thi hành. Hai máy cùng dựng ra một đặc
-    /// tả giống hệt nhau từ seed và số hiệu đợt, rồi mỗi máy tự thi hành nó.
+    /// Đặc tả là dữ liệu thuần. Boss dựng từ seed trên hai máy. Đợt tính giờ chỉ host
+    /// thi hành các lượt sinh hợp lệ, client nhận sự kiện spawn và snapshot roster.
     /// </remarks>
     public sealed class WaveSpec
     {
@@ -36,7 +36,7 @@ namespace LAC.Core
         /// <summary>Thành phần đợt. Có thể rỗng nếu bảng đợt điền thiếu.</summary>
         public Group[] Mix { get; }
 
-        /// <summary>Tổng số quái của cả đợt, đã cộng qua mọi nhóm.</summary>
+        /// <summary>Số quái một chu kỳ thành phần; đợt tính giờ lặp lại chu kỳ này.</summary>
         public int TotalCount { get; }
 
         /// <summary>
@@ -55,12 +55,16 @@ namespace LAC.Core
         /// <summary>Số quái hiện ra trong một lượt.</summary>
         public int Burst { get; }
 
-        public WaveSpec(Group[] mix, float[] directions, float spawnInterval, int burst)
+        /// <summary>0 là đợt dọn sạch; lớn hơn 0 là đợt sinh tồn tính giờ.</summary>
+        public float Duration { get; }
+
+        public WaveSpec(Group[] mix, float[] directions, float spawnInterval, int burst, float duration = 0f)
         {
             Mix = mix ?? System.Array.Empty<Group>();
             Directions = directions != null && directions.Length > 0 ? directions : new[] { 0f };
             SpawnInterval = Mathf.Max(spawnInterval, 0f);
             Burst = Mathf.Max(burst, 1);
+            Duration = Mathf.Max(duration, 0f);
 
             int total = 0;
             for (int i = 0; i < Mix.Length; i++)

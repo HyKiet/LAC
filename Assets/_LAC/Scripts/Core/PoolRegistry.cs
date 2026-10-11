@@ -63,6 +63,13 @@ namespace LAC.Core
             foreach (IPool pool in Pools.Values) pool.ReleaseAll();
         }
 
+        /// <summary>Dọn đòn/quái khi nghỉ giữa đợt, giữ Hồn tiếp tục bay về.</summary>
+        public static void ReleaseAllExcept<T>() where T : Component
+        {
+            foreach (IPool pool in Pools.Values)
+                if (!(pool is ObjectPool<T>)) pool.ReleaseAll();
+        }
+
         /// <summary>Huỷ toàn bộ pool. Gọi khi rời scene đấu trường.</summary>
         public static void ClearAll()
         {

@@ -17,7 +17,7 @@ namespace LAC.VFX.Editor
         private const string Tiny = "Assets/ThirdParty/TinySwords/";
         private const string PrefabPath = Root + "Prefabs/Environment/ArenaStageDecor.prefab";
 
-        [MenuItem("LAC/Content/Apply 15 Waves and ThirdParty Art")]
+        [MenuItem("LAC/Content/Apply 10 Waves and ThirdParty Art")]
         public static void Build()
         {
             if (EditorApplication.isPlaying) throw new InvalidOperationException("Thoát Play trước khi sửa nội dung.");
@@ -29,7 +29,7 @@ namespace LAC.VFX.Editor
             BuildDecor();
             var run = UnityEngine.Object.FindFirstObjectByType<RunManager>();
             var so = new SerializedObject(run);
-            so.FindProperty("_fallbackTotalWaves").intValue = 15;
+            so.FindProperty("_fallbackTotalWaves").intValue = 10;
             so.ApplyModifiedPropertiesWithoutUndo();
             var previous = UnityEngine.Object.FindFirstObjectByType<ArenaStageVisuals>();
             if (previous != null) UnityEngine.Object.DestroyImmediate(previous.gameObject);
@@ -37,20 +37,12 @@ namespace LAC.VFX.Editor
             AssetDatabase.SaveAssets();
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
-            Debug.Log("[ArenaContent] 15 waves, three playable classes and rock stages ready.");
+            Debug.Log("[ArenaContent] 10 waves, three playable classes and rock stages ready.");
         }
 
         private static void UpdateWaves()
         {
-            var table = AssetDatabase.LoadAssetAtPath<WaveTable>(Root + "Data/Waves/WaveTable_CoDinh.asset");
-            var so = new SerializedObject(table);
-            var waves = so.FindProperty("_waves");
-            // Bỏ đợt đệm trước trùm; giữ nguyên tiến trình 1–14 và cấu hình trùm cuối.
-            if (waves.arraySize == 16) waves.DeleteArrayElementAtIndex(14);
-            if (waves.arraySize != 15) throw new InvalidOperationException("Bảng phải có 15 hoặc 16 đợt.");
-            waves.GetArrayElementAtIndex(13).FindPropertyRelative("_label").stringValue = "14 · Âm Phủ — trước trùm";
-            waves.GetArrayElementAtIndex(14).FindPropertyRelative("_label").stringValue = "15 · Chằn Tinh";
-            so.ApplyModifiedPropertiesWithoutUndo();
+            LAC.Core.Editor.TenWaveContent.ApplyTable();
         }
 
         private static Sprite[] Frames(string path)
@@ -90,7 +82,7 @@ namespace LAC.VFX.Editor
                 {
                     var group = new GameObject(names[stage]); group.transform.SetParent(root.transform, false);
                     group.SetActive(stage == 0);
-                    stages.GetArrayElementAtIndex(stage).FindPropertyRelative("_firstWave").intValue = 1 + stage * 5;
+                    stages.GetArrayElementAtIndex(stage).FindPropertyRelative("_firstWave").intValue = 1 + stage * 3;
                     stages.GetArrayElementAtIndex(stage).FindPropertyRelative("_root").objectReferenceValue = group;
                     // Trang trí thưa ở mép, vẽ dưới người/quái và không mang collider.
                     for (int side = -1; side <= 1; side += 2)

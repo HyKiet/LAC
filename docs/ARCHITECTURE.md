@@ -50,8 +50,8 @@ graph TD
 
 | Lớp | Trách nhiệm | Ghi chú |
 |---|---|---|
-| `RunManager` | Vòng đời một ván: khởi tạo, điều phối 15 đợt, xác định điều kiện thắng thua | Chỉ host điều khiển tiến trình |
-| `WaveManager` | Yêu cầu đặc tả đợt, phát lệnh sinh quái, theo dõi số quái còn sống, kết thúc đợt | Chỉ host |
+| `RunManager` | Vòng đời một ván: khởi tạo, điều phối 10 đợt, xác định điều kiện thắng thua | Chỉ host điều khiển tiến trình |
+| `WaveManager` | Dựng lịch, lặp sinh trong wave tính giờ, kết thúc theo deadline; boss kết thúc khi sạch | Host quyết timed spawn; client biểu diễn, boss dựng lịch từ seed |
 | `RunRandom` | Bao bọc `System.Random` với seed của ván. **Nguồn ngẫu nhiên duy nhất trong gameplay** | Seed được đồng bộ một lần khi khởi tạo ván |
 | `ObjectPool<T>` | Pool dùng chung cho đạn, quái, hiệu ứng, số sát thương | Bắt buộc thay thế cho `Instantiate` trong gameplay |
 | `GameEvents` | Event bus tĩnh: `OnEnemyDied`, `OnWaveCleared`, `OnCardPicked`, `OnPlayerHit` | Giảm phụ thuộc chéo giữa các module |
@@ -62,7 +62,7 @@ graph TD
 WaveManager.StartWave(n)
   → Lấy WaveSpec (AIDirector, hoặc FixedWaveTable với nhóm đối chứng)
   → EnemySpawner.Spawn(spec, RunRandom)
-  → Chờ số quái còn sống bằng 0
+  → Wave 1–9: chờ hết deadline NetworkTime; boss wave 10: chờ sạch quái
   → GameEvents.OnWaveCleared
   → CardManager.OfferCards(3)
   → Chờ toàn bộ người chơi hoàn tất lựa chọn
@@ -165,7 +165,7 @@ Hoạt động ở **cả chế độ chơi đơn và co-op**. `FixedWaveTable` 
 | `partyArchetype` | Định danh nhân vật | **Nhóm tổ hợp đội hình:** cận chiến kép · tầm xa kép · hỗn hợp |
 | `buildType` | Phân loại build | Phân loại build trội của đội |
 
-> Số chiều của véc-tơ được giữ cố định và ở mức nhỏ. Với cỡ mẫu thực nghiệm 30 người, việc nối hai véc-tơ build riêng biệt sẽ làm số chiều tăng gấp đôi và LinUCB không hội tụ kịp trong 15 đợt. `partyArchetype` chỉ có ba giá trị chính vì lý do này.
+> Số chiều của véc-tơ được giữ cố định và ở mức nhỏ. Với cỡ mẫu thực nghiệm 30 người, việc nối hai véc-tơ build riêng biệt sẽ làm số chiều tăng gấp đôi và LinUCB có ít dữ liệu trong 9 đợt thường; cần chính sách khởi tạo và đánh giá hội tụ ở T-45. `partyArchetype` chỉ có ba giá trị chính vì lý do này.
 
 #### Hàm thưởng
 
@@ -264,3 +264,6 @@ Cả ba bối cảnh (Sân Đình, Ruộng Lúa, Âm Phủ) dùng chung một sc
 ```
 
 Sai lệch trình tự này là nguyên nhân của lỗi client vào được ván nhưng không có nhân vật.
+
+
+Cập nhật T-44D (11/10/2026): wave 1–9 dùng thời hạn NetworkTime do host đồng bộ; host chọn các lượt sinh hợp lệ theo trần dân số và khoảng cách an toàn rồi phát sự kiện spawn (ID, loại, vị trí, seed/wave). Client dùng snapshot roster để vào muộn. Boss wave 10 vẫn dùng lịch xác định từ seed và kết thúc khi hạ boss. Không gắn NetworkIdentity lên quái/đạn.

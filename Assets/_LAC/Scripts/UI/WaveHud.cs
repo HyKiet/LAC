@@ -26,6 +26,7 @@ namespace LAC.UI
         private RunState _state = RunState.Idle;
         private float _announcedAt;
         private bool _animating;
+        private int _seconds = -1;
 
         private void Awake()
         {
@@ -52,10 +53,20 @@ namespace LAC.UI
                 Refresh();
 
             if (_animating) Animate(Time.unscaledTime - _announcedAt);
+            if (_run.State == RunState.WaveActive && _run.IsTimedWave)
+            {
+                int seconds = Mathf.CeilToInt(_run.WaveSecondsRemaining);
+                if (seconds != _seconds)
+                {
+                    _seconds = seconds;
+                    _status.text = $"SỐNG SÓT · {seconds:00}s";
+                }
+            }
         }
 
         private void Refresh()
         {
+            _seconds = -1;
             bool announce = _run.State == RunState.WaveActive && _run.CurrentWave > 0 &&
                 (_wave != _run.CurrentWave || _seed != _run.Seed || _state != RunState.WaveActive);
             _wave = _run.CurrentWave;
@@ -70,7 +81,7 @@ namespace LAC.UI
                 case RunState.CardSelection: _status.text = "ĐÃ VƯỢT QUA · CHỌN THẺ"; break;
                 case RunState.Victory: _status.text = "HOÀN THÀNH"; break;
                 case RunState.Defeat: _status.text = "KẾT THÚC VÁN"; break;
-                default: _status.text = _wave == _total ? "ĐỢT CUỐI" : "ĐANG CHIẾN ĐẤU"; break;
+                default: _status.text = _wave == _total ? "HẠ CHẰN TINH" : "ĐANG CHIẾN ĐẤU"; break;
             }
 
             if (announce)

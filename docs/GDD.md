@@ -3,9 +3,9 @@
 
 **Game Design Document**
 
-> Cập nhật 04/10/2026: một ván có **15 đợt tổng cộng**, gồm 14 đợt thường và Chằn Tinh ở đợt 15; có 14 lượt chọn thẻ. Mỹ thuật ThirdParty đang dùng để thử nghiệm được mô tả tại mục 11.7. Các nội dung khác chưa cập nhật theo triển khai vẫn theo quyết định hiện hành trong `CLAUDE.md`.
+> Cập nhật 11/10/2026: một ván có **10 đợt tổng cộng**, gồm 9 đợt sinh tồn tính giờ và Chằn Tinh ở đợt 10; có 9 lượt chọn thẻ. Mỹ thuật ThirdParty đang dùng để thử nghiệm được mô tả tại mục 11.7. Các nội dung khác chưa cập nhật theo triển khai vẫn theo quyết định hiện hành trong `CLAUDE.md`.
 
-> Quyết định 07/10/2026: bản đồ án dùng **Warrior, Archer, Lancer** từ TinySwords thay cho Thạch Sanh, Gióng, Tấm. Dùng asset sẵn để giảm công mỹ thuật; giữ co-op host-authoritative, 15 wave, thẻ, Trống Đồng, Hồn và telemetry. AI Đạo Diễn và thực nghiệm so sánh vẫn là phần cần hoàn thành để đánh giá đề tài, không bị thay bằng màn chọn nhân vật.
+> Quyết định 07/10/2026: bản đồ án dùng **Warrior, Archer, Lancer** từ TinySwords thay cho Thạch Sanh, Gióng, Tấm. Dùng asset sẵn để giảm công mỹ thuật; giữ co-op host-authoritative, 10 wave, thẻ, Trống Đồng, Hồn và telemetry. AI Đạo Diễn và thực nghiệm so sánh vẫn là phần cần hoàn thành để đánh giá đề tài, không bị thay bằng màn chọn nhân vật.
 
 | | |
 |---|---|
@@ -13,7 +13,7 @@
 | Góc nhìn | Top-down 2D, pixel art |
 | Nền tảng | PC (Steam) |
 | Người chơi | 1–2 (co-op online) |
-| Thời lượng ván | 15 phút |
+| Thời lượng ván | Mục tiêu 8–10 phút, tuỳ thời gian hạ boss |
 | Engine | Unity 6000.5.6f1 · URP 2D · C# |
 | Giá | $2.99 |
 
@@ -23,7 +23,7 @@
 
 ### 1.1 High Concept
 
-Người chơi chọn Warrior, Archer hoặc Lancer, chiến đấu qua 15 đợt quái trong một đấu trường khép kín để giành lại Trống Đồng. Bối cảnh và quái giữ cảm hứng thần thoại Việt Nam; bộ ba người chơi là các lớp chiến đấu dùng mỹ thuật TinySwords. Vũ khí tự động khai hỏa; người chơi kiểm soát vị trí và thời điểm lướt. Sau mỗi đợt thường, người chơi chọn một trong ba thẻ nâng cấp. Hạ trùm ở đợt 15 kết thúc ván ngay, không mở lượt chọn thẻ thứ 15.
+Người chơi chọn Warrior, Archer hoặc Lancer, chiến đấu qua 10 đợt quái trong một đấu trường khép kín để giành lại Trống Đồng. Bối cảnh và quái giữ cảm hứng thần thoại Việt Nam; bộ ba người chơi là các lớp chiến đấu dùng mỹ thuật TinySwords. Vũ khí tự động khai hỏa; người chơi kiểm soát vị trí và thời điểm lướt. Sau mỗi đợt thường, người chơi chọn một trong ba thẻ nâng cấp. Hạ trùm ở đợt 10 kết thúc ván ngay, không mở lượt chọn thẻ thứ 10.
 
 ### 1.2 Pitch
 
@@ -52,10 +52,10 @@ Người chơi 15–30 tuổi quen thuộc với roguelite, tìm phiên chơi ng
 ### 2.1 Vòng trong ván
 
 ```
-ĐỢT CHIẾN ĐẤU (30–50s)  →  CHỌN THẺ (10s)  →  lặp ×14  →  TRÙM (đợt 15)
+SINH TỒN (20–60s)  →  CHỌN THẺ (tối đa 10s)  →  9 đợt / 9 lượt nâng cấp  →  TRÙM (đợt 10)
 ```
 
-**Đợt chiến đấu.** Quái xuất hiện từ mép đấu trường theo nhịp do AI Đạo Diễn quyết định. Vũ khí tự bắn. Đợt kết thúc khi dọn sạch quái. Quái không rơi vật phẩm.
+**Đợt chiến đấu.** Theo hướng nhịp chơi Brotato: sống sót đến hết giờ, không cần dọn sạch. Wave 1–9 dài lần lượt 20, 25, 30, 35, 40, 45, 50, 55, 60 giây; tổng 360 giây chiến đấu thường. Quái tiếp tục vào theo nhịp/thành phần trong bảng cố định; host giới hạn 40 quái kể cả dự trù quái con, không sinh trong bán kính 3 quanh người sống. Đợt kết thúc do host; dọn quái/đạn bằng pool, không tính là giết và không rơi Hồn. Hồn từ các quái đã giết vẫn bay về. Đạo diễn thích ứng chưa triển khai ở T-45. Wave 10 không có giới hạn giờ: hạ Chằn Tinh để thắng.
 
 **Chọn thẻ.** Tạm khoá di chuyển/lướt/tấn công của player trong 10 giây; đồng hồ mạng vẫn chạy. Ba thẻ hiện ra, chọn một; hết hạn host chọn thay. Mỗi ván có 2 lượt đổi thẻ. Co-op chờ cả hai hoàn tất.
 
@@ -67,7 +67,11 @@ Người chơi 15–30 tuổi quen thuộc với roguelite, tìm phiên chơi ng
 Ngọc  →  Mở nhân vật · Mở thẻ vào bể · Tăng lượt đổi thẻ · Mở cấp độ khó
 ```
 
-### 2.3 Hai thao tác
+### 2.3 Hướng cảm giác chơi và giới hạn phiên bản
+
+Ưu tiên chuyển động linh hoạt, tự đánh có mục tiêu rõ, phản hồi hit/knockback, quái vào đều và đồng hồ tạo mục tiêu sinh tồn. Chín lượt thẻ giữ khoảng nghỉ để xây dựng sức mạnh. Đây là bước đầu của hướng Brotato; cửa hàng giữa wave, tiền mua đồ và nhiều ô vũ khí chưa có, không được mô tả như chức năng đã hoàn thành. Giữ dash/Trống Đồng, ba vũ khí cố định và co-op để giữ bản sắc LẠC. T-50/T-51 cần cân bằng lại với 9 lượt thẻ; 8 công thức tiến hoá vẫn là yêu cầu T-25/T-26.
+
+### 2.4 Hai thao tác
 
 Toàn bộ tương tác của người chơi gồm **di chuyển** và **lướt**. Không có nút tấn công, không có nút ngắm, không có nút kỹ năng.
 
@@ -187,7 +191,7 @@ Hành vi triển khai bằng FSM đơn giản. Độ thử thách đến từ th
 
 ### 6.3 Trùm — Chằn Tinh
 
-Mãng xà khổng lồ xuất hiện ở đợt 15. Máu 800 khi một người, 1600 khi hai người. Hai giai đoạn, chuyển tại 50% máu.
+Mãng xà khổng lồ xuất hiện ở đợt 10. Máu 800 khi một người, 1600 khi hai người. Hai giai đoạn, chuyển tại 50% máu.
 
 | Giai đoạn | Đòn tấn công |
 |---|---|
@@ -337,7 +341,7 @@ Chọn lớp rồi bấm **Vào trận / Tạo host**; chơi một người cũn
 
 ```
 ┌────────────────────────────────────────┐
-│ [██████░░] 6/8      ĐỢT 7/15           │
+│ [██████░░] 6/8      ĐỢT 7/10 · 50s           │
 │                                        │
 │                  🧍                    │
 │                                        │
@@ -383,11 +387,11 @@ Compression   None
 
 | Đợt | Đấu trường |
 |---|---|
-| 1–5 | Sân Đình |
-| 6–10 | Ruộng Lúa |
-| 11–15 | Âm Phủ — Chằn Tinh ở đợt cuối |
+| 1–3 | Sân Đình |
+| 4–6 | Ruộng Lúa |
+| 7–10 | Âm Phủ — Chằn Tinh ở đợt cuối |
 
-Sân thử nghiệm hiện tại: 36×20 đơn vị thế giới, nền gạch tối và biên va chạm hiện có. Đã bỏ toàn bộ bụi cỏ khỏi ba chặng. Đá rìa sân không có collider, đổi sắc ở đợt 6/11; tileset hoàn chỉnh là công việc sau, không là điều kiện để thử ba lớp.
+Sân thử nghiệm hiện tại: 36×20 đơn vị thế giới, nền gạch tối và biên va chạm hiện có. Đã bỏ toàn bộ bụi cỏ khỏi ba chặng. Đá rìa sân không có collider, đổi sắc ở đợt 4/7; tileset hoàn chỉnh là công việc sau, không là điều kiện để thử ba lớp.
 
 ### 11.4 Danh mục tài nguyên
 
@@ -443,7 +447,7 @@ Khai báo trên Steam: *"Ảnh nền và tranh minh họa có sử dụng công 
 
 Warrior: 8 khung đứng, 6 chạy, 4 đánh; Archer: 6 đứng, 6 chạy, 8 bắn; Lancer: 12 đứng, 6 chạy, 3 khung cho mỗi hướng đâm. Animation lấy trực tiếp từ sprite đã slice, giữ import gốc. Không đổi hitbox theo vùng trong suốt của sheet 192×192/320×320.
 
-Prefab `ArenaStageDecor` giữ ba nhóm đá: tông ấm (1–5), xanh trầm (6–10), xanh tối (11–15). Chặng lấy từ số wave đã đồng bộ nên người vào muộn và chơi lại hiển thị đúng. Đây là trang trí thử nghiệm, chưa thay thế ba tileset hoàn chỉnh.
+Prefab `ArenaStageDecor` giữ ba nhóm đá: tông ấm (1–3), xanh trầm (4–6), xanh tối (7–10). Chặng lấy từ số wave đã đồng bộ nên người vào muộn và chơi lại hiển thị đúng. Đây là trang trí thử nghiệm, chưa thay thế ba tileset hoàn chỉnh.
 
 Không nhập nguyên nhà châu Âu, cây lớn, cừu, vịt hoặc hiệu ứng nổ/lửa sáng vào sân. Không sửa ảnh và metadata gốc trong ThirdParty. Chi tiết phân tích, tham chiếu và thay thế asset: [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 
@@ -502,7 +506,7 @@ Không nhập nguyên nhà châu Âu, cây lớn, cừu, vịt hoặc hiệu ứ
 
 ### 14.1 Bắt buộc
 
-Chiến đấu cốt lõi · 3 nhân vật · 48 thẻ · 5 loại quái · Trùm Chằn Tinh · 15 đợt · 3 bối cảnh · AI Đạo Diễn · Co-op 2 người · Lưu trữ và mở khóa · 4 cấp độ khó
+Chiến đấu cốt lõi · 3 lớp TinySwords · 12 thẻ nền + 8 tiến hoá · 5 loại quái · Chằn Tinh · 10 đợt · 3 bối cảnh · AI Đạo Diễn · Co-op 2 người · Telemetry và thực nghiệm · 1 cấp độ khó
 
 ### 14.2 Ngoài phạm vi
 
@@ -524,7 +528,7 @@ Nhân vật thứ 4 trở đi · Trùm thứ 2 · Co-op 4 người · Ghép tr�
 | 1–3 | Di chuyển, lướt, tự động bắn, 1 quái, 1 đấu trường, lớp input | **Cổng 1:** cảm giác chiến đấu đạt yêu cầu |
 | 4–5 | Hệ thống thẻ, 30 thẻ chung, màn chọn thẻ | Build phân nhánh rõ rệt qua 10 đợt |
 | 6–7 | 3 nhân vật, 18 thẻ riêng, màn chọn nhân vật | **Cổng 2:** 3 nhân vật khác biệt về lối chơi |
-| 8–9 | 5 quái, phản hồi chiến đấu, trùm, 15 đợt | Ván chơi hoàn chỉnh |
+| 8–9 | 5 quái, phản hồi chiến đấu, trùm, 10 đợt | Ván chơi hoàn chỉnh |
 | 10–12 | Co-op 2 người | 2 máy hoàn thành ván không mất đồng bộ |
 | 13 | Telemetry, AI Đạo Diễn, phiên bản đối chứng | Dữ liệu so sánh |
 | 14 | Mở khóa, lưu trữ, cân bằng | Thử nghiệm 10 người ngoài nhóm |

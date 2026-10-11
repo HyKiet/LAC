@@ -69,7 +69,7 @@ Loại: `feat` · `fix` · `art` · `balance` · `docs` · `chore`. Phần thân
 
 ## 4. Chỗ nối giữa ba mảng
 
-**@Hung → lõi.** Hết đợt quái, `RunManager` chuyển sang `CardSelection` và phát sự kiện `WaveCleared`. Hệ thống thẻ nghe sự kiện đó, mở giao diện, cả hai người chọn xong thì gọi:
+**@Hung → lõi.** T-44D: hết giờ wave 1–9 (20–60s), `RunManager` chuyển sang `CardSelection` và phát sự kiện `WaveCleared`. Hệ thống thẻ nghe sự kiện đó, mở giao diện, cả hai người chọn xong thì gọi:
 
 ```csharp
 RunManager.Instance.ReportCardSelectionComplete();   // chỉ host gọi

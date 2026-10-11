@@ -1,0 +1,5 @@
+sample=0 seed=1046 wave=1 state=WaveActive duration=20 remaining=17.14 enemies=2 players=2 hp=8/6 snapshots=5
+sample=1 seed=1046 wave=1 state=WaveActive duration=20 remaining=10.64 enemies=7 players=2 hp=8/6 snapshots=18
+sample=2 seed=1046 wave=1 state=WaveActive duration=20 remaining=2.13 enemies=12 players=2 hp=8/6 snapshots=35
+sample=3 seed=1046 wave=1 state=CardSelection duration=20 remaining=0.00 enemies=0 players=2 hp=8/6 snapshots=40
+sample=4 seed=1046 wave=2 state=WaveActive duration=25 remaining=24.47 enemies=1 players=2 hp=8/8 snapshots=42

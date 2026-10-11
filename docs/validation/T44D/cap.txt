@@ -1,0 +1,3 @@
+cap=40 alive=36 safe=True/True soulBefore=1
+timeout=CardSelection enemies=0 soulAfter=1
+ALL PASSED

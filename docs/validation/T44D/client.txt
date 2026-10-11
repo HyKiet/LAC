@@ -1,0 +1,15 @@
+﻿[TelemetryClient] connected=True host=False wave=1 total=10 state=WaveActive telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 4 hp=6 character=Archer animation=Archer_TinySwords
+[TimedProbe] seed=1046 wave=1 state=WaveActive duration=20 remaining=17.39 enemies=2 snapshots=5
+[TimedProbe] seed=1046 wave=1 state=WaveActive duration=20 remaining=10.78 enemies=7 snapshots=18
+[TimedProbe] seed=1046 wave=1 state=WaveActive duration=20 remaining=2.25 enemies=12 snapshots=35
+[TelemetryClient] connected=True host=False wave=1 total=10 state=CardSelection telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 4 hp=6 character=Archer animation=Archer_TinySwords
+[TimedProbe] seed=1046 wave=1 state=CardSelection duration=20 remaining=0.00 enemies=0 snapshots=40
+[TelemetryClient] connected=True host=False wave=1 total=10 state=CardSelection telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 4 hp=8 character=Archer animation=Archer_TinySwords
+[TelemetryClient] connected=True host=False wave=2 total=10 state=WaveActive telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 4 hp=8 character=Archer animation=Archer_TinySwords
+[TimedProbe] seed=1046 wave=2 state=WaveActive duration=25 remaining=24.62 enemies=0 snapshots=40
+[TelemetryClient] connected=True host=False wave=2 total=10 state=WaveActive telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 5 hp=6 character=Archer animation=Archer_TinySwords
+[TelemetryClient] connected=True host=False wave=1 total=10 state=WaveActive telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 5 hp=6 character=Archer animation=Archer_TinySwords
+[TimedProbe] seed=679156933 wave=1 state=WaveActive duration=20 remaining=18.54 enemies=2 snapshots=3
+[TelemetryClient] connected=True host=False wave=1 total=10 state=WaveActive telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 6 hp=6 character=Archer animation=Archer_TinySwords
+[TelemetryClient] connected=True host=False wave=1 total=10 state=CardSelection telemetry=False stage=0 | 3 hp=8 character=Lancer animation=Lancer_TinySwords | 6 hp=3 character=Archer animation=Archer_TinySwords
+[TimedProbe] seed=679156933 wave=1 state=CardSelection duration=20 remaining=0.00 enemies=0 snapshots=40

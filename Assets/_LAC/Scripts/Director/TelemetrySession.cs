@@ -130,6 +130,8 @@ namespace LAC.Director
                 detail.Append(direction.ToString("R", CultureInfo.InvariantCulture)).Append('|');
             detail.Append(";interval=").Append(spec.SpawnInterval.ToString("R", CultureInfo.InvariantCulture));
             detail.Append(";burst=").Append(spec.Burst);
+            detail.Append(";duration=").Append(spec.Duration.ToString("R", CultureInfo.InvariantCulture));
+            detail.Append(";repeat=").Append(spec.Duration > 0f ? "1" : "0");
             Event("wave_spec", value: spec.TotalCount, detail: detail.ToString());
         }
 
@@ -144,7 +146,7 @@ namespace LAC.Director
         public void EndWave(string result)
         {
             if (!IsRecording || _wave == 0) return;
-            if (result == "cleared") _clearedWaves++;
+            if (result == "cleared" || result == "survived") _clearedWaves++;
             Event("wave_ended", detail: result);
             foreach (var p in _players)
             {

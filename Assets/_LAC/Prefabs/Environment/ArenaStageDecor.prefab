@@ -234,9 +234,9 @@ MonoBehaviour:
   _stages:
   - _firstWave: 1
     _root: {fileID: 6782389923592752896}
-  - _firstWave: 6
+  - _firstWave: 4
     _root: {fileID: 2209426921561366482}
-  - _firstWave: 11
+  - _firstWave: 7
     _root: {fileID: 1780926989546159753}
 --- !u!1 &1078709447636195292
 GameObject:

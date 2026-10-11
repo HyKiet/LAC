@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using LAC.Enemies;
+using LAC.Player;
 using Mirror;
 using UnityEngine;
 
@@ -9,28 +10,10 @@ namespace LAC.Core
     /// Thi hành từng đợt quái theo đặc tả, và báo cho <see cref="RunManager"/> khi đợt đã sạch.
     /// </summary>
     /// <remarks>
-    /// <b>Thành phần đợt do cả hai máy tự tính, không ai gửi cho ai.</b> `RunManager` đã đồng
-    /// bộ seed và số đợt; từ hai con số đó mỗi máy dựng ra cùng một <see cref="WaveSpec"/> và
-    /// gọi <see cref="EnemySpawner.Spawn"/> theo cùng thứ tự. Gửi danh sách quái qua mạng sẽ
-    /// tốn băng thông cho một thứ hai bên đều tự suy ra được.
-    ///
-    /// Lớp này <b>không biết nội dung đợt đến từ đâu</b> — nó chỉ nhận một đặc tả. Hiện nguồn
-    /// là bảng cố định <see cref="WaveTable"/> ở T-44; ở T-45 AI Đạo Diễn thay vào chỗ đó mà
-    /// không phải sửa gì trong tệp này.
-    ///
-    /// Mỗi đợt dùng một luồng ngẫu nhiên riêng, gieo từ seed của ván cộng số hiệu đợt, chứ
-    /// không rút tiếp từ luồng `RunRandom.Enemies`. Lý do: người chơi thứ hai vào giữa ván
-    /// sẽ không có lịch sử rút của các đợt trước, nên nếu dùng luồng nối tiếp thì họ tính ra
-    /// một đợt hoàn toàn khác. Luồng theo đợt làm kết quả chỉ phụ thuộc số hiệu đợt.
-    ///
-    /// Chỉ host quyết định thời điểm đợt kết thúc, vì chỉ host biết chắc con quái nào đã chết.
-    ///
-    /// <b>Đọc trạng thái chứ không nghe sự kiện.</b> Bản đầu đăng ký vào `RunManager.WaveStarted`
-    /// trong `Start`, nhưng `NetworkManagerLAC.Start` khởi động host và phát sự kiện đó cũng
-    /// trong `Start`, mà Unity không bảo đảm thứ tự `Start` giữa các đối tượng trong scene.
-    /// Kết quả là một cuộc đua: máy nào để `WaveManager` chạy trước thì có quái, máy nào chạy
-    /// sau thì sân trống. So sánh số hiệu đợt trong `Update` không có cửa sổ nào để lỡ, và
-    /// đồng thời xử lý được người chơi vào giữa ván.
+    /// Wave tính giờ: host quyết spawn theo lịch, trần dân số và vị trí an toàn rồi phát
+    /// sự kiện qua EnemySpawner. Client dựng quái từ sự kiện/snapshot; không quyết theo
+    /// số quái sống cục bộ. Boss dùng lịch xác định từ seed trên cả hai máy như trước.
+    /// Host giữ thời hạn wave trong RunManager, client chỉ vẽ đồng hồ NetworkTime.
     /// </remarks>
     public sealed class WaveManager : NetworkBehaviour
     {
@@ -52,7 +35,7 @@ namespace LAC.Core
         }
 
         [Header("Nội dung đợt")]
-        [Tooltip("Bảng 15 đợt. Cũng là nguồn của tổng số đợt trong ván.")]
+        [Tooltip("Bảng 10 đợt. Cũng là nguồn của tổng số đợt trong ván.")]
         [SerializeField] private WaveTable _table;
 
         [Header("Điểm sinh")]
@@ -69,6 +52,7 @@ namespace LAC.Core
         private int _spawnedWave;
         private int _runSeed;
         private bool _hasRunSeed;
+        private bool _timed;
         private RunState _lastState = RunState.Idle;
 
         private void Update()
@@ -92,6 +76,13 @@ namespace LAC.Core
             {
                 _lastState = run.State;
                 if (_lastState == RunState.Victory || _lastState == RunState.Defeat) EndRun();
+                if (_lastState == RunState.CardSelection)
+                {
+                    _schedule.Clear();
+                    _nextSpawnIndex = 0;
+                    PoolRegistry.ReleaseAllExcept<SoulPickup>();
+                    EnemySpawner.Instance?.ClearWaveCombat();
+                }
             }
 
             // Số hiệu đợt là nguồn sự thật. Đợt nào chưa xếp lịch thì xếp, bất kể máy này có
@@ -102,11 +93,17 @@ namespace LAC.Core
                 BuildSchedule(run.CurrentWave);
             }
 
+            if (run.State != RunState.WaveActive) return;
+            if (isServer && run.IsTimedWave && run.WaveSecondsRemaining <= 0f)
+            {
+                run.ReportWaveCleared();
+                return;
+            }
             ReleaseDueSpawns();
 
             if (!isServer) return;
 
-            if (run.State == RunState.WaveActive && run.CurrentWave == _spawnedWave && IsWaveCleared())
+            if (!run.IsTimedWave && run.CurrentWave == _spawnedWave && IsWaveCleared())
             {
                 run.ReportWaveCleared();
 
@@ -148,16 +145,8 @@ namespace LAC.Core
         /// Xếp trước toàn bộ lịch sinh quái của một đợt. <b>Chạy trên cả hai máy.</b>
         /// </summary>
         /// <remarks>
-        /// <b>Xếp trước cả đợt chứ không quyết từng lượt.</b> Định danh quái là một bộ đếm
-        /// tăng dần trong `EnemySpawner`, nên hai máy chỉ đặt cùng định danh cho cùng con quái
-        /// khi thứ tự sinh giống hệt nhau. Xếp sẵn một danh sách rồi chạy theo chỉ số làm thứ
-        /// tự đó cố định, kể cả khi hai máy sinh quái lệch nhau về thời điểm do độ trễ. Nếu
-        /// quyết từng lượt tại thời điểm sinh thì mọi thứ ảnh hưởng tới thời điểm — tốc độ
-        /// khung hình chẳng hạn — đều có thể đảo thứ tự và làm lệch định danh.
-        ///
-        /// Thời điểm bắt đầu đợt ở hai máy vẫn lệch nhau đúng bằng độ trễ đường truyền, vì
-        /// client biết đợt mới khi SyncVar tới nơi. Đó là sai lệch về biểu diễn, đã nằm trong
-        /// mô hình ở CLAUDE.md mục 3.2; snapshot vị trí ở T-35 kéo lại phần lệch tích luỹ.
+        /// Đợt tính giờ lặp thành phần đến hết thời hạn. Chỉ host tạo lịch này để tránh
+        /// client vào muộn tự tái tạo quái đã chết. Boss vẫn dùng một lịch từ seed.
         /// </remarks>
         private void BuildSchedule(int waveIndex)
         {
@@ -178,7 +167,9 @@ namespace LAC.Core
 
             var stream = new RandomStream(RunRandom.Seed, "wave" + waveIndex);
             WaveSpec spec = _table.BuildSpec(waveIndex, stream);
+            _timed = spec.Duration > 0f;
             if (isServer) RunManager.Instance.Telemetry?.RecordWaveSpec(spec, _table.name);
+            if (_timed && !isServer) return;
 
             if (spec.TotalCount == 0)
             {
@@ -189,17 +180,26 @@ namespace LAC.Core
             Rect rect = SpawnRect();
             int placed = 0;
 
-            foreach (EnemyData enemy in Interleave(spec))
+            do
             {
-                float anchor = spec.Directions[placed % spec.Directions.Length];
-                float offset = stream.Range(-_directionSpread, _directionSpread);
-                // Phép chia số nguyên là có chủ ý: nó gộp quái thành từng lượt Burst con
-                // cùng vào sân, thay vì rải đều từng con một.
-                float delay = placed / spec.Burst * spec.SpawnInterval;
+                foreach (EnemyData enemy in Interleave(spec))
+                {
+                    float anchor = spec.Directions[placed % spec.Directions.Length];
+                    float offset = stream.Range(-_directionSpread, _directionSpread);
+                    // Phép chia số nguyên là có chủ ý: nó gộp quái thành từng lượt Burst con
+                    // cùng vào sân, thay vì rải đều từng con một.
+                    float delay = placed / spec.Burst * spec.SpawnInterval;
+                    if (_timed)
+                    {
+                        delay = placed / spec.Burst * Mathf.Max(.1f, spec.SpawnInterval);
+                        if (delay >= spec.Duration) return;
+                    }
 
-                _schedule.Add(new ScheduledSpawn(enemy, PerimeterPoint(rect, anchor + offset), delay));
-                placed++;
+                    _schedule.Add(new ScheduledSpawn(enemy, PerimeterPoint(rect, anchor + offset), delay));
+                    placed++;
+                }
             }
+            while (_timed);
         }
 
         /// <summary>
@@ -238,12 +238,40 @@ namespace LAC.Core
         {
             if (_nextSpawnIndex >= _schedule.Count) return;
 
-            float elapsed = Time.time - _waveStartedAt;
+            float elapsed = _timed ? RunManager.Instance.WaveDuration - RunManager.Instance.WaveSecondsRemaining
+                : Time.time - _waveStartedAt;
             while (_nextSpawnIndex < _schedule.Count && _schedule[_nextSpawnIndex].Delay <= elapsed)
             {
                 ScheduledSpawn spawn = _schedule[_nextSpawnIndex++];
-                EnemySpawner.Instance.Spawn(spawn.Enemy, spawn.Position);
+                if (!_timed) EnemySpawner.Instance.Spawn(spawn.Enemy, spawn.Position);
+                else if (isServer && HasPopulationBudget(spawn.Enemy) && TrySafePosition(spawn.Position, out Vector2 safe))
+                    EnemySpawner.Instance.SpawnTimed(spawn.Enemy, safe);
             }
+        }
+
+        private bool HasPopulationBudget(EnemyData next)
+        {
+            int reserved = next.PopulationCost;
+            foreach (var enemy in EnemyRegistry.Alive)
+                if (enemy != null && enemy.IsAlive) reserved += enemy.Data.PopulationCost;
+            return reserved <= _table.MaxConcurrent;
+        }
+
+        private bool TrySafePosition(Vector2 candidate, out Vector2 safe)
+        {
+            Rect rect = SpawnRect();
+            for (int i = 0; i < 17; i++)
+            {
+                safe = i == 0 ? candidate : PerimeterPoint(rect, (i - 1) / 16f);
+                bool clear = true;
+                foreach (var player in PlayerRegistry.All)
+                    if (player != null && player.IsAlive && ((Vector2)player.transform.position - safe).sqrMagnitude <
+                        _table.SafeSpawnDistance * _table.SafeSpawnDistance)
+                    { clear = false; break; }
+                if (clear) return true;
+            }
+            safe = candidate;
+            return false;
         }
 
         /// <summary>Vùng sinh quái — sân đã thu vào một khoảng lề.</summary>
@@ -261,18 +289,7 @@ namespace LAC.Core
         /// <summary>
         /// Một điểm trên chu vi sân, tham số hoá theo <paramref name="u"/> trong [0, 1).
         /// </summary>
-        /// <remarks>
-        /// Sinh sát biên chứ không sinh quanh người chơi: quái hiện ra ngay cạnh người chơi là
-        /// đòn không né được, và người chơi không có cách nào phòng bị.
-        ///
-        /// docs/GDD.md mục 7.6 còn cấm sinh trong bán kính 3 quanh người chơi, và luật đó
-        /// <b>chưa được cài ở đây</b> — cố ý. Nó cần đọc vị trí người chơi, mà vị trí người
-        /// chơi ở hai máy không bao giờ trùng khít do dự đoán cục bộ và độ trễ; đưa nó vào một
-        /// phép tính phải cho ra kết quả giống nhau ở hai máy là tự tạo ra sai lệch. Luật này
-        /// thuộc về tầng an toàn của đạo diễn ở T-45, nơi host là bên duy nhất quyết định.
-        /// Trong lúc chờ, việc sinh sát biên đã chặn phần lớn trường hợp; chỗ hở còn lại là
-        /// người chơi đứng dí vào tường.
-        /// </remarks>
+        /// <remarks>Host kiểm khoảng cách 3 đơn vị quanh người sống trước khi spawn timed.</remarks>
         private static Vector2 PerimeterPoint(Rect rect, float u)
         {
             u -= Mathf.Floor(u);

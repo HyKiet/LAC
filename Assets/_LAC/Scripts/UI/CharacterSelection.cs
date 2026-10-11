@@ -113,7 +113,7 @@ namespace LAC.UI
             shade.rectTransform.anchorMax = Vector2.one;
             shade.rectTransform.offsetMin = shade.rectTransform.offsetMax = Vector2.zero;
             Text("Title", _overlay.transform, "CHỌN NHÂN VẬT", 38, new Vector2(0, 330), new Vector2(1200, 65), Hex("FBDD82"));
-            Text("Subtitle", _overlay.transform, "15 ĐỢT  •  VŨ KHÍ TỰ ĐÁNH  •  CO-OP 2 NGƯỜI", 20, new Vector2(0, 272), new Vector2(1200, 40), Hex("9CCFC0"));
+            Text("Subtitle", _overlay.transform, "10 ĐỢT  •  SINH TỒN TÍNH GIỜ  •  CO-OP 2 NGƯỜI", 20, new Vector2(0, 272), new Vector2(1200, 40), Hex("9CCFC0"));
             for (int i = 0; i < 3; i++) BuildCard(i);
             _status = Text("Status", _overlay.transform, DefaultStatus, 19, new Vector2(0, -230), new Vector2(1270, 45), Hex("E0CFAF"));
             _host = Button("StartHost", _overlay.transform, "VÀO TRẬN / TẠO HOST", new Vector2(-345, -295), new Vector2(360, 58), BeginHost);

@@ -84,6 +84,12 @@ namespace LAC.Director
             else if (action == "quit") Application.Quit();
             else if (action == "invalid") NetworkClient.Send(new NetworkManagerLAC.CharacterChoiceMessage { Character = (CharacterId)99 });
             else if (action == "duplicate") NetworkClient.Send(new NetworkManagerLAC.CharacterChoiceMessage { Character = CharacterId.Lancer });
+            else if (action == "probe" && run != null)
+            {
+                Debug.Log("[TimedProbe] seed=" + run.Seed + " wave=" + run.CurrentWave + " state=" + run.State
+                    + " duration=" + run.WaveDuration + " remaining=" + run.WaveSecondsRemaining.ToString("F2")
+                    + " enemies=" + LAC.Enemies.EnemyRegistry.Count + " snapshots=" + LAC.Enemies.EnemySpawner.Instance.ReceivedSnapshots);
+            }
             Debug.Log("[TelemetryClient] command=" + command);
         }
     }

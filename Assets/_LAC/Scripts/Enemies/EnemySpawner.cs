@@ -49,7 +49,7 @@ namespace LAC.Enemies
         }
         private void OnDestroy() { if (_instance == this) _instance = null; }
         private RunManager Run => _run != null ? _run : (_run = RunManager.Instance);
-        private bool Matches(int seed, int wave) => Run != null && Run.Seed == seed && Run.CurrentWave == wave && !Run.IsOver;
+        private bool Matches(int seed, int wave) => Run != null && Run.Seed == seed && Run.CurrentWave == wave && Run.State == RunState.WaveActive;
 
         public void BeginWave(int wave)
         {
@@ -78,6 +78,33 @@ namespace LAC.Enemies
             if (enemy.IsBoss && isServer) RegisterBoss(enemy);
             return enemy;
         }
+        // Đợt tính giờ tái sinh theo số quái sống: chỉ host quyết, client nhận sự kiện.
+        [Server]
+        public void SpawnTimed(EnemyData data, Vector2 position)
+        {
+            int kind = _catalog.IndexOf(data);
+            if (kind < 0 || Run.State != RunState.WaveActive) return;
+            var enemy = Spawn(data, position);
+            if (enemy != null) RpcTimedSpawn(enemy.Id, kind, position, Run.Seed, Run.CurrentWave);
+        }
+
+        [ClientRpc]
+        private void RpcTimedSpawn(int id, int kind, Vector2 position, int seed, int wave)
+        {
+            if (isServer || !Matches(seed, wave)) return;
+            BeginWave(wave);
+            if (_deadIds.Contains(id) || (id <= _receivedHighWater && !_lastRoster.Contains(id))) return;
+            SpawnWithId(id, _catalog.Get(kind), position);
+        }
+
+        public void ClearWaveCombat()
+        {
+            _pool?.ReleaseAll();
+            _projectilePool?.ReleaseAll();
+            EnemyRegistry.Clear();
+            ResetBossEncounter();
+        }
+
         public void ResetRun()
         {
             _pool?.ReleaseAll();

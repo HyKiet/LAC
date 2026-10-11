@@ -8025,7 +8025,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _waves: {fileID: 11400000, guid: 74de609306278d34ebb6164d0cbc35c2, type: 2}
-  _fallbackTotalWaves: 15
+  _fallbackTotalWaves: 10
 --- !u!114 &712958574
 MonoBehaviour:
   m_ObjectHideFlags: 0

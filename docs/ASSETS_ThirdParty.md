@@ -19,7 +19,7 @@ Idle chạy 10 FPS, Run 12 FPS, Attack 18 FPS để mỗi đòn hoàn tất tron
 
 ## Bản đồ và phản hồi chiến đấu
 
-`ArenaStageDecor.prefab` chỉ giữ đá rìa sân; 1–5 tông ấm, 6–10 xanh trầm, 11–15 xanh tối. Không collider, sorting order -80, dưới người/quái/đòn. Nhóm được chọn từ wave đã đồng bộ; vào muộn và Restart vẫn đúng. Nền gạch và biên arena giữ nguyên.
+`ArenaStageDecor.prefab` chỉ giữ đá rìa sân; 1–3 tông ấm, 4–6 xanh trầm, 7–10 xanh tối. Không collider, sorting order -80, dưới người/quái/đòn. Nhóm được chọn từ wave đã đồng bộ; vào muộn và Restart vẫn đúng. Nền gạch và biên arena giữ nguyên.
 
 Warrior dùng vệt cung đúng tầm/góc; Lancer dùng đường viền dải đâm đúng tầm/bề rộng; Archer dùng sprite tên. Tất cả được pool, không gắn NetworkIdentity. FX người chơi dùng chàm, đòn địch giữ nhóm son và lớp vẽ cao hơn. Sóng Đông Sơn/Trống Đồng vẫn có trong hệ thống, ba vũ khí vật lý không vẽ thêm sóng nhạc cụ.
 
@@ -29,8 +29,8 @@ Chưa chọn Buildings/Pawn/Monk/cây lớn/mây/động vật: không thêm ch�
 
 Mở Arena ở Edit Mode, chạy `LAC > Content > Apply Warrior Archer Lancer`. Công cụ `Player/Editor/PlayableClassesContent.cs` tạo animation, cấu hình dữ liệu, prefab vũ khí/màn chọn và gỡ bụi. Chạy lại không nhân đôi màn chọn. GUID của ba CharacterData cũ được giữ khi đổi tên asset, bảo toàn tham chiếu.
 
-Công cụ 15 wave cũ đã cập nhật để không khôi phục bụi hoặc bộ ba cũ. Dữ liệu animation truyền thuyết còn trên đĩa để tham khảo, registry hiện hành chỉ trỏ ba lớp mới.
+Công cụ nội dung (10 wave hiện hành) đã cập nhật để không khôi phục bụi hoặc bộ ba cũ. Dữ liệu animation truyền thuyết còn trên đĩa để tham khảo, registry hiện hành chỉ trỏ ba lớp mới.
 
 Nguồn và quyền phát hành của asset cần được lưu cùng hồ sơ thương mại: không tìm thấy tệp giấy phép trong bản thư mục đã nhận. Việc dùng tài nguyên bên ngoài phải được ghi đúng trong báo cáo đồ án; không ghi sprite này là tự vẽ.
 
-Kiểm chứng hiện hành: [PLAYABLE_CLASSES_TESTS.md](PLAYABLE_CLASSES_TESTS.md). Kiểm chứng lần tích hợp 15 wave trước: [ARENA_CONTENT_TESTS.md](ARENA_CONTENT_TESTS.md).
+Nhịp 10 wave tính giờ: [TEN_WAVE_TESTS.md](TEN_WAVE_TESTS.md). Kiểm chứng ba lớp trước đó: [PLAYABLE_CLASSES_TESTS.md](PLAYABLE_CLASSES_TESTS.md). Kiểm chứng lần tích hợp 15 wave trước: [ARENA_CONTENT_TESTS.md](ARENA_CONTENT_TESTS.md).

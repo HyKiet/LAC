@@ -1,0 +1,1 @@
+late join restored 2 players; defeat/restart wave=1 duration=20 hp=8/6 seed=679156933

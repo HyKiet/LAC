@@ -25,7 +25,7 @@ LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, �
 | Nền tảng phát hành | PC — Steam |
 | Giá bán | **$2.99** |
 | Số người chơi | 1–2, **co-op trực tuyến** *(yêu cầu bắt buộc từ giảng viên hướng dẫn)* |
-| Thời lượng một ván | 15 phút — 15 đợt quái |
+| Thời lượng một ván | Mục tiêu 8–10 phút — 10 đợt quái |
 | Engine | **Unity 6000.5.6f1**, URP 2D, C# |
 | Kiến trúc mạng | Mirror + Steamworks.NET, mô hình **host-authoritative** |
 
@@ -36,11 +36,13 @@ LẠC là một **arena survival roguelite 2D góc nhìn từ trên xuống**, �
 ### 1.1 Vòng lặp cốt lõi
 
 ```
-Đợt quái (30–50 giây) → Chọn 1 trong 3 thẻ nâng cấp (10 giây)
-→ Lặp lại 14 lần → Trùm Chằn Tinh ở đợt 15
+Sinh tồn (20–60 giây) → Chọn 1 trong 3 thẻ nâng cấp (tối đa 10 giây)
+→ 9 đợt thường / 9 lượt nâng cấp → Trùm Chằn Tinh ở đợt 10
 ```
 
 Người chơi chỉ có **hai thao tác: di chuyển và lướt (dash)**. Vũ khí khai hoả tự động. Người chơi kiểm soát vị trí và thời điểm, không kiểm soát hành vi bắn.
+
+Đợt thường kết thúc theo đồng hồ mạng của host, quái tiếp tục vào sân đến hết giờ. Dọn quái/đạn khi nghỉ, giữ Hồn đã rơi. Boss phải bị hạ để thắng. Nhịp sinh và thời lượng nằm trong WaveTable; thay đổi 11/10/2026 theo hướng Brotato, giữ vũ khí cố định/thẻ/Trống Đồng. Cửa hàng và nhiều ô vũ khí chưa thuộc triển khai này.
 
 ### 1.2 Nhân vật
 
@@ -118,7 +120,7 @@ Kể cả khi kiểm thử một mình, game vẫn khởi chạy qua host mode. 
 |---|---|---|
 | Vị trí người chơi | Có | `NetworkTransform`; client dự đoán cục bộ nhân vật của mình |
 | Máu, sát thương, cái chết | Có | **Host là thẩm quyền duy nhất.** Phát RPC theo sự kiện, không đồng bộ liên tục |
-| Quái vật | Một phần | Đồng bộ seed và đặc tả đợt; hai máy tự sinh. Host gửi snapshot vị trí 2 lần/giây để hiệu chỉnh sai lệch |
+| Quái vật | Một phần | Wave tính giờ: host phát sự kiện sinh (ID/loại/vị trí); boss tự sinh từ seed. Snapshot roster/vị trí 2 lần/giây cho hiệu chỉnh và vào muộn |
 | Lựa chọn thẻ | Có | Đồng bộ định danh thẻ; hai máy tự áp dụng hiệu ứng |
 | Thời gian hồi Trống Đồng | Có | `SyncVar` do host quản lý, dùng chung |
 | **Đạn** | **Không** | Sinh cục bộ. Đạn phía client chỉ mang tính biểu diễn |
@@ -273,7 +275,7 @@ Nhóm phát triển chủ yếu bằng phương pháp AI-assisted. Ba quy địn
 | GDD | Quyết định hiện hành | Lý do |
 |---|---|---|
 | Unity 6.3 LTS · $6.99 | **6000.5.6f1** · **$2.99** | Phiên bản engine thực tế; định giá theo mặt bằng thể loại |
-| 48 thẻ · 4 cấp độ khó | **12 thẻ nền + 8 tiến hoá** · **1 cấp** | T-24 thu gọn còn 12 thẻ nền theo quyết định ngày 24/09/2026; cân bằng theo giới hạn cộng dồn và 14 lượt nâng cấp. Cấp độ khó thứ hai để sau bảo vệ |
+| 48 thẻ · 4 cấp độ khó | **12 thẻ nền + 8 tiến hoá** · **1 cấp** | T-24 thu gọn còn 12 thẻ nền theo quyết định ngày 24/09/2026; cân bằng theo giới hạn cộng dồn và 9 lượt nâng cấp. Cấp độ khó thứ hai để sau bảo vệ |
 | Không có vật phẩm rơi ra | **Bổ sung cơ chế Hồn** | Thể loại yêu cầu vòng phản hồi chu kỳ ngắn |
 | Không có Trống Đồng và tiến hoá thẻ | **Bổ sung — xem mục 2** | Yếu tố định vị sản phẩm |
 | AI Đạo Diễn chạy ở mọi chế độ | **Hoạt động ở cả hai chế độ.** Co-op dùng véc-tơ ngữ cảnh hợp thành, tầng an toàn theo người yếu nhất và số hạng công bằng | Yêu cầu bắt buộc từ giảng viên hướng dẫn. Đặc tả đầy đủ tại [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) mục 2.7 |

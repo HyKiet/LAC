@@ -28,7 +28,7 @@ Cổng 1 đã xong: vòng lặp một ván chạy được đầu-cuối — di 
 
 **Cấu hình đang chạy là cấu hình thử nghiệm, đừng nhầm là bản cuối:**
 
-- Người chơi chọn **Warrior / Archer / Lancer** trước trận, dùng TinySwords vàng/xanh/tím. Cô Hồn dùng Orc. Ván có 15 đợt, boss ở đợt cuối; rìa sân chỉ còn đá, đổi sắc ở đợt 6 và 11. Xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md).
+- Người chơi chọn **Warrior / Archer / Lancer** trước trận, dùng TinySwords vàng/xanh/tím. Cô Hồn dùng Orc. Ván có 10 đợt: 9 đợt sinh tồn tính giờ 20–60s, boss ở đợt 10; rìa sân chỉ còn đá, đổi sắc ở đợt 4 và 7. Xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md).
 - Mỹ thuật T-18 vẫn có tại `Data/Animations/ThachSanh.asset` và `CoHon.asset` để tham khảo; người chơi hiện dùng bộ ba TinySwords theo quyết định 07/10/2026.
 - T-22/T-23 đã có chọn thẻ 10 giây và đồng bộ co-op; đã gỡ cơ chế tự sang đợt sau 1.5 giây. Kiểm thử: [docs/CARD_TESTS.md](docs/CARD_TESTS.md)
 

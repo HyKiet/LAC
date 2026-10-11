@@ -180,6 +180,8 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
   > Codex · 04/10/2026: `WaveTable_CoDinh.asset` còn 14 đợt thường + Chằn Tinh ở đợt 15; fallback scene/mã và GDD/CLAUDE đồng bộ. `Giong_TinySwords.asset` dùng Yellow Warrior; `ArenaStageDecor.prefab` + `VFX/ArenaStageVisuals.cs` đổi cây/đá ở wave 6 và 11. Đã xem Game View ba chặng và Victory 15/15; Play đủ 15 wave/14 lượt chọn thẻ, telemetry, animation, Restart đạt. Co-op hai tiến trình 100 ms xác nhận vào muộn, boss 1600 máu ở wave 15, Victory/Restart; Console cuối 0 lỗi/0 cảnh báo. Development build 0 lỗi; 40 quái/200 đạn P95 4,76 ms. [Phân tích asset](ASSETS_ThirdParty.md), [kiểm chứng](ARENA_CONTENT_TESTS.md).
 - [x] **T-44C** Warrior/Archer/Lancer, đòn đánh riêng và chọn lớp trước trận; gỡ bụi cỏ — **@Kiet**
   > Codex · 07/10/2026: `Player/Editor/PlayableClassesContent.cs`, dữ liệu/bộ animation ba lớp TinySwords, `Combat/WeaponAuto.cs` + `VFX/SpearThrust.cs`, prefab Arrow/Thrust/CharacterSelection. `UI/CharacterSelection.cs` chọn trước StartHost/StartClient; `Net/NetworkManagerLAC.cs` thẩm định ID trước sinh, giữ solo host và co-op. Gỡ Bushes cả ba nhóm map, cập nhật GDD/CLAUDE/phạm vi mỹ thuật. Play Mode ba lớp/đòn/HP/dash/animation ALL PASSED; 15 wave/14 pha thẻ/boss/telemetry/Restart đạt. Hai Editor 100 ms xác nhận Lancer8/Archer6 và chống đổi lớp sau spawn, Console gameplay 0 lỗi; 40 quái/200 đạn P95 4,90 ms. Build executable bị Windows Application Control chặn Unity.Linker.Api.dll, chưa nghiệm thu build mới. [Kiểm chứng và giới hạn](PLAYABLE_CLASSES_TESTS.md).
+- [x] **T-44D** Nhịp sinh tồn theo thời gian, nén ván còn 10 wave theo hướng Brotato — **@Kiet** · 11/10/2026
+  > Codex: `Core/WaveSpec.cs`, `WaveTable.cs`, `WaveManager.cs`, `RunManager.cs`, `Core/Editor/TenWaveContent.cs`, `Enemies/EnemySpawner.cs`, `UI/WaveHud.cs`; 9 wave 20–60s/9 lượt thẻ, boss wave 10, spawn do host quyết với trần 40 và khoảng cách an toàn, cleanup giữ Hồn, telemetry đếm `survived`. Play wave đầu đủ 20s và kiểm tra 10 wave/boss/CSV/Restart ALL PASSED; co-op hai Editor 100ms xác nhận timer/cleanup/chọn thẻ, vào lại giữa wave và Restart. Game View 40 quái/200 đạn P95 4.98ms; Console cuối 0 lỗi/0 cảnh báo. Cửa hàng/nhiều vũ khí và cân bằng cuối chưa có; chưa chứng nhận executable mới do lỗi Application Control trước đó. [Thiết kế và kiểm chứng](TEN_WAVE_TESTS.md).
 - [ ] **T-45** AI Đạo Diễn (LinUCB) — lõi thuật toán, `ContextVector`, `WaveSpec` — **@Kiet**
 - [ ] **T-45B** Đạo diễn trong co-op — hợp thành ngữ cảnh N người, số hạng công bằng, tầng an toàn theo người yếu nhất — **@Kiet**
 - [ ] **T-46** Điều tiết bất đối xứng, đòn bẩy chia cắt và dồn ép; hiển thị hoạt động đạo diễn trên HUD — **@Kiet**
@@ -195,7 +197,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [ ] **T-48** Tiền tệ Ngọc, lưu tiến trình, bảng mở khoá — **@Kang**
 - [ ] **T-49** Màn thống kê sau ván — **@Kang**
 - [ ] **T-50** Cân bằng: xác định sát thương gốc cho cả ba vũ khí — **@Kiet**
-- [ ] **T-51** Cân bằng đường cong độ khó qua 15 đợt — **@Kiet**
+- [ ] **T-51** Cân bằng đường cong độ khó qua 10 đợt, với 9 lượt nâng cấp — **@Kiet**
 - [ ] **T-52** Nhạc nền và hiệu ứng âm thanh — Chưa phân công
 - [ ] **T-53** Thực nghiệm đánh giá: 15 người dùng AI Đạo Diễn, 15 người dùng bảng đợt cố định — **@Kiet**
 - [ ] **T-54** Phân tích số liệu và biên soạn chương đánh giá — **@Kiet**

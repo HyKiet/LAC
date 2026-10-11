@@ -5,7 +5,7 @@ using UnityEngine;
 namespace LAC.Core
 {
     /// <summary>
-    /// Bảng đợt cố định — nội dung của cả 15 đợt, biên soạn bằng tay.
+    /// Bảng đợt cố định — nội dung của cả 10 đợt, biên soạn bằng tay.
     /// </summary>
     /// <remarks>
     /// Hai vai trò, đều nằm trong docs/TASKS.md T-44. Thứ nhất, đây là <b>nhóm đối chứng</b>
@@ -14,9 +14,9 @@ namespace LAC.Core
     /// liệu biên soạn tay chứ không phải công thức. Thứ hai, đây là <b>phương án dự phòng</b>
     /// nếu đạo diễn ở T-45 không kịp hoàn thành.
     ///
-    /// <b>Cả 15 đợt nằm trong một tài sản duy nhất, không phải 15 tệp.</b> Tài sản Unity lưu
-    /// dạng YAML và không hợp nhất tự động được — CLAUDE.md mục 6.2. Mười lăm tệp nghĩa là
-    /// mười lăm nguồn xung đột, trong khi khâu cân bằng ở T-51 gần như luôn sửa nhiều đợt cùng
+    /// <b>Cả 10 đợt nằm trong một tài sản duy nhất, không phải 10 tệp.</b> Tài sản Unity lưu
+    /// dạng YAML và không hợp nhất tự động được — CLAUDE.md mục 6.2. Mười tệp nghĩa là
+    /// mười nguồn xung đột, trong khi khâu cân bằng ở T-51 gần như luôn sửa nhiều đợt cùng
     /// một lúc. Một tệp thì mỗi lần cân bằng là một xung đột, và nhìn được cả đường cong độ
     /// khó trên một màn hình Inspector.
     /// </remarks>
@@ -52,11 +52,15 @@ namespace LAC.Core
             [Tooltip("Số hướng quái đi vào sân. Càng nhiều hướng càng khó xoay trở.")]
             [SerializeField, Range(1, 8)] private int _directions = 2;
 
+            [Tooltip("Thời gian sinh tồn; 0 để kết thúc khi dọn sạch, dùng cho boss.")]
+            [SerializeField, Min(0f)] private float _duration;
+
             public string Label => _label;
             public Group[] Groups => _groups;
             public float SpawnInterval => _spawnInterval;
             public int Burst => _burst;
             public int Directions => _directions;
+            public float Duration => _duration;
         }
 
         [SerializeField] private Entry[] _waves = new Entry[0];
@@ -64,10 +68,15 @@ namespace LAC.Core
         [Tooltip("Trần số quái cùng lúc trên sân. Ngân sách hiệu năng ở CLAUDE.md mục 5 là 40.")]
         [SerializeField, Min(1)] private int _maxConcurrent = 40;
 
+        [Tooltip("Khoảng cách an toàn giữa điểm sinh timed và mọi người chơi còn sống.")]
+        [SerializeField, Min(0f)] private float _safeSpawnDistance = 3f;
+
         /// <summary>Số đợt của một ván. Nguồn duy nhất — `RunManager` đọc từ đây.</summary>
         public int TotalWaves => _waves.Length;
 
         public int MaxConcurrent => _maxConcurrent;
+        public float SafeSpawnDistance => _safeSpawnDistance;
+        public float DurationFor(int waveIndex) => GetEntry(waveIndex)?.Duration ?? 0f;
 
         /// <summary>
         /// Dựng đặc tả cho một đợt. <b>Cả hai máy cùng gọi và phải ra cùng kết quả.</b>
@@ -89,7 +98,8 @@ namespace LAC.Core
                 BuildMix(entry),
                 BuildDirections(entry.Directions, stream),
                 entry.SpawnInterval,
-                entry.Burst);
+                entry.Burst,
+                entry.Duration);
         }
 
         private Entry GetEntry(int waveIndex)
@@ -107,12 +117,9 @@ namespace LAC.Core
         /// Thành phần đợt, đã kẹp về trần số quái cùng lúc.
         /// </summary>
         /// <remarks>
-        /// <b>Trần được áp lúc dựng đặc tả chứ không phải lúc sinh quái.</b> Chặn theo số quái
-        /// đang sống trên sân thì mỗi máy đọc một con số khác nhau — sự kiện chết đi từ host
-        /// xuống client mất một quãng độ trễ, nên trong quãng đó host thấy sân đã vơi còn
-        /// client thì chưa. Hai máy sẽ sinh quái ở hai thời điểm khác nhau và lệch dần. Kẹp
-        /// theo dữ liệu bảng là một hàm thuần của bảng, hai máy luôn ra cùng kết quả, và trần
-        /// 40 con ở docs/GDD.md mục 7.6 vẫn được giữ đúng vì cả đợt có thể sống cùng lúc.
+        /// Kẹp dân số của một chu kỳ thành phần. Boss chạy đúng một chu kỳ trên cả hai máy.
+        /// Wave tính giờ lặp chu kỳ này; WaveManager kiểm thêm số quái sống trên host
+        /// trước từng lượt sinh và phát sự kiện để client không tự quyết theo roster trễ.
         /// </remarks>
         private WaveSpec.Group[] BuildMix(Entry entry)
         {

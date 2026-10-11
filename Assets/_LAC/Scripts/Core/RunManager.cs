@@ -51,13 +51,16 @@ namespace LAC.Core
         [SerializeField] private WaveTable _waves;
 
         [Tooltip("Chỉ dùng khi chưa gán bảng đợt.")]
-        [SerializeField, Min(1)] private int _fallbackTotalWaves = 15;
+        [SerializeField, Min(1)] private int _fallbackTotalWaves = 10;
 
         [SyncVar(hook = nameof(OnSeedChanged))]
         private int _seed;
 
         [SyncVar]
         private int _currentWave;
+
+        [SyncVar] private double _waveEndsAt;
+        [SyncVar] private float _waveDuration;
 
         [SyncVar(hook = nameof(OnStateChanged))]
         private RunState _state = RunState.Idle;
@@ -85,6 +88,10 @@ namespace LAC.Core
         public RunState State => _state;
         public int Seed => _seed;
         public bool IsFinalWave => _currentWave >= TotalWaves;
+        public float WaveDuration => _waveDuration;
+        public float WaveSecondsRemaining => _state == RunState.WaveActive && _waveDuration > 0f
+            ? Mathf.Max(0f, (float)(_waveEndsAt - NetworkTime.time)) : 0f;
+        public bool IsTimedWave => _waveDuration > 0f;
 
         /// <summary>Phát khi một đợt bắt đầu, kèm số thứ tự đợt. Chạy trên cả host và client.</summary>
         public event Action<int> WaveStarted;
@@ -132,6 +139,8 @@ namespace LAC.Core
             _alivePlayers = 0;
             _currentWave = 0;
             _state = RunState.Idle;
+            _waveDuration = 0f;
+            _waveEndsAt = 0;
         }
 
         /// <summary>Ghi nhận một người chơi vừa vào ván. Chỉ host được gọi.</summary>
@@ -196,8 +205,15 @@ namespace LAC.Core
         public void ReportWaveCleared()
         {
             if (_state != RunState.WaveActive) return;
+            if (IsTimedWave && WaveSecondsRemaining > 0f) return;
 
-            Telemetry?.EndWave("cleared");
+            if (IsTimedWave)
+            {
+                PoolRegistry.ReleaseAllExcept<SoulPickup>();
+                LAC.Enemies.EnemySpawner.Instance?.ClearWaveCombat();
+            }
+
+            Telemetry?.EndWave(IsTimedWave ? "survived" : "cleared");
             if (_currentWave >= TotalWaves)
             {
                 EndRun(true);
@@ -296,6 +312,8 @@ namespace LAC.Core
                     if (player != null && player.IsAlive && player.Upgrades.WaveHeal > 0)
                         LAC.Combat.DamageSystem.HealPlayer(player, player.Upgrades.WaveHeal);
             _currentWave = waveIndex;
+            _waveDuration = _waves != null ? _waves.DurationFor(waveIndex) : 0f;
+            _waveEndsAt = NetworkTime.time + _waveDuration;
             Telemetry?.StartWave(waveIndex);
             _state = RunState.WaveActive;
         }

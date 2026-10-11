@@ -92,7 +92,7 @@ namespace LAC.Enemies { public class EnemyData { public string name="CoHon"; } p
 namespace LAC.Core {
  public class RunManager { public int Seed=431, SoulsCollected; public uint DrumActivations; }
  public static class GameEvents { public static event Action<LAC.Enemies.Enemy> EnemyDied; public static void Kill(int id) => EnemyDied?.Invoke(new LAC.Enemies.Enemy { Id=id }); }
- public class WaveSpec { public class Group { public LAC.Enemies.EnemyData Enemy; public int Count; } public Group[] Mix=Array.Empty<Group>(); public float[] Directions=new[]{.25f}; public float SpawnInterval=.5f; public int Burst=2; public int TotalCount=4; }
+ public class WaveSpec { public class Group { public LAC.Enemies.EnemyData Enemy; public int Count; } public Group[] Mix=Array.Empty<Group>(); public float[] Directions=new[]{.25f}; public float SpawnInterval=.5f; public int Burst=2; public float Duration=0; public int TotalCount=4; }
 }
 
 #endif

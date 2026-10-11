@@ -51,7 +51,7 @@ namespace LAC.Player.Editor
                     var player = NetworkClient.localPlayer.GetComponent<PlayerCharacter>();
                     Check(player.CharacterId == menu.Selected, "Selected class lost");
                     Check(player.GetComponent<PlayerHealth>().Health == player.Data.MaxHealth, "Wrong spawn HP");
-                    Check(RunManager.Instance.CurrentWave == 1 && RunManager.Instance.TotalWaves == 15, "Run did not start");
+                    Check(RunManager.Instance.CurrentWave == 1 && RunManager.Instance.TotalWaves == 10, "Run did not start");
                     await Task.Delay(80);
                     Check(!menu.IsVisible, "Selection remains over game");
                     var animator = player.GetComponent<SpriteAnimator>();
@@ -100,7 +100,7 @@ namespace LAC.Player.Editor
                     await Wait(() => !NetworkClient.active && !NetworkServer.active && PlayerRegistry.Count == 0, "Stop host");
                     await Task.Delay(300);
                 }
-                LastResult = "ALL PASSED: pre-match, three choices, spawn HP, 15 waves, arc, arrow, dash bonus, thrust, directions, no bushes, reconnect.";
+                LastResult = "ALL PASSED: pre-match, three choices, spawn HP, 10 waves, arc, arrow, dash bonus, thrust, directions, no bushes, reconnect.";
                 Debug.Log("[ClassesChecks] " + LastResult);
             }
             catch (Exception e) { LastResult = "FAILED: " + e; Debug.LogError("[ClassesChecks] " + LastResult); }

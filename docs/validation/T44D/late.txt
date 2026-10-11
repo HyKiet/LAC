@@ -1,0 +1,1 @@
+players=2 wave=1 state=CardSelection remaining=0.00 enemies=0

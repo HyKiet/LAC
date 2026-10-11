@@ -1,0 +1,1 @@
+earlyClearGuard=True; natural20sTimeout=True; maxAlive=13; remaining=0; state=CardSelection; spawned=14

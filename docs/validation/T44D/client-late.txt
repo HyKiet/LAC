@@ -1,0 +1,1 @@
+﻿[TimedProbe] seed=1050 wave=9 state=WaveActive duration=60 remaining=54.57 enemies=27 snapshots=11
