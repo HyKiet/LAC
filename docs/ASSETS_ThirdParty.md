@@ -1,21 +1,29 @@
-# Asset bên thứ ba — cập nhật 11/10/2026
+# Asset bên thứ ba và nhân vật tích hợp — cập nhật 18/10/2026
 
 Nguồn: `Assets/ThirdParty/`, đã kiểm kê 34 PNG TinyRPG và 410 PNG TinySwords. Giữ ảnh, sprite slice, Point filtering, PPU và metadata nguồn. Dữ liệu, animation và prefab tích hợp nằm trong `_LAC/`.
 
-Theo yêu cầu ngày 07/10, bản đồ án dùng ba lớp TinySwords thay cho bộ ba truyền thuyết. Mục tiêu là hoàn thiện gameplay và hệ thống kỹ thuật nhanh hơn, không yêu cầu tự vẽ lại người chơi.
+Theo yêu cầu ngày 07/10, bản đồ án dùng ba lớp TinySwords thay cho bộ ba truyền thuyết. Ngày 18/10, người dùng yêu cầu thay Warrior bằng **Thánh Gióng cầm tre** từ sprite sheet tạo bằng imagegen; Archer/Lancer giữ TinySwords. Không thêm lớp thứ tư hoặc đổi ID mạng.
 
 | Vai trò | Asset | Tích hợp |
 |---|---|---|
-| Warrior | `Units/Yellow Units/Warrior` | Kiếm chém cung; `Data/Characters/Warrior.asset`, `Data/Animations/Warrior_TinySwords.asset` |
+| Thánh Gióng (Warrior) | Ảnh sinh bằng imagegen, chuẩn hóa trong `_LAC/` | Tre ngà quét cung; giữ `Data/Characters/Warrior.asset`, dùng `Data/Animations/ThanhGiong.asset` |
 | Archer | `Units/Blue Units/Archer` | Cung, clip Shoot và Arrow; asset Archer và `Prefabs/Projectiles/Arrow.prefab` |
 | Lancer | `Units/Purple Units/Lancer` | Thương đâm xuyên; clip Right/Up/Down/UpRight/DownRight; asset Lancer và `Prefabs/VFX/SpearThrust.prefab` |
 | Cô Hồn | TinyRPG Orc | Giữ bộ quái hiện có với hoạt ảnh chết |
 | Quái khác / boss | Asset của nhóm | Giữ silhouette và tín hiệu đòn đang dùng |
 | Rìa sân | TinySwords Rocks | Đã gỡ toàn bộ Bushes khỏi cả ba chặng |
 
-Warrior/Archer có frame 192×192, Lancer 320×320; cùng PPU 64 nên không lấy kích thước cả sheet làm kích thước thân. Chân dung Lancer dùng tư thế thương ngang để không đè tiêu đề thẻ chọn. Không đổi collider player theo phần trong suốt của sheet.
+Archer có frame 192×192, Lancer 320×320, cùng PPU 64. Thánh Gióng có frame 64×64, PPU 32; không lấy kích thước cả sheet làm kích thước thân. Chân dung tính theo kích thước thế giới để hỗ trợ cả hai mật độ ảnh. Không đổi collider player theo phần trong suốt của sheet.
 
-Idle chạy 10 FPS, Run 12 FPS, Attack 18 FPS để mỗi đòn hoàn tất trong chu kỳ. Lancer chọn clip theo hướng mục tiêu, sprite lật cho hướng trái. Các lớp dùng Death một khung tĩnh vì gói không có hoạt ảnh ngã; trạng thái gục/hồi sinh hiển thị bằng vòng cứu hiện có, trúng đòn dùng SpriteFlash.
+## Thánh Gióng — 18/10/2026
+
+Ảnh nguồn do AI tạo theo yêu cầu người dùng: `Art/Source/ThanhGiong.png` và prompt đi kèm; không ghi là sprite tự vẽ. `Player/Editor/ThanhGiongContent.cs` dùng Unity API lấy mẫu điểm ảnh nguồn 1536×1024 xuống 384×256, cắt alpha ở 192/255 thành trong suốt/đặc, đưa màu về 20 màu Đông Hồ không thuộc nhóm Son, rồi cắt 24 frame 64×64. Point filtering, không mipmap/nén; pivot chung (0.5, 0.375). Đây là pixel art chuẩn hóa từ ảnh AI, không phải sprite gốc 16×16.
+
+`Art/Sprites/ThanhGiong.png` có bốn hàng Idle/Walk/Attack/Hurt, mỗi hàng sáu frame. AnimationSet thêm Death bằng một tư thế Hurt tĩnh giữ tới lúc hồi sinh; không nhận là có animation chết riêng. Đòn vung tre dùng cùng cung 110°, tầm 2.2 và timing/damage của Warrior hiện tại; không tăng sức mạnh chỉ vì đổi mỹ thuật. Đòn do host chốt, cùng ID Warrior trên host/client; không thêm NetworkIdentity.
+
+Chạy `LAC.Player.Editor.ThanhGiongContent.Build()` qua MCP ở Edit Mode để tái tạo. `PlayableClassesContent.BuildCharacters()` tự áp lại phần hiển thị này nếu đã có sheet, nên thao tác dựng bộ ba không đưa kiếm TinySwords trở lại. Animation TinySwords cũ vẫn giữ làm phương án dự phòng.
+
+TinySwords dùng Idle 10 FPS, Run 12 FPS, Attack 18 FPS; Thánh Gióng dùng Idle 8, Walk 12, Attack 30 và Hurt 18 FPS. Thời lượng đánh thực theo timing của host. Lancer chọn clip theo hướng mục tiêu, sprite lật cho hướng trái. Các lớp dùng Death một khung tĩnh; trạng thái gục/hồi sinh hiển thị bằng vòng cứu hiện có. Thánh Gióng có Hurt sáu frame, hai lớp còn lại dùng SpriteFlash.
 
 ## Bản đồ và phản hồi chiến đấu
 

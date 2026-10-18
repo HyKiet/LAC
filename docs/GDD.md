@@ -16,7 +16,7 @@ Không phát hành thương mại. Phạm vi thu gọn theo yêu cầu người 
 
 ## 1. Tổng quan và yêu cầu đề tài
 
-Người chơi chọn Warrior, Archer hoặc Lancer, sinh tồn trong arena và hạ Chằn Tinh ở wave cuối. Vũ khí tự đánh; người chơi di chuyển và dash. Chọn thẻ giữa wave để nâng cấp. Bối cảnh lấy cảm hứng thần thoại Việt Nam, dùng asset sẵn để giảm công mỹ thuật.
+Người chơi chọn Thánh Gióng (lớp Warrior), Archer hoặc Lancer, sinh tồn trong arena và hạ Chằn Tinh ở wave cuối. Vũ khí tự đánh; người chơi di chuyển và dash. Chọn thẻ giữa wave để nâng cấp. Thánh Gióng dùng sprite sheet do AI tạo và chuẩn hóa ngày 18/10/2026; các lớp khác dùng asset sẵn để giảm công mỹ thuật.
 
 Ba yêu cầu đã biết của giảng viên: **online multiplayer, có AI, có yếu tố mới lạ độc đáo**. Điểm riêng được chọn là Hồn nạp Trống Đồng dùng chung trong co-op, kết hợp đạo diễn thích ứng xét người yếu nhất. Không tuyên bố thuật toán mới hoặc cơ chế chưa từng có trong mọi game.
 
@@ -46,12 +46,12 @@ Vũ khí chọn mục tiêu gần nhất trong tầm rồi tự khai hoả. Cả
 
 Hướng tinh chỉnh combat T-50B: tham khảo nhịp tự đánh/ra đòn của Brotato, ưu tiên mốc contact, hoạt ảnh theo tốc độ thật, giữ hướng và feedback/co-op. Phương án tại [BROTATO_COMBAT_FEEL.md](BROTATO_COMBAT_FEEL.md); chưa đổi chỉ số/cách gây sát thương đang chạy. Timing/feel được chốt trước cân bằng damage T-50 và wave T-51.
 
-| Chỉ số | Warrior | Archer | Lancer |
+| Chỉ số | Thánh Gióng (Warrior) | Archer | Lancer |
 |---|---|---|---|
-| Sprite | TinySwords Yellow | TinySwords Blue | TinySwords Purple |
+| Sprite | AI sinh, chuẩn hóa 64×64 / PPU 32 | TinySwords Blue | TinySwords Purple |
 | Máu | 10 | 6 | 8 |
 | Tốc độ | 4 | 5.5 | 4.5 |
-| Vũ khí | Kiếm | Cung | Thương |
+| Vũ khí | Tre ngà (quét cung) | Cung | Thương |
 | Sát thương | 4 | 4 | 5 |
 | Tầm | 2.2, cung 110° | 8, tên tốc độ 16 | 3.2, dải rộng 0.8 |
 | Chu kỳ | 0.65s | 0.7s | 0.85s |
@@ -170,4 +170,4 @@ Thứ tự: ổn định môi trường → đạo diễn và online/menu song s
 
 ## 15. Bối cảnh
 
-Trống Đồng giữ cân bằng giữa các cõi. Chằn Tinh làm chủ dungeon, điều khiển các đợt ma quỷ thử sức người xâm nhập; khi quân không cản được đội, hắn tự ra trận ở wave 10. Người chơi cùng bảo vệ trống và hạ hắn. Ý đồ/lời thoại ngắn trên HUD nối các wave với cùng một đối thủ; không cần cutscene/lồng tiếng. Warrior/Archer/Lancer là lớp chiến đấu dùng asset ngoài, không nhận là sprite anh hùng Việt Nam tự vẽ.
+Trống Đồng giữ cân bằng giữa các cõi. Chằn Tinh làm chủ dungeon, điều khiển các đợt ma quỷ thử sức người xâm nhập; khi quân không cản được đội, hắn tự ra trận ở wave 10. Người chơi cùng bảo vệ trống và hạ hắn. Ý đồ/lời thoại ngắn trên HUD nối các wave với cùng một đối thủ; không cần cutscene/lồng tiếng. Thánh Gióng là ảnh AI đã chuẩn hóa; Archer/Lancer dùng asset ngoài, không nhận là sprite tự vẽ.

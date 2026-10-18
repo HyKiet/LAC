@@ -50,11 +50,13 @@ Người chơi chỉ có **hai thao tác: di chuyển và lướt (dash)**. Vũ 
 
 | Nhân vật | Vũ khí | Máu | Tốc độ | Tầm đánh | Chu kỳ |
 |---|---|---|---|---|---|
-| Warrior | Kiếm | 10 | 4 | 2.2 — cung 110° | 0.65 s |
+| Thánh Gióng (Warrior) | Tre ngà | 10 | 4 | 2.2 — cung 110° | 0.65 s |
 | Archer | Cung | 6 | 5.5 | 8 — tên bay thẳng | 0.7 s |
 | Lancer | Thương | 8 | 4.5 | 3.2 — dải đâm rộng 0.8 | 0.85 s |
 
 Vũ khí gắn cố định với nhân vật và không thể thay thế trong ván. Việc đổi nhân vật tương đương đổi lối chơi.
+
+Ngày 18/10/2026: Thánh Gióng từ ảnh AI đã chuẩn hóa thay mỹ thuật Warrior, giữ ID mạng, chỉ số và vùng quét; Archer/Lancer không đổi. Nguồn/pipeline tại [ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md).
 
 Quyết định 07/10/2026: dùng ba lớp TinySwords thay nhân vật truyền thuyết để giảm công mỹ thuật. Ba lớp mở sẵn; chọn trước khi khởi động host/client trong `UI/CharacterSelection.cs`. ID được host thẩm định trước khi sinh player. Solo vẫn Mirror host, co-op cho phép chọn trùng lớp. Archer nhân đôi tên kế tiếp sau dash; Warrior/Lancer khác nhau ở hình dạng sát thương. Chi tiết hiện hành: GDD mục 4 và 10.
 

@@ -1,0 +1,1 @@
+System.String: "PASS: real contact frame3, enemy HP 40 -> 35; sprite=ThanhGiong_Attack_03; flip=True; paused=True"

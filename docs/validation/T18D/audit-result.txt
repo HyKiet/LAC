@@ -1,0 +1,1 @@
+System.String: "PASS: 24 sprites; 64x64; pivot (32,24); PPU32; Point/no mip/no compression; 4x6 clips + held Death; binary alpha; no enemy colors; opaque pixels=28831; Warrior ID1/combat stats preserved; display=Thánh Gióng"

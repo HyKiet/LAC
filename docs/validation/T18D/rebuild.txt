@@ -1,0 +1,1 @@
+System.String: "PASS: repeat Build preserves all 24 sprite IDs and CharacterData; playing=False; paused=False; compiling=False; Console errors=0"

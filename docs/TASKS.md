@@ -109,7 +109,10 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-18C** Hoạt ảnh cho quái — @Kiet · 03/09
   > Dùng lại nguyên hệ thống T-18B, chỉ nối dây. `EnemyData._animationSet` · `Enemy._animator`.
 
-> **Cấu hình hiện hành:** Warrior/Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18 giữ làm tài nguyên tham khảo, không là yêu cầu vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
+- [x] **T-18D** Thánh Gióng cầm tre thay phần hiển thị Warrior theo yêu cầu — **@Kiet** · 18/10/2026
+  > `Player/Editor/ThanhGiongContent.cs`, `Art/Source/ThanhGiong.png`, `Art/Sprites/ThanhGiong.png`, `Data/Animations/ThanhGiong.asset`, `Data/Characters/Warrior.asset`; chuẩn hóa alpha/palette/PPU, cắt 24 frame, nối Idle/Walk/Attack/Hurt/Death, cập nhật tên/chân dung và giữ ID/chỉ số. Đã xem ảnh Game View, kiểm tra ba lớp và 243 kiểm tra chiến đấu trên working tree, Console 0 lỗi. Nguồn AI, pipeline và giới hạn: [THANH_GIONG.md](THANH_GIONG.md). Không nghiệm thu Internet hoặc các task cân bằng còn mở.
+
+  > **Cấu hình hiện hành:** Thánh Gióng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18 giữ làm tài nguyên tham khảo, không là yêu cầu vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 
 ---
 

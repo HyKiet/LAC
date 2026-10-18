@@ -1,0 +1,31 @@
+GENERATED WITH BUILT-IN IMAGEGEN
+
+INITIAL PROMPT
+Use case: game-asset. Create a clean production-style 2D pixel-art animation sprite sheet of THÁNH GIÓNG, the Vietnamese legendary hero, for LẠC, a top-down arena survival game with small charming Tiny RPG characters. This is a new original character asset, not a poster.
+Subject: one consistent young Vietnamese male hero ON FOOT, black hair gathered in a small topknot, tan face, compact bronze-gold Vietnamese-inspired lamellar armor, pale cream cloth, dark teal waist sash, short dark boots. Weapon: one unmistakable long segmented bamboo staff, muted jade/teal green with visible bamboo nodes and a small leafy tip. No shield, no horse, no wings, no crown. Strong clear tiny silhouette, approximately 16x16-pixel body with simple 1-pixel outlines; the bamboo weapon can extend beyond the body into the cell margin. Match the friendly chibi proportions and readable three-quarter top-down combat view of a tiny RPG game, not realistic anatomy or detailed painted concept art.
+Sheet layout: EXACTLY 6 columns by 4 rows, exactly 24 sprites, evenly spaced uniform square cells, no empty cells, no labels, no text, no grid lines, no panel borders. All frames use the SAME right-facing three-quarter direction, same character size, same equipment, same camera, and same feet anchor within each cell. Work on a logical 192x128 pixel canvas with 32x32 cells, shown enlarged by a uniform nearest-neighbor integer scale to 1536x1024 for a readable preview; every visible pixel must remain a crisp square with no antialiasing.
+Row 1: 6-frame subtle idle breathing loop, bamboo held diagonally at the right.
+Row 2: 6-frame run cycle with genuinely alternating planted and lifted feet, slight torso bob, controlled bamboo movement.
+Row 3: 6-frame bamboo melee attack, ordered anticipation -> wind-up -> forward thrust -> extended contact -> recoil -> return. Make timing legible through pose, keep the forward hit point inside its own cell, no oversized energy effects.
+Row 4: 6-frame taking-hit and recovery sequence: normal -> recoil -> compressed hurt pose -> slight recovery -> regain balance -> ready. No blood.
+Colors: limited flat pixel palette, charcoal outlines #15130F and #2B2724; gold #FBDD82 #EDBB3E #C08D20 #8A5F14; skin/cloth #F4EADA #E0CFAF #BFA981; jade/teal #9CCFC0 #4FA694 #2F7480 #1C4B5C; brown #B37F4F #7F5432. Absolutely no red, orange, scarlet, glowing red, bloom, gradients, blur, smooth vector edges, UI, scenery or decorative particles. Flat 2-3 shade clusters per material. Keep the body deliberately tiny and sparse, not elaborate high-resolution pixel illustration.
+Background must be actual fully transparent alpha, not a painted checkerboard, not white or black. Sprites isolated and fully contained in their cells with transparent separation.
+
+FIRST REVISION
+Edit this Thánh Gióng sprite sheet into a properly arranged transparent game asset. Preserve the existing hero's chibi pixel-art appearance, face, black topknot, bronze armor, teal sash, bamboo weapon, and right-facing three-quarter view.
+CRITICAL REPAIR: remove ALL of the brown/green painted background, halo and ground shading to actual transparent alpha. No colored backdrop at all.
+Rearrange into a STRICT 6 columns x 4 rows layout of 24 independent sprites on a 1536x1024 sheet: every cell is exactly 256x256, no gutters, no grid strokes or labels. Put a character in EVERY cell. Keep each character's feet anchored to x=center,y=224 within its own cell, except slight run bob. The head/body must remain the same scale across all 24 cells. Every weapon, arm and foot must stay within its own 256x256 cell. Scale the hero plus bamboo down enough to fit a fully extended thrust inside a single cell.
+Rows top to bottom: 6 idle poses; 6 run poses; EXACTLY 6 bamboo attack poses (ready, wind-up, forward thrust, extended contact, retract, ready); 6 hurt/recovery poses.
+The current third row contains a long attack stretching across two cells and has a missing character: replace that entire third row with six separate complete characters, each with its own bamboo and its own full animation pose, no weapon bridging any cell. In the contact frame, use a compact foreshortened bamboo thrust pointing right so it still fits.
+Use crisp blocky pixel clusters, hard edges, flat limited palette, no antialiasing, no soft shadows, no glow, no red/orange effects. All non-sprite pixels must be fully transparent. Output only the corrected sprite sheet.
+
+FINAL REVISION
+Fix ONLY the third horizontal animation row of this sprite sheet. Preserve the first, second and fourth rows exactly. Preserve the transparent alpha background. Preserve the existing Thánh Gióng character design, pixel clusters, gold armor, teal sash and bamboo.
+The sheet is 1536x1024, a strict 6 by 4 grid. Third-row bounds y=512 through 767. Delete every existing third-row sprite and all stray bamboo fragments within that row, then draw SIX COMPLETE HEROES, one centered in EACH cell:
+cell 1 x=0..255: full hero ready stance with bamboo held close upright;
+cell 2 x=256..511: full hero wind-up with bamboo raised vertically over shoulder;
+cell 3 x=512..767: full hero swinging bamboo DOWN, compact overhead strike;
+cell 4 x=768..1023: full hero low impact pose, knees bent, bamboo pointing DOWN diagonally to lower-right inside the cell;
+cell 5 x=1024..1279: full hero recoiling with bamboo held close, returning upward;
+cell 6 x=1280..1535: full hero ready stance, completing the attack loop.
+There MUST be a complete head, torso, two arms and two legs in the fourth cell. It currently has a floating weapon fragment: replace that with a COMPLETE CHARACTER. All six heroes same size as the existing other rows. Feet centered near y=740, keep each complete body and all weapon pixels safely inside its own cell with 12px clear transparent margin at left and right. Shorten or foreshorten the bamboo during attack to achieve this; do not extend any weapon horizontally across cells. No horizontal thrust in this animation. Compact OVERHEAD DOWNWARD SWING only. Transparent background, no added text, no lines, no extra effects.

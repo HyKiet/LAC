@@ -79,6 +79,7 @@ namespace LAC.Player.Editor
             for (int i = 0; i < names.Length; i++) list.GetArrayElementAtIndex(i).objectReferenceValue =
                 AssetDatabase.LoadAssetAtPath<CharacterData>(Root + "Data/Characters/" + names[i] + ".asset");
             so.ApplyModifiedPropertiesWithoutUndo();
+            ThanhGiongContent.ApplyIfAvailable();
         }
 
         private static void Move(string oldPath, string newPath)

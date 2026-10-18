@@ -32,8 +32,8 @@ Cổng 1 đã xong: vòng lặp một ván chạy được đầu-cuối — di 
 
 **Cấu hình đang chạy là cấu hình thử nghiệm, đừng nhầm là bản cuối:**
 
-- Người chơi chọn **Warrior / Archer / Lancer** trước trận, dùng TinySwords vàng/xanh/tím. Cô Hồn dùng Orc. Ván có 10 đợt: 9 đợt sinh tồn tính giờ 20–60s, boss ở đợt 10; rìa sân chỉ còn đá, đổi sắc ở đợt 4 và 7. Xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md).
-- Mỹ thuật T-18 vẫn có tại `Data/Animations/ThachSanh.asset` và `CoHon.asset` để tham khảo; người chơi hiện dùng bộ ba TinySwords theo quyết định 07/10/2026.
+- Người chơi chọn **Thánh Gióng (ID Warrior) / Archer / Lancer** trước trận. Thánh Gióng dùng sprite AI đã chuẩn hóa trong `_LAC/`, hai lớp còn lại dùng TinySwords xanh/tím. Cô Hồn dùng Orc. Ván có 10 đợt: 9 đợt sinh tồn tính giờ 20–60s, boss ở đợt 10; rìa sân chỉ còn đá, đổi sắc ở đợt 4 và 7. Xem [docs/ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md).
+- Mỹ thuật T-18 vẫn có tại `Data/Animations/ThachSanh.asset` và `CoHon.asset` để tham khảo; Thánh Gióng thay phần hiển thị Warrior ngày 18/10/2026, hai lớp còn lại giữ TinySwords. Pipeline và bằng chứng: [docs/THANH_GIONG.md](docs/THANH_GIONG.md).
 - T-22/T-23 đã có chọn thẻ 10 giây và đồng bộ co-op; đã gỡ cơ chế tự sang đợt sau 1.5 giây. Kiểm thử: [docs/CARD_TESTS.md](docs/CARD_TESTS.md)
 - Chọn **Cố định / Thích ứng** trước kết nối; host chốt chế độ, Restart giữ chế độ phòng. `Director/AIDirector.cs` dùng luật từ `DirectorRules.asset` trước wave 2–9; `ContextAggregator` đóng băng HP cuối wave trước thẻ/hồi máu. Host dùng đặc tả đó trong `WaveManager`, client chỉ nhận sự kiện sinh và HUD. **F3** mở lý do/ngữ cảnh/fallback; CSV schema 2 thêm `directors.csv`. Không dùng CSV cũ làm bằng chứng AI mới.
 - AI đạo diễn **chính là Chằn Tinh**, chủ dungeon điều binh rồi ra trận ở wave 10. `DungeonMaster.asset` chứa ý đồ/lời thoại; `DirectorHud` diễn kết quả host, không tự quyết luật. Giãn binh/Điều binh/Đổi thế vây tương ứng Relief/Balanced/Variety. Hướng dẫn: [docs/AI_CHAN_TINH.md](docs/AI_CHAN_TINH.md).

@@ -227,8 +227,8 @@ namespace LAC.UI
             portrait.sprite = data.Portrait != null ? data.Portrait : data.BodySprite;
             portrait.preserveAspect = true;
             portrait.raycastTarget = false;
-            // Lancer có frame 320px, hai lớp khác 192px; giữ cùng cỡ thân thay vì cỡ sheet.
-            float portraitSize = 190 * data.BodySprite.rect.width / 192f;
+            // Dùng kích thước thế giới để bộ PPU 32 và TinySwords PPU 64 cùng tỷ lệ trên thẻ.
+            float portraitSize = 190f * portrait.sprite.rect.width / portrait.sprite.pixelsPerUnit / 3f;
             Rect(portrait.rectTransform, new Vector2(0, 69), Vector2.one * portraitSize);
             Text("Weapon", panel.transform, data.WeaponName, 23, new Vector2(0, -12), new Vector2(310, 40), Hex("9CCFC0"));
             Text("Stats", panel.transform, $"Máu {data.MaxHealth}  •  Tốc độ {data.MoveSpeed:0.#}\nSát thương {data.BaseDamage}  •  Tầm {data.AttackRange:0.#}\nMỗi {data.AttackInterval:0.##} giây", 18,
