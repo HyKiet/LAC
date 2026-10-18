@@ -63,6 +63,7 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 
 - [x] **T-07** `NetworkManagerLAC` luôn chạy host mode, kể cả chơi đơn — @Kiet · 29/08
   > Không có nhánh mã riêng cho chơi đơn. Gán nhân vật trước khi sinh để chỉ số có mặt trong gói trạng thái đầu tiên. `Net/NetworkManagerLAC.cs`.
+  > Sửa lỗi tạo trận 18/10/2026: gỡ `NetworkManagerHUD` mặc định đã tắt và manager nền thừa trong Editor khỏi `Scenes/Arena.unity`; giữ đúng một `NetworkManagerLAC` với `LatencySimulation`. Đã nạp lại scene, vào lại Play, bấm nút tạo host và kiểm tra tạo/đóng trận cả ba lớp; Console 0 lỗi/0 cảnh báo. Bằng chứng: [T07-host-fix/checks.txt](validation/T07-host-fix/checks.txt). Không thay thế nghiệm thu hai máy qua Internet.
 - [x] **T-08** Giả lập độ trễ 100 ms làm mặc định khi phát triển — @Kiet · 29/08
   > `LatencySimulation` tự chọn trong Editor và development build, transport thật khi chạy bản đồ án bình thường.
 - [x] **T-09** Sinh 1–2 nhân vật, hai máy cùng vào một ván — @Kiet · 30/08

@@ -1,0 +1,34 @@
+T-07 host creation repair - 2026-10-18
+Unity 6000.5.6f1; Arena; Mirror host; Editor; current working tree.
+
+Observed failure:
+- The live Editor had Mirror.NetworkManager and LAC.Net.NetworkManagerLAC
+  on the same NetworkManager GameObject.
+- The base manager became the singleton; Mirror destroyed the duplicate
+  GameObject, leaving CharacterSelection with a destroyed manager reference.
+- Console: duplicate manager, transport fallback, MissingReferenceException.
+
+Repair through Unity Editor APIs (not manual scene YAML edits):
+- Remove the unused, disabled Mirror.NetworkManagerHUD component.
+- Remove the extra base Mirror.NetworkManager component from the live Editor.
+- Save Arena with exactly one LAC.Net.NetworkManagerLAC; retain Player prefab,
+  KCP and LatencySimulation references. HUD was the remaining component that
+  required the base NetworkManager; the extra manager was not in the scene file.
+
+Verified:
+1. Enter Play and invoke the actual StartHost button's onClick event.
+   server=True; connected=True; player=Player_Warrior;
+   wave=1; state=WaveActive; managers=1;
+   singleton=LAC.Net.NetworkManagerLAC; Console errors=0; warnings=0.
+2. Capture and visually inspect host.png: player, wave HUD, arena and drum.
+3. Exit Play, reopen the saved Arena scene, assert exactly one LAC manager,
+   enter Play again.
+4. Existing PlayableClassesChecks against the current working tree:
+   ALL PASSED: pre-match, three choices, spawn HP, ten-wave configuration,
+   wind-up/contact/recovery, arc, arrow, dash bonus, thrust, directions,
+   no bushes, reconnect. Console errors=0; warnings=0.
+5. Exit Play after checks; no script edits while playing.
+
+Scope: local Editor host creation/reconnection regression. This is not a
+standalone build, two-machine Internet test, full natural ten-wave playthrough,
+or completion evidence for pending T-50B/T-50/T-51 balance tasks.
