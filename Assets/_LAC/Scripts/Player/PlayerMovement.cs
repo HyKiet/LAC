@@ -42,6 +42,7 @@ namespace LAC.Player
 
         /// <summary>Nhân vật có đang di chuyển hay không. Dùng cho hoạt ảnh.</summary>
         public bool IsMoving { get; private set; }
+        public float VisualSpeed { get; private set; }
 
         private float MoveSpeed =>
             (_character != null && _character.Data != null ? _character.Data.MoveSpeed : _fallbackSpeed)
@@ -83,6 +84,7 @@ namespace LAC.Player
 
             _lastPosition = position;
             IsMoving = false;
+            VisualSpeed = 0f;
             Facing = Vector2.down;
             _facingOverrideUntil = 0f;
         }
@@ -113,6 +115,7 @@ namespace LAC.Player
 
         private void ReadOwnedIntent()
         {
+            VisualSpeed = _rigidbody != null ? _rigidbody.linearVelocity.magnitude : 0f;
             if (_input == null) return;
 
             Vector2 move = _input.Move;
@@ -142,6 +145,7 @@ namespace LAC.Player
             if (dt <= 0f) return;
 
             float speed = delta.magnitude / dt;
+            VisualSpeed = speed;
             IsMoving = speed > _remoteMoveThreshold;
             if (IsMoving) Facing = delta.normalized;
         }

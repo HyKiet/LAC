@@ -44,6 +44,8 @@ Vũ khí chọn mục tiêu gần nhất trong tầm rồi tự khai hoả. Cả
 
 ## 4. Ba lớp hiện có
 
+Thánh Gióng dùng motion T-18E: tám frame chạy/vung tre, nhịp chân theo tốc độ thực, giữ pha khi trở lại chạy sau đòn và dùng SpriteFlash thay Hurt toàn thân. Chi tiết, GIF và giới hạn kiểm chứng tại [THANH_GIONG.md](THANH_GIONG.md).
+
 Hướng tinh chỉnh combat T-50B: tham khảo nhịp tự đánh/ra đòn của Brotato, ưu tiên mốc contact, hoạt ảnh theo tốc độ thật, giữ hướng và feedback/co-op. Phương án tại [BROTATO_COMBAT_FEEL.md](BROTATO_COMBAT_FEEL.md); chưa đổi chỉ số/cách gây sát thương đang chạy. Timing/feel được chốt trước cân bằng damage T-50 và wave T-51.
 
 | Chỉ số | Thánh Gióng (Warrior) | Archer | Lancer |

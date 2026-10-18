@@ -133,6 +133,7 @@ namespace LAC.Player.Editor
             so.FindProperty("_portrait").objectReferenceValue = idle;
             so.FindProperty("_animationSet").objectReferenceValue = set;
             so.ApplyModifiedPropertiesWithoutUndo(); EditorUtility.SetDirty(character);
+            ThanhGiongMotionContent.ApplyIfAvailable();
         }
 
         private static void ConfigureClip(SerializedProperty clip, AnimState state, Sprite[] frames, float fps, bool loop, bool hold)

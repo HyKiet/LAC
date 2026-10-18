@@ -112,6 +112,9 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-18D** Thánh Gióng cầm tre thay phần hiển thị Warrior theo yêu cầu — **@Kiet** · 18/10/2026
   > `Player/Editor/ThanhGiongContent.cs`, `Art/Source/ThanhGiong.png`, `Art/Sprites/ThanhGiong.png`, `Data/Animations/ThanhGiong.asset`, `Data/Characters/Warrior.asset`; chuẩn hóa alpha/palette/PPU, cắt 24 frame, nối Idle/Walk/Attack/Hurt/Death, cập nhật tên/chân dung và giữ ID/chỉ số. Đã xem ảnh Game View, kiểm tra ba lớp và 243 kiểm tra chiến đấu trên working tree, Console 0 lỗi. Nguồn AI, pipeline và giới hạn: [THANH_GIONG.md](THANH_GIONG.md). Không nghiệm thu Internet hoặc các task cân bằng còn mở.
 
+- [x] **T-18E** Chỉnh animation Thánh Gióng sau phản hồi chạy/đánh thiếu tự nhiên — **@Kiet** · 18/10/2026
+  > `ThanhGiongMotionContent.cs` và sheet motion mới; tám Run/tám Swing, Idle nhất quán, chuẩn hóa pivot/alpha/palette. `PlayerMovement.VisualSpeed`, `SpriteAnimationSet.WalkReferenceSpeed`, `SpriteAnimator` giữ pha chạy qua one-shot và chỉnh nhịp chân theo vận tốc. Động tác 0.30s/contact 0.15s trong working tree T-50, chu kỳ/damage/tầm giữ nguyên; Hurt không cắt cú đánh. Đã xem chuỗi Game View/GIF, đo nhịp chân, kiểm tra ba lớp và 243 kiểm tra chiến đấu. [THANH_GIONG.md](THANH_GIONG.md) ghi rõ phương pháp/giới hạn; không đánh dấu task cân bằng hoặc Internet hoàn tất.
+
   > **Cấu hình hiện hành:** Thánh Gióng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18 giữ làm tài nguyên tham khảo, không là yêu cầu vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 
 ---

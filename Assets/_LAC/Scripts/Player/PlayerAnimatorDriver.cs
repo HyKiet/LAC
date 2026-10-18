@@ -54,6 +54,12 @@ namespace LAC.Player
             if (_health != null && !_health.IsAlive) return;
 
             bool moving = _movement != null && _movement.IsMoving;
+            if (_movement != null)
+            {
+                _animator.SetWalkSpeed(_movement.VisualSpeed);
+                if (_appliedSet != null && _appliedSet.WalkReferenceSpeed > 0f)
+                    moving &= _movement.VisualSpeed > .1f;
+            }
             _animator.SetBaseState(moving ? AnimState.Walk : AnimState.Idle);
         }
 

@@ -23,6 +23,8 @@ MonoBehaviour:
   _attackRange: 2.2
   _attackInterval: 0.65
   _baseDamage: 4
+  _attackAnimationDuration: 0.3
+  _attackContactNormalized: 0.5
   _arcHalfAngle: 55
   _projectileSpeed: 16
   _projectilePrefab: {fileID: 0}
@@ -34,6 +36,6 @@ MonoBehaviour:
   _dashCooldown: 1
   _dashDamageMultiplier: 1
   _instrumentWave: {fileID: 0}
-  _bodySprite: {fileID: 893403363, guid: 3648b03391f44484493da865d26619c1, type: 3}
-  _portrait: {fileID: 893403363, guid: 3648b03391f44484493da865d26619c1, type: 3}
+  _bodySprite: {fileID: 981746454, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+  _portrait: {fileID: 981746454, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
   _animationSet: {fileID: 11400000, guid: 0c27813354ed3cf418eef7eea98a2787, type: 2}

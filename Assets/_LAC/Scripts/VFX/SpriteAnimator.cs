@@ -35,6 +35,8 @@ namespace LAC.VFX
         private int _frame;
         private float _timer;
         private float _speedScale = 1f;
+        private float _walkSpeedScale = 1f;
+        private float _walkPhase;
         private bool _oneShot;
         private bool _finished;
         private bool _locked;
@@ -45,6 +47,15 @@ namespace LAC.VFX
 
         /// <summary>Có bộ hoạt ảnh để chạy hay không. Sai thì renderer giữ nguyên sprite tĩnh.</summary>
         public bool HasSet => _set != null;
+
+        /// <summary>Nhịp chân theo tốc độ thực; không thay timeline của đòn đánh/Death.</summary>
+        public void SetWalkSpeed(float speed)
+        {
+            float reference = _set != null ? _set.WalkReferenceSpeed : 0f;
+            float target = reference > 0f && !float.IsNaN(speed) && !float.IsInfinity(speed)
+                ? Mathf.Clamp(speed / reference, .35f, 1.75f) : 1f;
+            _walkSpeedScale = Mathf.Lerp(_walkSpeedScale, target, 1f - Mathf.Exp(-18f * Time.deltaTime));
+        }
 
         /// <summary>Đang chạy một lượt không lặp và chưa xong.</summary>
         public bool IsBusy => _oneShot && !_finished;
@@ -69,6 +80,8 @@ namespace LAC.VFX
             if (_set == set) return;
 
             _set = set;
+            _walkSpeedScale = 1f;
+            _walkPhase = 0f;
             _locked = false;
             _oneShot = false;
             _warnedTooLong = false;
@@ -80,6 +93,7 @@ namespace LAC.VFX
         /// <summary>Trạng thái nền — Idle hoặc Walk. Bị hoãn nếu đang chạy một lượt dở dang.</summary>
         public void SetBaseState(AnimState state)
         {
+            if (state != AnimState.Walk) _walkPhase = 0f;
             _baseState = state;
             if (_locked || IsBusy) return;
             Begin(state, force: false);
@@ -169,6 +183,8 @@ namespace LAC.VFX
             _state = state;
             _frame = 0;
             _timer = 0f;
+            if (state == AnimState.Walk && !_oneShot)
+                _frame = Mathf.FloorToInt(_walkPhase) % clip.FrameCount;
             _finished = false;
             if (!_oneShot) _speedScale = 1f;
 
@@ -177,9 +193,22 @@ namespace LAC.VFX
 
         private void Update()
         {
+            // Nhịp chân tiếp tục dưới one-shot, để mỗi cú đánh không trả vòng chạy về chân đầu.
+            SpriteAnimationClip walk = _set != null ? _set.Get(AnimState.Walk) : null;
+            if (_baseState == AnimState.Walk && !_locked && walk != null)
+            {
+                _walkPhase = Mathf.Repeat(_walkPhase + Time.deltaTime * walk.Fps * _walkSpeedScale, walk.FrameCount);
+                if (_state == AnimState.Walk && !_oneShot)
+                {
+                    _frame = Mathf.FloorToInt(_walkPhase);
+                    ApplyFrame();
+                    return;
+                }
+            }
             if (_clip == null || _finished) return;
 
             float step = _clip.Fps * _speedScale;
+            if (_state == AnimState.Walk && !_oneShot && !_locked) step *= _walkSpeedScale;
             if (step <= 0f) return;
 
             _timer += Time.deltaTime * step;

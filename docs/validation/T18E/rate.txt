@@ -1,0 +1,3 @@
+PASS: observed run frame advances 15.94/s at normal speed, 5.88/s at 1.2 units/s; ratio=0.369.
+Attack -> Walk resumes: ['ThanhGiong_Run_01', 'ThanhGiong_Run_05', 'ThanhGiong_Run_01'].
+Measured actual rendered sprites from Game View capture, not synthetic timeline calls.

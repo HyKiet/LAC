@@ -15,35 +15,34 @@ MonoBehaviour:
   _clips:
   - _state: 0
     _frames:
-    - {fileID: 893403363, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: 115738638, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -144475240, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: 299687289, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -1615456333, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -1921863740, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    _fps: 8
+    - {fileID: 981746454, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    _fps: 1
     _loop: 1
     _holdLastFrame: 0
   - _state: 1
     _frames:
-    - {fileID: -1337881060, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -616159125, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -1309148169, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: 1464045162, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: 148384167, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: 2141971053, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    _fps: 12
+    - {fileID: -429461841, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 1710436549, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 668286157, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 2085899815, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 238312104, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: -829936244, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: -2138347164, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 179417060, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    _fps: 16
     _loop: 1
     _holdLastFrame: 0
   - _state: 2
     _frames:
-    - {fileID: -612044467, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -1591568894, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -594726988, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -1172089226, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: -696280997, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    - {fileID: 1151356501, guid: 3648b03391f44484493da865d26619c1, type: 3}
-    _fps: 30
+    - {fileID: 1881151960, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 1979621910, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: -412009351, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 223324900, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 1426258775, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 342264822, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 1001210458, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    - {fileID: 981746454, guid: f68c35b7bb42d7a498750f93b1cd4e71, type: 3}
+    _fps: 26.666668
     _loop: 0
     _holdLastFrame: 0
   - _state: 3
@@ -63,4 +62,5 @@ MonoBehaviour:
     _fps: 1
     _loop: 0
     _holdLastFrame: 1
-  _playHurtClip: 1
+  _playHurtClip: 0
+  _walkReferenceSpeed: 4

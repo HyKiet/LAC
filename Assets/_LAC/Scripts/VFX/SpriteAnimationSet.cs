@@ -73,7 +73,11 @@ namespace LAC.VFX
                  "cùng nhuộm đỏ sẽ chớp hai lần lệch nhịp.")]
         [SerializeField] private bool _playHurtClip;
 
+        [Tooltip("Tốc độ di chuyển ứng với FPS gốc của Walk. 0 giữ nhịp cũ cho asset chưa cấu hình.")]
+        [SerializeField, Min(0f)] private float _walkReferenceSpeed;
+
         public bool PlayHurtClip => _playHurtClip;
+        public float WalkReferenceSpeed => _walkReferenceSpeed;
 
         /// <summary>
         /// Clip của một trạng thái, hoặc null nếu tài sản không định nghĩa trạng thái đó.

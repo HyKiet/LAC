@@ -2,7 +2,23 @@
 
 Thánh Gióng cầm tre ngà thay phần hiển thị của Warrior. Màn chọn nhân vật có **Thánh Gióng / Archer / Lancer**; chọn Thánh Gióng rồi bấm **Vào trận / Tạo host** để chơi. Giữ `CharacterId.Warrior = 1`, GUID của `Warrior.asset` và registry ba lớp. Các máy cùng dùng tài nguyên dự án; mạng vẫn chỉ truyền ID và sự kiện, không gửi ảnh hay gắn NetworkIdentity mới.
 
-Đây là thay mỹ thuật và tên, giữ chỉ số/vùng đánh hiện tại của Warrior: 10 HP, tốc độ 4, cung 110°, tầm 2.2, chu kỳ 0.65 giây. Không thêm lớp, vũ khí, thẻ hoặc kỹ năng. Bản cân bằng đang làm tại T-50 có sát thương 5, động tác 0.18s/contact 0.09s; việc thay sprite không nghiệm thu T-50/T-50B/T-51.
+## Chỉnh chạy/đánh sau phản hồi chơi thử — T-18E
+
+Bản v1 có chân/thân đổi dáng và hướng cây tre thiếu liên tục giữa các frame chạy; cú đánh từ giơ tre sang cúi thấp trong 0.18s tạo cảm giác giật. Bản hiện tại dùng sheet motion mới: [nguồn AI](../Assets/_LAC/Art/Source/ThanhGiongMotion.png), [prompt](../Assets/_LAC/Art/Source/ThanhGiongMotion.prompt.txt), [ảnh runtime](../Assets/_LAC/Art/Sprites/ThanhGiongMotion.png). Công cụ [ThanhGiongMotionContent.cs](../Assets/_LAC/Scripts/Player/Editor/ThanhGiongMotionContent.cs) chuẩn hóa lưới 4×4 thành 16 frame 64×64, PPU 32, cùng alpha/palette của v1.
+
+- Chạy tám frame, 16 FPS ở tốc độ 4; giữ tre cùng phía, có chân chống/đưa chân qua/đổi chân. Idle lấy tư thế kết thúc Swing để giảm đổi dáng khi chuyển trạng thái.
+- `SpriteAnimationSet.WalkReferenceSpeed` bật nhịp chân theo tốc độ thực cho Thánh Gióng. `PlayerMovement.VisualSpeed` đọc vận tốc local hoặc độ dời remote; không đổi vật lý/mạng. `SpriteAnimator` làm mượt nhịp chân, giới hạn 0.35–1.75 lần; asset cũ để reference 0 giữ FPS cũ.
+- Chu kỳ chân vẫn tiến trong lúc one-shot và được dùng lại khi trở về Walk; mỗi cú đánh không bắt chu kỳ chạy quay lại frame 0.
+- Vung tre tám frame, có lấy đà/vung/thu tay. Trong working tree T-50 hiện tại, động tác tăng 0.18 → **0.30s**, contact tăng 0.09 → **0.15s**, cùng nguồn dữ liệu host. Sát thương, tầm và chu kỳ 0.65s không đổi. Không chỉ kéo dài hình ở client.
+- Tắt phát Hurt toàn thân tự động để cúi người không cắt ngang cú đánh liên tục khi áp sát; SpriteFlash/HP/số sát thương vẫn báo bị đánh. Hurt/Death v1 giữ làm tài nguyên gục, chưa có animation chết riêng.
+
+Đã xem [chuỗi frame Game View](validation/T18E/frames.png); có [GIF chạy và vừa di chuyển vừa đánh](validation/T18E/motion.gif) từ 99 frame thực, cùng [CSV](validation/T18E/frames.csv). Quan sát đủ tám Run/tám Swing; địch thử HP 40 → 25. [Đo nhịp chân](validation/T18E/rate.txt): 15.94 frame tiến/giây khi chạy thường, 5.88 khi di chuyển 1.2 đơn vị/giây; trở lại Walk ở frame 01/05/01 thay vì luôn frame 00. [243 kiểm tra chiến đấu](validation/T18E/timing.txt) đạt trên working tree T-50. Đây là bằng chứng kỹ thuật/quan sát có kiểm soát; cảm giác cuối vẫn cần người chơi thử, không thay nghiệm thu Internet hoặc hoàn thành các task cân bằng.
+
+Các mục v1 và bằng chứng T-18D dưới đây giữ để đối chiếu lịch sử. Dựng lại v1 tự áp motion v2 nếu đã có sheet; có thể gọi `LAC.Player.Editor.ThanhGiongMotionContent.Build()` ở Edit Mode để tái tạo motion riêng.
+
+Kiểm tra sau khi sửa: [ba lớp](validation/T18E/classes.txt), [timing chạy lại](validation/T18E/timing-clean.txt), [Console 0 lỗi/0 cảnh báo](validation/T18E/console.txt), [asset và dựng lại giữ ID](validation/T18E/assets.txt). Lỗi kích thước ảnh đầu vào và lỗi tên biến trong snippet quay thử đã được sửa trước lượt kiểm tra sạch; không phải lỗi còn lại trong gameplay.
+
+V1 thay mỹ thuật và tên, giữ chỉ số/vùng đánh của Warrior: 10 HP, tốc độ 4, cung 110°, tầm 2.2, chu kỳ 0.65 giây. Không thêm lớp, vũ khí, thẻ hoặc kỹ năng. T-18E sau đó điều chỉnh thời lượng động tác/contact như phần trên; không nghiệm thu T-50/T-50B/T-51.
 
 ## Tài nguyên và cách tái tạo
 

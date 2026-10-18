@@ -1,0 +1,1 @@
+System.String: "PASS: 16 stable motion IDs, 64x64/PPU32/pivot(32,24), Point/no mip; binary alpha/no Son; Walk8/Swing8/Idle1, HurtFlash; ref speed4; damage5/cooldown0.65/range2.2 unchanged; duration0.30/contact0.15; rebuild stable; Editor stopped/unpaused."

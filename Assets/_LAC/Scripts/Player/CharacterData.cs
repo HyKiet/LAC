@@ -40,6 +40,12 @@ namespace LAC.Player
         [SerializeField, Min(0.02f)] private float _attackInterval = 0.9f;
         [SerializeField, Min(1)] private int _baseDamage = 1;
 
+        [Header("Nhịp ra đòn")]
+        [Tooltip("Thời lượng hoạt ảnh ở tốc độ gốc; không vượt quá chu kỳ thực sau nâng cấp.")]
+        [SerializeField, Min(0.02f)] private float _attackAnimationDuration = 0.18f;
+        [Tooltip("Mốc chạm/nhả tên trong hoạt ảnh, từ 0 đến 1.")]
+        [SerializeField, Range(0f, 1f)] private float _attackContactNormalized = 0.5f;
+
         [Tooltip("Nửa góc mở của hình cung, tính bằng độ. Chỉ dùng cho vũ khí hình cung.")]
         [SerializeField, Range(10f, 180f)] private float _arcHalfAngle = 60f;
 
@@ -83,6 +89,8 @@ namespace LAC.Player
         public float AttackRange => _attackRange;
         public float AttackInterval => _attackInterval;
         public int BaseDamage => _baseDamage;
+        public float AttackAnimationDuration => _attackAnimationDuration;
+        public float AttackContactNormalized => _attackContactNormalized;
         public float ProjectileSpeed => _projectileSpeed;
         public Projectile ProjectilePrefab => _projectilePrefab;
         public float ThrustHalfWidth => _thrustHalfWidth;

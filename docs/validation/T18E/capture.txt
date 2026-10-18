@@ -1,0 +1,1 @@
+System.String: "PASS: Captured 99 real Game View frames; run sprites=8; swing sprites=8; enemy HP=40 -> 25; distance/animation in frames.csv; not a WAN or human feel test."

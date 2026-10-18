@@ -17,6 +17,8 @@ Archer có frame 192×192, Lancer 320×320, cùng PPU 64. Thánh Gióng có fram
 
 ## Thánh Gióng — 18/10/2026
 
+Sau phản hồi chơi thử, T-18E dùng thêm `ThanhGiongMotion.png`: tám frame chạy/tám frame vung tre, cùng pivot/PPU; Idle theo tư thế mới. Nhịp chân theo tốc độ thực, giữ pha qua one-shot; Hurt dùng SpriteFlash để không cắt động tác đánh. Motion hiện tại và GIF kiểm tra: [THANH_GIONG.md](THANH_GIONG.md). Phần mô tả 24 frame dưới đây là sheet v1 giữ làm nguồn Hurt/Death và đối chiếu.
+
 Ảnh nguồn do AI tạo theo yêu cầu người dùng: `Art/Source/ThanhGiong.png` và prompt đi kèm; không ghi là sprite tự vẽ. `Player/Editor/ThanhGiongContent.cs` dùng Unity API lấy mẫu điểm ảnh nguồn 1536×1024 xuống 384×256, cắt alpha ở 192/255 thành trong suốt/đặc, đưa màu về 20 màu Đông Hồ không thuộc nhóm Son, rồi cắt 24 frame 64×64. Point filtering, không mipmap/nén; pivot chung (0.5, 0.375). Đây là pixel art chuẩn hóa từ ảnh AI, không phải sprite gốc 16×16.
 
 `Art/Sprites/ThanhGiong.png` có bốn hàng Idle/Walk/Attack/Hurt, mỗi hàng sáu frame. AnimationSet thêm Death bằng một tư thế Hurt tĩnh giữ tới lúc hồi sinh; không nhận là có animation chết riêng. Đòn vung tre dùng cùng cung 110°, tầm 2.2 và timing/damage của Warrior hiện tại; không tăng sức mạnh chỉ vì đổi mỹ thuật. Đòn do host chốt, cùng ID Warrior trên host/client; không thêm NetworkIdentity.

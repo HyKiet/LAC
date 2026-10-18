@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: ca52b2b57c702e84d9101d337fc7bc3e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5480931101348814198
+    second: ThanhGiongMotion_0
+  - first:
+      213: 3269861902765526047
+    second: ThanhGiongMotion_1
+  - first:
+      213: -5780621182639277050
+    second: ThanhGiongMotion_2
+  - first:
+      213: 5445708151464447354
+    second: ThanhGiongMotion_3
+  - first:
+      213: -1254985399030593471
+    second: ThanhGiongMotion_4
+  - first:
+      213: 7350661960212236098
+    second: ThanhGiongMotion_5
+  - first:
+      213: 8093281816055612534
+    second: ThanhGiongMotion_6
+  - first:
+      213: 7139134499033773473
+    second: ThanhGiongMotion_7
+  - first:
+      213: -4170427394650280153
+    second: ThanhGiongMotion_8
+  - first:
+      213: 6561252577531475932
+    second: ThanhGiongMotion_9
+  - first:
+      213: -6259977190927267211
+    second: ThanhGiongMotion_10
+  - first:
+      213: -3506190567610424610
+    second: ThanhGiongMotion_11
+  - first:
+      213: -7774428632433925835
+    second: ThanhGiongMotion_12
+  - first:
+      213: -587448825472089807
+    second: ThanhGiongMotion_13
+  - first:
+      213: 2114446321139245436
+    second: ThanhGiongMotion_14
+  - first:
+      213: -9032859981071913471
+    second: ThanhGiongMotion_15
+  - first:
+      213: -3724660744151237931
+    second: ThanhGiongMotion_16
+  - first:
+      213: 6556065731331667489
+    second: ThanhGiongMotion_17
+  - first:
+      213: -7098430523140384930
+    second: ThanhGiongMotion_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ThanhGiongMotion_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 943
+        width: 269
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a82a6b9d332dfe3b0800000000000000
+      internalID: -5480931101348814198
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_1
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 903
+        width: 290
+        height: 304
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1c0cea7312e06d20800000000000000
+      internalID: 3269861902765526047
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_2
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 945
+        width: 259
+        height: 287
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60cffa359ab17cfa0800000000000000
+      internalID: -5780621182639277050
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_3
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 1084
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7dcc7e06ba039b40800000000000000
+      internalID: 5445708151464447354
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_4
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 945
+        width: 268
+        height: 265
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 148ca74cd65659ee0800000000000000
+      internalID: -1254985399030593471
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 310
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2474d6a7b1cc20660800000000000000
+      internalID: 7350661960212236098
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_6
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 310
+        width: 225
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6748f118eec115070800000000000000
+      internalID: 8093281816055612534
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_7
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 608
+        width: 308
+        height: 287
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a5f4aa800d431360800000000000000
+      internalID: 7139134499033773473
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_8
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 609
+        width: 291
+        height: 309
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72fef44616aaf16c0800000000000000
+      internalID: -4170427394650280153
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_9
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 600
+        width: 289
+        height: 298
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd7316dc4704e0b50800000000000000
+      internalID: 6561252577531475932
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_10
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 322
+        width: 265
+        height: 267
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57a8bb069e71029a0800000000000000
+      internalID: -6259977190927267211
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_11
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 308
+        width: 309
+        height: 285
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed261ce5142875fc0800000000000000
+      internalID: -3506190567610424610
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_12
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 308
+        width: 324
+        height: 283
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5316628795eab1490800000000000000
+      internalID: -7774428632433925835
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_13
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 582
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 131040ad766f8d7f0800000000000000
+      internalID: -587448825472089807
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_14
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 307
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c71e22ce9b5085d10800000000000000
+      internalID: 2114446321139245436
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_15
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 19
+        width: 328
+        height: 263
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10eed5294b5d4a280800000000000000
+      internalID: -9032859981071913471
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_16
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 19
+        width: 302
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5daf50c89c85f4cc0800000000000000
+      internalID: -3724660744151237931
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_17
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 17
+        width: 279
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 126b2201c03dbfa50800000000000000
+      internalID: 6556065731331667489
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongMotion_18
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 21
+        width: 280
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e575d6d5c0f4d7d90800000000000000
+      internalID: -7098430523140384930
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID:
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ThanhGiongMotion_0: -5480931101348814198
+      ThanhGiongMotion_1: 3269861902765526047
+      ThanhGiongMotion_10: -6259977190927267211
+      ThanhGiongMotion_11: -3506190567610424610
+      ThanhGiongMotion_12: -7774428632433925835
+      ThanhGiongMotion_13: -587448825472089807
+      ThanhGiongMotion_14: 2114446321139245436
+      ThanhGiongMotion_15: -9032859981071913471
+      ThanhGiongMotion_16: -3724660744151237931
+      ThanhGiongMotion_17: 6556065731331667489
+      ThanhGiongMotion_18: -7098430523140384930
+      ThanhGiongMotion_2: -5780621182639277050
+      ThanhGiongMotion_3: 5445708151464447354
+      ThanhGiongMotion_4: -1254985399030593471
+      ThanhGiongMotion_5: 7350661960212236098
+      ThanhGiongMotion_6: 8093281816055612534
+      ThanhGiongMotion_7: 7139134499033773473
+      ThanhGiongMotion_8: -4170427394650280153
+      ThanhGiongMotion_9: 6561252577531475932
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

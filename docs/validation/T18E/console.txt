@@ -1,0 +1,1 @@
+System.String: playing=True; frames=123622; realtime=178.1014; Console errors=0; warnings=0; Stop requested
