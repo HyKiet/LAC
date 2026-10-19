@@ -1,0 +1,1755 @@
+fileFormatVersion: 2
+guid: 9226f51664f7be643b51dc798cbbb915
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4791344102084260564
+    second: ThanhGiongChibi_0
+  - first:
+      213: 7272242868822200381
+    second: ThanhGiongChibi_1
+  - first:
+      213: -8066890515356938963
+    second: ThanhGiongChibi_2
+  - first:
+      213: 6695089951476233150
+    second: ThanhGiongChibi_3
+  - first:
+      213: 7892553757335636769
+    second: ThanhGiongChibi_4
+  - first:
+      213: 3334680839371643760
+    second: ThanhGiongChibi_5
+  - first:
+      213: 6949713334468660518
+    second: ThanhGiongChibi_6
+  - first:
+      213: -5306937001517810585
+    second: ThanhGiongChibi_7
+  - first:
+      213: 8948747664328813901
+    second: ThanhGiongChibi_8
+  - first:
+      213: -3490100713513883991
+    second: ThanhGiongChibi_9
+  - first:
+      213: 491186686059538830
+    second: ThanhGiongChibi_10
+  - first:
+      213: -2782297591175290385
+    second: ThanhGiongChibi_11
+  - first:
+      213: -6821015382443837750
+    second: ThanhGiongChibi_12
+  - first:
+      213: 3034629166608366415
+    second: ThanhGiongChibi_13
+  - first:
+      213: 3160501492293512691
+    second: ThanhGiongChibi_14
+  - first:
+      213: -4767498557917479150
+    second: ThanhGiongChibi_15
+  - first:
+      213: -2674780349954660546
+    second: ThanhGiongChibi_16
+  - first:
+      213: -7322806066403924565
+    second: ThanhGiongChibi_17
+  - first:
+      213: 909374489522096206
+    second: ThanhGiongChibi_18
+  - first:
+      213: -6230723841339154688
+    second: ThanhGiongChibi_19
+  - first:
+      213: -6752005321526295702
+    second: ThanhGiongChibi_20
+  - first:
+      213: 1341019620636621979
+    second: ThanhGiongChibi_21
+  - first:
+      213: 7072125361689733767
+    second: ThanhGiongChibi_22
+  - first:
+      213: 1319049772538021606
+    second: ThanhGiongChibi_23
+  - first:
+      213: 2187048471041623785
+    second: ThanhGiongChibi_24
+  - first:
+      213: 4403150412428350884
+    second: ThanhGiongChibi_25
+  - first:
+      213: 3408739773888814460
+    second: ThanhGiongChibi_26
+  - first:
+      213: 2417998237729334257
+    second: ThanhGiongChibi_27
+  - first:
+      213: -6012627031655286609
+    second: ThanhGiongChibi_28
+  - first:
+      213: 3061569669154690624
+    second: ThanhGiongChibi_29
+  - first:
+      213: -8865077748429706118
+    second: ThanhGiongChibi_30
+  - first:
+      213: -6815555932974809069
+    second: ThanhGiongChibi_31
+  - first:
+      213: 946495525176274838
+    second: ThanhGiongChibi_32
+  - first:
+      213: -8893775394075127955
+    second: ThanhGiongChibi_33
+  - first:
+      213: 5446952280079935314
+    second: ThanhGiongChibi_34
+  - first:
+      213: -6762365318706524291
+    second: ThanhGiongChibi_35
+  - first:
+      213: 3583353151668975764
+    second: ThanhGiongChibi_36
+  - first:
+      213: -4879378952588111749
+    second: ThanhGiongChibi_37
+  - first:
+      213: 2444590249838948265
+    second: ThanhGiongChibi_38
+  - first:
+      213: -3084912334523303255
+    second: ThanhGiongChibi_39
+  - first:
+      213: -1396510519098488800
+    second: ThanhGiongChibi_40
+  - first:
+      213: 4737475734035738224
+    second: ThanhGiongChibi_41
+  - first:
+      213: 3647227122377439366
+    second: ThanhGiongChibi_42
+  - first:
+      213: 8654087767504286671
+    second: ThanhGiongChibi_43
+  - first:
+      213: 156701785657837774
+    second: ThanhGiongChibi_44
+  - first:
+      213: 3502338741770356307
+    second: ThanhGiongChibi_45
+  - first:
+      213: -8521526653517731909
+    second: ThanhGiongChibi_46
+  - first:
+      213: -8737955394990311505
+    second: ThanhGiongChibi_47
+  - first:
+      213: 1986517659437221897
+    second: ThanhGiongChibi_48
+  - first:
+      213: 5479340642422852498
+    second: ThanhGiongChibi_49
+  - first:
+      213: -2606684710860255236
+    second: ThanhGiongChibi_50
+  - first:
+      213: -1096212479465669247
+    second: ThanhGiongChibi_51
+  - first:
+      213: -7775529995777158386
+    second: ThanhGiongChibi_52
+  - first:
+      213: 6967130704495187840
+    second: ThanhGiongChibi_53
+  - first:
+      213: 4264004913063386864
+    second: ThanhGiongChibi_54
+  - first:
+      213: -6905925136775492572
+    second: ThanhGiongChibi_55
+  - first:
+      213: -8770718107655496219
+    second: ThanhGiongChibi_56
+  - first:
+      213: -3500249213629931774
+    second: ThanhGiongChibi_57
+  - first:
+      213: -685711237737935838
+    second: ThanhGiongChibi_58
+  - first:
+      213: -4184790578958249065
+    second: ThanhGiongChibi_59
+  - first:
+      213: -391612087184088588
+    second: ThanhGiongChibi_60
+  - first:
+      213: 1557021575201233996
+    second: ThanhGiongChibi_61
+  - first:
+      213: -4368364462667011453
+    second: ThanhGiongChibi_62
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ThanhGiongChibi_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 738
+        width: 441
+        height: 488
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2dca9ebce9b18db0800000000000000
+      internalID: -4791344102084260564
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_1
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 1205
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d30d384fb523ce460800000000000000
+      internalID: 7272242868822200381
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_2
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 1205
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2d8e2601d5ac0090800000000000000
+      internalID: -8066890515356938963
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_3
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 680
+        width: 393
+        height: 568
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb33709b6dcb9ec50800000000000000
+      internalID: 6695089951476233150
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_4
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 542
+        width: 417
+        height: 663
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12b4aa463dbf78d60800000000000000
+      internalID: 7892553757335636769
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_5
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 1094
+        width: 77
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07b5c063e8a274e20800000000000000
+      internalID: 3334680839371643760
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1100
+        width: 100
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62dcccfd477527060800000000000000
+      internalID: 6949713334468660518
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_7
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 1162
+        width: 14
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76c772b1ae8f956b0800000000000000
+      internalID: -5306937001517810585
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_8
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 1115
+        width: 51
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4dece49696503c70800000000000000
+      internalID: 8948747664328813901
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_9
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 1155
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a6eaa474eba09fc0800000000000000
+      internalID: -3490100713513883991
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_10
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 1167
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e89eaf440bb01d600800000000000000
+      internalID: 491186686059538830
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_11
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 1160
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe16292051b4369d0800000000000000
+      internalID: -2782297591175290385
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_12
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 1151
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac6b5f126a2e651a0800000000000000
+      internalID: -6821015382443837750
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_13
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 1142
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4b3bbc162b2d1a20800000000000000
+      internalID: 3034629166608366415
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_14
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 1152
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fd2f38bc5b5cdb20800000000000000
+      internalID: 3160501492293512691
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_15
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 1151
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21f3424225176ddb0800000000000000
+      internalID: -4767498557917479150
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_16
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 1152
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e37e1cc717541ead0800000000000000
+      internalID: -2674780349954660546
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_17
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 1122
+        width: 21
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba52be43eaa206a90800000000000000
+      internalID: -7322806066403924565
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_18
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 1132
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4844c7b74fbe9c00800000000000000
+      internalID: 909374489522096206
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_19
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 1124
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00f1c679da50889a0800000000000000
+      internalID: -6230723841339154688
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_20
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 1124
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a63c0e80fee0c42a0800000000000000
+      internalID: -6752005321526295702
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_21
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 1028
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9cffdc6d324c9210800000000000000
+      internalID: 1341019620636621979
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_22
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 869
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78a2c86fb8c352260800000000000000
+      internalID: 7072125361689733767
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_23
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 853
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e6403d87c43e4210800000000000000
+      internalID: 1319049772538021606
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_24
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 843
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e64ff63ff4f95e10800000000000000
+      internalID: 2187048471041623785
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_25
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 819
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a51861a8f12b1d30800000000000000
+      internalID: 4403150412428350884
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_26
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 79
+        width: 483
+        height: 725
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7d536a93c64e4f20800000000000000
+      internalID: 3408739773888814460
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_27
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 803
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f3a06b06947e8120800000000000000
+      internalID: 2417998237729334257
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_28
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 393
+        width: 309
+        height: 410
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa8764b229bde8ca0800000000000000
+      internalID: -6012627031655286609
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_29
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 371
+        width: 357
+        height: 433
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0465319a461ec7a20800000000000000
+      internalID: 3061569669154690624
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_30
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 758
+        width: 15
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7ca0aac1cae8f480800000000000000
+      internalID: -8865077748429706118
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_31
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 755
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3100b344df74a61a0800000000000000
+      internalID: -6815555932974809069
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_32
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 730
+        width: 19
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69fe0a75aa0a22d00800000000000000
+      internalID: 946495525176274838
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_33
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 765
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6fca0c7666f29480800000000000000
+      internalID: -8893775394075127955
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_34
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 521
+        width: 92
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2572ba25d36779b40800000000000000
+      internalID: 5446952280079935314
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_35
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 724
+        width: 23
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7f831932904722a0800000000000000
+      internalID: -6762365318706524291
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_36
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 698
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 498710eb4b0aab130800000000000000
+      internalID: 3583353151668975764
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_37
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 471
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b70d776d1b6f84cb0800000000000000
+      internalID: -4879378952588111749
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_38
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 467
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9afa80751edece120800000000000000
+      internalID: 2444590249838948265
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_39
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 457
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aa748983903035d0800000000000000
+      internalID: -3084912334523303255
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_40
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 457
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 028c908f4199e9ce0800000000000000
+      internalID: -1396510519098488800
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_41
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 441
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07eab337415eeb140800000000000000
+      internalID: 4737475734035738224
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_42
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 425
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6883a747ebd8d9230800000000000000
+      internalID: 3647227122377439366
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_43
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 417
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc3752529fe791870800000000000000
+      internalID: 8654087767504286671
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 375
+        width: 35
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec80ecd9177bc2200800000000000000
+      internalID: 156701785657837774
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_45
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 30
+        width: 230
+        height: 373
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3568f4a878eca9030800000000000000
+      internalID: 3502338741770356307
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_46
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 29
+        width: 336
+        height: 376
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb76d0958a47db980800000000000000
+      internalID: -8521526653517731909
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_47
+      rect:
+        serializedVersion: 2
+        x: 778
+        y: 349
+        width: 29
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa7f46a2ddb8cb680800000000000000
+      internalID: -8737955394990311505
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_48
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 256
+        width: 67
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 908cbc64947819b10800000000000000
+      internalID: 1986517659437221897
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_49
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 304
+        width: 47
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29b89f298478a0c40800000000000000
+      internalID: 5479340642422852498
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_50
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 321
+        width: 19
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff8bb7f01233dbd0800000000000000
+      internalID: -2606684710860255236
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_51
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 294
+        width: 75
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18d3913de8879c0f0800000000000000
+      internalID: -1096212479465669247
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_52
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 347
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e03de455aa4c71490800000000000000
+      internalID: -7775529995777158386
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_53
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 353
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0871729567830b060800000000000000
+      internalID: 6967130704495187840
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_54
+      rect:
+        serializedVersion: 2
+        x: 918
+        y: 29
+        width: 289
+        height: 333
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fed9a370e9cc2b30800000000000000
+      internalID: 4264004913063386864
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_55
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 345
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42c4e016da93920a0800000000000000
+      internalID: -6905925136775492572
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_56
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 312
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ed9b10b956284680800000000000000
+      internalID: -8770718107655496219
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_57
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 312
+        width: 19
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20f5f34a2ed9c6fc0800000000000000
+      internalID: -3500249213629931774
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_58
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 226
+        width: 63
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22c0328234ddb76f0800000000000000
+      internalID: -685711237737935838
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_59
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 312
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 793dac1f323ace5c0800000000000000
+      internalID: -4184790578958249065
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_60
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 280
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f1a4ada1e6b09af0800000000000000
+      internalID: -391612087184088588
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_61
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 264
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4c1d798fd6ab9510800000000000000
+      internalID: 1557021575201233996
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongChibi_62
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 226
+        width: 41
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38aea417aa37063c0800000000000000
+      internalID: -4368364462667011453
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID:
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ThanhGiongChibi_0: -4791344102084260564
+      ThanhGiongChibi_1: 7272242868822200381
+      ThanhGiongChibi_10: 491186686059538830
+      ThanhGiongChibi_11: -2782297591175290385
+      ThanhGiongChibi_12: -6821015382443837750
+      ThanhGiongChibi_13: 3034629166608366415
+      ThanhGiongChibi_14: 3160501492293512691
+      ThanhGiongChibi_15: -4767498557917479150
+      ThanhGiongChibi_16: -2674780349954660546
+      ThanhGiongChibi_17: -7322806066403924565
+      ThanhGiongChibi_18: 909374489522096206
+      ThanhGiongChibi_19: -6230723841339154688
+      ThanhGiongChibi_2: -8066890515356938963
+      ThanhGiongChibi_20: -6752005321526295702
+      ThanhGiongChibi_21: 1341019620636621979
+      ThanhGiongChibi_22: 7072125361689733767
+      ThanhGiongChibi_23: 1319049772538021606
+      ThanhGiongChibi_24: 2187048471041623785
+      ThanhGiongChibi_25: 4403150412428350884
+      ThanhGiongChibi_26: 3408739773888814460
+      ThanhGiongChibi_27: 2417998237729334257
+      ThanhGiongChibi_28: -6012627031655286609
+      ThanhGiongChibi_29: 3061569669154690624
+      ThanhGiongChibi_3: 6695089951476233150
+      ThanhGiongChibi_30: -8865077748429706118
+      ThanhGiongChibi_31: -6815555932974809069
+      ThanhGiongChibi_32: 946495525176274838
+      ThanhGiongChibi_33: -8893775394075127955
+      ThanhGiongChibi_34: 5446952280079935314
+      ThanhGiongChibi_35: -6762365318706524291
+      ThanhGiongChibi_36: 3583353151668975764
+      ThanhGiongChibi_37: -4879378952588111749
+      ThanhGiongChibi_38: 2444590249838948265
+      ThanhGiongChibi_39: -3084912334523303255
+      ThanhGiongChibi_4: 7892553757335636769
+      ThanhGiongChibi_40: -1396510519098488800
+      ThanhGiongChibi_41: 4737475734035738224
+      ThanhGiongChibi_42: 3647227122377439366
+      ThanhGiongChibi_43: 8654087767504286671
+      ThanhGiongChibi_44: 156701785657837774
+      ThanhGiongChibi_45: 3502338741770356307
+      ThanhGiongChibi_46: -8521526653517731909
+      ThanhGiongChibi_47: -8737955394990311505
+      ThanhGiongChibi_48: 1986517659437221897
+      ThanhGiongChibi_49: 5479340642422852498
+      ThanhGiongChibi_5: 3334680839371643760
+      ThanhGiongChibi_50: -2606684710860255236
+      ThanhGiongChibi_51: -1096212479465669247
+      ThanhGiongChibi_52: -7775529995777158386
+      ThanhGiongChibi_53: 6967130704495187840
+      ThanhGiongChibi_54: 4264004913063386864
+      ThanhGiongChibi_55: -6905925136775492572
+      ThanhGiongChibi_56: -8770718107655496219
+      ThanhGiongChibi_57: -3500249213629931774
+      ThanhGiongChibi_58: -685711237737935838
+      ThanhGiongChibi_59: -4184790578958249065
+      ThanhGiongChibi_6: 6949713334468660518
+      ThanhGiongChibi_60: -391612087184088588
+      ThanhGiongChibi_61: 1557021575201233996
+      ThanhGiongChibi_62: -4368364462667011453
+      ThanhGiongChibi_7: -5306937001517810585
+      ThanhGiongChibi_8: 8948747664328813901
+      ThanhGiongChibi_9: -3490100713513883991
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

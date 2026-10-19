@@ -73,6 +73,8 @@ namespace LAC.Player
         public VFX.InstrumentWaveData InstrumentWave => _instrumentWave;
         [SerializeField] private Sprite _bodySprite;
         [SerializeField] private Sprite _portrait;
+        [Tooltip("Có dữ liệu thì vũ khí diễn riêng; cơ thể vẫn chạy trong đòn.")]
+        [SerializeField] private VFX.DetachedWeaponData _detachedWeapon;
 
         [Tooltip("Bộ hoạt ảnh. Bỏ trống thì nhân vật dùng sprite tĩnh ở trên.")]
         [SerializeField] private VFX.SpriteAnimationSet _animationSet;
@@ -137,6 +139,7 @@ namespace LAC.Player
 
         public Sprite BodySprite => _bodySprite;
         public Sprite Portrait => _portrait;
+        public VFX.DetachedWeaponData DetachedWeapon => _detachedWeapon;
 
         /// <summary>
         /// Bộ hoạt ảnh, hoặc null nếu nhân vật chỉ có sprite tĩnh.

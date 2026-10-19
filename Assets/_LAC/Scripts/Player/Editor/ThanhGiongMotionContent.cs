@@ -129,6 +129,7 @@ namespace LAC.Player.Editor
             var contact = so.FindProperty("_attackContactNormalized");
             if (contact != null) contact.floatValue = .5f;
             so.ApplyModifiedPropertiesWithoutUndo(); EditorUtility.SetDirty(data);
+            ThanhGiongChibiContent.ApplyIfAvailable();
         }
 
         private static void RequireEdit()

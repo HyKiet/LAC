@@ -2,7 +2,11 @@
 
 Thánh Gióng cầm tre ngà thay phần hiển thị của Warrior. Màn chọn nhân vật có **Thánh Gióng / Archer / Lancer**; chọn Thánh Gióng rồi bấm **Vào trận / Tạo host** để chơi. Giữ `CharacterId.Warrior = 1`, GUID của `Warrior.asset` và registry ba lớp. Các máy cùng dùng tài nguyên dự án; mạng vẫn chỉ truyền ID và sự kiện, không gửi ảnh hay gắn NetworkIdentity mới.
 
-## Chỉnh chạy/đánh sau phản hồi chơi thử — T-18E
+## Hiện hành — T-18F, 19/10/2026
+
+Đã thử **chibi ít chi tiết, cơ thể không cầm sẵn vũ khí và tre ngà là sprite riêng** theo yêu cầu người dùng. `Warrior.asset` dùng `ThanhGiongChibi.asset`/`TreNgaVisual.asset`; chân tiếp tục chạy trong cú đánh. Nguồn AI, prompt, cách dựng lại và bằng chứng mới: [THANH_GIONG_CHIBI.md](THANH_GIONG_CHIBI.md). Phần T-18D/E bên dưới là lịch sử và tài nguyên đối chiếu, không còn là bộ frame đang gán cho Warrior.
+
+## Chỉnh chạy/đánh sau phản hồi chơi thử — T-18E (lịch sử)
 
 Bản v1 có chân/thân đổi dáng và hướng cây tre thiếu liên tục giữa các frame chạy; cú đánh từ giơ tre sang cúi thấp trong 0.18s tạo cảm giác giật. Bản hiện tại dùng sheet motion mới: [nguồn AI](../Assets/_LAC/Art/Source/ThanhGiongMotion.png), [prompt](../Assets/_LAC/Art/Source/ThanhGiongMotion.prompt.txt), [ảnh runtime](../Assets/_LAC/Art/Sprites/ThanhGiongMotion.png). Công cụ [ThanhGiongMotionContent.cs](../Assets/_LAC/Scripts/Player/Editor/ThanhGiongMotionContent.cs) chuẩn hóa lưới 4×4 thành 16 frame 64×64, PPU 32, cùng alpha/palette của v1.
 

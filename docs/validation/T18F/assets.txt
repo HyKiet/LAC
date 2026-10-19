@@ -1,0 +1,1 @@
+{"status":"success","content":[{"type":"text","text":"System.String: \"PASS: body9, Idle2/Run6/Down1, 48x48 PPU32 pivot24,20; weapon separate; Point/uncompressed/noMip/binary alpha/no Son; 3646 opaque pixels; stable IDs after Build; legacy builder keeps chibi; unchanged stats=Warrior/10/4/5/2.2/0.65/0.3\"","data":null,"mimeType":"text/plain","resource":null}]}

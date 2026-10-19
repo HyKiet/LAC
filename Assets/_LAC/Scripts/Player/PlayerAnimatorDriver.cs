@@ -33,6 +33,13 @@ namespace LAC.Player
         private SpriteAnimationSet _appliedSet;
         private bool _wasAlive = true;
         private int _lastHealth = int.MaxValue;
+        private PlayerWeaponVisual _weaponVisual;
+
+        private void Awake()
+        {
+            _weaponVisual = GetComponent<PlayerWeaponVisual>();
+            if (_weaponVisual == null) _weaponVisual = gameObject.AddComponent<PlayerWeaponVisual>();
+        }
 
         private void OnEnable()
         {
@@ -42,6 +49,7 @@ namespace LAC.Player
 
         private void OnDisable()
         {
+            if (_weaponVisual != null) _weaponVisual.CancelAttack();
             if (_weapon != null) _weapon.Fired -= OnFired;
             if (_health != null) _health.HealthChanged -= OnHealthChanged;
         }
@@ -98,6 +106,17 @@ namespace LAC.Player
             CharacterData data = _character != null ? _character.Data : null;
             if (data != null) budget = data.AttackInterval * _attackClipBudget;
 
+            if (_weaponVisual != null && _weaponVisual.UsesSeparateWeapon && data != null)
+            {
+                // Đường Fired cũ báo tại contact. T-50 chuyển sang cue trước đòn để diễn cả lấy đà.
+                float interval = _character.Upgrades != null
+                    ? _character.Upgrades.AttackIntervalFromBase(data.AttackInterval) : data.AttackInterval;
+                float duration = Mathf.Min(interval, data.AttackAnimationDuration * interval / data.AttackInterval);
+                float range = data.AttackRange * (_character.Upgrades != null ? _character.Upgrades.AttackRangeMultiplier : 1f);
+                _weaponVisual.PlayAttack(direction, duration, data.AttackContactNormalized, range,
+                    duration * data.AttackContactNormalized);
+                return;
+            }
             _animator.PlayOneShot(AttackState(data, direction), budget);
         }
 
@@ -121,6 +140,7 @@ namespace LAC.Player
 
             if (!alive)
             {
+                if (_weaponVisual != null) _weaponVisual.CancelAttack();
                 _animator.Lock(AnimState.Death);
                 _wasAlive = false;
                 return;

@@ -115,7 +115,10 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-18E** Chỉnh animation Thánh Gióng sau phản hồi chạy/đánh thiếu tự nhiên — **@Kiet** · 18/10/2026
   > `ThanhGiongMotionContent.cs` và sheet motion mới; tám Run/tám Swing, Idle nhất quán, chuẩn hóa pivot/alpha/palette. `PlayerMovement.VisualSpeed`, `SpriteAnimationSet.WalkReferenceSpeed`, `SpriteAnimator` giữ pha chạy qua one-shot và chỉnh nhịp chân theo vận tốc. Động tác 0.30s/contact 0.15s trong working tree T-50, chu kỳ/damage/tầm giữ nguyên; Hurt không cắt cú đánh. Đã xem chuỗi Game View/GIF, đo nhịp chân, kiểm tra ba lớp và 243 kiểm tra chiến đấu. [THANH_GIONG.md](THANH_GIONG.md) ghi rõ phương pháp/giới hạn; không đánh dấu task cân bằng hoặc Internet hoàn tất.
 
-  > **Cấu hình hiện hành:** Thánh Gióng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18 giữ làm tài nguyên tham khảo, không là yêu cầu vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
+- [x] **T-18F** Thử Thánh Gióng chibi ít chi tiết, cơ thể và tre ngà tách rời — **@Kiet** · 19/10/2026
+  > `ThanhGiongChibiContent.cs`, `PlayerWeaponVisual.cs`, `DetachedWeaponData.cs`, `Art/Source/ThanhGiongChibi.png`/`TreNga.png`, `Data/Animations/ThanhGiongChibi.asset`/`TreNgaVisual.asset`; cơ thể khoảng 32px, Idle2/Run6/Down1, tre diễn riêng và chân không ngừng chạy khi đánh. Giữ ID/chỉ số/vùng sát thương; host cue hiện hành điều khiển lấy đà/contact/thu về. Đã xem Game View/chuỗi ảnh, 83 kiểm tra hình học/vòng đời, ba lớp và 243 kiểm tra chiến đấu đạt; Console 0 lỗi. Nguồn AI, pipeline và giới hạn: [THANH_GIONG_CHIBI.md](THANH_GIONG_CHIBI.md). Không nghiệm thu Internet hoặc task cân bằng.
+
+  > **Cấu hình hiện hành:** Thánh Gióng chibi có tre riêng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18/D/E giữ làm tài nguyên tham khảo; không vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 
 ---
 
