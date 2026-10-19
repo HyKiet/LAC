@@ -36,7 +36,8 @@ MonoBehaviour:
   _dashCooldown: 1
   _dashDamageMultiplier: 1
   _instrumentWave: {fileID: 0}
-  _bodySprite: {fileID: -1208696673, guid: 9b9daea588a2db6449534cf9e680a28a, type: 3}
-  _portrait: {fileID: -1208696673, guid: 9b9daea588a2db6449534cf9e680a28a, type: 3}
-  _detachedWeapon: {fileID: 11400000, guid: 757da688b2955064ea8b601bfb296a78, type: 2}
-  _animationSet: {fileID: 11400000, guid: 98bbd0206f3705f4d874b3871201be93, type: 2}
+  _bodySprite: {fileID: 1226074603, guid: ddaf755f71a829e4ab71dc53712da87c, type: 3}
+  _portrait: {fileID: 1226074603, guid: ddaf755f71a829e4ab71dc53712da87c, type: 3}
+  _detachedWeapon: {fileID: 11400000, guid: 0f4d7a91e18608c41b938da4d8a633ff, type: 2}
+  _cartoonVisual: {fileID: 11400000, guid: fd824d1199f4ed64f8b6e03f43a123ae, type: 2}
+  _animationSet: {fileID: 11400000, guid: e1c832b1c44fbc54db3bb5cae1696266, type: 2}

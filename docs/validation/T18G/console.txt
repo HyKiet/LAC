@@ -1,0 +1,1 @@
+{"status":"success","content":[{"type":"text","text":"System.String: playing=True; managers=1; singleton=LAC.Net.NetworkManagerLAC; server=True; connected=True; player=Player_Thánh Gióng; wave=2; state=Defeat; frames=114548; errors=0; warnings=0","data":null,"mimeType":"text/plain","resource":null}]}

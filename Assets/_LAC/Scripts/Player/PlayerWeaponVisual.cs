@@ -39,6 +39,7 @@ namespace LAC.Player
             _renderer = child.AddComponent<SpriteRenderer>();
             _renderer.enabled = false;
             if (_body != null) _renderer.sharedMaterial = _body.sharedMaterial;
+            if (GetComponent<PlayerCartoonVisual>() == null) gameObject.AddComponent<PlayerCartoonVisual>();
         }
 
         public void PlayAttack(Vector2 direction, float duration, float contactNormalized, float range, float elapsed = 0f)

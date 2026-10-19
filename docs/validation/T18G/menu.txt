@@ -1,0 +1,1 @@
+PASS: fresh menu/host; player=Thánh Gióng; HP=10/10; frame=8594; cartoon=True; Console errors=0; warnings=0

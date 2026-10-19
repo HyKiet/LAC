@@ -118,7 +118,10 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-18F** Thử Thánh Gióng chibi ít chi tiết, cơ thể và tre ngà tách rời — **@Kiet** · 19/10/2026
   > `ThanhGiongChibiContent.cs`, `PlayerWeaponVisual.cs`, `DetachedWeaponData.cs`, `Art/Source/ThanhGiongChibi.png`/`TreNga.png`, `Data/Animations/ThanhGiongChibi.asset`/`TreNgaVisual.asset`; cơ thể khoảng 32px, Idle2/Run6/Down1, tre diễn riêng và chân không ngừng chạy khi đánh. Giữ ID/chỉ số/vùng sát thương; host cue hiện hành điều khiển lấy đà/contact/thu về. Đã xem Game View/chuỗi ảnh, 83 kiểm tra hình học/vòng đời, ba lớp và 243 kiểm tra chiến đấu đạt; Console 0 lỗi. Nguồn AI, pipeline và giới hạn: [THANH_GIONG_CHIBI.md](THANH_GIONG_CHIBI.md). Không nghiệm thu Internet hoặc task cân bằng.
 
-  > **Cấu hình hiện hành:** Thánh Gióng chibi có tre riêng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18/D/E giữ làm tài nguyên tham khảo; không vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
+- [x] **T-18G** Áp mẫu Thánh Gióng cartoon viền đậm đã được duyệt vào game — **@Kiet** · 19/10/2026
+  > `ThanhGiongCartoonContent`, `PlayerCartoonVisual`, `CartoonCharacterData`; atlas sáu mảnh HD và ảnh toàn thân, chân bước theo tốc độ/tay bám tre, portrait/afterimage mới. Giữ ID/chỉ số/vùng đánh, chỉ Warrior dùng cartoon; đổi lớp khôi phục renderer thường. Đã xem Game View/màn chọn, 196 kiểm tra mảnh/vòng đời và 243 kiểm tra chiến đấu đạt; trận mới10/10 HP/Console0 lỗi. Nguồn AI/prompt/pipeline/bằng chứng/giới hạn: [THANH_GIONG_CARTOON.md](THANH_GIONG_CARTOON.md).
+
+  > **Cấu hình hiện hành:** Thánh Gióng cartoon có tre riêng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18/D/E/F giữ để đối chiếu; không vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 
 ---
 

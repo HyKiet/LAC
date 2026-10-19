@@ -44,7 +44,7 @@ Vũ khí chọn mục tiêu gần nhất trong tầm rồi tự khai hoả. Cả
 
 ## 4. Ba lớp hiện có
 
-Thánh Gióng hiện thử chibi T-18F: cơ thể khoảng 32px, Idle2/Run6/Down1; tre ngà là sprite riêng xoay theo timeline đòn host, chân tiếp tục chạy khi đánh. Giữ chỉ số/vùng đánh, dùng SpriteFlash thay Hurt toàn thân. Nguồn AI, GIF và giới hạn tại [THANH_GIONG_CHIBI.md](THANH_GIONG_CHIBI.md). T-18D/E là lịch sử.
+Thánh Gióng hiện dùng cartoon T-18G theo mẫu đã duyệt: nét mượt/viền đậm, thân/chân/tay/tre ghép riêng; chân bước theo tốc độ thực và tay bám chuôi khi tre vung theo timeline host. Giữ chỉ số/vùng đánh, flash/afterimage; chỉ lớp này đổi mỹ thuật. Nguồn AI, GIF và giới hạn tại [THANH_GIONG_CARTOON.md](THANH_GIONG_CARTOON.md). T-18D/E/F là lịch sử.
 
 Hướng tinh chỉnh combat T-50B: tham khảo nhịp tự đánh/ra đòn của Brotato, ưu tiên mốc contact, hoạt ảnh theo tốc độ thật, giữ hướng và feedback/co-op. Phương án tại [BROTATO_COMBAT_FEEL.md](BROTATO_COMBAT_FEEL.md); chưa đổi chỉ số/cách gây sát thương đang chạy. Timing/feel được chốt trước cân bằng damage T-50 và wave T-51.
 

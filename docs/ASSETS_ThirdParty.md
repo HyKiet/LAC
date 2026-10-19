@@ -6,18 +6,20 @@ Theo yêu cầu ngày 07/10, bản đồ án dùng ba lớp TinySwords thay cho 
 
 | Vai trò | Asset | Tích hợp |
 |---|---|---|
-| Thánh Gióng (Warrior) | Ảnh sinh bằng imagegen, chuẩn hóa trong `_LAC/` | Chibi và tre riêng T-18F; giữ `Data/Characters/Warrior.asset`, dùng `Data/Animations/ThanhGiongChibi.asset` và `TreNgaVisual.asset` |
+| Thánh Gióng (Warrior) | Ảnh sinh bằng imagegen, chuẩn hóa trong `_LAC/` | Cartoon T-18G, thân/chân/tay/tre riêng; giữ `Warrior.asset`, dùng `ThanhGiongCartoon.asset`, `ThanhGiongCartoonParts.asset`, `TreNgaCartoon.asset` |
 | Archer | `Units/Blue Units/Archer` | Cung, clip Shoot và Arrow; asset Archer và `Prefabs/Projectiles/Arrow.prefab` |
 | Lancer | `Units/Purple Units/Lancer` | Thương đâm xuyên; clip Right/Up/Down/UpRight/DownRight; asset Lancer và `Prefabs/VFX/SpearThrust.prefab` |
 | Cô Hồn | TinyRPG Orc | Giữ bộ quái hiện có với hoạt ảnh chết |
 | Quái khác / boss | Asset của nhóm | Giữ silhouette và tín hiệu đòn đang dùng |
 | Rìa sân | TinySwords Rocks | Đã gỡ toàn bộ Bushes khỏi cả ba chặng |
 
-Archer có frame 192×192, Lancer 320×320, cùng PPU 64. Thánh Gióng T-18F có ô 48×48, thân khoảng 32px, PPU32 và tre riêng; không lấy kích thước cả sheet làm kích thước thân. Chân dung tính theo kích thước thế giới để hỗ trợ cả hai mật độ ảnh. Không đổi collider player theo phần trong suốt của sheet.
+Archer có frame192×192, Lancer320×320, cùng PPU64. Thánh Gióng T-18G dùng atlas cartoon1024×1024/PPU320 và ảnh toàn thân256×256/PPU172.8, Bilinear; không lấy kích thước atlas làm kích thước thân. Chân dung tính theo kích thước thế giới. Không đổi collider hoặc PPU toàn dự án theo ảnh mới.
 
 ## Thánh Gióng — 18/10/2026
 
-**Hiện hành 19/10/2026 — T-18F:** chibi ít chi tiết, nguồn `Art/Source/ThanhGiongChibi.png` và `TreNga.png` do built-in image_gen tạo; pipeline `ThanhGiongChibiContent`, body Idle2/Run6/Down1 và renderer tre rời, không dùng đòn toàn thân cắt chu kỳ chạy. Xem [THANH_GIONG_CHIBI.md](THANH_GIONG_CHIBI.md) cho prompt, cách dựng, bằng chứng và giới hạn. Các dòng T-18D/E dưới đây giữ làm lịch sử, không phải clip đang gán cho Warrior.
+**Hiện hành T-18G, 19/10/2026:** mẫu cartoon nét mượt/viền đậm được người dùng duyệt đã vào Warrior, thay pixel T-18F. Parts AI giữ phong cách mẫu; chân/tay/tre chuyển động độc lập, portrait/afterimage ghép cùng các mảnh. Nguồn/prompt/kiểm chứng: [THANH_GIONG_CARTOON.md](THANH_GIONG_CARTOON.md). Các mục T-18D/E/F dưới đây là lịch sử.
+
+**Lịch sử 19/10/2026 — T-18F:** chibi ít chi tiết, nguồn `Art/Source/ThanhGiongChibi.png` và `TreNga.png` do built-in image_gen tạo; pipeline `ThanhGiongChibiContent`, body Idle2/Run6/Down1 và renderer tre rời, không dùng đòn toàn thân cắt chu kỳ chạy. Xem [THANH_GIONG_CHIBI.md](THANH_GIONG_CHIBI.md) cho prompt, cách dựng, bằng chứng và giới hạn. Các dòng T-18D/E dưới đây giữ làm lịch sử, không phải clip đang gán cho Warrior.
 
 Sau phản hồi chơi thử, T-18E dùng thêm `ThanhGiongMotion.png`: tám frame chạy/tám frame vung tre, cùng pivot/PPU; Idle theo tư thế mới. Nhịp chân theo tốc độ thực, giữ pha qua one-shot; Hurt dùng SpriteFlash để không cắt động tác đánh. Motion hiện tại và GIF kiểm tra: [THANH_GIONG.md](THANH_GIONG.md). Phần mô tả 24 frame dưới đây là sheet v1 giữ làm nguồn Hurt/Death và đối chiếu.
 

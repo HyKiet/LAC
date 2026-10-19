@@ -2,7 +2,11 @@
 
 Thánh Gióng cầm tre ngà thay phần hiển thị của Warrior. Màn chọn nhân vật có **Thánh Gióng / Archer / Lancer**; chọn Thánh Gióng rồi bấm **Vào trận / Tạo host** để chơi. Giữ `CharacterId.Warrior = 1`, GUID của `Warrior.asset` và registry ba lớp. Các máy cùng dùng tài nguyên dự án; mạng vẫn chỉ truyền ID và sự kiện, không gửi ảnh hay gắn NetworkIdentity mới.
 
-## Hiện hành — T-18F, 19/10/2026
+## Hiện hành — T-18G, 19/10/2026
+
+Mẫu **cartoon nét mượt/viền đậm theo hướng Brotato** đã được người dùng duyệt và thay bộ pixel riêng Thánh Gióng. Thân/chân/tay/tre tách mảnh, giữ ID/chỉ số. Nguồn/prompt/pipeline/ảnh trong game: [THANH_GIONG_CARTOON.md](THANH_GIONG_CARTOON.md).
+
+## T-18F — lịch sử, 19/10/2026
 
 Đã thử **chibi ít chi tiết, cơ thể không cầm sẵn vũ khí và tre ngà là sprite riêng** theo yêu cầu người dùng. `Warrior.asset` dùng `ThanhGiongChibi.asset`/`TreNgaVisual.asset`; chân tiếp tục chạy trong cú đánh. Nguồn AI, prompt, cách dựng lại và bằng chứng mới: [THANH_GIONG_CHIBI.md](THANH_GIONG_CHIBI.md). Phần T-18D/E bên dưới là lịch sử và tài nguyên đối chiếu, không còn là bộ frame đang gán cho Warrior.
 

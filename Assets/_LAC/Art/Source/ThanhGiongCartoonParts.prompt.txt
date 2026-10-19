@@ -1,0 +1,11 @@
+Built-in image_gen edit, 19/10/2026. Reference: ThanhGiongCartoonPreview.png (approved in chat). AI-generated art, not hand-drawn by the team.
+
+Use case: precise-object-edit. Input image is the APPROVED Thánh Gióng cartoon reference; preserve its identity, face, black topknot, bronze armor, cream trousers, teal sash, thick dark outlines and smooth flat 2D cartoon rendering. This is a technical separation into reusable game sprite pieces, not a redesign. Keep the same proportions and colors, no pixel art.
+Create a transparent sprite-parts atlas, EXACTLY 3 columns x 2 rows, 6 equal square cells, no gutters or visible grid. Each cell contains ONE isolated part with ample transparent padding, centered. No text or labels.
+Top-left: HEAD+TORSO+HIP body as one piece, including the SAME whole head/hair/face, plain bronze chest armor and teal sash, cream upper trouser thighs ending flat. REMOVE BOTH ARMS AND HANDS and REMOVE BOTH BROWN FEET/BOOTS. Keep shoulder armor attached to torso, no detached limbs.
+Top-middle: the character's LEFT small brown shoe/boot only, facing slightly right, no long leg, just the rounded brown foot with thick outline.
+Top-right: the matching RIGHT brown shoe/boot only, same scale as left.
+Bottom-left: LEFT floating oval mitten fist with brown wrist cuff, tan palm, no fingers, no arm, no shoulder.
+Bottom-middle: matching RIGHT mitten fist with brown wrist cuff, same scale as left.
+Bottom-right: the SAME green bamboo weapon, but rotate it perfectly HORIZONTAL, grip on LEFT, broken gold blunt tip on RIGHT, three nodes, no hand attached. The bamboo is straight and one isolated piece.
+CRITICAL: only one part per cell. All six cells have genuine transparent alpha backgrounds. No floor, shadow, lighting backdrop, UI or extra objects. Smooth antialiased edges, bold consistent outlines, modest flat shading. Maintain the exact approved face and colors. Parts are for runtime animation in Unity, NOT a new character pose sheet.

@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: e378f918cb6db6049aab15616e9489ea
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4429850398471834558
+    second: ThanhGiongCartoonParts_0
+  - first:
+      213: 3325493264805555150
+    second: ThanhGiongCartoonParts_1
+  - first:
+      213: -1039044606677377293
+    second: ThanhGiongCartoonParts_2
+  - first:
+      213: -1023883307242711163
+    second: ThanhGiongCartoonParts_3
+  - first:
+      213: 1566702681326458220
+    second: ThanhGiongCartoonParts_4
+  - first:
+      213: 2388245963302953161
+    second: ThanhGiongCartoonParts_5
+  - first:
+      213: -4398431664577668794
+    second: ThanhGiongCartoonParts_6
+  - first:
+      213: 6255519947489017433
+    second: ThanhGiongCartoonParts_7
+  - first:
+      213: 8940117204384842236
+    second: ThanhGiongCartoonParts_8
+  - first:
+      213: 6547730081169951755
+    second: ThanhGiongCartoonParts_9
+  - first:
+      213: 7958251376589037948
+    second: ThanhGiongCartoonParts_10
+  - first:
+      213: 3808691100811493408
+    second: ThanhGiongCartoonParts_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 359
+        width: 745
+        height: 644
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebb4901977df97d30800000000000000
+      internalID: 4429850398471834558
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_1
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 625
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecb60bf4186862e20800000000000000
+      internalID: 3325493264805555150
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_2
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 279
+        width: 587
+        height: 693
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fe95317f629491f0800000000000000
+      internalID: -1039044606677377293
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_3
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 415
+        width: 220
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 587985c8e8f6ac1f0800000000000000
+      internalID: -1023883307242711163
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_4
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 447
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c659d15b9cb0eb510800000000000000
+      internalID: 1566702681326458220
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_5
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 407
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c0eee6dc01c42120800000000000000
+      internalID: 2388245963302953161
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_6
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 396
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 649940874b1a5f2c0800000000000000
+      internalID: -4398431664577668794
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_7
+      rect:
+        serializedVersion: 2
+        x: 1263
+        y: 285
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95ef373cf3210d650800000000000000
+      internalID: 6255519947489017433
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_8
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 39
+        width: 437
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf187b90b3da11c70800000000000000
+      internalID: 8940117204384842236
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_9
+      rect:
+        serializedVersion: 2
+        x: 622
+        y: 81
+        width: 271
+        height: 203
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0c464541d53eda50800000000000000
+      internalID: 6547730081169951755
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_10
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 0
+        width: 557
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c716ade5673617e60800000000000000
+      internalID: 7958251376589037948
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongCartoonParts_11
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 7
+        width: 27
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0208f0b70603bd430800000000000000
+      internalID: 3808691100811493408
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID:
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ThanhGiongCartoonParts_0: 4429850398471834558
+      ThanhGiongCartoonParts_1: 3325493264805555150
+      ThanhGiongCartoonParts_10: 7958251376589037948
+      ThanhGiongCartoonParts_11: 3808691100811493408
+      ThanhGiongCartoonParts_2: -1039044606677377293
+      ThanhGiongCartoonParts_3: -1023883307242711163
+      ThanhGiongCartoonParts_4: 1566702681326458220
+      ThanhGiongCartoonParts_5: 2388245963302953161
+      ThanhGiongCartoonParts_6: -4398431664577668794
+      ThanhGiongCartoonParts_7: 6255519947489017433
+      ThanhGiongCartoonParts_8: 8940117204384842236
+      ThanhGiongCartoonParts_9: 6547730081169951755
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

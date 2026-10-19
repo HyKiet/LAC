@@ -123,6 +123,7 @@ namespace LAC.Player.Editor
             so.FindProperty("_animationSet").objectReferenceValue = set;
             so.FindProperty("_detachedWeapon").objectReferenceValue = visual;
             so.ApplyModifiedPropertiesWithoutUndo(); EditorUtility.SetDirty(data);
+            ThanhGiongCartoonContent.ApplyIfAvailable();
         }
 
         private static void SetClip(SerializedProperty clips, int index, AnimState state, Sprite[] frames, float fps, bool loop, bool hold)
