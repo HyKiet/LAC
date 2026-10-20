@@ -1,0 +1,5 @@
+ALL PASSED: 243 assertions. Real Mirror host/player/pools/damage; stationary runtime-only enemies, manual start and accelerated contact probes. Not natural balance, WAN or subjective feel.
+Warrior: wind-up -> one contact -> correct real damage; no duplicate hit.
+Archer: wind-up -> one contact -> correct real damage; no duplicate hit.
+Lancer: wind-up -> one contact -> correct real damage; no duplicate hit.
+Controlled group geometry, removed target, movement/aim, max legal speed, dash bonus, late seek, cards/down/end/disable/Restart and kill burst passed.

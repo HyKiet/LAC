@@ -58,7 +58,7 @@ Vũ khí gắn cố định với nhân vật và không thể thay thế trong 
 
 Ngày 18/10/2026: Thánh Gióng từ ảnh AI đã chuẩn hóa thay mỹ thuật Warrior, giữ ID mạng, chỉ số và vùng quét; Archer/Lancer không đổi. Nguồn/pipeline tại [ASSETS_ThirdParty.md](docs/ASSETS_ThirdParty.md).
 
-Ngày20/10/2026 — T-18H: theo yêu cầu mới, Thánh Gióng dùng pixel toàn thân Idle4/Run8/Down4, chỉ tách cây tre có đốt tự nhiên. PPU32/Point/palette không Son; điểm cầm lưu theo frame. Bộ cartoon T-18G giữ làm lịch sử. Asset khác và camera/PPU toàn dự án không đổi. [THANH_GIONG_PIXEL.md](docs/THANH_GIONG_PIXEL.md) ghi nguồn/pipeline/bằng chứng.
+Ngày20/10/2026 — T-18I: áp mẫu Forge32 liền cả cây tre được người dùng chọn, giữ22 màu nguồn ngoài Son/PPU32/Point. Chuyển động cơ bản dịch/nghiêng cả hình từ một dáng tĩnh, không phải bộ pose chạy/vung tay mới; vũ khí rời và cartoon tắt. Không đổi chỉ số/camera/asset khác. T-18D/E/F/G/H là lịch sử. [THANH_GIONG_FORGE.md](docs/THANH_GIONG_FORGE.md) ghi nguồn/pipeline/kiểm chứng/giới hạn hình học đòn.
 
 Quyết định 07/10/2026: dùng ba lớp TinySwords thay nhân vật truyền thuyết để giảm công mỹ thuật. Ba lớp mở sẵn; chọn trước khi khởi động host/client trong `UI/CharacterSelection.cs`. ID được host thẩm định trước khi sinh player. Solo vẫn Mirror host, co-op cho phép chọn trùng lớp. Archer nhân đôi tên kế tiếp sau dash; Warrior/Lancer khác nhau ở hình dạng sát thương. Chi tiết hiện hành: GDD mục 4 và 10.
 

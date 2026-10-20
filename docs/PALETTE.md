@@ -132,7 +132,7 @@ Nâu chỉ được dùng làm điểm lốm đốm thưa. Đây là điều ki�
 
 ## 5. Phạm vi mỹ thuật đồ án — 11/10/2026
 
-Ngày20/10/2026, T-18H: Thánh Gióng trở lại pixel toàn thân và tre riêng theo yêu cầu mới, dùng20 màu ngoài Son/alpha nhị phân/Point/PPU32. Ngoại lệ cartoon T-18G ngày19/10 chỉ còn là lịch sử. Xem [THANH_GIONG_PIXEL.md](THANH_GIONG_PIXEL.md).
+Ngày20/10/2026, T-18I: áp nguyên mẫu Thánh Gióng Forge32 liền tre được người dùng chọn; giữ22 màu học từ nguồn để giữ da/tre, alpha nhị phân/Point/PPU32. Đây là ngoại lệ riêng nhân vật này đối với20 màu cố định; vẫn kiểm tra không Son với sai số0.005. T-18G/H là lịch sử. Xem [THANH_GIONG_FORGE.md](THANH_GIONG_FORGE.md).
 
 T-33 ưu tiên 12 icon thẻ nền rõ nghĩa. T-47 tinh chỉnh silhouette quái/boss/trống bằng asset sẵn nếu cần; không bắt buộc vẽ lại người chơi hoặc hai tileset mới. Giữ nền tối, màu/lớp đòn địch và khả năng đọc.
 

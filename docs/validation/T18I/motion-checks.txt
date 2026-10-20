@@ -1,0 +1,1 @@
+PASS: 142 checks; captured 125 real Game View frames; unique full-body run frames=8; whole-image Attack frames=38; moving during Attack=24; enemy HP 40 -> 15 (before fixture reset). No detached weapon in four facings; class changes/down/restart passed. Basic whole-image motion only, not newly drawn poses. Controlled host fixture, not WAN or subjective feel acceptance.

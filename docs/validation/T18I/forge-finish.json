@@ -1,0 +1,251 @@
+{
+  "schema": "video2dsprite.finish.v1",
+  "tool": {
+    "name": "finish_frames",
+    "version": "0.4.0"
+  },
+  "mode": "pixel",
+  "clip": "idle",
+  "character": "thanh-giong-bamboo-32",
+  "role": "hero",
+  "source": {
+    "frames": "../master",
+    "count": 1,
+    "size": [
+      1024,
+      1024
+    ],
+    "pattern": "master_rgba.png",
+    "registration": null
+  },
+  "rest": {
+    "frame": 0,
+    "topPx": 139,
+    "feetPx": 925,
+    "heightPx": 786,
+    "areaPx": 298980,
+    "stanceX": 292.5,
+    "centroid": [
+      479.8209110977323,
+      539.5419191919192
+    ],
+    "minRun": 6
+  },
+  "anchorMode": "feet",
+  "anchorSource": [
+    292.5,
+    925.0
+  ],
+  "scale": 0.03689567430025445,
+  "scaleSource": "target-height",
+  "targetHeight": 29.0,
+  "scaleRef": null,
+  "size": [
+    32,
+    32
+  ],
+  "anchor": [
+    12,
+    31
+  ],
+  "canvas": {
+    "size": [
+      32,
+      32
+    ],
+    "anchor": [
+      12,
+      31
+    ],
+    "requestedAnchor": null
+  },
+  "engine": {
+    "sourceSize": [
+      32,
+      32
+    ],
+    "sourceAnchor": [
+      12,
+      31
+    ],
+    "sampling": "nearest",
+    "pixelArt": true,
+    "note": "engine_export.py package --clean-dir <out>/frames --source-size W,H --source-anchor X,Y (no --registration; add --pixel-art --sampling nearest for pixel)"
+  },
+  "resampler": "box",
+  "restOutput": {
+    "heightPx": 29.0,
+    "areaPx": 406.999,
+    "bodyHeightPx": 29.0,
+    "outlinePx": 0,
+    "measuredHeightPx": 29,
+    "measuredAreaPx": 406
+  },
+  "displaySizes": [
+    {
+      "label": "1x",
+      "dir": "frames",
+      "scale": 0.03689567430025445,
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        12,
+        31
+      ],
+      "targetHeight": 29.0,
+      "flicker": null,
+      "alphaBinary": true
+    }
+  ],
+  "palette": {
+    "path": "palette.json",
+    "sha256": "2444ab09de9821fe74e8f31779c4cb4c0673520400db694f0c37a0dc939387e6",
+    "bytes": 1037,
+    "colors": 22,
+    "built": true,
+    "reserved": 0,
+    "transparentIndex": 255
+  },
+  "pixel": {
+    "alphaThreshold": 0.5,
+    "dither": false,
+    "loopPolicy": "oneshot",
+    "margin": 0.0004,
+    "alphaBand": [
+      0.4,
+      0.6
+    ],
+    "orphans": 2,
+    "despeckle": true,
+    "downscale": "crisp",
+    "supersample": 4,
+    "lift": {
+      "contrast": 1.0,
+      "saturation": 1.0,
+      "pivotL": 0.41873
+    },
+    "outline": "none",
+    "outlinePx": 0,
+    "featureDeltaL": 0.22,
+    "shadeGap": 0.04,
+    "shadeMerged": 2,
+    "coloursPerFrameMax": 22,
+    "noiseFlipReduction": null,
+    "perFrameNearest": null,
+    "heldIndexPx": 0,
+    "heldAlphaPx": 0,
+    "lonePixelsFixed": 77
+  },
+  "colourLock": null,
+  "indexedSheet": null,
+  "loopPolicy": "oneshot",
+  "frames": [
+    {
+      "file": "frames/master_rgba.png",
+      "sha256": "f1a207a1165d0aec9ac60fcba22a1e5223af82b55a6986b590cb91d80831fc73",
+      "sourceFile": "master_rgba.png",
+      "sourceSha256": "c6db71ae3fecbec09a808f4561d9b7d233e6a1bc58034aefbbfc9dad04036076",
+      "opaquePx": 406
+    }
+  ],
+  "flicker": null,
+  "specksRemoved": 3,
+  "alphaBinary": true,
+  "review": {
+    "path": "review-contact.png",
+    "frames": [
+      0
+    ]
+  },
+  "qa": {
+    "status": "needs-visual-review",
+    "method": "finish_frames pixel v2 (bold): the hd registration; alpha from the box downscale (the hd silhouette); colour from a 4x4 supersampled box downscale split per output pixel into two OKLab clusters (4 Lloyd steps), the heavier cluster winning, a cluster 0.15 L darker from 35% (lines and eyes survive), the previous frame's cluster kept from 30% (no 50/50 flicker); OKLab lift (lightness spread around the rest pose's mean, chroma scale); one palette (given, or k-means++ on the lifted frames, then spaced: the closest pair of learned colours merged, usage-weighted, until no two are closer than the shade gap, OKLab dE 0.04 by default, the darkest, the lightest and reserved colours kept in place); forge_palette.quantize_sequence hysteresis and cleanup_alpha; lone pixels merged into their neighbours' majority unless 0.22 L lighter or darker than every neighbour (features kept), 2 passes; a 1 px outline outside the 4-connected silhouette in the palette's dark shade of the darkest neighbour (selective) or its darkest colour (dark); the target height includes the outline and the feet anchor moves to the outline's bottom edge; no dither, binary alpha at 0.5",
+    "notProven": [
+      "identity, pose and readability at the finished size (look at review-contact.png and the frames)",
+      "that the target height suits the game camera and the rest of the cast (run lineup)",
+      "loop seams and timing (gait_loop, retime); finished frames keep the source names",
+      "hysteresis follows file order: the seam pair of a loop window chosen later is not held",
+      "the palette's fit to other clips of the cast (build one shared palette with palette build)"
+    ],
+    "checks": [
+      {
+        "id": "no-upscale",
+        "status": "pass",
+        "value": 0.036896,
+        "threshold": 1.0
+      },
+      {
+        "id": "rest-height",
+        "status": "pass",
+        "value": 0.0,
+        "threshold": 1.5,
+        "note": "|measured - nominal| rest-pose body height at 1x (outline included), output px"
+      },
+      {
+        "id": "empty-frames",
+        "status": "pass",
+        "value": [],
+        "threshold": 0
+      },
+      {
+        "id": "flicker",
+        "status": "skipped",
+        "value": null,
+        "threshold": null
+      },
+      {
+        "id": "pixel-reduction",
+        "status": "pass",
+        "value": 27.103,
+        "threshold": 4.0,
+        "note": "source px per output px; pixel art comes from about 8-12x"
+      },
+      {
+        "id": "alpha-binary",
+        "status": "pass",
+        "value": true,
+        "threshold": true
+      },
+      {
+        "id": "palette-fit",
+        "status": "pass",
+        "value": {
+          "colorsUsed": 22,
+          "paletteColors": 22,
+          "offPaletteColors": 0,
+          "coloursPerFrameMax": 22
+        },
+        "threshold": 0
+      }
+    ],
+    "inputs": [
+      {
+        "path": "../master/master_rgba.png",
+        "sha256": "c6db71ae3fecbec09a808f4561d9b7d233e6a1bc58034aefbbfc9dad04036076"
+      }
+    ],
+    "outputs": [
+      {
+        "path": "frames/master_rgba.png",
+        "sha256": "f1a207a1165d0aec9ac60fcba22a1e5223af82b55a6986b590cb91d80831fc73",
+        "bytes": 916
+      },
+      {
+        "path": "review-contact.png",
+        "sha256": "e7cc64917bd6b1728453b7ff338268e07ec0000b2fce572408a791b980627463",
+        "bytes": 2059
+      },
+      {
+        "path": "palette.json",
+        "sha256": "2444ab09de9821fe74e8f31779c4cb4c0673520400db694f0c37a0dc939387e6",
+        "bytes": 1037
+      }
+    ],
+    "tool": {
+      "name": "finish_frames",
+      "version": "0.4.0"
+    }
+  }
+}

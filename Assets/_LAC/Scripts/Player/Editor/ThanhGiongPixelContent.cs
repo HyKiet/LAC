@@ -136,6 +136,7 @@ namespace LAC.Player.Editor
             so.FindProperty("_detachedWeapon").objectReferenceValue = visual;
             so.FindProperty("_cartoonVisual").objectReferenceValue = null;
             so.ApplyModifiedPropertiesWithoutUndo(); EditorUtility.SetDirty(data);
+            ThanhGiongForgeContent.ApplyIfAvailable();
         }
 
         private static RectInt Bounds(Color32[] input, int width, int height, RectInt rect)

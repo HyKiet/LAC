@@ -6,18 +6,18 @@ Theo yêu cầu ngày 07/10, bản đồ án dùng ba lớp TinySwords thay cho 
 
 | Vai trò | Asset | Tích hợp |
 |---|---|---|
-| Thánh Gióng (Warrior) | Ảnh sinh bằng imagegen, chuẩn hóa trong `_LAC/` | Pixel toàn thân T-18H, chỉ tre riêng; giữ `Warrior.asset`, dùng `ThanhGiongPixel.asset`, `TreNgaPixel.asset` |
+| Thánh Gióng (Warrior) | image_gen + Sprite Forge, chuẩn hóa trong `_LAC/` | Forge32 liền cả cây tre T-18I; giữ `Warrior.asset`, dùng `ThanhGiongForge.asset`, tắt tre rời/cartoon |
 | Archer | `Units/Blue Units/Archer` | Cung, clip Shoot và Arrow; asset Archer và `Prefabs/Projectiles/Arrow.prefab` |
 | Lancer | `Units/Purple Units/Lancer` | Thương đâm xuyên; clip Right/Up/Down/UpRight/DownRight; asset Lancer và `Prefabs/VFX/SpearThrust.prefab` |
 | Cô Hồn | TinyRPG Orc | Giữ bộ quái hiện có với hoạt ảnh chết |
 | Quái khác / boss | Asset của nhóm | Giữ silhouette và tín hiệu đòn đang dùng |
 | Rìa sân | TinySwords Rocks | Đã gỡ toàn bộ Bushes khỏi cả ba chặng |
 
-Archer có frame192×192, Lancer320×320, cùng PPU64. Thánh Gióng T-18H dùng atlas256×256, ô64×64/thân khoảng40px, PPU32/Point, tre56×6px trong ô64×16; không lấy kích thước atlas làm kích thước thân. Chân dung tính theo kích thước thế giới. Không đổi collider hoặc PPU toàn dự án theo ảnh mới.
+Archer có frame192×192, Lancer320×320, cùng PPU64. Thánh Gióng T-18I dùng portrait32×32 và atlas256×384, ô64×64 chứa hình khoảng29px, PPU32/Point; cây tre nằm trong cùng sprite. Không lấy kích thước atlas làm kích thước thân. Không đổi collider hoặc PPU toàn dự án theo ảnh mới.
 
 ## Thánh Gióng — 18/10/2026
 
-**Hiện hành T-18H, 20/10/2026:** theo yêu cầu mới, pixel toàn thân Idle4/Run8/Down4 thay cartoon, chỉ tre có đốt/mấu tự nhiên tách riêng. Điểm cầm theo frame để chuôi bám nắm tay; portrait/afterimage dùng toàn thân. Nguồn/prompt/kiểm chứng: [THANH_GIONG_PIXEL.md](THANH_GIONG_PIXEL.md). T-18D/E/F và [cartoon T-18G](THANH_GIONG_CARTOON.md) giữ làm lịch sử.
+**Hiện hành T-18I, 20/10/2026:** áp mẫu Forge32 liền cả cây tre được người dùng chọn. Chuyển động cơ bản nhún/nghiêng từ một ảnh tĩnh, không tách bộ phận/vũ khí. Nguồn/prompt/kiểm chứng/giới hạn: [THANH_GIONG_FORGE.md](THANH_GIONG_FORGE.md). [Pixel T-18H](THANH_GIONG_PIXEL.md), T-18D/E/F và [cartoon T-18G](THANH_GIONG_CARTOON.md) giữ làm lịch sử.
 
 **Lịch sử 19/10/2026 — T-18F:** chibi ít chi tiết, nguồn `Art/Source/ThanhGiongChibi.png` và `TreNga.png` do built-in image_gen tạo; pipeline `ThanhGiongChibiContent`, body Idle2/Run6/Down1 và renderer tre rời, không dùng đòn toàn thân cắt chu kỳ chạy. Xem [THANH_GIONG_CHIBI.md](THANH_GIONG_CHIBI.md) cho prompt, cách dựng, bằng chứng và giới hạn. Các dòng T-18D/E dưới đây giữ làm lịch sử, không phải clip đang gán cho Warrior.
 

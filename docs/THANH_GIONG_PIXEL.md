@@ -1,5 +1,7 @@
 # Thánh Gióng pixel toàn thân — T-18H, 20/10/2026
 
+**Lịch sử:** người dùng đã chọn [mẫu Forge32 liền cả cây tre, T-18I](THANH_GIONG_FORGE.md) để đưa vào game. Tài nguyên/kiểm chứng T-18H dưới đây giữ để đối chiếu.
+
 Theo yêu cầu mới, Warrior trở lại pixel art 2D. **Mỗi frame là một sprite toàn thân; chỉ cây tre là sprite riêng.** Không dùng rig tay/chân rời của T-18G. Giữ ID Warrior1, GUID nhân vật, collider, chỉ số và luật sát thương hiện có. Archer/Lancer không đổi.
 
 ## Nguồn và tài nguyên

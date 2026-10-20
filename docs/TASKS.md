@@ -124,7 +124,10 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-18H** Thánh Gióng pixel toàn thân, chỉ cây tre tách riêng — **@Kiet** · 20/10/2026
   > `ThanhGiongPixelContent`, `ThanhGiongPixel.asset`, `TreNgaPixel.asset`; nguồn AI toàn thân16 frame, Idle4/Run8/Down4/PPU32, tre tự nhiên56×6px. `DetachedWeaponData.HandPosition` giữ chuôi tại nắm tay trong từng frame, không tách tay/chân. Đã xem Game View/màn chọn/chuỗi frame, kiểm tra hình học/vòng đời và243 kiểm tra chiến đấu đạt, Console0 lỗi. Giữ chỉ số/ID/vùng đánh; nguồn/prompt/giới hạn tại [THANH_GIONG_PIXEL.md](THANH_GIONG_PIXEL.md).
 
-  > **Cấu hình hiện hành:** Thánh Gióng pixel toàn thân có tre riêng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18/D/E/F/G giữ để đối chiếu; không vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
+- [x] **T-18I** Áp mẫu Thánh Gióng Forge32 liền cả cây tre — **@Kiet** · 20/10/2026
+  > `ThanhGiongForgeContent`, `ThanhGiongForge32.png`, `ThanhGiongForgeMotion.png`, `ThanhGiongForge.asset`; giữ nguyên mẫu32/22 màu không Son, tắt tre rời/cartoon, portrait/afterimage mới.24 frame dịch/nghiêng cả hình là chuyển động cơ bản từ một dáng tĩnh, không phải bộ chạy/vung tay mới. Đã xem Game View/chuỗi frame, kiểm tra ba lớp/vòng đời/combat, Console không lỗi đỏ; giữ ID/chỉ số/vùng đánh. Nguồn/prompt/giới hạn và bằng chứng: [THANH_GIONG_FORGE.md](THANH_GIONG_FORGE.md).
+
+  > **Cấu hình hiện hành:** Thánh Gióng Forge32 liền cả cây tre (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18/D/E/F/G/H giữ để đối chiếu; không vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 
 ---
 

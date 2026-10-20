@@ -2,9 +2,9 @@
 
 Thánh Gióng cầm tre ngà thay phần hiển thị của Warrior. Màn chọn nhân vật có **Thánh Gióng / Archer / Lancer**; chọn Thánh Gióng rồi bấm **Vào trận / Tạo host** để chơi. Giữ `CharacterId.Warrior = 1`, GUID của `Warrior.asset` và registry ba lớp. Các máy cùng dùng tài nguyên dự án; mạng vẫn chỉ truyền ID và sự kiện, không gửi ảnh hay gắn NetworkIdentity mới.
 
-## Hiện hành — T-18H, 20/10/2026
+## Hiện hành — T-18I, 20/10/2026
 
-Theo yêu cầu mới: **pixel toàn thân, chỉ tách cây tre**. Idle4/Run8/Down4, PPU32, điểm cầm theo frame; giữ ID/chỉ số. Nguồn/prompt/pipeline/ảnh trong game: [THANH_GIONG_PIXEL.md](THANH_GIONG_PIXEL.md). Bộ [cartoon T-18G](THANH_GIONG_CARTOON.md) là lịch sử.
+Theo mẫu mới được chọn: **Forge32 liền cả cây tre**, chuyển động cơ bản nhún/nghiêng toàn hình, không vẽ chồng tre rời. Giữ ID/chỉ số. Nguồn/prompt/pipeline/ảnh trong game và giới hạn từ nguồn tĩnh: [THANH_GIONG_FORGE.md](THANH_GIONG_FORGE.md). [Pixel T-18H](THANH_GIONG_PIXEL.md) và [cartoon T-18G](THANH_GIONG_CARTOON.md) là lịch sử.
 
 ## T-18F — lịch sử, 19/10/2026
 

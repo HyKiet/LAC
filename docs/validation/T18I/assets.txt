@@ -1,0 +1,1 @@
+PASS: approved32 PNG byte-identical; 24 derived whole-image motion frames (not drawn poses); Idle4/Walk8/Attack8/Down4; no detached weapon/cartoon; Point/PPU32/uncompressed/noMip; binary alpha; no Son within0.005; opaque=10141; stable IDs after rebuild; old pixel builder preserves Forge; unchanged stats=Warrior/10/4/5/2.2/0.65/0.3

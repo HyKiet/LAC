@@ -1,0 +1,55 @@
+{
+    "asset":  "ThanhGiong_32.png",
+    "size":  [
+                 32,
+                 32
+             ],
+    "alpha":  [
+                  0,
+                  255
+              ],
+    "opaqueColors":  22,
+    "bbox":  [
+                 9,
+                 2,
+                 31,
+                 31
+             ],
+    "reservedSonColorsUsed":  false,
+    "sha256":  "f1a207a1165d0aec9ac60fcba22a1e5223af82b55a6986b590cb91d80831fc73",
+    "art_source":  "host_image",
+    "route":  "host-image_gen (built-in image_gen)",
+    "model":  null,
+    "modelNote":  "The host tool did not report an exact model id.",
+    "estimateUsd":  null,
+    "source":  "source.png",
+    "prompt":  "prompt-used.txt",
+    "master":  "master/master.json",
+    "processing":  "Agent Sprite Forge 0.4.0 master_still.py + finish_frames.py pixel",
+    "finalFinish":  "pixel-final/finish.json",
+    "finalWarnings":  [
+
+                      ],
+    "visualReview":  "Source, true-size contact sheet and nearest-neighbor 16x preview inspected by the agent.",
+    "scope":  "One complete-body static sprite with bamboo held in the hand; no separate weapon or limb files. Preview only, no gameplay/animation replacement.",
+    "limits":  [
+                   "Not an animation sheet.",
+                   "Learned 22-color palette, not the fixed DongHo20 palette.",
+                   "Visual quality remains subject to user review."
+               ],
+    "discardedVariantWarnings":  [
+                                     {
+                                         "id":  "canvas-fit",
+                                         "status":  "warn",
+                                         "value":  {
+                                                       "targetHeight":  30.0,
+                                                       "fittedHeight":  29.699
+                                                   },
+                                         "threshold":  [
+                                                           32,
+                                                           32
+                                                       ],
+                                         "note":  "the clip did not fit the canvas at the target; it was finished smaller"
+                                     }
+                                 ]
+}
