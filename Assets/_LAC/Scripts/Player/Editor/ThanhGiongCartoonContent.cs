@@ -94,6 +94,7 @@ namespace LAC.Player.Editor
             so.FindProperty("_animationSet").objectReferenceValue = set;
             so.FindProperty("_detachedWeapon").objectReferenceValue = weapon; so.FindProperty("_cartoonVisual").objectReferenceValue = parts;
             so.ApplyModifiedPropertiesWithoutUndo(); EditorUtility.SetDirty(data);
+            ThanhGiongPixelContent.ApplyIfAvailable();
         }
 
         private static T LoadOrCreate<T>(string path) where T : ScriptableObject

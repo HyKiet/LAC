@@ -1,6 +1,6 @@
 # Thánh Gióng chibi và tre ngà riêng — T-18F, 19/10/2026
 
-**Lịch sử:** T-18G đã thay Warrior đang chạy bằng [bộ cartoon nét mượt](THANH_GIONG_CARTOON.md) theo mẫu người dùng duyệt. Tài nguyên và kiểm chứng T-18F dưới đây giữ để đối chiếu.
+**Lịch sử:** Warrior hiện dùng [pixel toàn thân T-18H](THANH_GIONG_PIXEL.md), thay [cartoon T-18G](THANH_GIONG_CARTOON.md). Tài nguyên và kiểm chứng T-18F dưới đây giữ để đối chiếu.
 
 Theo yêu cầu người dùng, thử riêng Thánh Gióng theo hướng chibi pixel art thần thoại Việt ít chi tiết. Giữ Warrior ID 1, registry, máu/tốc độ/sát thương/tầm/chu kỳ và collider hiện tại. Archer/Lancer giữ mỹ thuật cũ. Đây là thử nghiệm mỹ thuật và biểu diễn chiến đấu; không mở thêm hệ thống vũ khí hay thay phạm vi đồ án.
 

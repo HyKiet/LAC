@@ -44,7 +44,7 @@ Vũ khí chọn mục tiêu gần nhất trong tầm rồi tự khai hoả. Cả
 
 ## 4. Ba lớp hiện có
 
-Thánh Gióng hiện dùng cartoon T-18G theo mẫu đã duyệt: nét mượt/viền đậm, thân/chân/tay/tre ghép riêng; chân bước theo tốc độ thực và tay bám chuôi khi tre vung theo timeline host. Giữ chỉ số/vùng đánh, flash/afterimage; chỉ lớp này đổi mỹ thuật. Nguồn AI, GIF và giới hạn tại [THANH_GIONG_CARTOON.md](THANH_GIONG_CARTOON.md). T-18D/E/F là lịch sử.
+Thánh Gióng hiện dùng pixel toàn thân T-18H theo yêu cầu20/10/2026: Idle4/Run8/Down4, chỉ cây tre tách riêng. Tre có đốt/mấu tự nhiên và điểm cầm theo frame; chân chạy theo vận tốc thực trong khi tre diễn timeline host. Giữ chỉ số/vùng đánh, flash/afterimage; chỉ lớp này đổi mỹ thuật. Nguồn AI, GIF và giới hạn tại [THANH_GIONG_PIXEL.md](THANH_GIONG_PIXEL.md). T-18D/E/F/G là lịch sử.
 
 Hướng tinh chỉnh combat T-50B: tham khảo nhịp tự đánh/ra đòn của Brotato, ưu tiên mốc contact, hoạt ảnh theo tốc độ thật, giữ hướng và feedback/co-op. Phương án tại [BROTATO_COMBAT_FEEL.md](BROTATO_COMBAT_FEEL.md); chưa đổi chỉ số/cách gây sát thương đang chạy. Timing/feel được chốt trước cân bằng damage T-50 và wave T-51.
 

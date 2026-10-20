@@ -1,0 +1,2 @@
+ALL PASSED: pre-match, three choices, spawn HP, ten-wave configuration, wind-up/contact/recovery, arc, arrow, dash bonus, thrust, directions, no bushes, reconnect.
+Console errors/warnings=0/0

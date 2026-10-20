@@ -6,7 +6,18 @@ namespace LAC.VFX
     [CreateAssetMenu(fileName = "DetachedWeapon", menuName = "LAC/Detached Weapon")]
     public sealed class DetachedWeaponData : ScriptableObject
     {
+        [System.Serializable]
+        private struct BodyGrip
+        {
+            [SerializeField] private Sprite _body;
+            [SerializeField] private Vector2 _offset;
+            public Sprite Body => _body;
+            public Vector2 Offset => _offset;
+        }
+
         [SerializeField] private Sprite _sprite;
+        [Tooltip("Điểm cầm trên từng frame toàn thân; không tách bàn tay khỏi sprite.")]
+        [SerializeField] private BodyGrip[] _bodyGrips;
         [SerializeField] private Vector2 _handOffset = new Vector2(.18f, .02f);
         [SerializeField, Min(.01f)] private float _tipDistance = 1.28125f;
         [SerializeField] private float _restAngle = -30f;
@@ -23,6 +34,15 @@ namespace LAC.VFX
         public float FollowThroughAngle => _followThroughAngle;
         public float StrikeLead => _strikeLead;
         public float FollowThrough => _followThrough;
+
+        public Vector2 HandPosition(Sprite body, bool flipX, Vector2 direction)
+        {
+            if (_bodyGrips != null)
+                foreach (BodyGrip grip in _bodyGrips)
+                    if (grip.Body == body)
+                        return new Vector2(grip.Offset.x * (flipX ? -1f : 1f), grip.Offset.y);
+            return direction * _handOffset.x + Vector2.up * _handOffset.y;
+        }
 
         /// <summary>Góc tương đối đạt đúng hướng đòn tại contact, kể cả khi contact đổi.</summary>
         public float AngleAt(float progress, float contact)

@@ -1,0 +1,3627 @@
+fileFormatVersion: 2
+guid: a94b6a564c3639b4292f7be64a4382d5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7062897960078617741
+    second: ThanhGiongPixelBody_0
+  - first:
+      213: -731827199190659073
+    second: ThanhGiongPixelBody_1
+  - first:
+      213: 5823208076105647452
+    second: ThanhGiongPixelBody_2
+  - first:
+      213: 1934067786161033051
+    second: ThanhGiongPixelBody_3
+  - first:
+      213: 3807626412184577822
+    second: ThanhGiongPixelBody_4
+  - first:
+      213: 1030304180332978846
+    second: ThanhGiongPixelBody_5
+  - first:
+      213: -1431694619501966851
+    second: ThanhGiongPixelBody_6
+  - first:
+      213: 3289121143631480516
+    second: ThanhGiongPixelBody_7
+  - first:
+      213: 3192327971333233723
+    second: ThanhGiongPixelBody_8
+  - first:
+      213: 3318164403016250311
+    second: ThanhGiongPixelBody_9
+  - first:
+      213: 2645582137747571269
+    second: ThanhGiongPixelBody_10
+  - first:
+      213: 6910858958581027827
+    second: ThanhGiongPixelBody_11
+  - first:
+      213: -2213501395993690664
+    second: ThanhGiongPixelBody_12
+  - first:
+      213: -8421049933260412822
+    second: ThanhGiongPixelBody_13
+  - first:
+      213: 8417164059172296455
+    second: ThanhGiongPixelBody_14
+  - first:
+      213: -5343792393365495649
+    second: ThanhGiongPixelBody_15
+  - first:
+      213: 397758224517668117
+    second: ThanhGiongPixelBody_16
+  - first:
+      213: -3991485428951198445
+    second: ThanhGiongPixelBody_17
+  - first:
+      213: -4361720280691276402
+    second: ThanhGiongPixelBody_18
+  - first:
+      213: -2588424825544238696
+    second: ThanhGiongPixelBody_19
+  - first:
+      213: 5918208706046435398
+    second: ThanhGiongPixelBody_20
+  - first:
+      213: 1531812229787368394
+    second: ThanhGiongPixelBody_21
+  - first:
+      213: 7587941603138042443
+    second: ThanhGiongPixelBody_22
+  - first:
+      213: 1360265258759571389
+    second: ThanhGiongPixelBody_23
+  - first:
+      213: 2838577945795531887
+    second: ThanhGiongPixelBody_24
+  - first:
+      213: -5623072179219956123
+    second: ThanhGiongPixelBody_25
+  - first:
+      213: 7466071328742943500
+    second: ThanhGiongPixelBody_26
+  - first:
+      213: 2234670476864538778
+    second: ThanhGiongPixelBody_27
+  - first:
+      213: 3002236011984569069
+    second: ThanhGiongPixelBody_28
+  - first:
+      213: -6186121981308223870
+    second: ThanhGiongPixelBody_29
+  - first:
+      213: 3019421262437990923
+    second: ThanhGiongPixelBody_30
+  - first:
+      213: 4126533025148266020
+    second: ThanhGiongPixelBody_31
+  - first:
+      213: -3639166123370190766
+    second: ThanhGiongPixelBody_32
+  - first:
+      213: 501333668729081735
+    second: ThanhGiongPixelBody_33
+  - first:
+      213: -2138745152959187018
+    second: ThanhGiongPixelBody_34
+  - first:
+      213: 616196735118149233
+    second: ThanhGiongPixelBody_35
+  - first:
+      213: 5937268263547529720
+    second: ThanhGiongPixelBody_36
+  - first:
+      213: 3221677989998080208
+    second: ThanhGiongPixelBody_37
+  - first:
+      213: 3862062236545180642
+    second: ThanhGiongPixelBody_38
+  - first:
+      213: 6120023810317051225
+    second: ThanhGiongPixelBody_39
+  - first:
+      213: 4687558639778974396
+    second: ThanhGiongPixelBody_40
+  - first:
+      213: 7233370083103801907
+    second: ThanhGiongPixelBody_41
+  - first:
+      213: -535677011126966973
+    second: ThanhGiongPixelBody_42
+  - first:
+      213: -2626573842840738159
+    second: ThanhGiongPixelBody_43
+  - first:
+      213: -5451848828702779185
+    second: ThanhGiongPixelBody_44
+  - first:
+      213: 5364139113038530391
+    second: ThanhGiongPixelBody_45
+  - first:
+      213: 8682320219237358888
+    second: ThanhGiongPixelBody_46
+  - first:
+      213: 2429157161167173819
+    second: ThanhGiongPixelBody_47
+  - first:
+      213: 2777900209831176211
+    second: ThanhGiongPixelBody_48
+  - first:
+      213: -6363460378779442645
+    second: ThanhGiongPixelBody_49
+  - first:
+      213: 326805966438209613
+    second: ThanhGiongPixelBody_50
+  - first:
+      213: -4324020092840517175
+    second: ThanhGiongPixelBody_51
+  - first:
+      213: -9215282295229005417
+    second: ThanhGiongPixelBody_52
+  - first:
+      213: 884002542880267973
+    second: ThanhGiongPixelBody_53
+  - first:
+      213: 3760696525146936531
+    second: ThanhGiongPixelBody_54
+  - first:
+      213: 3359852814633710267
+    second: ThanhGiongPixelBody_55
+  - first:
+      213: -190664351443222726
+    second: ThanhGiongPixelBody_56
+  - first:
+      213: -4201189767107447010
+    second: ThanhGiongPixelBody_57
+  - first:
+      213: -5992469209994681014
+    second: ThanhGiongPixelBody_58
+  - first:
+      213: 145723804658700690
+    second: ThanhGiongPixelBody_59
+  - first:
+      213: -1437833618472138524
+    second: ThanhGiongPixelBody_60
+  - first:
+      213: 1352111597213319983
+    second: ThanhGiongPixelBody_61
+  - first:
+      213: 2598751727876235957
+    second: ThanhGiongPixelBody_62
+  - first:
+      213: 7458430801274641447
+    second: ThanhGiongPixelBody_63
+  - first:
+      213: -9012340201238739956
+    second: ThanhGiongPixelBody_64
+  - first:
+      213: 908177136765870222
+    second: ThanhGiongPixelBody_65
+  - first:
+      213: -2621230484378445873
+    second: ThanhGiongPixelBody_66
+  - first:
+      213: -986185162179704111
+    second: ThanhGiongPixelBody_67
+  - first:
+      213: -3537232674939273848
+    second: ThanhGiongPixelBody_68
+  - first:
+      213: 69055241665959272
+    second: ThanhGiongPixelBody_69
+  - first:
+      213: 3179696533032124307
+    second: ThanhGiongPixelBody_70
+  - first:
+      213: -569832071623248688
+    second: ThanhGiongPixelBody_71
+  - first:
+      213: -3198819887706943444
+    second: ThanhGiongPixelBody_72
+  - first:
+      213: 3843169992649943842
+    second: ThanhGiongPixelBody_73
+  - first:
+      213: -1357116015655743297
+    second: ThanhGiongPixelBody_74
+  - first:
+      213: -5145040436759414393
+    second: ThanhGiongPixelBody_75
+  - first:
+      213: 1430861853127377403
+    second: ThanhGiongPixelBody_76
+  - first:
+      213: 5935911381785729613
+    second: ThanhGiongPixelBody_77
+  - first:
+      213: 4082963836867377027
+    second: ThanhGiongPixelBody_78
+  - first:
+      213: 6349632379394902215
+    second: ThanhGiongPixelBody_79
+  - first:
+      213: 7173388182287394252
+    second: ThanhGiongPixelBody_80
+  - first:
+      213: 7556958300281337283
+    second: ThanhGiongPixelBody_81
+  - first:
+      213: -6066379754874036244
+    second: ThanhGiongPixelBody_82
+  - first:
+      213: 6211207749165218093
+    second: ThanhGiongPixelBody_83
+  - first:
+      213: -6440941261037379695
+    second: ThanhGiongPixelBody_84
+  - first:
+      213: -5615521927855053679
+    second: ThanhGiongPixelBody_85
+  - first:
+      213: -2349148584331668716
+    second: ThanhGiongPixelBody_86
+  - first:
+      213: 2790873955898393477
+    second: ThanhGiongPixelBody_87
+  - first:
+      213: 2791324793192868715
+    second: ThanhGiongPixelBody_88
+  - first:
+      213: -2731017557602595656
+    second: ThanhGiongPixelBody_89
+  - first:
+      213: 1617801037783333413
+    second: ThanhGiongPixelBody_90
+  - first:
+      213: -280721492121607918
+    second: ThanhGiongPixelBody_91
+  - first:
+      213: 8207775033504158015
+    second: ThanhGiongPixelBody_92
+  - first:
+      213: 521910304757217744
+    second: ThanhGiongPixelBody_93
+  - first:
+      213: -5047195093396520018
+    second: ThanhGiongPixelBody_94
+  - first:
+      213: 5990727049144005509
+    second: ThanhGiongPixelBody_95
+  - first:
+      213: -3780720869503979664
+    second: ThanhGiongPixelBody_96
+  - first:
+      213: 581760467243474538
+    second: ThanhGiongPixelBody_97
+  - first:
+      213: -7124965596416325901
+    second: ThanhGiongPixelBody_98
+  - first:
+      213: -8288324025483504834
+    second: ThanhGiongPixelBody_99
+  - first:
+      213: 264962053466513653
+    second: ThanhGiongPixelBody_100
+  - first:
+      213: 3419543995665963987
+    second: ThanhGiongPixelBody_101
+  - first:
+      213: 4280201158639056259
+    second: ThanhGiongPixelBody_102
+  - first:
+      213: 3126994304105579035
+    second: ThanhGiongPixelBody_103
+  - first:
+      213: 7355891010568205218
+    second: ThanhGiongPixelBody_104
+  - first:
+      213: 8694062244735482525
+    second: ThanhGiongPixelBody_105
+  - first:
+      213: -943357543073741301
+    second: ThanhGiongPixelBody_106
+  - first:
+      213: -7789560708707257117
+    second: ThanhGiongPixelBody_107
+  - first:
+      213: -174987158815706616
+    second: ThanhGiongPixelBody_108
+  - first:
+      213: 2894762659243521014
+    second: ThanhGiongPixelBody_109
+  - first:
+      213: 5332052585442764274
+    second: ThanhGiongPixelBody_110
+  - first:
+      213: -3035901480152741080
+    second: ThanhGiongPixelBody_111
+  - first:
+      213: 4835205002236958638
+    second: ThanhGiongPixelBody_112
+  - first:
+      213: 8789462600209888246
+    second: ThanhGiongPixelBody_113
+  - first:
+      213: 1552808764767337907
+    second: ThanhGiongPixelBody_114
+  - first:
+      213: 9221574963933547764
+    second: ThanhGiongPixelBody_115
+  - first:
+      213: 2839420669072330176
+    second: ThanhGiongPixelBody_116
+  - first:
+      213: 6737087311996904800
+    second: ThanhGiongPixelBody_117
+  - first:
+      213: 2717821602797077509
+    second: ThanhGiongPixelBody_118
+  - first:
+      213: -898611364931223962
+    second: ThanhGiongPixelBody_119
+  - first:
+      213: -7411803272402463448
+    second: ThanhGiongPixelBody_120
+  - first:
+      213: 2467519539834601528
+    second: ThanhGiongPixelBody_121
+  - first:
+      213: 4649959964208357901
+    second: ThanhGiongPixelBody_122
+  - first:
+      213: -7070971795436537450
+    second: ThanhGiongPixelBody_123
+  - first:
+      213: -33894884311568982
+    second: ThanhGiongPixelBody_124
+  - first:
+      213: -3321442245396605592
+    second: ThanhGiongPixelBody_125
+  - first:
+      213: 8760159339405740547
+    second: ThanhGiongPixelBody_126
+  - first:
+      213: 1819363470240592222
+    second: ThanhGiongPixelBody_127
+  - first:
+      213: -6306917860473723224
+    second: ThanhGiongPixelBody_128
+  - first:
+      213: -6712546903522188275
+    second: ThanhGiongPixelBody_129
+  - first:
+      213: 388376220205149972
+    second: ThanhGiongPixelBody_130
+  - first:
+      213: 3705241987427473405
+    second: ThanhGiongPixelBody_131
+  - first:
+      213: 4457356215648017344
+    second: ThanhGiongPixelBody_132
+  - first:
+      213: 8168531110283304900
+    second: ThanhGiongPixelBody_133
+  - first:
+      213: 5905011804140353602
+    second: ThanhGiongPixelBody_134
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1243
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 373dea4e9bb8bfd90800000000000000
+      internalID: -7062897960078617741
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 839
+        width: 323
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fff854b2a0708d5f0800000000000000
+      internalID: -731827199190659073
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_2
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 1124
+        width: 60
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c55867d74e030d050800000000000000
+      internalID: 5823208076105647452
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_3
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 851
+        width: 273
+        height: 395
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5f87a5876037da10800000000000000
+      internalID: 1934067786161033051
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_4
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 1181
+        width: 55
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1728a75c0867d430800000000000000
+      internalID: 3807626412184577822
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_5
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 1229
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e92e85771306c4e00800000000000000
+      internalID: 1030304180332978846
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_6
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 1237
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df94fb93459912ce0800000000000000
+      internalID: -1431694619501966851
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_7
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 1227
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c6816de04e45ad20800000000000000
+      internalID: 3289121143631480516
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_8
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 923
+        width: 252
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3c5cd1506d6d4c20800000000000000
+      internalID: 3192327971333233723
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_9
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 1225
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c33124b1fc7c0e20800000000000000
+      internalID: 3318164403016250311
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_10
+      rect:
+        serializedVersion: 2
+        x: 1011
+        y: 939
+        width: 222
+        height: 301
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5420098ffeef6b420800000000000000
+      internalID: 2645582137747571269
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_11
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 1164
+        width: 66
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f35c078b9d48ef50800000000000000
+      internalID: 6910858958581027827
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_12
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 1196
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ddf6fd35301841e0800000000000000
+      internalID: -2213501395993690664
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_13
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1048
+        width: 39
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a68af2cc3bb622b80800000000000000
+      internalID: -8421049933260412822
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_14
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 951
+        width: 100
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7075623ad16cfc470800000000000000
+      internalID: 8417164059172296455
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_15
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 1124
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f90e300812907d5b0800000000000000
+      internalID: -5343792393365495649
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_16
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 1129
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51d9dde6ffe158500800000000000000
+      internalID: 397758224517668117
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_17
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 1076
+        width: 38
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 315573176256b98c0800000000000000
+      internalID: -3991485428951198445
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_18
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 1114
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8587cb938e0873c0800000000000000
+      internalID: -4361720280691276402
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_19
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 1092
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89912a1d551141cd0800000000000000
+      internalID: -2588424825544238696
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_20
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 1062
+        width: 12
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 640a58e4673b12250800000000000000
+      internalID: 5918208706046435398
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_21
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 1084
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acb331b6b17124510800000000000000
+      internalID: 1531812229787368394
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_22
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 1104
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4a73777fa8cd4960800000000000000
+      internalID: 7587941603138042443
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_23
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 1076
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db74bacbb02a0e210800000000000000
+      internalID: 1360265258759571389
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_24
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 1072
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f64966e2a97a46720800000000000000
+      internalID: 2838577945795531887
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_25
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1082
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56e763335a5d6f1b0800000000000000
+      internalID: -5623072179219956123
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_26
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 1072
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0ba3790150dc9760800000000000000
+      internalID: 7466071328742943500
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_27
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 1071
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a98409b75f4230f10800000000000000
+      internalID: 2234670476864538778
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_28
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 1062
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de2c9321fb51aa920800000000000000
+      internalID: 3002236011984569069
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_29
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 1054
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28e33ee55da762aa0800000000000000
+      internalID: -6186121981308223870
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_30
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1010
+        width: 42
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b02c0eef3a327e920800000000000000
+      internalID: 3019421262437990923
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_31
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 1020
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42661ed4ce3644930800000000000000
+      internalID: 4126533025148266020
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_32
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 1004
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25862e121b51f7dc0800000000000000
+      internalID: -3639166123370190766
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_33
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 988
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78f4a86c05815f600800000000000000
+      internalID: 501333668729081735
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_34
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 964
+        width: 21
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b777cc6d96a152e0800000000000000
+      internalID: -2138745152959187018
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_35
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 921
+        width: 51
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17609747aab2d8800800000000000000
+      internalID: 616196735118149233
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_36
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 970
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f963f8570a656250800000000000000
+      internalID: 5937268263547529720
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_37
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 939
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d0b78e0013b5bc20800000000000000
+      internalID: 3221677989998080208
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_38
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 926
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3e9bd542dc89530800000000000000
+      internalID: 3862062236545180642
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 619
+        width: 313
+        height: 313
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95561eeea31bee450800000000000000
+      internalID: 6120023810317051225
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_40
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 907
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbac6d34fbd8d0140800000000000000
+      internalID: 4687558639778974396
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_41
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 923
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 332075c34c7126460800000000000000
+      internalID: 7233370083103801907
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_42
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 584
+        width: 335
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3452f65b894e098f0800000000000000
+      internalID: -535677011126966973
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_43
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 923
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 196252191098c8bd0800000000000000
+      internalID: -2626573842840738159
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_44
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 513
+        width: 331
+        height: 422
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc89a0c10642754b0800000000000000
+      internalID: -5451848828702779185
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_45
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 870
+        width: 20
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 757c0765a10417a40800000000000000
+      internalID: 5364139113038530391
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_46
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 898
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82d95dd0d3ccd7870800000000000000
+      internalID: 8682320219237358888
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_47
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 610
+        width: 306
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb837fe519916b120800000000000000
+      internalID: 2429157161167173819
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_48
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 857
+        width: 49
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 318687cd5851d8620800000000000000
+      internalID: 2777900209831176211
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_49
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 795
+        width: 44
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b222494208270b7a0800000000000000
+      internalID: -6363460378779442645
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_50
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 758
+        width: 20
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4817048b4c098400800000000000000
+      internalID: 326805966438209613
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_51
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 821
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c1e69c92aefdf3c0800000000000000
+      internalID: -4324020092840517175
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_52
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 770
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 791cdefb39dbc1080800000000000000
+      internalID: -9215282295229005417
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_53
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 771
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ce9bec01ab944c00800000000000000
+      internalID: 884002542880267973
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_54
+      rect:
+        serializedVersion: 2
+        x: 1221
+        y: 761
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d4dd69809da03430800000000000000
+      internalID: 3760696525146936531
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_55
+      rect:
+        serializedVersion: 2
+        x: 1228
+        y: 761
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb2b6d9655890ae20800000000000000
+      internalID: 3359852814633710267
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_56
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 728
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3f75e458cf9a5df0800000000000000
+      internalID: -190664351443222726
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_57
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 730
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e17fd896a2062b5c0800000000000000
+      internalID: -4201189767107447010
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_58
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 696
+        width: 28
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a452dc2c00976dca0800000000000000
+      internalID: -5992469209994681014
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_59
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 702
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 291100c3707b50200800000000000000
+      internalID: 145723804658700690
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_60
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 676
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e88ad421f9cb0ce0800000000000000
+      internalID: -1437833618472138524
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_61
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 668
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f230698755aa3c210800000000000000
+      internalID: 1352111597213319983
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_62
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 666
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b2ee7f7dee901420800000000000000
+      internalID: 2598751727876235957
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_63
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 650
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72c9ecb1c4ba18760800000000000000
+      internalID: 7458430801274641447
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_64
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 650
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c04413e165cbde280800000000000000
+      internalID: -9012340201238739956
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_65
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 648
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e80af0e4b4e7a9c00800000000000000
+      internalID: 908177136765870222
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_66
+      rect:
+        serializedVersion: 2
+        x: 953
+        y: 652
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc7923823c48f9bd0800000000000000
+      internalID: -2621230484378445873
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_67
+      rect:
+        serializedVersion: 2
+        x: 961
+        y: 649
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1da848de1dd5052f0800000000000000
+      internalID: -986185162179704111
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_68
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 650
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88df65a8f9939eec0800000000000000
+      internalID: -3537232674939273848
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_69
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 621
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 865d06d506555f000800000000000000
+      internalID: 69055241665959272
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_70
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 616
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39fbbe8662d802c20800000000000000
+      internalID: 3179696533032124307
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_71
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 626
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d4754dffbc8718f0800000000000000
+      internalID: -569832071623248688
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_72
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 302
+        width: 297
+        height: 311
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c20d5cc92428b93d0800000000000000
+      internalID: -3198819887706943444
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_73
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 75
+        width: 355
+        height: 538
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22b275f0fbea55530800000000000000
+      internalID: 3843169992649943842
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_74
+      rect:
+        serializedVersion: 2
+        x: 615
+        y: 256
+        width: 306
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb098df8c2e8a2de0800000000000000
+      internalID: -1357116015655743297
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_75
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 208
+        width: 321
+        height: 405
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7893feb7bf42998b0800000000000000
+      internalID: -5145040436759414393
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_76
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 602
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf1805e36417bd310800000000000000
+      internalID: 1430861853127377403
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_77
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 578
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4a5981b3f7906250800000000000000
+      internalID: 5935911381785729613
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_78
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 587
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 387fe372af999a830800000000000000
+      internalID: 4082963836867377027
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_79
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 562
+        width: 25
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c8c62cd10d6e1850800000000000000
+      internalID: 6349632379394902215
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_80
+      rect:
+        serializedVersion: 2
+        x: 987
+        y: 570
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc5a939ab8efc8360800000000000000
+      internalID: 7173388182287394252
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_81
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 558
+        width: 26
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c575be1985bfd860800000000000000
+      internalID: 7556958300281337283
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_82
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 562
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cef9c1601c3efcba0800000000000000
+      internalID: -6066379754874036244
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_83
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 533
+        width: 28
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d29752b1a84a23650800000000000000
+      internalID: 6211207749165218093
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_84
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 517
+        width: 21
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19fd5b47c0e2d96a0800000000000000
+      internalID: -6440941261037379695
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_85
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 473
+        width: 15
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19468c51f88a112b0800000000000000
+      internalID: -5615521927855053679
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_86
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 487
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4139c421fc5266fd0800000000000000
+      internalID: -2349148584331668716
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_87
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 477
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5838632831d2bb620800000000000000
+      internalID: 2790873955898393477
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_88
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 471
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6b600f3c17ccb620800000000000000
+      internalID: 2791324793192868715
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_89
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 455
+        width: 35
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bc0ebb300a791ad0800000000000000
+      internalID: -2731017557602595656
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_90
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 461
+        width: 30
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52a755ee875937610800000000000000
+      internalID: 1617801037783333413
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_91
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 449
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 211264d4a4daa1cf0800000000000000
+      internalID: -280721492121607918
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_92
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 481
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f31d55408efd7e170800000000000000
+      internalID: 8207775033504158015
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_93
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 477
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d97baf28a23e3700800000000000000
+      internalID: 521910304757217744
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_94
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 457
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea38102cdc2c4f9b0800000000000000
+      internalID: -5047195093396520018
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_95
+      rect:
+        serializedVersion: 2
+        x: 953
+        y: 455
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5837d8ec286532350800000000000000
+      internalID: 5990727049144005509
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_96
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 467
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07f2f4a766e288bc0800000000000000
+      internalID: -3780720869503979664
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_97
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 417
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6e996a0014d21800800000000000000
+      internalID: 581760467243474538
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_98
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 359
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f6c9bc2a890f1d90800000000000000
+      internalID: -7124965596416325901
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_99
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 353
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3358b55635f9fc80800000000000000
+      internalID: -8288324025483504834
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_100
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 329
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f064d375955da300800000000000000
+      internalID: 264962053466513653
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_101
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 234
+        height: 306
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3db5d738529a47f20800000000000000
+      internalID: 3419543995665963987
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_102
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 294
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38575ebb644566b30800000000000000
+      internalID: 4280201158639056259
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_103
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 293
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1202e680c0556b20800000000000000
+      internalID: 3126994304105579035
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_104
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 288
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a33863a6ef551660800000000000000
+      internalID: 7355891010568205218
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_105
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 272
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9af7986c8387a870800000000000000
+      internalID: 8694062244735482525
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_106
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 266
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0687ec005588e2f0800000000000000
+      internalID: -943357543073741301
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_107
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 11
+        width: 209
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e4f9296ecbe5e390800000000000000
+      internalID: -7789560708707257117
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_108
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 278
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 802f88e2b12529df0800000000000000
+      internalID: -174987158815706616
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_109
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 0
+        width: 281
+        height: 278
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f3764d2d434c2820800000000000000
+      internalID: 2894762659243521014
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_110
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 246
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f5e40773914ff940800000000000000
+      internalID: 5332052585442764274
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_111
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 13
+        width: 313
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82bc96e40bf4ed5d0800000000000000
+      internalID: -3035901480152741080
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_112
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 244
+        width: 19
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea7968ed4591a1340800000000000000
+      internalID: 4835205002236958638
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_113
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 264
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f377149aa17af970800000000000000
+      internalID: 8789462600209888246
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_114
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 240
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bdf11c285fac8510800000000000000
+      internalID: 1552808764767337907
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_115
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 248
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fc05ea529d99ff70800000000000000
+      internalID: 9221574963933547764
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_116
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 248
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cd45fbfd06a76720800000000000000
+      internalID: 2839420669072330176
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_117
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 240
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 065ed543731fe7d50800000000000000
+      internalID: 6737087311996904800
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_118
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 184
+        width: 8
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5044a9d1954a7b520800000000000000
+      internalID: 2717821602797077509
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_119
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 182
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66e352289bd7783f0800000000000000
+      internalID: -898611364931223962
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_120
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 168
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8259f53713cf32990800000000000000
+      internalID: -7411803272402463448
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_121
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 152
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8304d20b2f36e3220800000000000000
+      internalID: 2467519539834601528
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_122
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 111
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d026d6e63f9f78040800000000000000
+      internalID: 4649959964208357901
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_123
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 128
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 699f23c9d9cdedd90800000000000000
+      internalID: -7070971795436537450
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_124
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 117
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aade7e448c4978ff0800000000000000
+      internalID: -33894884311568982
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_125
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 115
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 865d82520edd7e1d0800000000000000
+      internalID: -3321442245396605592
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_126
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 114
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30a89118186529970800000000000000
+      internalID: 8760159339405740547
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_127
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 114
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e513301df6daf3910800000000000000
+      internalID: 1819363470240592222
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_128
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 130
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a6a5e21f935978a0800000000000000
+      internalID: -6306917860473723224
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_129
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 117
+        width: 36
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d046965e72e38d2a0800000000000000
+      internalID: -6712546903522188275
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_130
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 108
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41f69845d1ac36500800000000000000
+      internalID: 388376220205149972
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_131
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 91
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df71a73d4f9ab6330800000000000000
+      internalID: 3705241987427473405
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_132
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 87
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cb541facd5bbdd30800000000000000
+      internalID: 4457356215648017344
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_133
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 95
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cfd92d14c37c5170800000000000000
+      internalID: 8168531110283304900
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThanhGiongPixelBody_134
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 85
+        width: 20
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 248364423f0d2f150800000000000000
+      internalID: 5905011804140353602
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID:
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ThanhGiongPixelBody_0: -7062897960078617741
+      ThanhGiongPixelBody_1: -731827199190659073
+      ThanhGiongPixelBody_10: 2645582137747571269
+      ThanhGiongPixelBody_100: 264962053466513653
+      ThanhGiongPixelBody_101: 3419543995665963987
+      ThanhGiongPixelBody_102: 4280201158639056259
+      ThanhGiongPixelBody_103: 3126994304105579035
+      ThanhGiongPixelBody_104: 7355891010568205218
+      ThanhGiongPixelBody_105: 8694062244735482525
+      ThanhGiongPixelBody_106: -943357543073741301
+      ThanhGiongPixelBody_107: -7789560708707257117
+      ThanhGiongPixelBody_108: -174987158815706616
+      ThanhGiongPixelBody_109: 2894762659243521014
+      ThanhGiongPixelBody_11: 6910858958581027827
+      ThanhGiongPixelBody_110: 5332052585442764274
+      ThanhGiongPixelBody_111: -3035901480152741080
+      ThanhGiongPixelBody_112: 4835205002236958638
+      ThanhGiongPixelBody_113: 8789462600209888246
+      ThanhGiongPixelBody_114: 1552808764767337907
+      ThanhGiongPixelBody_115: 9221574963933547764
+      ThanhGiongPixelBody_116: 2839420669072330176
+      ThanhGiongPixelBody_117: 6737087311996904800
+      ThanhGiongPixelBody_118: 2717821602797077509
+      ThanhGiongPixelBody_119: -898611364931223962
+      ThanhGiongPixelBody_12: -2213501395993690664
+      ThanhGiongPixelBody_120: -7411803272402463448
+      ThanhGiongPixelBody_121: 2467519539834601528
+      ThanhGiongPixelBody_122: 4649959964208357901
+      ThanhGiongPixelBody_123: -7070971795436537450
+      ThanhGiongPixelBody_124: -33894884311568982
+      ThanhGiongPixelBody_125: -3321442245396605592
+      ThanhGiongPixelBody_126: 8760159339405740547
+      ThanhGiongPixelBody_127: 1819363470240592222
+      ThanhGiongPixelBody_128: -6306917860473723224
+      ThanhGiongPixelBody_129: -6712546903522188275
+      ThanhGiongPixelBody_13: -8421049933260412822
+      ThanhGiongPixelBody_130: 388376220205149972
+      ThanhGiongPixelBody_131: 3705241987427473405
+      ThanhGiongPixelBody_132: 4457356215648017344
+      ThanhGiongPixelBody_133: 8168531110283304900
+      ThanhGiongPixelBody_134: 5905011804140353602
+      ThanhGiongPixelBody_14: 8417164059172296455
+      ThanhGiongPixelBody_15: -5343792393365495649
+      ThanhGiongPixelBody_16: 397758224517668117
+      ThanhGiongPixelBody_17: -3991485428951198445
+      ThanhGiongPixelBody_18: -4361720280691276402
+      ThanhGiongPixelBody_19: -2588424825544238696
+      ThanhGiongPixelBody_2: 5823208076105647452
+      ThanhGiongPixelBody_20: 5918208706046435398
+      ThanhGiongPixelBody_21: 1531812229787368394
+      ThanhGiongPixelBody_22: 7587941603138042443
+      ThanhGiongPixelBody_23: 1360265258759571389
+      ThanhGiongPixelBody_24: 2838577945795531887
+      ThanhGiongPixelBody_25: -5623072179219956123
+      ThanhGiongPixelBody_26: 7466071328742943500
+      ThanhGiongPixelBody_27: 2234670476864538778
+      ThanhGiongPixelBody_28: 3002236011984569069
+      ThanhGiongPixelBody_29: -6186121981308223870
+      ThanhGiongPixelBody_3: 1934067786161033051
+      ThanhGiongPixelBody_30: 3019421262437990923
+      ThanhGiongPixelBody_31: 4126533025148266020
+      ThanhGiongPixelBody_32: -3639166123370190766
+      ThanhGiongPixelBody_33: 501333668729081735
+      ThanhGiongPixelBody_34: -2138745152959187018
+      ThanhGiongPixelBody_35: 616196735118149233
+      ThanhGiongPixelBody_36: 5937268263547529720
+      ThanhGiongPixelBody_37: 3221677989998080208
+      ThanhGiongPixelBody_38: 3862062236545180642
+      ThanhGiongPixelBody_39: 6120023810317051225
+      ThanhGiongPixelBody_4: 3807626412184577822
+      ThanhGiongPixelBody_40: 4687558639778974396
+      ThanhGiongPixelBody_41: 7233370083103801907
+      ThanhGiongPixelBody_42: -535677011126966973
+      ThanhGiongPixelBody_43: -2626573842840738159
+      ThanhGiongPixelBody_44: -5451848828702779185
+      ThanhGiongPixelBody_45: 5364139113038530391
+      ThanhGiongPixelBody_46: 8682320219237358888
+      ThanhGiongPixelBody_47: 2429157161167173819
+      ThanhGiongPixelBody_48: 2777900209831176211
+      ThanhGiongPixelBody_49: -6363460378779442645
+      ThanhGiongPixelBody_5: 1030304180332978846
+      ThanhGiongPixelBody_50: 326805966438209613
+      ThanhGiongPixelBody_51: -4324020092840517175
+      ThanhGiongPixelBody_52: -9215282295229005417
+      ThanhGiongPixelBody_53: 884002542880267973
+      ThanhGiongPixelBody_54: 3760696525146936531
+      ThanhGiongPixelBody_55: 3359852814633710267
+      ThanhGiongPixelBody_56: -190664351443222726
+      ThanhGiongPixelBody_57: -4201189767107447010
+      ThanhGiongPixelBody_58: -5992469209994681014
+      ThanhGiongPixelBody_59: 145723804658700690
+      ThanhGiongPixelBody_6: -1431694619501966851
+      ThanhGiongPixelBody_60: -1437833618472138524
+      ThanhGiongPixelBody_61: 1352111597213319983
+      ThanhGiongPixelBody_62: 2598751727876235957
+      ThanhGiongPixelBody_63: 7458430801274641447
+      ThanhGiongPixelBody_64: -9012340201238739956
+      ThanhGiongPixelBody_65: 908177136765870222
+      ThanhGiongPixelBody_66: -2621230484378445873
+      ThanhGiongPixelBody_67: -986185162179704111
+      ThanhGiongPixelBody_68: -3537232674939273848
+      ThanhGiongPixelBody_69: 69055241665959272
+      ThanhGiongPixelBody_7: 3289121143631480516
+      ThanhGiongPixelBody_70: 3179696533032124307
+      ThanhGiongPixelBody_71: -569832071623248688
+      ThanhGiongPixelBody_72: -3198819887706943444
+      ThanhGiongPixelBody_73: 3843169992649943842
+      ThanhGiongPixelBody_74: -1357116015655743297
+      ThanhGiongPixelBody_75: -5145040436759414393
+      ThanhGiongPixelBody_76: 1430861853127377403
+      ThanhGiongPixelBody_77: 5935911381785729613
+      ThanhGiongPixelBody_78: 4082963836867377027
+      ThanhGiongPixelBody_79: 6349632379394902215
+      ThanhGiongPixelBody_8: 3192327971333233723
+      ThanhGiongPixelBody_80: 7173388182287394252
+      ThanhGiongPixelBody_81: 7556958300281337283
+      ThanhGiongPixelBody_82: -6066379754874036244
+      ThanhGiongPixelBody_83: 6211207749165218093
+      ThanhGiongPixelBody_84: -6440941261037379695
+      ThanhGiongPixelBody_85: -5615521927855053679
+      ThanhGiongPixelBody_86: -2349148584331668716
+      ThanhGiongPixelBody_87: 2790873955898393477
+      ThanhGiongPixelBody_88: 2791324793192868715
+      ThanhGiongPixelBody_89: -2731017557602595656
+      ThanhGiongPixelBody_9: 3318164403016250311
+      ThanhGiongPixelBody_90: 1617801037783333413
+      ThanhGiongPixelBody_91: -280721492121607918
+      ThanhGiongPixelBody_92: 8207775033504158015
+      ThanhGiongPixelBody_93: 521910304757217744
+      ThanhGiongPixelBody_94: -5047195093396520018
+      ThanhGiongPixelBody_95: 5990727049144005509
+      ThanhGiongPixelBody_96: -3780720869503979664
+      ThanhGiongPixelBody_97: 581760467243474538
+      ThanhGiongPixelBody_98: -7124965596416325901
+      ThanhGiongPixelBody_99: -8288324025483504834
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

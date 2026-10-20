@@ -84,7 +84,7 @@ namespace LAC.Player
             float sign = direction.x < 0f ? -1f : 1f;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             float offset = _attacking ? _data.AngleAt(progress, _contact) : _data.RestAngle;
-            Vector2 hand = direction * _data.HandOffset.x + Vector2.up * _data.HandOffset.y;
+            Vector2 hand = _data.HandPosition(_body.sprite, _body.flipX, direction);
             // Tre giữ nguyên chiều dài qua cả đòn; chỉ nâng cấp tầm mới đổi tỷ lệ.
             float reach = _attacking ? _range : _character.Data.AttackRange *
                 (_character.Upgrades != null ? _character.Upgrades.AttackRangeMultiplier : 1f);

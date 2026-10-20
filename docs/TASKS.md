@@ -121,7 +121,10 @@ Dòng `>` là cách người khác và công cụ AI biết chức năng đã t�
 - [x] **T-18G** Áp mẫu Thánh Gióng cartoon viền đậm đã được duyệt vào game — **@Kiet** · 19/10/2026
   > `ThanhGiongCartoonContent`, `PlayerCartoonVisual`, `CartoonCharacterData`; atlas sáu mảnh HD và ảnh toàn thân, chân bước theo tốc độ/tay bám tre, portrait/afterimage mới. Giữ ID/chỉ số/vùng đánh, chỉ Warrior dùng cartoon; đổi lớp khôi phục renderer thường. Đã xem Game View/màn chọn, 196 kiểm tra mảnh/vòng đời và 243 kiểm tra chiến đấu đạt; trận mới10/10 HP/Console0 lỗi. Nguồn AI/prompt/pipeline/bằng chứng/giới hạn: [THANH_GIONG_CARTOON.md](THANH_GIONG_CARTOON.md).
 
-  > **Cấu hình hiện hành:** Thánh Gióng cartoon có tre riêng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18/D/E/F giữ để đối chiếu; không vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
+- [x] **T-18H** Thánh Gióng pixel toàn thân, chỉ cây tre tách riêng — **@Kiet** · 20/10/2026
+  > `ThanhGiongPixelContent`, `ThanhGiongPixel.asset`, `TreNgaPixel.asset`; nguồn AI toàn thân16 frame, Idle4/Run8/Down4/PPU32, tre tự nhiên56×6px. `DetachedWeaponData.HandPosition` giữ chuôi tại nắm tay trong từng frame, không tách tay/chân. Đã xem Game View/màn chọn/chuỗi frame, kiểm tra hình học/vòng đời và243 kiểm tra chiến đấu đạt, Console0 lỗi. Giữ chỉ số/ID/vùng đánh; nguồn/prompt/giới hạn tại [THANH_GIONG_PIXEL.md](THANH_GIONG_PIXEL.md).
+
+  > **Cấu hình hiện hành:** Thánh Gióng pixel toàn thân có tre riêng (ID Warrior), Archer/Lancer TinySwords, Cô Hồn dùng TinyRPG Orc, 10 wave theo T-44D. T-18/D/E/F/G giữ để đối chiếu; không vẽ lại toàn bộ. Xem [ASSETS_ThirdParty.md](ASSETS_ThirdParty.md).
 
 ---
 

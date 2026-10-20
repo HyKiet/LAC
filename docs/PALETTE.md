@@ -132,7 +132,7 @@ Nâu chỉ được dùng làm điểm lốm đốm thưa. Đây là điều ki�
 
 ## 5. Phạm vi mỹ thuật đồ án — 11/10/2026
 
-Ngoại lệ người dùng duyệt ngày19/10/2026, T-18G: riêng Thánh Gióng dùng cartoon HD, giữ màu/alpha mượt của mẫu, không ép 20 màu pixel. Vẫn kiểm tra không dùng Son và giữ đòn địch rõ; nền/VFX và asset khác theo quy tắc hiện có. Xem [THANH_GIONG_CARTOON.md](THANH_GIONG_CARTOON.md).
+Ngày20/10/2026, T-18H: Thánh Gióng trở lại pixel toàn thân và tre riêng theo yêu cầu mới, dùng20 màu ngoài Son/alpha nhị phân/Point/PPU32. Ngoại lệ cartoon T-18G ngày19/10 chỉ còn là lịch sử. Xem [THANH_GIONG_PIXEL.md](THANH_GIONG_PIXEL.md).
 
 T-33 ưu tiên 12 icon thẻ nền rõ nghĩa. T-47 tinh chỉnh silhouette quái/boss/trống bằng asset sẵn nếu cần; không bắt buộc vẽ lại người chơi hoặc hai tileset mới. Giữ nền tối, màu/lớp đòn địch và khả năng đọc.
 

@@ -1,0 +1,2 @@
+Play mode Console errors/warnings/logs: 0/0/22
+Final thicker-bamboo Play pass errors/warnings/logs: 0/0/2

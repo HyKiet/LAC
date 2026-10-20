@@ -1,0 +1,1 @@
+PASS: 213 checks; captured 129 real Game View frames; unique full-body run frames=8; weapon attack frames=38; simultaneous run/attack=24; enemy HP 40 -> 15 (before fixture reset). Eight directions/contact radius/sorting/cancel/late/expired/class changes/down/restart passed. Controlled host fixture, not WAN or subjective feel acceptance.

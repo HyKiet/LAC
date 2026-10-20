@@ -1,6 +1,8 @@
 # Thánh Gióng cartoon — T-18G, 19/10/2026
 
-Người dùng đã duyệt mẫu nét mượt, viền đậm theo hướng Brotato và yêu cầu áp dụng vào game. **Warrior hiện dùng cartoon, thay pixel T-18F.** Giữ ID Warrior1, GUID nhân vật, chỉ số, collider và vùng sát thương. Archer/Lancer và bản đồ vẫn dùng asset hiện tại; chưa đổi đồng bộ mỹ thuật toàn game.
+**Lịch sử:** ngày20/10/2026, người dùng yêu cầu [pixel toàn thân T-18H](THANH_GIONG_PIXEL.md), chỉ tách cây tre. Các tài nguyên/kiểm chứng cartoon dưới đây giữ để đối chiếu.
+
+Người dùng đã duyệt mẫu nét mượt, viền đậm theo hướng Brotato và yêu cầu áp dụng vào game ngày19/10. T-18G từng thay pixel T-18F. Giữ ID Warrior1, GUID nhân vật, chỉ số, collider và vùng sát thương. Archer/Lancer và bản đồ giữ asset hiện tại.
 
 ## Tài nguyên và cách dựng
 

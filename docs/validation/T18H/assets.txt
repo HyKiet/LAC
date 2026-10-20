@@ -1,0 +1,1 @@
+PASS: 16 whole-body frames; Idle4/Run8/Down4; only bamboo separate; 12 mirrored baked-fist sockets; Point/PPU32/uncompressed/noMip; binary alpha; all opaque pixels in non-Son DongHo palette; opaque=8837; stable IDs after rebuild; legacy cartoon builder preserves active pixel set; unchanged stats=Warrior/10/4/5/2.2/0.65/0.3
